@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(sed 's/.*\\\\.//')",
+      "Bash(git mv *)",
+      "PowerShell(Move-Item -Path \"d:\\\\Programas\\\\Consultoria-JGM4\\\\web\" -Destination \"d:\\\\Programas\\\\Consultoria-JGM4\\\\pages\" -Force)"
+    ]
+  }
+}

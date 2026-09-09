@@ -1,0 +1,894 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Logística do Zero | Ebook para Iniciantes por R$ 9,90</title>
+  <meta name="description" content="Aprenda logística do zero com um ebook direto, prático e acessível. Ideal para estudantes, universitários e iniciantes. Oferta de R$ 29,90 por R$ 9,90 por tempo limitado." />
+  <meta name="keywords" content="logística para iniciantes, logística do zero, ebook logística, carreira em logística, o que é logística, curso de logística básico, estudante de logística, supply chain iniciante, como entrar na logística" />
+  <meta name="theme-color" content="#081120" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="../assets/favicon.ico" type="image/png" />
+
+  <style>
+    :root{
+      --bg:#07101d;
+      --bg-soft:#0d1a31;
+      --card:rgba(255,255,255,.05);
+      --border:rgba(255,255,255,.10);
+      --text:#eef4ff;
+      --muted:#b9c5d9;
+      --primary:#2ec5ff;
+      --primary-dark:#00a8e8;
+      --accent:#8df06d;
+      --danger:#ff5b5b;
+      --warning:#ffb84d;
+      --shadow:0 18px 48px rgba(0,0,0,.35);
+      --radius:18px;
+      --max:1160px;
+    }
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      font-family:Arial, Helvetica, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(46,197,255,.10), transparent 26%),
+        radial-gradient(circle at top left, rgba(141,240,109,.06), transparent 18%),
+        linear-gradient(180deg, #06101c 0%, #081120 45%, #07101d 100%);
+      line-height:1.6;
+    }
+
+    img{
+      max-width:100%;
+      display:block;
+    }
+
+    a{
+      text-decoration:none;
+    }
+
+    .container{
+      width:min(92%, var(--max));
+      margin:0 auto;
+    }
+
+    .section{
+      padding:72px 0;
+    }
+
+    .top-alert{
+      background:linear-gradient(90deg, #ff8a00, #ff5b5b);
+      color:#fff;
+      text-align:center;
+      padding:10px 14px;
+      font-size:.92rem;
+      font-weight:700;
+    }
+
+    .header{
+      position:sticky;
+      top:0;
+      z-index:60;
+      backdrop-filter:blur(10px);
+      background:rgba(5,11,20,.72);
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+
+    .header-inner{
+      min-height:78px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+    }
+
+    .logo img{
+      height:48px;
+      width:auto;
+    }
+
+    .nav{
+      display:flex;
+      align-items:center;
+      gap:20px;
+      flex-wrap:wrap;
+    }
+
+    .nav a{
+      color:var(--muted);
+      font-size:.95rem;
+      transition:.2s ease;
+    }
+
+    .nav a:hover{
+      color:#fff;
+    }
+
+    .btn,
+    .btn-outline,
+    .btn-mobile{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      font-weight:700;
+      border-radius:12px;
+      transition:.25s ease;
+      cursor:pointer;
+    }
+
+    .btn{
+      background:linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color:#04111d;
+      padding:15px 24px;
+      box-shadow:var(--shadow);
+    }
+
+    .btn:hover{
+      transform:translateY(-2px);
+      filter:brightness(1.03);
+    }
+
+    .btn-outline{
+      color:#fff;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.04);
+      padding:14px 22px;
+    }
+
+    .btn-outline:hover{
+      background:rgba(255,255,255,.08);
+    }
+
+    .hero{
+      padding:54px 0 34px;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:38px;
+      align-items:center;
+    }
+
+    .eyebrow{
+      display:inline-block;
+      padding:8px 14px;
+      border-radius:999px;
+      font-size:.85rem;
+      font-weight:700;
+      background:rgba(46,197,255,.12);
+      border:1px solid rgba(46,197,255,.18);
+      color:var(--primary);
+      margin-bottom:18px;
+    }
+
+    .hero h1{
+      font-size:clamp(2.2rem, 5vw, 4.4rem);
+      line-height:1.04;
+      letter-spacing:-1px;
+      margin-bottom:16px;
+    }
+
+    .hero .sub{
+      font-size:1.06rem;
+      color:var(--muted);
+      margin-bottom:22px;
+      max-width:670px;
+    }
+
+    .offer-row{
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      gap:12px;
+      margin:18px 0 18px;
+    }
+
+    .old-price{
+      color:#aab4c6;
+      text-decoration:line-through;
+      font-size:1.05rem;
+      font-weight:700;
+    }
+
+    .new-price{
+      color:var(--accent);
+      font-size:2.2rem;
+      font-weight:800;
+      line-height:1;
+    }
+
+    .discount-badge{
+      background:linear-gradient(135deg, #ff6a6a, #ff8b3d);
+      color:#fff;
+      font-size:.84rem;
+      font-weight:800;
+      padding:8px 12px;
+      border-radius:999px;
+      box-shadow:var(--shadow);
+    }
+
+    .scarcity{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-bottom:24px;
+    }
+
+    .scarcity span{
+      font-size:.92rem;
+      color:#fff;
+      padding:10px 12px;
+      border-radius:12px;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.08);
+    }
+
+    .hero-points{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:14px;
+      margin:28px 0;
+    }
+
+    .hero-points .point{
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:14px;
+      padding:14px 16px;
+      color:var(--muted);
+      font-size:.96rem;
+    }
+
+    .hero-points strong{
+      color:#fff;
+    }
+
+    .cta-row{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      align-items:center;
+      margin-top:8px;
+    }
+
+    .micro-proof{
+      margin-top:14px;
+      color:var(--muted);
+      font-size:.93rem;
+    }
+
+    .book-card{
+      position:relative;
+      padding:18px;
+      border-radius:24px;
+      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+      border:1px solid rgba(255,255,255,.10);
+      box-shadow:var(--shadow);
+    }
+
+    .book-card img{
+      width:100%;
+      border-radius:16px;
+      object-fit:cover;
+      min-height:430px;
+      background:#11203e;
+    }
+
+    .floating-tag{
+      position:absolute;
+      right:-12px;
+      top:-14px;
+      padding:12px 16px;
+      border-radius:999px;
+      background:linear-gradient(135deg, #8df06d, #59d88d);
+      color:#072014;
+      font-weight:800;
+      font-size:.9rem;
+      box-shadow:var(--shadow);
+    }
+
+    .trust-row{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:18px;
+      margin-top:34px;
+    }
+
+    .trust-item{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:22px 18px;
+      text-align:center;
+    }
+
+    .trust-item h3{
+      font-size:1.6rem;
+      margin-bottom:6px;
+      color:#fff;
+    }
+
+    .trust-item p{
+      color:var(--muted);
+      font-size:.94rem;
+    }
+
+    .section-title{
+      font-size:clamp(1.8rem, 3vw, 2.7rem);
+      line-height:1.12;
+      margin-bottom:12px;
+    }
+
+    .section-sub{
+      max-width:760px;
+      color:var(--muted);
+      margin-bottom:32px;
+      font-size:1rem;
+    }
+
+    .grid-3,
+    .grid-2{
+      display:grid;
+      gap:22px;
+    }
+
+    .grid-3{
+      grid-template-columns:repeat(3,1fr);
+    }
+
+    .grid-2{
+      grid-template-columns:repeat(2,1fr);
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:28px;
+      box-shadow:var(--shadow);
+    }
+
+    .card h3{
+      font-size:1.15rem;
+      margin-bottom:10px;
+      color:#fff;
+    }
+
+    .card p, .card li{
+      color:var(--muted);
+      font-size:.98rem;
+    }
+
+    .card ul{
+      padding-left:18px;
+      margin-top:8px;
+    }
+
+    .card li + li{
+      margin-top:8px;
+    }
+
+    .mini-cta{
+      margin-top:18px;
+      color:#fff;
+      font-weight:700;
+      font-size:.95rem;
+    }
+
+    .author-box{
+      display:grid;
+      grid-template-columns:1fr 1.2fr;
+      gap:28px;
+      align-items:center;
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border:1px solid var(--border);
+      border-radius:24px;
+      padding:26px;
+      box-shadow:var(--shadow);
+    }
+
+    .author-photo{
+      border-radius:20px;
+      overflow:hidden;
+      min-height:330px;
+      background:#11203d;
+    }
+
+    .author-photo img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+
+    .author-content h3{
+      font-size:1.8rem;
+      margin-bottom:12px;
+    }
+
+    .author-content p{
+      color:var(--muted);
+      margin-bottom:14px;
+    }
+
+    .faq-list{
+      display:grid;
+      gap:18px;
+    }
+
+    .faq-item{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:22px 24px;
+    }
+
+    .faq-item h3{
+      font-size:1.04rem;
+      margin-bottom:8px;
+    }
+
+    .faq-item p{
+      color:var(--muted);
+    }
+
+    .final-cta{
+      text-align:center;
+      border-radius:24px;
+      padding:48px 24px;
+      background:linear-gradient(180deg, rgba(46,197,255,.10), rgba(255,255,255,.03));
+      border:1px solid rgba(46,197,255,.14);
+      box-shadow:var(--shadow);
+    }
+
+    .final-cta h2{
+      font-size:clamp(1.9rem, 3vw, 3rem);
+      margin-bottom:12px;
+    }
+
+    .final-cta p{
+      color:var(--muted);
+      max-width:760px;
+      margin:0 auto 20px;
+    }
+
+    .urgency-line{
+      color:#ffd27a;
+      font-weight:700;
+      margin-bottom:20px;
+    }
+
+    .footer{
+      padding:28px 0 95px;
+      text-align:center;
+      color:#93a5c4;
+      font-size:.92rem;
+    }
+
+    .btn-mobile{
+      display:none;
+      position:fixed;
+      left:14px;
+      right:14px;
+      bottom:14px;
+      z-index:99;
+      padding:16px 18px;
+      font-size:1rem;
+      background:linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color:#04111d;
+      box-shadow:0 18px 38px rgba(0,0,0,.42);
+      border:none;
+    }
+
+    .btn-mobile small{
+      display:block;
+      font-size:.8rem;
+      font-weight:700;
+      opacity:.86;
+    }
+
+    .google-ads-copy{
+      display:none;
+    }
+
+    @media (max-width: 980px){
+      .hero-grid,
+      .author-box,
+      .grid-3,
+      .grid-2,
+      .trust-row{
+        grid-template-columns:1fr;
+      }
+
+      .nav a:not(.nav-buy){
+        display:none;
+      }
+
+      .hero-points{
+        grid-template-columns:1fr;
+      }
+
+      .book-card img{
+        min-height:280px;
+      }
+
+      .floating-tag{
+        position:static;
+        display:inline-block;
+        margin-bottom:12px;
+      }
+
+      .btn-mobile{
+        display:flex;
+        flex-direction:column;
+        line-height:1.1;
+      }
+    }
+
+    @media (max-width: 640px){
+      .header-inner{
+        min-height:70px;
+      }
+
+      .logo img{
+        height:40px;
+      }
+
+      .btn{
+        width:100%;
+      }
+
+      .btn-outline{
+        width:100%;
+      }
+
+      .cta-row{
+        flex-direction:column;
+        align-items:stretch;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Texto de apoio para SEO/Ads -->
+  <div class="google-ads-copy">
+    Ebook de logística para iniciantes, estudantes e universitários. Aprenda o que é logística, áreas de atuação, carreira, salários e como entrar no mercado.
+  </div>
+
+  <div class="top-alert">
+    Oferta promocional por tempo limitado: de R$ 29,90 por apenas R$ 9,90
+  </div>
+
+  <header class="header">
+    <div class="container header-inner">
+      <a href="#" class="logo" aria-label="JGM4 Consultoria">
+        <img src="../assets/logojgm4.png" alt="Logo JGM4 Consultoria">
+      </a>
+
+      <nav class="nav">
+        <a href="#sobre">Sobre</a>
+        <a href="#conteudo">Conteúdo</a>
+        <a href="#autor">Autor</a>
+        <a href="#faq">FAQ</a>
+        <a href="https://pay.kiwify.com.br/uOFcekD" class="btn nav-buy">Comprar agora</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow">Ideal para quem quer aprender logística do zero</span>
+
+          <h1>Entenda a logística de forma simples e comece sua jornada com mais clareza</h1>
+
+          <p class="sub">
+            Um ebook objetivo, direto e acessível para estudantes, universitários e jovens profissionais que desejam conhecer a logística, descobrir áreas de atuação e enxergar oportunidades reais de carreira. :contentReference[oaicite:1]{index=1}
+          </p>
+
+          <div class="offer-row">
+            <span class="old-price">De R$ 29,90</span>
+            <span class="new-price">por R$ 9,90</span>
+            <span class="discount-badge">economize agora</span>
+          </div>
+
+          <div class="scarcity">
+            <span>⏰ condição promocional por tempo limitado</span>
+            <span>🔥 preço de entrada para novos leitores</span>
+            <span>📘 acesso rápido após a compra</span>
+          </div>
+
+          <div class="hero-points">
+            <div class="point"><strong>Explica a base:</strong> o que é logística e por que ela importa</div>
+            <div class="point"><strong>Mostra a carreira:</strong> áreas, competências e crescimento</div>
+            <div class="point"><strong>Traz visão prática:</strong> rotina, mercado e primeiros passos</div>
+            <div class="point"><strong>Fala a língua do iniciante:</strong> conteúdo acessível e direto</div>
+          </div>
+
+          <div class="cta-row">
+            <a href="https://pay.kiwify.com.br/uOFcekD" class="btn">Quero garantir por R$ 9,90</a>
+            <a href="#conteudo" class="btn-outline">Ver o que vou aprender</a>
+          </div>
+
+          <p class="micro-proof">
+            Material estruturado em 6 capítulos e mais de 25 blocos de conteúdo para orientar quem está começando. :contentReference[oaicite:2]{index=2}
+          </p>
+        </div>
+
+        <div>
+          <div class="book-card">
+            <span class="floating-tag">Oferta ativa</span>
+            <img src="../assets/logistica-inicantes.png" alt="Capa do ebook Logística: Seu Mapa para uma Carreira de Sucesso">
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="trust-row">
+          <div class="trust-item">
+            <h3>6</h3>
+            <p>capítulos com foco em carreira e formação :contentReference[oaicite:3]{index=3}</p>
+          </div>
+          <div class="trust-item">
+            <h3>25+</h3>
+            <p>cards e conteúdos organizados para iniciantes :contentReference[oaicite:4]{index=4}</p>
+          </div>
+          <div class="trust-item">
+            <h3>2025</h3>
+            <p>conteúdo atualizado para o cenário recente :contentReference[oaicite:5]{index=5}</p>
+          </div>
+          <div class="trust-item">
+            <h3>R$ 9,90</h3>
+            <p>preço promocional para facilitar a entrada</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="sobre">
+      <div class="container">
+        <h2 class="section-title">Por que este ebook ajuda quem está começando</h2>
+        <p class="section-sub">
+          Muita gente quer entrar na logística, mas não sabe por onde começar, o que estudar ou quais áreas fazem mais sentido. Este guia foi construído justamente para reduzir essa dúvida e organizar a visão de quem está no início da jornada. :contentReference[oaicite:6]{index=6}
+        </p>
+
+        <div class="grid-3">
+          <div class="card">
+            <h3>Você sai do genérico</h3>
+            <p>
+              Em vez de continuar pesquisando conteúdos soltos, você acessa um material estruturado que mostra conceitos, mercado e caminhos profissionais.
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>Você entende a profissão</h3>
+            <p>
+              O ebook apresenta fundamentos, glossário, perfil profissional, tendências, áreas de atuação e progressão de carreira. :contentReference[oaicite:7]{index=7}
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>Você toma decisão melhor</h3>
+            <p>
+              Com mais clareza sobre a área, fica mais fácil decidir o que estudar, como se posicionar e quais próximos passos seguir.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="conteudo">
+      <div class="container">
+        <h2 class="section-title">O que você vai aprender neste material</h2>
+        <p class="section-sub">
+          O conteúdo percorre desde a base da logística até uma visão de carreira mais estratégica, mostrando como a área funciona e quais competências o mercado valoriza. :contentReference[oaicite:8]{index=8}
+        </p>
+
+        <div class="grid-3">
+          <div class="card">
+            <h3>Fundamentos da logística</h3>
+            <p>
+              Entenda o conceito, a importância econômica, o funcionamento da cadeia de suprimentos e os termos essenciais para iniciantes. :contentReference[oaicite:9]{index=9}
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>Perfil do profissional</h3>
+            <p>
+              Veja as competências técnicas e comportamentais que ajudam um profissional a crescer na área. :contentReference[oaicite:10]{index=10}
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>Primeiros passos na carreira</h3>
+            <p>
+              Descubra como ganhar experiência, construir networking e criar uma base mais sólida para entrar no mercado. :contentReference[oaicite:11]{index=11}
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>Áreas de atuação</h3>
+            <p>
+              Transporte, estoques, supply chain, logística reversa, logística internacional e logística sustentável. :contentReference[oaicite:12]{index=12}
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>Carreira e salários</h3>
+            <p>
+              Tenha noção de progressão profissional, valorização e retorno financeiro dentro da logística. :contentReference[oaicite:13]{index=13}
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>Formação e próximos passos</h3>
+            <p>
+              Saiba onde aprofundar seus estudos e como continuar evoluindo depois do primeiro contato com a área. :contentReference[oaicite:14]{index=14}
+            </p>
+          </div>
+        </div>
+
+        <p class="mini-cta">
+          Quem age primeiro costuma sair na frente. Aproveite o valor promocional enquanto a oferta estiver ativa.
+        </p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">Uma área que continua abrindo portas</h2>
+        <p class="section-sub">
+          O ebook reforça a relevância crescente da logística, impulsionada por e-commerce, digitalização e operações mais exigentes. Para quem está começando, entender esse cenário cedo pode encurtar muito o caminho. :contentReference[oaicite:15]{index=15}
+        </p>
+
+        <div class="grid-2">
+          <div class="card">
+            <h3>Mais visão, menos dúvida</h3>
+            <p>
+              Em vez de começar no escuro, você entra na área já conhecendo termos, possibilidades e exigências reais do mercado.
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>Conhecimento acessível</h3>
+            <p>
+              Por R$ 9,90, você leva um material introdutório que pode ajudar a evitar erros comuns e acelerar sua compreensão do setor.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="autor">
+      <div class="container">
+        <h2 class="section-title">Sobre o autor</h2>
+        <p class="section-sub">
+          Confiança também vem de saber quem está por trás do conteúdo.
+        </p>
+
+        <div class="author-box">
+          <div class="author-photo">
+            <img src="../assets/sua-foto.png" alt="Bruno Muniz">
+          </div>
+
+          <div class="author-content">
+            <h3>Bruno Muniz</h3>
+            <p>
+              Bruno Muniz atua com foco em logística, gestão e desenvolvimento de conteúdos práticos voltados ao mercado. Neste ebook, a proposta é tornar a logística mais compreensível para quem está no início da jornada, organizando informações importantes de forma acessível e objetiva.
+            </p>
+            <p>
+              O material foi pensado especialmente para estudantes e jovens profissionais que desejam entender melhor a área antes de aprofundar a formação.
+            </p>
+            <a href="https://www.linkedin.com/in/brunomuniz72/" target="_blank" rel="noopener noreferrer" class="btn-outline">Ver LinkedIn do autor</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="container">
+        <h2 class="section-title">Perguntas frequentes</h2>
+        <p class="section-sub">
+          Essas respostas ajudam a reduzir dúvidas antes da compra.
+        </p>
+
+        <div class="faq-list">
+          <div class="faq-item">
+            <h3>Esse ebook é para quem nunca trabalhou com logística?</h3>
+            <p>
+              Sim. Ele foi pensado justamente para iniciantes, estudantes e pessoas que ainda estão conhecendo a área.
+            </p>
+          </div>
+
+          <div class="faq-item">
+            <h3>O conteúdo é muito técnico?</h3>
+            <p>
+              Não. A proposta é explicar de forma clara, sem deixar de mostrar uma visão profissional do setor.
+            </p>
+          </div>
+
+          <div class="faq-item">
+            <h3>O ebook fala sobre carreira e salário?</h3>
+            <p>
+              Sim. Ele aborda progressão de carreira, níveis de atuação e retorno financeiro esperado em diferentes etapas. :contentReference[oaicite:16]{index=16}
+            </p>
+          </div>
+
+          <div class="faq-item">
+            <h3>Como recebo o material?</h3>
+            <p>
+              Após a compra pela Kiwify, o acesso é liberado de forma rápida conforme a plataforma.
+            </p>
+          </div>
+
+          <div class="faq-item">
+            <h3>Esse valor de R$ 9,90 é promocional?</h3>
+            <p>
+              Sim. A página trabalha a condição promocional de lançamento/entrada, ancorada no valor original de R$ 29,90.
+            </p>
+          </div>
+
+          <div class="faq-item">
+            <h3>Depois posso aprender mais com outros conteúdos?</h3>
+            <p>
+              Sim. No final da página você encontra um link para explorar mais materiais e cursos no site da JGM4.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="final-cta">
+          <h2>Comece agora com um investimento simbólico</h2>
+          <p class="urgency-line">
+            Oferta de R$ 29,90 por R$ 9,90 disponível nesta página promocional.
+          </p>
+          <p>
+            Esse é o tipo de compra simples que pode economizar tempo, organizar sua visão sobre a profissão e ajudar você a começar com mais direção.
+          </p>
+
+          <div class="offer-row" style="justify-content:center; margin-bottom:20px;">
+            <span class="old-price">De R$ 29,90</span>
+            <span class="new-price">por R$ 9,90</span>
+          </div>
+
+          <div class="cta-row" style="justify-content:center;">
+            <a href="https://pay.kiwify.com.br/uOFcekD" class="btn">Comprar agora na Kiwify</a>
+            <a href="https://www.jgm4consultoria.com.br/pages/cursos.html" target="_blank" rel="noopener noreferrer" class="btn-outline">Deseja aprender mais? Visite a página de cursos</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>© JGM4 Consultoria — Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- Botão flutuante mobile -->
+  <a href="https://pay.kiwify.com.br/uOFcekD" class="btn-mobile" aria-label="Comprar ebook por R$ 9,90">
+    Comprar agora por R$ 9,90
+    <small>Oferta promocional ativa</small>
+  </a>
+
+</body>
+</html>

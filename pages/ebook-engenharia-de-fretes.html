@@ -1,0 +1,823 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Engenharia do Frete | JGM4 Consultoria Logística</title>
+  <meta name="description" content="Aprenda a montar, analisar e negociar tabelas de frete no Brasil. Um guia prático sobre cubagem, faixas de peso, taxas, auditoria e negociação. Por Bruno Muniz." />
+
+  <link rel="icon" href="../assets/favicon.ico" type="image/x-icon" />
+
+  <meta property="og:title" content="Engenharia do Frete | JGM4 Consultoria" />
+  <meta property="og:description" content="Manual profissional para dominar tabelas de transporte, cubagem, taxas e negociação." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="./assets/capa-engenharia-do-frete.png" />
+
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-X1QSQEF3EN"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-X1QSQEF3EN');
+</script>
+
+<!-- Google tag (gtag.js) event - delayed navigation helper -->
+<script>
+  // Helper function to delay opening a URL until a gtag event is sent.
+  // Call it in response to an action that should navigate to a URL.
+  function gtagSendEvent(url) {
+    var callback = function () {
+      if (typeof url === 'string') {
+        window.location = url;
+      }
+    };
+    gtag('event', 'page_view', {
+      'event_callback': callback,
+      'event_timeout': 2000,
+      // <event_parameters>
+    });
+    return false;
+  }
+</script>
+
+  <style>
+    :root{
+      --bg:#07122b;
+      --panel:#0b1a3c;
+      --card:#0e2351;
+      --text:#eaf0ff;
+      --muted:#b9c6ea;
+      --brand:#ff2b2b;
+      --brand2:#2bd1ff;
+      --ok:#2ee59d;
+      --shadow: 0 18px 50px rgba(0,0,0,.35);
+      --radius: 18px;
+      --radius2: 26px;
+      --max: 1140px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(1200px 700px at 20% -10%, rgba(43,209,255,.18), transparent 60%),
+        radial-gradient(900px 600px at 90% 0%, rgba(255,43,43,.18), transparent 55%),
+        linear-gradient(180deg, #050b1a 0%, var(--bg) 35%, #050b1a 100%);
+      color:var(--text);
+      line-height:1.55;
+    }
+
+    img{max-width:100%; display:block}
+    a{color:inherit; text-decoration:none}
+    .container{max-width:var(--max); margin:0 auto; padding:0 18px}
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:50;
+      backdrop-filter: blur(12px);
+      background: rgba(5,11,26,.72);
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+
+    .topbar-inner{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:12px 0;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .brand img{
+      width:46px;
+      height:46px;
+      object-fit:contain;
+    }
+
+    .brand strong{
+      display:block;
+      font-size:16px;
+    }
+
+    .brand span{
+      display:block;
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    .nav{
+      display:flex;
+      gap:18px;
+      font-size:14px;
+      color:var(--muted);
+    }
+
+    .nav a:hover{color:#fff}
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:13px 18px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+      font-weight:700;
+      transition:.2s ease;
+    }
+
+    .btn:hover{
+      transform:translateY(-1px);
+      background:rgba(255,255,255,.09);
+    }
+
+    .btn.primary{
+      border:none;
+      color:#08101f;
+      background:linear-gradient(135deg, var(--brand) 0%, #ff6b2b 55%, #ffd12b 130%);
+      box-shadow: 0 14px 40px rgba(255,43,43,.22);
+    }
+
+    .btn.primary:hover{
+      transform:translateY(-1px) scale(1.01);
+    }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(14,35,81,.45);
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .hero{
+      padding:40px 0 20px;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.08fr .92fr;
+      gap:28px;
+      align-items:center;
+    }
+
+    .headline{
+      font-size:clamp(30px, 4vw, 48px);
+      line-height:1.1;
+      margin:12px 0;
+      letter-spacing:-.8px;
+    }
+
+    .subhead{
+      color:var(--muted);
+      font-size:clamp(15px, 1.5vw, 18px);
+      max-width:60ch;
+      margin:0 0 18px;
+    }
+
+    .hero-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-top:18px;
+    }
+
+    .trust{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:16px;
+    }
+
+    .hero-box{
+      border-radius:var(--radius2);
+      background:linear-gradient(180deg, rgba(14,35,81,.65), rgba(11,26,60,.35));
+      border:1px solid rgba(255,255,255,.10);
+      box-shadow:var(--shadow);
+      padding:18px;
+      overflow:hidden;
+      position:relative;
+    }
+
+    .hero-box::before{
+      content:"";
+      position:absolute;
+      inset:-1px;
+      background:
+        radial-gradient(550px 240px at 30% 0%, rgba(43,209,255,.20), transparent 70%),
+        radial-gradient(420px 240px at 90% 10%, rgba(255,43,43,.18), transparent 70%);
+      pointer-events:none;
+    }
+
+    .hero-box-inner{
+      position:relative;
+      z-index:2;
+    }
+
+    .cover-wrap{
+      display:grid;
+      place-items:center;
+      margin-bottom:16px;
+    }
+
+    .cover-img{
+      width:100%;
+      max-width:370px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow:0 24px 60px rgba(0,0,0,.45);
+      overflow:hidden;
+      background:rgba(255,255,255,.05);
+    }
+
+    .price{
+      display:flex;
+      align-items:baseline;
+      gap:10px;
+      flex-wrap:wrap;
+      margin:14px 0 8px;
+    }
+
+    .price .now{
+      font-size:36px;
+      font-weight:900;
+      letter-spacing:-.6px;
+    }
+
+    .price .tag{
+      color:#08101f;
+      background:linear-gradient(135deg, var(--ok), #b8ff2b);
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:900;
+    }
+
+    section{padding:28px 0}
+
+    .section-title{
+      font-size:24px;
+      margin:0 0 12px;
+      letter-spacing:-.3px;
+    }
+
+    .section-lead{
+      color:var(--muted);
+      margin:0 0 18px;
+      max-width:80ch;
+    }
+
+    .grid-3{
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:14px;
+    }
+
+    .card{
+      border-radius:var(--radius);
+      background:rgba(14,35,81,.38);
+      border:1px solid rgba(255,255,255,.10);
+      padding:18px;
+      box-shadow:0 14px 40px rgba(0,0,0,.20);
+    }
+
+    .card h3{
+      margin:0 0 8px;
+      font-size:17px;
+    }
+
+    .card p{
+      margin:0;
+      color:var(--muted);
+      font-size:15px;
+    }
+
+    .split{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:16px;
+    }
+
+    .list{
+      list-style:none;
+      margin:0;
+      padding:0;
+      display:grid;
+      gap:10px;
+    }
+
+    .li{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      padding:12px;
+      border-radius:14px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.09);
+    }
+
+    .dot{
+      width:10px;
+      height:10px;
+      border-radius:999px;
+      margin-top:7px;
+      background:linear-gradient(135deg, var(--brand2), #a0ff2b);
+      box-shadow:0 0 0 4px rgba(43,209,255,.10);
+      flex:0 0 auto;
+    }
+
+    .li b{
+      display:block;
+      margin-bottom:2px;
+    }
+
+    .li span{
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .author-box{
+      display:grid;
+      grid-template-columns: 220px 1fr;
+      gap:20px;
+      align-items:center;
+    }
+
+    .author-photo{
+      width:100%;
+      max-width:220px;
+      aspect-ratio:1/1;
+      border-radius:22px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow:0 20px 45px rgba(0,0,0,.30);
+      background:rgba(255,255,255,.05);
+    }
+
+    .author-photo img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+
+    .linkedin-link{
+      display:inline-flex;
+      margin-top:12px;
+      font-weight:800;
+      color:#fff;
+    }
+
+    .linkedin-link:hover{
+      color:var(--brand2);
+    }
+
+    .faq{
+      display:grid;
+      gap:10px;
+    }
+
+    .faq-item{
+      border-radius:16px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.10);
+      overflow:hidden;
+    }
+
+    .faq-q{
+      width:100%;
+      text-align:left;
+      background:transparent;
+      border:none;
+      color:#fff;
+      font-weight:800;
+      padding:15px;
+      cursor:pointer;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+    }
+
+    .faq-a{
+      display:none;
+      padding:0 15px 15px;
+      color:var(--muted);
+    }
+
+    .faq-item.open .faq-a{display:block}
+
+    .chev{
+      width:24px;
+      height:24px;
+      display:grid;
+      place-items:center;
+      border-radius:999px;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      transition:.2s ease;
+      flex:0 0 auto;
+    }
+
+    .faq-item.open .chev{
+      transform:rotate(180deg);
+    }
+
+    .final-box{
+      border-radius:var(--radius2);
+      background:linear-gradient(180deg, rgba(14,35,81,.65), rgba(11,26,60,.28));
+      border:1px solid rgba(255,255,255,.10);
+      box-shadow:var(--shadow);
+      padding:22px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .final-box::before{
+      content:"";
+      position:absolute;
+      inset:-1px;
+      background:
+        radial-gradient(650px 260px at 25% 0%, rgba(255,43,43,.18), transparent 70%),
+        radial-gradient(650px 260px at 85% 10%, rgba(43,209,255,.18), transparent 70%);
+      pointer-events:none;
+    }
+
+    .final-content{
+      position:relative;
+      z-index:2;
+    }
+
+    .note{
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    footer{
+      border-top:1px solid rgba(255,255,255,.08);
+      padding:20px 0 30px;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    @media (max-width: 980px){
+      .nav{display:none}
+      .hero-grid,
+      .grid-3,
+      .split,
+      .author-box{
+        grid-template-columns:1fr;
+      }
+
+      .author-photo{
+        max-width:180px;
+      }
+
+      .topbar-inner{
+        flex-wrap:wrap;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="container">
+      <div class="topbar-inner">
+        <div class="brand">
+          <img src="../assets/logojgm4.png" alt="JGM4 Consultoria Logística">
+          <div>
+            <strong>JGM4 Consultoria</strong>
+            <span>Página oficial do eBook</span>
+          </div>
+        </div>
+
+        <nav class="nav">
+          <a href="#conteudo">Conteúdo</a>
+          <a href="#capitulos">Capítulos</a>
+          <a href="#autor">Autor</a>
+          <a href="#faq">FAQ</a>
+        </nav>
+
+        <a class="btn primary" href="https://pay.kiwify.com.br/infAC7I" target="_blank" rel="noopener">
+          Comprar por R$19,90
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <header class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div>
+          <span class="pill">Manual Profissional de Logística</span>
+          <h1 class="headline">Engenharia do Frete</h1>
+          <p class="subhead">
+            Aprenda a montar, analisar e negociar tabelas de transporte com mais segurança e clareza.
+            Um material pensado para quem deseja entender cubagem, faixas de peso, taxas, auditoria de fretes
+            e estratégias de negociação aplicáveis à realidade da operação.
+          </p>
+
+          <div class="trust">
+            <span class="pill">✅ Conteúdo prático</span>
+            <span class="pill">✅ Linguagem profissional</span>
+            <span class="pill">✅ Aplicável no dia a dia</span>
+            <span class="pill">✅ Fundo de funil</span>
+          </div>
+
+          <div class="hero-actions">
+            <a class="btn primary" href="https://pay.kiwify.com.br/infAC7I" target="_blank" rel="noopener">
+              Quero comprar agora
+            </a>
+            <a class="btn" href="#capitulos">Ver capítulos</a>
+          </div>
+
+          <p class="note" style="margin-top:12px;">
+            Um investimento acessível para quem quer transformar conhecimento em decisão prática na gestão de fretes.
+          </p>
+        </div>
+
+        <div class="hero-box">
+          <div class="hero-box-inner">
+            <div class="cover-wrap">
+              <div class="cover-img">
+                <img src="../assets/engenharia-do-frete.png" alt="Capa do eBook Engenharia do Frete">
+              </div>
+            </div>
+
+            <div class="price">
+              <div class="now">R$ 19,90</div>
+              <div class="tag">Acesso imediato</div>
+            </div>
+
+            <ul class="list">
+              <li class="li">
+                <span class="dot"></span>
+                <div>
+                  <b>eBook completo em PDF</b>
+                  <span>Com conteúdo organizado por temas e aplicação prática.</span>
+                </div>
+              </li>
+              <li class="li">
+                <span class="dot"></span>
+                <div>
+                  <b>Base para análise de fretes</b>
+                  <span>Mais segurança para comparar tabelas e discutir custos.</span>
+                </div>
+              </li>
+              <li class="li">
+                <span class="dot"></span>
+                <div>
+                  <b>Visão prática de negociação</b>
+                  <span>Para tratar frete com critério e não apenas por feeling.</span>
+                </div>
+              </li>
+            </ul>
+
+            <div style="margin-top:14px;">
+              <a class="btn primary" style="width:100%;" href="https://pay.kiwify.com.br/infAC7I" target="_blank" rel="noopener">
+                Comprar agora por R$19,90 
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section id="conteudo">
+    <div class="container">
+      <h2 class="section-title">O que o comprador irá levar</h2>
+      <p class="section-lead">
+        Este não é apenas um material teórico. O comprador leva uma visão estruturada de como o frete funciona,
+        como uma tabela deve ser analisada e quais pontos merecem atenção na hora de negociar com transportadoras.
+      </p>
+
+      <div class="grid-3">
+        <div class="card">
+          <h3>Entendimento técnico</h3>
+          <p>Aprenda os conceitos que sustentam a formação do frete e evite decisões baseadas apenas em percepção.</p>
+        </div>
+
+        <div class="card">
+          <h3>Visão de gestão</h3>
+          <p>Mais clareza para interpretar tabelas, avaliar faixas, entender adicionais e questionar cobranças.</p>
+        </div>
+
+        <div class="card">
+          <h3>Aplicação prática</h3>
+          <p>Conteúdo voltado para quem quer usar o conhecimento no dia a dia da operação, compras ou logística.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2 class="section-title">Resultados esperados com a leitura</h2>
+      <p class="section-lead">
+        O objetivo do material é entregar base para decisões melhores, mais segurança na negociação e mais visão
+        sobre o impacto do transporte no custo total da operação.
+      </p>
+
+      <div class="split">
+        <div class="card">
+          <h3>Você tende a ganhar em:</h3>
+          <ul class="list">
+            <li class="li"><span class="dot"></span><div><b>Clareza de análise</b><span>Mais facilidade para entender tabelas e identificar diferenças relevantes.</span></div></li>
+            <li class="li"><span class="dot"></span><div><b>Segurança na negociação</b><span>Mais argumento técnico para tratar preços e adicionais com transportadoras.</span></div></li>
+            <li class="li"><span class="dot"></span><div><b>Organização de raciocínio</b><span>Uma forma mais profissional de estruturar o tema frete dentro da empresa.</span></div></li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>O material ajuda a evitar:</h3>
+          <ul class="list">
+            <li class="li"><span class="dot"></span><div><b>Comparações equivocadas</b><span>Quando duas tabelas parecem iguais, mas têm lógicas diferentes.</span></div></li>
+            <li class="li"><span class="dot"></span><div><b>Surpresas com cobranças</b><span>Ao entender melhor taxas, cubagem e adicionais do transporte.</span></div></li>
+            <li class="li"><span class="dot"></span><div><b>Negociação superficial</b><span>Substituindo opinião por argumento baseado em estrutura e análise.</span></div></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="capitulos">
+    <div class="container">
+      <h2 class="section-title">Capítulos do eBook</h2>
+      <p class="section-lead">
+        Um conteúdo pensado para sair do básico e avançar até a construção de uma visão mais estratégica sobre transporte.
+      </p>
+
+      <div class="card">
+        <ul class="list">
+          <li class="li"><span class="dot"></span><div><b>1. O papel estratégico do transporte</b><span>Como o frete afeta custo, serviço e competitividade.</span></div></li>
+          <li class="li"><span class="dot"></span><div><b>2. Formação do preço do frete</b><span>Como transportadoras pensam e estruturam cobrança.</span></div></li>
+          <li class="li"><span class="dot"></span><div><b>3. Legislação aplicada ao transporte</b><span>Pontos relevantes que todo gestor precisa conhecer.</span></div></li>
+          <li class="li"><span class="dot"></span><div><b>4. Estrutura da tabela de frete</b><span>Como ler, analisar e comparar com mais critério.</span></div></li>
+          <li class="li"><span class="dot"></span><div><b>5. Faixas de peso</b><span>Entendimento da lógica econômica por trás da cobrança.</span></div></li>
+          <li class="li"><span class="dot"></span><div><b>6. Peso real e peso cubado</b><span>Base fundamental para não errar na análise.</span></div></li>
+          <li class="li"><span class="dot"></span><div><b>7. Taxas e encargos</b><span>Entenda os itens que impactam diretamente o custo final.</span></div></li>
+          <li class="li"><span class="dot"></span><div><b>8. Como montar uma tabela de frete</b><span>Passo a passo para estruturar corretamente.</span></div></li>
+          <li class="li"><span class="dot"></span><div><b>9. Planilha profissional de fretes</b><span>Organização das informações para análise e gestão.</span></div></li>
+          <li class="li"><span class="dot"></span><div><b>10. Como analisar uma tabela recebida</b><span>Leitura crítica para encontrar inconsistências e oportunidades.</span></div></li>
+          <li class="li"><span class="dot"></span><div><b>11. Técnicas de negociação</b><span>Como argumentar melhor com base técnica.</span></div></li>
+          <li class="li"><span class="dot"></span><div><b>12. Auditoria de fretes</b><span>Conferência e validação de cobranças de transporte.</span></div></li>
+          <li class="li"><span class="dot"></span><div><b>13. Simulações de negociação</b><span>Exemplos práticos para aproximar teoria e realidade.</span></div></li>
+          <li class="li"><span class="dot"></span><div><b>14. Exercícios práticos</b><span>Aplicação do conteúdo para reforço do aprendizado.</span></div></li>
+          <li class="li"><span class="dot"></span><div><b>15. Estratégia de transporte</b><span>Como transformar a gestão do frete em vantagem operacional.</span></div></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="autor">
+    <div class="container">
+      <h2 class="section-title">Sobre o autor</h2>
+      <div class="card">
+        <div class="author-box">
+          <div class="author-photo">
+            <img src="../assets/sua-foto.png" alt="Foto do autor Bruno Muniz">
+          </div>
+
+          <div>
+            <h3 style="margin-top:0;">Bruno Muniz</h3>
+            <p style="color:var(--muted); margin:0;">
+              Bruno Muniz reúne vivência prática em logística e gestão operacional, trazendo para este material uma visão aplicada,
+              humana e profissional sobre o universo dos fretes. O foco do conteúdo é ajudar empresas, gestores e profissionais a
+              entenderem o transporte de forma mais estruturada, com menos improviso e mais clareza na tomada de decisão.
+            </p>
+
+            <p style="color:var(--muted); margin-top:12px;">
+              Ao longo do eBook, o leitor encontra uma abordagem pensada para a realidade do mercado, conectando conceitos técnicos
+              com situações do dia a dia de quem precisa lidar com custo, prazo, cobrança, negociação e performance logística.
+            </p>
+
+            <a class="linkedin-link" href="https://www.linkedin.com/in/brunomuniz72/" target="_blank" rel="noopener">
+              Acessar LinkedIn do autor →
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="container">
+      <h2 class="section-title">Perguntas frequentes</h2>
+      <div class="faq">
+
+        <div class="faq-item">
+          <button class="faq-q" type="button">
+            <span>Como recebo o eBook após a compra?</span>
+            <span class="chev">⌄</span>
+          </button>
+          <div class="faq-a">
+            Após a confirmação do pagamento, o acesso é liberado pela plataforma de checkout utilizada pela JGM4.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" type="button">
+            <span>Esse conteúdo é indicado apenas para grandes empresas?</span>
+            <span class="chev">⌄</span>
+          </button>
+          <div class="faq-a">
+            Não. O conteúdo pode ser aproveitado tanto por profissionais de empresas maiores quanto por operações em crescimento que precisam ganhar método.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" type="button">
+            <span>O material é muito técnico?</span>
+            <span class="chev">⌄</span>
+          </button>
+          <div class="faq-a">
+            Ele é técnico na medida certa, mas escrito de forma clara, prática e acessível para facilitar a aplicação no dia a dia.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" type="button">
+            <span>O eBook promete redução de custos?</span>
+            <span class="chev">⌄</span>
+          </button>
+          <div class="faq-a">
+            Não há promessa absoluta, porque cada operação possui uma realidade. O material entrega conhecimento para que você negocie melhor e tome decisões mais seguras.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" type="button">
+            <span>Por que o investimento de R$19,90 vale a pena?</span>
+            <span class="chev">⌄</span>
+          </button>
+          <div class="faq-a">
+            Porque é um valor acessível diante do impacto que uma visão melhor de fretes pode trazer para sua análise, negociação e gestão operacional.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="final-box">
+        <div class="final-content">
+          <h2 class="section-title">Um material objetivo, aplicável e com excelente custo-benefício</h2>
+          <p class="section-lead">
+            Por apenas <b>R$19,90</b>, o comprador leva um conteúdo que ajuda a enxergar o frete com mais profundidade,
+            reduzindo achismos e trazendo mais critério para decisões que impactam diretamente a operação.
+          </p>
+
+          <a class="btn primary" href="https://pay.kiwify.com.br/infAC7I" target="_blank" rel="noopener">
+            Comprar agora por R$19,90
+          </a>
+
+          <p class="note" style="margin-top:12px;">
+            Aproveite esta OPORTUNIDADE!. Preço PROMOCIONAL!
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      © <span id="year"></span> JGM4 Consultoria Logística • contato@jgm4consultoria.com.br
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    document.querySelectorAll('.faq-q').forEach(button => {
+      button.addEventListener('click', () => {
+        const item = button.closest('.faq-item');
+        const open = item.classList.contains('open');
+
+        document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+
+        if (!open) item.classList.add('open');
+      });
+    });
+  </script>
+</body>
+</html>

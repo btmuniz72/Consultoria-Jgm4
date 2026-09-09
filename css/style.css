@@ -57,6 +57,7 @@
 
         header.scrolled {
             box-shadow: var(--shadow-md);
+            padding: 5px 0;
         }
 
         nav {
@@ -66,6 +67,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: relative;
         }
 
         .logo {
@@ -141,12 +143,13 @@
 
         /* Hero Section */
         .hero {
-            margin-top: 102px;
+            margin-top: 80px;
             background: linear-gradient(135deg, #0a1929 0%, #132f4c 50%, #1e3a5f 100%);
             color: white;
             padding: var(--space-80) var(--space-32);
             position: relative;
             overflow: hidden;
+            
         }
 
         .hero::before {
@@ -885,10 +888,7 @@
             line-height: 1.8;
             font-size: 1.1rem;
         }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+        
 
         .cliente-title {
             text-align: center;
@@ -1037,8 +1037,501 @@
                 width: 40px;
                 height: 40px;
             }
+            .blog-slider {
+  position: relative;
+  margin-top: 2rem;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
 
-          
+.blog-slider img {
+  width: 100%;
+  height: 260px;          /* padrão desktop */
+  object-fit: cover;
+  object-position: center;
+  border-radius: var(--radius-lg);
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .blog-slider img {
+    height: 200px;        /* padrão mobile */
+  }
+}
+
+.slider-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,.6), transparent);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 2rem;
+  color: #fff;
+}
+/* --- ESTILOS PARA RESPONSIVIDADE (Não alteram sua estrutura) --- */
+
+/* 1. Ajustes Gerais de Container */
+.container-blog {
+    width: 95%; /* Garante margens nas laterais em telas pequenas */
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 10px;
+}
+
+/* 2. Menu de Navegação (Mobile) */
+@media (max-width: 768px) {
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 20px;
+    }
+
+    /* Esconde o menu por padrão no mobile */
+    .nav-links {
+        display: none; 
+        flex-direction: column;
+        position: absolute;
+        top: 70px; /* Ajuste conforme a altura do seu header */
+        left: 0;
+        width: 100%;
+        background-color:#1a2332; /* Altere para a cor do seu site */
+        box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        z-index: 1000;
+    }
+
+    /* Classe que o seu JS deve ativar ao clicar no botão */
+    .nav-links.active {
+        display: flex;
+    }
+
+    .nav-links li {
+        text-align: center;
+        padding: 15px;
+        border-bottom: 1px solid #eee;
+    }
+
+    /* Exibe o botão de hambúrguer que já está no seu HTML */
+    .menu-toggle {
+        display: block;
+        font-size: 24px;
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+}
+
+/* Se for Desktop, esconde o botão de menu */
+@media (min-width: 769px) {
+    .menu-toggle {
+        display: none;
+    }
+    .nav-links {
+        display: flex;
+        list-style: none;
+        gap: 20px;
+    }
+}
+
+/* 3. Grid de Soluções/Artigos */
+.solutions-grid {
+    display: grid;
+    gap: 20px;
+    /* Faz o grid ter 1 coluna no mobile, 2 no tablet e 3 no desktop automaticamente */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+/* 4. Hero Section e Textos */
+.hero-blog {
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.hero-blog h1 {
+    font-size: calc(1.8rem + 1vw); /* Fonte cresce conforme a tela */
+}
+
+/* 5. CTA Section (Caixa de Contato) */
+.cta-box {
+    width: 90%;
+    margin: 0 auto;
+    padding: 30px 15px;
+    text-align: center;
+}
+
+/* 6. Imagens Fluidas */
+img {
+    max-width: 100%;
+    height: auto;
+}
+.courses-page {
+    padding: 60px 20px;
+    background-color: var(--color-background);
+}
         }
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    
+}
+
+.courses-intro h1 {
+    font-size: 2.2rem;
+    margin-bottom: 15px;
+}
+
+.courses-intro p {
+    font-size: 1.05rem;
+    color: #555;
+    max-width: 800px;
+}
+
+/* ===== LISTA DE CURSOS ===== */
+.courses-list {
+    margin-top: 50px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+.course-card {
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: center;   /* 🔥 ESSENCIAL */
+    text-align: center;    /* 🔥 TÍTULO CENTRALIZADO */
+}
+
+.course-image {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.course-image img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.course-content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.course-content h3 {
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+}
+
+.course-content p {
+    font-size: 0.95rem;
+    color: #666;
+    flex-grow: 1;
+}
+
+.course-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.course-price {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #1a1a1a;
+}
+
+.btn-course {
+    background: #0a58ca;
+    color: #fff;
+    padding: 10px 18px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: background 0.3s;
+}
+
+.btn-course:hover {
+    background: #084298;
+}
+
+
+.courses-trust h2 {
+    text-align: center;
+    margin: 20px;
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    
+}
+
+.courses-trust p {
+    text-align: center;
+    font-size: 1rem;
+    color: #f3eeee;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 768px) {
+    .courses-intro h1 {
+        font-size: 1.8rem;
+    }
+
+    .course-image img {
+        height: 180px;
+    }
+
+    .course-footer {
+        flex-direction: column;
+        gap: 12px;
+        align-items: flex-start;
+    }
+
+    .btn-course {
+        width: 100%;
+        text-align: center;
+    }
+}
+/* ===============================
+   CORREÇÕES MOBILE – CARROSSEL
+   =============================== */
+@media (max-width: 768px) {
+
+  /* 🔒 Evita desalinhamento geral (100vw escondido) */
+  html, body {
+    overflow-x: hidden;
+  }
+
+  * {
+    max-width: 100%;
+  }
+
+  /* ===============================
+     CARROSSEL
+     =============================== */
+  .carousel-container-cliente {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    padding: 0 12px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* 1 feedback por vez */
+  .feedback-card {
+    flex: 0 0 100%;
+    max-width: 100%;
+    scroll-snap-align: center;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+  }
+
+  /* 📏 Altura dinâmica correta */
+  .feedback-card p {
+    flex-grow: 1;
+  }
+
+  /* ===============================
+     BOTÕES PREV / NEXT
+     =============================== */
+  .nav-button-cliente {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 38px;
+    height: 38px;
+    z-index: 10;
+  }
+
+  .nav-button-cliente.prev {
+    left: 6px;
+  }
+
+  .nav-button-cliente.next {
+    right: 6px;
+  }
+}
+/* ===============================
+   CORREÇÃO ALINHAMENTO - PILARES
+   =============================== */
+@media (max-width: 768px) {
+
+  .pilares-section {
+    width: 100%;
+    max-width: 100%;
+    padding-left: 16px;
+    padding-right: 16px;
+    overflow-x: hidden;
+    box-sizing: border-box;
+  }
+
+  .pilares-grid {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+}
+/* =========================================================
+   CORREÇÃO DEFINITIVA MOBILE
+   NÃO ALTERA ESTRUTURA ORIGINAL
+   ========================================================= */
+@media (max-width: 768px) {
+
+  /* ---------------------------------------------------------
+     BLINDAGEM GLOBAL (evita vazamento lateral)
+     --------------------------------------------------------- */
+  html, body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  /* ---------------------------------------------------------
+     SEÇÕES – alinhamento com fundo
+     --------------------------------------------------------- */
+  section {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* ---------------------------------------------------------
+     CONTAINERS REAIS DO PROJETO
+     (não usar div genérico)
+     --------------------------------------------------------- */
+  .container,
+  .container-sobre,
+  .container-cliente {
+    width: 100%;
+    max-width: 100%;
+    padding-left: 16px;
+    padding-right: 16px;
+    box-sizing: border-box;
+  }
+
+  /* ---------------------------------------------------------
+     HERO / SOBRE (prevenção de 100vw escondido)
+     --------------------------------------------------------- */
+  .hero-sobre {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  /* ---------------------------------------------------------
+     PILARES – CORREÇÃO DE DESALINHAMENTO
+     --------------------------------------------------------- */
+  .pilares-section {
+    width: 100%;
+    max-width: 100%;
+    padding-left: 16px;
+    padding-right: 16px;
+    overflow-x: hidden;
+    box-sizing: border-box;
+  }
+
+  .pilares-grid {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* ---------------------------------------------------------
+     CARROSSEL – MOBILE FIRST
+     1 feedback por vez
+     --------------------------------------------------------- */
+  .carousel-container-cliente {
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 16px;
+    box-sizing: border-box;
+  }
+
+  .feedback-card {
+    flex: 0 0 100%;
+    min-width: auto;
+    max-width: auto;
+    scroll-snap-align: center;
+    box-sizing: border-box;
+  }
+
+  /* ---------------------------------------------------------
+     ALTURA DINÂMICA DOS FEEDBACKS
+     --------------------------------------------------------- */
+  .feedback-card {
+    height: auto;
+  }
+
+  /* ---------------------------------------------------------
+     BOTÕES PREV / NEXT – ALINHADOS NO MOBILE
+     --------------------------------------------------------- */
+  .nav-button-cliente {
+    width: 38px;
+    height: 38px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .nav-button-cliente.prev {
+    left: 6px;
+  }
+
+  .nav-button-cliente.next {
+    right: 6px;
+  }
+/* =====================================================
+   FEEDBACK – NOME E FUNÇÃO ABAIXO DA FOTO (MOBILE)
+   ===================================================== */
+@media (max-width: 768px) {
+
+  .client-info {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 8px;
+  }
+
+  .client-avatar {
+    margin: 0;
+  }
+
+  .client-details {
+    align-items: center;
+  }
+
+  .client-details h3 {
+    margin: 0;
+  }
+
+  .client-details p {
+    margin: 0;
+    font-size: 0.9rem;
+    opacity: 0.85;
+  }
+  
+
+}
+
+}
+
+
+         
         
         

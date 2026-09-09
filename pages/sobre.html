@@ -1,0 +1,934 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Sobre Nós - JGM4 Consultoria Logística</title>
+  <meta name="description" content="Conheça a JGM4 Consultoria Logística e a trajetória de Bruno Muniz. Experiência prática, foco em resultado e melhoria contínua em operações logísticas." />
+  <meta name="robots" content="index,follow" />
+
+  <link rel="icon" href="../assets/favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <script src="../js/scripts.js" defer></script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-11112817546"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'AW-11112817546');
+  </script>
+
+  <style>
+    :root{
+      --jgm4-navy:#071A38;
+      --jgm4-navy2:#0B2552;
+      --jgm4-blue:#2EA7FF;
+      --jgm4-red:#E10616;
+
+      --white:#FFFFFF;
+      --stroke: rgba(255,255,255,.12);
+      --glass: rgba(255,255,255,.05);
+      --glass2: rgba(255,255,255,.04);
+      --shadow: 0 18px 55px rgba(0,0,0,.28);
+      --radius: 18px;
+
+      --muted: rgba(255,255,255,.72);
+      --muted2: rgba(255,255,255,.62);
+      --ink: rgba(255,255,255,.92);
+    }
+
+    *{ box-sizing:border-box; }
+    html{ scroll-behavior:smooth; }
+    body{
+      margin:0;
+      color: var(--white);
+      background:
+        radial-gradient(900px 600px at 20% 10%, rgba(46,167,255,.16), transparent 55%),
+        radial-gradient(900px 600px at 80% 30%, rgba(225,6,22,.12), transparent 55%),
+        linear-gradient(180deg, var(--jgm4-navy) 0%, #041024 100%);
+    }
+    img{ max-width:100%; display:block; }
+
+    /* Container padrão (mesma linha da página do blog) */
+    .container{
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    /* HERO */
+    .hero-sobre{
+      margin-top: 110px;
+      padding: 26px 16px 18px;
+    }
+    @media (max-width:768px){
+      .hero-sobre{ margin-top: 130px; }
+    }
+
+    .hero-wrap{
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 22px 18px;
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      background: var(--glass2);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      overflow:hidden;
+      position: relative;
+    }
+
+    .hero-wrap:before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background:
+        radial-gradient(700px 380px at 15% 20%, rgba(46,167,255,.18), transparent 60%),
+        radial-gradient(700px 380px at 85% 30%, rgba(225,6,22,.12), transparent 60%);
+      pointer-events:none;
+    }
+
+    .hero-grid{
+      position:relative;
+      display:grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      align-items:start;
+    }
+    @media (max-width: 880px){
+      .hero-grid{ grid-template-columns: 1fr; }
+    }
+
+    .hero-title{
+      margin:0;
+      font-size: clamp(28px, 3.1vw, 44px);
+      letter-spacing:-.5px;
+      line-height:1.08;
+      color: var(--ink);
+    }
+    .hero-sub{
+      margin: 10px 0 0;
+      color: var(--muted);
+      line-height: 1.65;
+      max-width: 80ch;
+      font-size: 15.5px;
+    }
+
+    .hero-pill{
+      justify-self:end;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(46,167,255,.25);
+      background: rgba(46,167,255,.12);
+      font-weight: 800;
+      color: rgba(255,255,255,.92);
+      white-space: nowrap;
+    }
+    @media (max-width:880px){
+      .hero-pill{ justify-self:start; width:fit-content; }
+    }
+
+    .hero-actions{
+      margin-top: 14px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    .btn-jgm4{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      text-decoration:none;
+      font-weight: 900;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color:#fff;
+      transition: transform .12s ease, filter .12s ease;
+      width: fit-content;
+      max-width:100%;
+    }
+    .btn-jgm4:hover{ transform: translateY(-1px); filter:saturate(1.05); }
+    .btn-jgm4.primary{
+      border:0;
+      background: linear-gradient(135deg, var(--jgm4-red), #ff3b4a);
+      box-shadow: 0 14px 28px rgba(225,6,22,.22);
+    }
+    .btn-jgm4.outline{
+      border: 1px solid rgba(46,167,255,.28);
+      background: transparent;
+    }
+    @media (max-width:520px){
+      .btn-jgm4{ width:100%; }
+    }
+
+    /* SEÇÕES */
+    .section{
+      margin-top: 18px;
+      padding: 18px;
+      border-radius: var(--radius);
+      border: 1px solid var(--stroke);
+      background: var(--glass2);
+      box-shadow: var(--shadow);
+    }
+    @media (max-width:480px){
+      .section{ padding: 14px; }
+      .hero-wrap{ padding: 18px 14px; }
+    }
+
+    .section-header{
+      text-align:center;
+      margin-bottom: 10px;
+    }
+    .section-label{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(46,167,255,.25);
+      background: rgba(46,167,255,.10);
+      font-weight: 900;
+      font-size: 12px;
+      color: rgba(255,255,255,.92);
+    }
+    .section-title{
+      margin: 10px 0 6px;
+      font-size: 22px;
+      letter-spacing:-.2px;
+    }
+    .section-subtitle{
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* Layout Sobre + Bruno */
+    .about-grid{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 18px;
+      align-items: start;
+      margin-top: 10px;
+    }
+    @media (max-width: 980px){
+      .about-grid{ grid-template-columns: 1fr; }
+    }
+
+    .prose p{
+      margin: 0 0 12px;
+      color: rgba(255,255,255,.85);
+      line-height: 1.75;
+    }
+    .prose p strong{ color: var(--ink); }
+
+    .profile-card{
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(4,16,36,.30);
+      padding: 16px;
+      overflow:hidden;
+    }
+    .profile-top{
+      display:flex;
+      gap: 12px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+    .avatar{
+  width:56px;
+  height:56px;
+  border-radius:16px;
+  overflow:hidden;
+  border:1px solid rgba(46,167,255,.22);
+  background:rgba(255,255,255,.06);
+  flex:0 0 auto;
+}
+
+.avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+    
+    .profile-name{
+      margin:0;
+      font-size: 16.5px;
+      letter-spacing: -.2px;
+      color: var(--ink);
+    }
+    .profile-role{
+      margin:4px 0 0;
+      color: var(--muted);
+      font-size: 13.5px;
+      line-height: 1.35;
+    }
+
+    .profile-list{
+      margin: 12px 0 0;
+      padding: 0;
+      list-style:none;
+      display:grid;
+      gap:10px;
+    }
+    .profile-item{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      padding: 10px 10px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+    }
+    .profile-item i{
+      margin-top: 2px;
+      color: rgba(255,255,255,.88);
+    }
+    .profile-item span{
+      color: rgba(255,255,255,.82);
+      line-height: 1.5;
+      font-size: 13.5px;
+    }
+
+    .linkedin{
+      margin-top: 12px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+      justify-content:space-between;
+      border-top: 1px solid rgba(255,255,255,.10);
+      padding-top: 12px;
+    }
+    .linkedin a{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      text-decoration:none;
+      font-weight: 900;
+      color:#fff;
+      padding: 11px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(10,102,194,.35);
+      background: rgba(10,102,194,.12);
+      max-width:100%;
+    }
+    .linkedin small{
+      color: var(--muted2);
+      line-height:1.4;
+    }
+    @media (max-width:520px){
+      .linkedin{ justify-content:flex-start; }
+      .linkedin a{ width:100%; justify-content:center; }
+    }
+
+    /* Pilares */
+    .pilares-grid{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 14px;
+      margin-top: 12px;
+    }
+    @media (max-width: 980px){
+      .pilares-grid{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+    }
+    @media (max-width: 640px){
+      .pilares-grid{ grid-template-columns: 1fr; }
+    }
+
+    .pilar{
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      padding: 14px;
+      min-width:0;
+    }
+    .pilar h3{
+      margin: 0 0 6px;
+      font-size: 16px;
+      letter-spacing: -.15px;
+      color: var(--ink);
+    }
+    .pilar p{
+      margin:0;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 13.8px;
+    }
+
+    /* FAQ (intuitivo e robusto) */
+    .faq{
+      max-width: 920px;
+      margin: 10px auto 0;
+      display:grid;
+      gap: 10px;
+      text-align:left;
+    }
+    details{
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      padding: 12px 14px;
+      overflow:hidden;
+    }
+    summary{
+      cursor:pointer;
+      list-style:none;
+      font-weight: 900;
+      color: rgba(255,255,255,.92);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+    }
+    summary::-webkit-details-marker{ display:none; }
+    .faq p{
+      margin: 10px 0 0;
+      color: rgba(255,255,255,.76);
+      line-height: 1.65;
+    }
+    .caret{
+      width: 28px;
+      height: 28px;
+      border-radius: 10px;
+      display:grid;
+      place-items:center;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(4,16,36,.28);
+      flex: 0 0 auto;
+    }
+
+    /* Clientes - mantém seu HTML, só melhora responsivo */
+    .carousel-cliente-wrapper{
+      position: relative;
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .carousel-container-cliente{
+      display:grid;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(260px, 360px);
+      gap: 16px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding: 6px 2px 14px;
+      scrollbar-width: thin;
+    }
+    .carousel-container-cliente::-webkit-scrollbar{ height: 10px; }
+    .carousel-container-cliente::-webkit-scrollbar-thumb{
+      background: rgba(255,255,255,.18);
+      border-radius: 999px;
+    }
+
+    .feedback-card{
+      scroll-snap-align: start;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      box-shadow: var(--shadow);
+      padding: 14px;
+      min-width:0;
+    }
+    .client-info{
+      display:flex;
+      gap: 10px;
+      align-items:center;
+    }
+    .client-avatar{
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display:grid;
+      place-items:center;
+      font-weight: 900;
+      background: linear-gradient(135deg, rgba(46,167,255,.22), rgba(46,167,255,.06));
+      border: 1px solid rgba(46,167,255,.22);
+    }
+    .client-details h3{
+      margin:0;
+      font-size: 14.5px;
+      color: var(--ink);
+    }
+    .client-details p{
+      margin:4px 0 0;
+      font-size: 12.8px;
+      color: var(--muted);
+    }
+    .stars{
+      margin-top: 10px;
+      letter-spacing: 1px;
+      color: rgba(255,255,255,.92);
+    }
+    .feedback-text{
+      margin: 10px 0 0;
+      color: rgba(255,255,255,.78);
+      line-height: 1.6;
+      font-size: 13.5px;
+    }
+
+    .nav-button-cliente{
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(4,16,36,.45);
+      color: #fff;
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display:grid;
+      place-items:center;
+      cursor:pointer;
+      transition: transform .12s ease, filter .12s ease;
+      flex: 0 0 auto;
+    }
+    .nav-button-cliente:hover{ transform: translateY(-1px); filter:saturate(1.05); }
+    .nav-button-cliente svg{
+      width: 22px;
+      height: 22px;
+      stroke: rgba(255,255,255,.92);
+    }
+
+    @media (max-width: 720px){
+      .nav-button-cliente{ display:none; } /* swipe no mobile */
+      .carousel-container-cliente{
+        grid-auto-columns: minmax(240px, 85%);
+      }
+    }
+
+    /* Footer */
+    footer{
+      margin-top: 18px;
+      padding: 22px 16px;
+      border-top: 1px solid rgba(255,255,255,.10);
+      color: rgba(255,255,255,.70);
+      text-align:center;
+    }
+    footer a{ color: #ff3333; text-decoration:none; font-weight: 900; }
+  </style>
+</head>
+
+<body>
+
+<header id="header">
+  <nav>
+    <img src="../assets/logojgm4.png" alt="JGM4 Consultoria Logística" class="logo" />
+    <button class="menu-toggle" onclick="toggleMenu()" aria-label="Menu">☰</button>
+
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../index.html#inicio" onclick="closeMenu()">Início</a></li>
+      <li><a href="../index.html#desafios" onclick="closeMenu()">Desafios</a></li>
+      <li><a href="../index.html#solucoes" onclick="closeMenu()">Soluções</a></li>
+      <li><a href="../index.html#contato" onclick="closeMenu()">Contato</a></li>
+      <li><a href="blog.html" onclick="closeMenu()">Blog</a></li>
+      <li><a href="./cursos.html" onclick="closeMenu()">Cursos</a></li>
+      <li><a href="../pages/analise.html" class="nav-cta" onclick="closeMenu()">Faça seu Diagnóstico Grátis</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero-sobre">
+  <div class="hero-wrap container">
+    <div class="hero-grid">
+      <div>
+        <h1 class="hero-title">Sobre a JGM4 Consultoria</h1>
+        <p class="hero-sub">
+          Transformando operações logísticas em vantagem competitiva há mais de 20 anos — com método,
+          execução e foco em resultado real no dia a dia.
+        </p>
+
+        <div class="hero-actions">
+          <a class="btn-jgm4 primary" href="#como-ajudamos"><i class="fa-solid fa-sitemap"></i> Como ajudamos</a>
+          <a class="btn-jgm4 outline" href="../index.html#contato"><i class="fa-solid fa-headset"></i> Falar com especialista</a>
+        </div>
+      </div>
+
+      <div class="hero-pill">
+        <i class="fa-solid fa-bullseye"></i> Método + Execução + Resultado
+      </div>
+    </div>
+  </div>
+</section>
+
+<main class="container">
+
+  <!-- SOBRE + BRUNO -->
+  <section class="section" id="como-ajudamos" aria-label="Sobre a JGM4 e Bruno Muniz">
+    <div class="section-header">
+      <span class="section-label"><i class="fa-solid fa-building"></i> Quem somos</span>
+      <h2 class="section-title">Consultoria prática, de operação para operação</h2>
+      <p class="section-subtitle">Sem teoria vazia: diagnóstico, plano e implementação.</p>
+    </div>
+
+    <div class="about-grid">
+      <div class="prose">
+        <p>
+          <strong>A JGM4 Consultoria Logística</strong> atua com foco em centros de distribuição, estoques,
+          transportes e eficiência operacional. Ajudamos pequenas e médias empresas a destravar gargalos,
+          padronizar processos e ganhar previsibilidade com indicadores simples e governáveis.
+        </p>
+
+        <p>
+          Nosso trabalho começa entendendo a sua realidade: pessoas, rotina, sistema, layout, metas e restrições.
+          A partir disso, desenhamos um plano objetivo — e acompanhamos a execução para garantir que as mudanças
+          virem resultado no chão de fábrica.
+        </p>
+
+        <p>
+          A JGM4 nasceu para apoiar empresas que sentem que “já tentaram de tudo”, mas continuam com rupturas,
+          retrabalho, falta de acuracidade, atrasos e custos invisíveis que corroem a margem.
+        </p>
+
+        <p>
+          <strong>Nós escutamos, planejamos e caminhamos junto com você.</strong> O objetivo é deixar o seu estoque confiável,
+          sua equipe produtiva e suas entregas fluindo com controle e governança.
+        </p>
+      </div>
+
+      <!-- CARD BRUNO (ESPAÇOS PARA VOCÊ PREENCHER) -->
+      <aside class="profile-card" aria-label="Perfil do fundador Bruno Muniz">
+        <div class="profile-top">
+          <div class="avatar">
+  <img src="../assets/sua-foto.png" alt="Bruno Muniz">
+</div>
+          <div>
+            <h3 class="profile-name">Bruno Muniz</h3>
+            <p class="profile-role">Fundador da JGM4 • Especialista em Operações Logísticas</p>
+          </div>
+        </div>
+
+        <ul class="profile-list">
+          <li class="profile-item">
+            <i class="fa-solid fa-briefcase" aria-hidden="true"></i>
+            <span><strong>Experiência:</strong> <em>Gestor SR de Logística com sólida experiência em gestão logística estratégica, atuando na estruturação e transformação de operações logísticas em ambientes industriais e de varejo, com forte vivência em Centros de Distribuição (CDs) de alta performance.
+Atuação estratégica em planejamento logístico, gestão de transportes, armazenagem, gestão de estoques e custos logísticos, conduzindo projetos de reengenharia de processos, melhoria contínua e governança operacional, com foco em eficiência, escalabilidade e resultados do negócio. Implantação e gestão de KPIs logísticos, SLAs, OTIF e indicadores de performance.
+
+</em> anos em logística, CDs e melhoria contínua.</span>
+          </li>
+          <li class="profile-item">
+            <i class="fa-solid fa-warehouse" aria-hidden="true"></i>
+            <span><strong>Áreas:</strong> <em>Gestor de Logística</em> Centros de Distribuição, estoques, transportes, Almoxarifados e implantação de sistemas WMS/ERP.</span>
+          </li>
+          <li class="profile-item">
+            <i class="fa-solid fa-industry" aria-hidden="true"></i>
+            <span><strong>Empresas:</strong> <em>Ramada Atacadista, Grupo LLE, Fabrimar, Fornecedora Chatuba.</em> Segmentos: indústria, varejo, e-commerce).</span>
+          </li>
+          <li class="profile-item">
+            <i class="fa-solid fa-chart-line" aria-hidden="true"></i>
+            <span><strong>Resultados:</strong> <em> redução de custos, aumento de produtividade, acuracidade, SLA.</span>
+          </li>
+        </ul>
+
+        <div class="linkedin">
+          <small>Veja publicações, cases e trajetória completa.</small>
+
+          <a href="https://www.linkedin.com/in/brunomuniz72/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Bruno Muniz">
+            <i class="fa-brands fa-linkedin"></i>
+            Acessar LinkedIn
+          </a>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- PILARES -->
+  <section class="section" aria-label="Pilares da JGM4">
+    <div class="section-header">
+      <span class="section-label"><i class="fa-solid fa-gem"></i> Nossos pilares</span>
+      <h2 class="section-title">O que sustenta a entrega</h2>
+      <p class="section-subtitle">Clareza, método e acompanhamento real.</p>
+    </div>
+
+    <div class="pilares-grid">
+      <div class="pilar">
+        <h3>Experiência prática</h3>
+        <p>Recomendação baseada em chão de fábrica e CD real, com decisões viáveis e aplicáveis.</p>
+      </div>
+
+      <div class="pilar">
+        <h3>Foco em resultados</h3>
+        <p>Indicadores simples e metas governáveis: produtividade, qualidade, acuracidade e custo por pedido.</p>
+      </div>
+
+      <div class="pilar">
+        <h3>Parceria contínua</h3>
+        <p>Acompanhamento do plano e suporte na execução para garantir aderência e consistência.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ ROBUSTO -->
+  <section class="section" aria-label="Perguntas frequentes">
+    <div class="section-header">
+      <span class="section-label"><i class="fa-solid fa-circle-question"></i> FAQ</span>
+      <h2 class="section-title">Dúvidas frequentes</h2>
+      <p class="section-subtitle">Respostas claras para você decidir com segurança.</p>
+    </div>
+
+    <div class="faq">
+      <details>
+        <summary>
+          Quais tipos de empresa a JGM4 atende?
+          <span class="caret"><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></span>
+        </summary>
+        <p>Atendemos principalmente pequenas e médias empresas com operação de estoque, CD, expedição e transportes — indústria, varejo e e-commerce. O foco é reduzir gargalos e aumentar previsibilidade operacional.</p>
+      </details>
+
+      <details>
+        <summary>
+          Como funciona o diagnóstico?
+          <span class="caret"><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></span>
+        </summary>
+        <p>Mapeamos processos, indicadores, layout, sistemas e rotinas. Entregamos um plano com prioridades, impacto estimado e sequência de implementação (quick wins + melhorias estruturais).</p>
+      </details>
+
+      <details>
+        <summary>
+          Em quanto tempo consigo ver resultado?
+          <span class="caret"><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></span>
+        </summary>
+        <p>Depende do cenário, mas normalmente existem ganhos rápidos em 2 a 4 semanas (padronização, rotinas e indicadores) e resultados mais fortes em 60 a 90 dias (execução completa do plano).</p>
+      </details>
+
+      <details>
+        <summary>
+          A consultoria ajuda a implementar ou só recomenda?
+          <span class="caret"><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></span>
+        </summary>
+        <p>A JGM4 atua com execução: acompanhamos o plano, treinamos a equipe, ajustamos o modelo e garantimos aderência. O objetivo é mudança real, não relatório.</p>
+      </details>
+
+      <details>
+        <summary>
+          Vocês trabalham com indicadores e metas de produtividade?
+          <span class="caret"><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></span>
+        </summary>
+        <p>Sim. Estruturamos KPIs simples e auditáveis (produtividade, qualidade, acuracidade, SLA, custo por pedido) e desenhamos metas com governança e rituais de gestão.</p>
+      </details>
+
+      <details>
+        <summary>
+          Vocês apoiam WMS/ERP e melhoria de processos?
+          <span class="caret"><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></span>
+        </summary>
+        <p>Sim. Atuamos na parte operacional e de processos: parametrização, rotinas, disciplina de apontamento, inventários, endereçamento, e integração com a operação real.</p>
+      </details>
+
+      <details>
+        <summary>
+          Como falar com um especialista?
+          <span class="caret"><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></span>
+        </summary>
+        <p>Você pode ir direto no WhatsApp ou preencher o formulário no site. Também oferecemos diagnóstico gratuito para direcionar o melhor caminho.</p>
+      </details>
+    </div>
+  </section>
+
+</main>
+
+<!-- CLIENTES / FEEDBACK (mantendo o seu conteúdo) -->
+<section class="section container" aria-label="Feedback dos clientes">
+  <div class="section-header">
+    <span class="section-label"><i class="fa-solid fa-star"></i> Prova social</span>
+    <h2 class="section-title">Feedback dos nossos clientes</h2>
+    <p class="section-subtitle">Veja o que dizem sobre nossa atuação.</p>
+  </div>
+
+  <div class="carousel-cliente-wrapper">
+
+    <button class="nav-button-cliente prev" onclick="scrollCarousel(-1)" aria-label="Anterior">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+    </button>
+
+    <div class="carousel-container-cliente" id="carousel-cliente">
+      <!-- FEEDBACKS (seu conteúdo original) -->
+      <div class="feedback-card">
+        <div class="client-info">
+          <div class="client-avatar">M</div>
+          <div class="client-details">
+            <h3>Maria Silva</h3>
+            <p>Empresária</p>
+          </div>
+        </div>
+        <div class="stars">★★★★★</div>
+        <p class="feedback-text">"Excelente serviço! A equipe é muito profissional e atenciosa. Superou todas as minhas expectativas e recomendo para todos."</p>
+      </div>
+
+      <div class="feedback-card">
+        <div class="client-info">
+          <div class="client-avatar">J</div>
+          <div class="client-details">
+            <h3>João Santos</h3>
+            <p>Gerente de Operações</p>
+          </div>
+        </div>
+        <div class="stars">★★★★★</div>
+        <p class="feedback-text">"Trabalho impecável! A comunicação foi clara durante todo o processo e o resultado final ficou exatamente como imaginei."</p>
+      </div>
+
+      <div class="feedback-card">
+        <div class="client-info">
+          <div class="client-avatar">A</div>
+          <div class="client-details">
+            <h3>Ana Costa</h3>
+            <p>Gerente de Logística</p>
+          </div>
+        </div>
+        <div class="stars">★★★★★</div>
+        <p class="feedback-text">"Adorei a experiência! Muito dedicados e comprometidos com a qualidade. Com certeza voltarei a trabalhar com essa equipe."</p>
+      </div>
+
+      <div class="feedback-card">
+        <div class="client-info">
+          <div class="client-avatar">P</div>
+          <div class="client-details">
+            <h3>Pedro Oliveira</h3>
+            <p>Consultor</p>
+          </div>
+        </div>
+        <div class="stars">★★★★☆</div>
+        <p class="feedback-text">"Muito bom! O atendimento foi rápido e eficiente."</p>
+      </div>
+
+      <div class="feedback-card">
+        <div class="client-info">
+          <div class="client-avatar">C</div>
+          <div class="client-details">
+            <h3>Carla Mendes</h3>
+            <p>Gerente de Projetos</p>
+          </div>
+        </div>
+        <div class="stars">★★★★★</div>
+        <p class="feedback-text">"Profissionais extremamente competentes! Entregaram tudo no prazo e com uma qualidade excepcional. Recomendo muito!"</p>
+      </div>
+
+      <div class="feedback-card">
+        <div class="client-info">
+          <div class="client-avatar">R</div>
+          <div class="client-details">
+            <h3>Ricardo Alves</h3>
+            <p>Empreendedor</p>
+          </div>
+        </div>
+        <div class="stars">★★★★★</div>
+        <p class="feedback-text">"Fantástico! A solução entregue resolveu exatamente o problema que eu tinha. Equipe muito prestativa e disponível."</p>
+      </div>
+    </div>
+
+    <button class="nav-button-cliente next" onclick="scrollCarousel(1)" aria-label="Próximo">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </button>
+
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2025 JGM4 Consultoria Logística. Todos os direitos reservados.</p>
+  <p>Transformando operações logísticas em vantagem competitiva há mais de 20 anos.</p>
+  <p style="margin-top: 16px; font-size: 0.95rem;">
+    <a href="politica.html">Política de Privacidade</a>
+  </p>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const carousel = document.getElementById('carousel-cliente');
+  if (!carousel) return;
+
+  let isDragging = false;
+  let startX = 0;
+  let scrollStart = 0;
+  let autoScroll = null;
+  let cardWidth = 0;
+
+  function updateCardWidth() {
+    const card = carousel.querySelector('.feedback-card');
+    if (!card) return;
+
+    const style = window.getComputedStyle(carousel);
+    const gapValue = parseInt(style.columnGap || style.gap || 16, 10);
+    cardWidth = card.getBoundingClientRect().width + gapValue;
+  }
+
+  updateCardWidth();
+  window.addEventListener('resize', updateCardWidth);
+
+  function startAutoScroll() {
+    stopAutoScroll();
+    autoScroll = setInterval(() => {
+      if (isDragging) return;
+
+      const maxScroll = carousel.scrollWidth - carousel.clientWidth;
+      const nextScroll = carousel.scrollLeft + cardWidth;
+
+      if (nextScroll >= maxScroll - 2) {
+        carousel.scrollTo({ left: 0, behavior: 'smooth' });
+      } else {
+        carousel.scrollTo({ left: nextScroll, behavior: 'smooth' });
+      }
+    }, 3200);
+  }
+
+  function stopAutoScroll() {
+    if (autoScroll) {
+      clearInterval(autoScroll);
+      autoScroll = null;
+    }
+  }
+
+  startAutoScroll();
+
+  window.scrollCarousel = function (direction) {
+    stopAutoScroll();
+    carousel.scrollTo({
+      left: carousel.scrollLeft + direction * cardWidth,
+      behavior: 'smooth'
+    });
+    setTimeout(startAutoScroll, 900);
+  };
+
+  carousel.addEventListener('touchstart', (e) => {
+    isDragging = true;
+    startX = e.touches[0].pageX;
+    scrollStart = carousel.scrollLeft;
+    stopAutoScroll();
+  }, { passive: true });
+
+  carousel.addEventListener('touchmove', (e) => {
+    if (!isDragging) return;
+    const x = e.touches[0].pageX;
+    const walk = startX - x;
+    carousel.scrollLeft = scrollStart + walk;
+  }, { passive: true });
+
+  carousel.addEventListener('touchend', () => {
+    isDragging = false;
+    const index = Math.round(carousel.scrollLeft / cardWidth);
+    carousel.scrollTo({
+      left: index * cardWidth,
+      behavior: 'smooth'
+    });
+    setTimeout(startAutoScroll, 900);
+  });
+
+  carousel.addEventListener('mouseenter', stopAutoScroll);
+  carousel.addEventListener('mouseleave', startAutoScroll);
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,532 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Remuneração Variável em Operações Logísticas | JGM4 Consultoria</title>
+  <meta name="description" content="Manual executivo para implantar remuneração variável na logística com métricas, modelo matemático e plano de ação. De R$120 por R$19,90." />
+  <meta name="robots" content="index,follow" />
+
+  <!-- FAVICON (suba o arquivo no seu site) -->
+  <link rel="icon" href="../assets/favicon.ico" type="image/x-icon" />
+
+  <!-- (Opcional) Open Graph -->
+  <meta property="og:title" content="Remuneração Variável em Operações Logísticas | JGM4" />
+  <meta property="og:description" content="Aprenda a estruturar um modelo de remuneração variável sustentável e aplicável em CDs." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="../assets/remunera.png" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1QSQEF3EN"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-X1QSQEF3EN');
+</script>
+  
+
+  <style>
+    :root{
+      /* Paleta inspirada na logo JGM4 */
+      --navy: #071A38;
+      --navy-2:#0B2552;
+      --ice:#EAF3FF;
+      --blue:#2EA7FF;
+      --red:#E10616;
+      --white:#FFFFFF;
+      --text:#0A1633;
+      --muted:#5E6B86;
+      --card:#0B234B;
+      --stroke: rgba(255,255,255,.12);
+      --shadow: 0 18px 60px rgba(2,10,30,.35);
+      --radius: 18px;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Helvetica Neue", sans-serif;
+      color: var(--white);
+      background:
+        radial-gradient(900px 600px at 20% 10%, rgba(46,167,255,.20), transparent 55%),
+        radial-gradient(900px 600px at 80% 30%, rgba(225,6,22,.16), transparent 55%),
+        linear-gradient(180deg, var(--navy) 0%, #041024 100%);
+    }
+
+    a{color:inherit}
+    .wrap{max-width:1120px;margin:0 auto;padding:28px 18px 70px}
+    .topbar{
+      display:flex;align-items:center;justify-content:space-between;gap:14px;
+      padding:10px 12px;border:1px solid var(--stroke);border-radius:999px;
+      background: rgba(255,255,255,.04); backdrop-filter: blur(10px);
+    }
+    .brand{display:flex;align-items:center;gap:12px}
+    .brand img{height:40px;width:auto;display:block}
+    .brand small{display:block;color:rgba(255,255,255,.75);margin-top:2px}
+    .pill{
+      display:inline-flex;gap:8px;align-items:center;
+      padding:8px 12px;border-radius:999px;
+      background: rgba(46,167,255,.14);
+      border:1px solid rgba(46,167,255,.25);
+      color:rgba(255,255,255,.92);
+      font-weight:600;font-size:13px;
+      white-space:nowrap;
+    }
+
+    .hero{
+      margin-top:18px;
+      display:grid;grid-template-columns: 1.05fr .95fr;gap:18px;
+      align-items:stretch;
+    }
+    @media (max-width: 940px){
+      .hero{grid-template-columns:1fr}
+    }
+
+    .card{
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.05);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .hero-left{padding:26px}
+    .kicker{
+      display:inline-flex;align-items:center;gap:10px;
+      font-weight:700;font-size:13px;letter-spacing:.4px;text-transform:uppercase;
+      color:rgba(255,255,255,.85);
+    }
+    .dot{width:9px;height:9px;border-radius:50%;background:var(--red);box-shadow:0 0 0 4px rgba(225,6,22,.18)}
+    h1{
+      margin:14px 0 10px;
+      font-size: clamp(28px, 3.2vw, 46px);
+      line-height:1.08;
+      letter-spacing:-.5px;
+    }
+    .sub{
+      margin:0 0 16px;
+      color:rgba(255,255,255,.78);
+      font-size:16px; line-height:1.55;
+      max-width:62ch;
+    }
+
+    .benefits{
+      display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px
+    }
+    @media (max-width: 560px){ .benefits{grid-template-columns:1fr} }
+    .b{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(4,16,36,.35);
+      border-radius:14px;
+      padding:12px 12px;
+      display:flex;gap:10px;align-items:flex-start;
+    }
+    .b strong{display:block;font-size:14px}
+    .b span{display:block;color:rgba(255,255,255,.72);font-size:13px;margin-top:3px;line-height:1.35}
+    .ic{
+      flex:0 0 auto;width:34px;height:34px;border-radius:12px;
+      background: linear-gradient(135deg, rgba(46,167,255,.22), rgba(46,167,255,.06));
+      border:1px solid rgba(46,167,255,.22);
+      display:grid;place-items:center;
+    }
+    .ic svg{width:18px;height:18px;fill:rgba(255,255,255,.9)}
+    .ctaRow{
+      margin-top:18px;
+      display:flex;gap:12px;flex-wrap:wrap;align-items:center;
+    }
+    .priceBox{
+      display:flex;align-items:baseline;gap:10px;
+      padding:12px 14px;border-radius:14px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.12);
+    }
+    .from{color:rgba(255,255,255,.65);text-decoration:line-through;font-weight:700}
+    .to{font-size:28px;font-weight:900;color:var(--ice)}
+    .to small{font-size:14px;font-weight:800;color:rgba(255,255,255,.75)}
+    .btn{
+      appearance:none;border:0;cursor:pointer;
+      padding:14px 16px;border-radius:14px;
+      background: linear-gradient(135deg, var(--red), #ff3b4a);
+      color:white;font-weight:900;
+      box-shadow: 0 12px 26px rgba(225,6,22,.25);
+      transition: transform .12s ease, filter .12s ease;
+      text-decoration:none; display:inline-flex; align-items:center; gap:10px;
+    }
+    .btn:hover{transform:translateY(-1px);filter:saturate(1.05)}
+    .btn:active{transform:translateY(0px)}
+    .btnOutline{
+      background: transparent;
+      border:1px solid rgba(46,167,255,.28);
+      color:rgba(255,255,255,.92);
+      font-weight:800;
+      box-shadow:none;
+    }
+
+    .hero-right{
+      padding:18px;
+      display:grid;gap:14px;
+      align-content:start;
+    }
+    .cover{
+      border-radius:16px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      padding:16px;
+    }
+    .cover img{
+      width:100%;
+      height:auto;
+      display:block;
+      border-radius:14px;
+      box-shadow: 0 18px 40px rgba(0,0,0,.32);
+    }
+    .trust{
+      display:grid;gap:10px;
+      padding:16px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(4,16,36,.35);
+    }
+    .trustRow{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+    .seal{
+      display:flex;gap:10px;align-items:center;
+      padding:10px 12px;border-radius:14px;
+      background: rgba(46,167,255,.10);
+      border:1px solid rgba(46,167,255,.20);
+    }
+    .seal svg{width:34px;height:34px}
+    .seal strong{display:block}
+    .seal span{display:block;color:rgba(255,255,255,.72);font-size:12.5px;margin-top:2px}
+
+    .pay{
+      display:flex;gap:10px;flex-wrap:wrap;align-items:center
+    }
+    .pay .tag{
+      padding:9px 10px;border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      font-weight:800;font-size:12.5px;color:rgba(255,255,255,.88);
+    }
+
+    .section{margin-top:18px}
+    .section h2{
+      margin:0 0 10px;
+      font-size:22px;
+      letter-spacing:-.3px;
+    }
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    @media (max-width: 880px){ .grid2{grid-template-columns:1fr} }
+
+    .contentBox{padding:18px}
+    .list{
+      margin:0;padding-left:18px;color:rgba(255,255,255,.78);line-height:1.55
+    }
+    .list li{margin:8px 0}
+    .note{
+      margin-top:10px;
+      color:rgba(255,255,255,.70);
+      font-size:13px;
+      border-left:3px solid rgba(46,167,255,.45);
+      padding-left:10px;
+    }
+
+    /* FAQ */
+    details{
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      border-radius:14px;
+      padding:12px 14px;
+    }
+    details + details{margin-top:10px}
+    summary{
+      cursor:pointer;
+      font-weight:900;
+      color:rgba(255,255,255,.92);
+      list-style:none;
+    }
+    summary::-webkit-details-marker{display:none}
+    details p{margin:10px 0 0;color:rgba(255,255,255,.75);line-height:1.55}
+
+    /* Sticky CTA (mobile) */
+    .sticky{
+      position:fixed;left:0;right:0;bottom:0;
+      padding:10px 12px;
+      background: rgba(4,16,36,.82);
+      border-top:1px solid rgba(255,255,255,.10);
+      backdrop-filter: blur(10px);
+      display:none;
+    }
+    .sticky .inner{
+      max-width:1120px;margin:0 auto;
+      display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;
+    }
+    .sticky .mini{display:flex;gap:10px;align-items:baseline}
+    .sticky .mini .from{font-size:12px}
+    .sticky .mini .to{font-size:18px}
+    @media (max-width: 940px){
+      .sticky{display:block}
+    }
+
+    footer{
+      margin-top:22px;
+      padding-top:16px;
+      color:rgba(255,255,255,.62);
+      font-size:12.5px;
+      border-top:1px solid rgba(255,255,255,.10);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <!-- TOPO -->
+    <div class="topbar">
+      <div class="brand">
+        <!-- LOGO (suba o arquivo no seu site) -->
+        <img src="/assets/logojgm4.png" alt="JGM4 Consultoria Logística" />
+        <div>
+          <strong>JGM4 Consultoria</strong>
+          <small>Performance, métricas e eficiência operacional</small>
+        </div>
+      </div>
+      <div class="pill">📘 Manual Executivo • Acesso imediato</div>
+    </div>
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="card hero-left">
+        <div class="kicker"><span class="dot"></span> Pronto para aplicar</div>
+
+        <h1>Remuneração Variável em Operações Logísticas</h1>
+        <p class="sub">
+          Um guia prático para estruturar um modelo meritocrático e sustentável, elevando produtividade,
+          reduzindo erros e alinhando a equipe ao resultado — sem aumentar custos fixos.
+        </p>
+
+        <div class="benefits">
+          <div class="b">
+            <div class="ic" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M3 3h2v18H3V3zm4 10h2v8H7v-8zm4-6h2v14h-2V7zm4 4h2v10h-2V11zm4-8h2v18h-2V3z"/></svg>
+            </div>
+            <div>
+              <strong>Indicadores que funcionam na prática</strong>
+              <span>Produtividade, qualidade e assiduidade — simples e auditáveis.</span>
+            </div>
+          </div>
+
+          <div class="b">
+            <div class="ic" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.2L18.5 21 12 16.9 5.5 21l2-7.8L2 9h7l3-7z"/></svg>
+            </div>
+            <div>
+              <strong>Modelo matemático sustentável</strong>
+              <span>Fórmula multiplicadora com teto orçamentário para proteger o caixa.</span>
+            </div>
+          </div>
+
+          <div class="b">
+            <div class="ic" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 1a7 7 0 00-7 7c0 5.2 7 15 7 15s7-9.8 7-15a7 7 0 00-7-7zm0 9.5A2.5 2.5 0 1112 5a2.5 2.5 0 010 5.5z"/></svg>
+            </div>
+            <div>
+              <strong>Implantação passo a passo</strong>
+              <span>Do diagnóstico ao piloto e ao rollout definitivo (90 dias).</span>
+            </div>
+          </div>
+
+          <div class="b">
+            <div class="ic" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 6V3L8 7l4 4V8c2.8 0 5 2.2 5 5 0 1-.3 2-.9 2.8l1.5 1.5A6.9 6.9 0 0019 13c0-3.9-3.1-7-7-7zm-5.1.2L5.4 7.7A6.9 6.9 0 005 13c0 3.9 3.1 7 7 7v3l4-4-4-4v3c-2.8 0-5-2.2-5-5 0-1 .3-2 .9-2.8z"/></svg>
+            </div>
+            <div>
+              <strong>Resultados com controle</strong>
+              <span>Redução de retrabalho e ganho de performance com previsibilidade.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ctaRow" id="checkout">
+          <div class="priceBox" aria-label="Preço">
+            <span class="from">R$ 120,00</span>
+            <span class="to">R$ 19,90 <small>à vista</small></span>
+          </div>
+
+          <!-- TROQUE o link abaixo pelo seu checkout Kiwify -->
+          <a class="btn" href="https://pay.kiwify.com.br/RK4zlAp" target="_blank" rel="noopener">
+            Quero o manual agora
+            <span aria-hidden="true">→</span>
+          </a>
+
+          <a class="btn btnOutline" href="#conteudo">Ver conteúdo</a>
+        </div>
+
+        <div class="note">
+          ✅ Acesso imediato após a compra • Material em PDF • Indicado para gestores, supervisores e diretores.
+        </div>
+        
+            <div style="text-align:center;">
+             <img src="../assets/selo-garantia.png" alt="selo garantia" width="130">
+</div>
+    </div>
+
+      <div class="card hero-right">
+        <div class="cover">
+          <!-- IMAGEM DO PRODUTO (suba no seu site) -->
+          <img src="../assets/remunera.png" alt="Capa do eBook Remuneração Variável em Operações Logísticas" />
+        </div>
+
+        <div class="trust">
+          <div class="trustRow">
+            <div class="seal">
+              <!-- Selo de garantia (SVG) -->
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <defs>
+                  <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0" stop-color="#2EA7FF" stop-opacity=".9"/>
+                    <stop offset="1" stop-color="#E10616" stop-opacity=".9"/>
+                  </linearGradient>
+                </defs>
+                <circle cx="32" cy="32" r="24" fill="url(#g)" opacity=".95"/>
+                <circle cx="32" cy="32" r="20" fill="rgba(4,16,36,.55)" stroke="rgba(255,255,255,.35)"/>
+                <path d="M26 33l4 4 10-12" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <div>
+                <strong>Garantia</strong>
+                <span>7 dias para solicitar reembolso</span>
+              </div>
+            </div>
+
+            <div class="seal">
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <circle cx="32" cy="32" r="24" fill="rgba(46,167,255,.28)"/>
+                <path d="M20 34c0-8 6-14 14-14s14 6 14 14-6 14-14 14S20 42 20 34z" fill="rgba(4,16,36,.55)" stroke="rgba(255,255,255,.35)"/>
+                <path d="M32 24v10l7 4" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <div>
+                <strong>Acesso imediato</strong>
+                <span>Baixe assim que confirmar</span>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <strong style="display:block;margin-bottom:8px;">Formas de pagamento</strong>
+            <div class="pay" aria-label="Formas de pagamento">
+              <span class="tag">PIX</span>
+              <span class="tag">Cartão</span>
+              <span class="tag">Boleto</span>
+              <span class="tag">Visa</span>
+              <span class="tag">Mastercard</span>
+              <span class="tag">Elo</span>
+              <span class="tag">Amex</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTEÚDO / O QUE VAI APRENDER -->
+    <div class="section grid2" id="conteudo">
+      <div class="card contentBox">
+        <h2>O que você vai aprender</h2>
+        <ul class="list">
+          <li>Como ligar esforço individual ao resultado coletivo com regras claras e auditáveis.</li>
+          <li>Quais indicadores operacionais fazem sentido no chão de fábrica (e são fáceis de explicar).</li>
+          <li>Como usar modelo multiplicador para premiar entrega completa (volume + qualidade + presença).</li>
+          <li>Como reduzir erros e retrabalho com impacto financeiro direto no comportamento.</li>
+          <li>Como simular custos e garantir sustentabilidade financeira (teto orçamentário e cenários).</li>
+          <li>Como implantar com maturidade: diagnóstico, piloto, comunicação e calibração.</li>
+        </ul>
+        <p class="note">Dica: esta página é “fundo de funil” — foco em clareza, prova e chamada para compra.</p>
+      </div>
+
+      <div class="card contentBox">
+        <h2>Conteúdo do Manual</h2>
+        <ul class="list">
+          <li>Introdução: por que salário fixo limita a operação e como mudar com segurança.</li>
+          <li>Lógica estratégica: produtividade, erro e meritocracia como pilares inseparáveis.</li>
+          <li>Indicadores: simplicidade, governabilidade e base histórica para metas justas.</li>
+          <li>Modelo matemático: bônus base × produtividade × qualidade × assiduidade.</li>
+          <li>Qualidade: regras de erro e “gatilhos” para proteção operacional.</li>
+          <li>Operação industrial: ajustes para abastecimento e ausência de ruptura.</li>
+          <li>Implantação: sequência recomendada (diagnóstico → simulação → piloto → rollout).</li>
+          <li>Sustentabilidade: como provar ROI e convencer controladoria/diretoria.</li>
+          <li>FAQ e plano de ação de 90 dias para começar ainda esta semana.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="section">
+      <div class="card contentBox">
+        <h2>FAQ</h2>
+
+        <details>
+          <summary>Isso vai aumentar meu custo de folha?</summary>
+          <p>Quando bem desenhado, o variável converte parte do custo em resultado mensurável. O manual ensina como definir teto e simular cenários antes de implantar.</p>
+        </details>
+
+        <details>
+          <summary>E se muita gente bater a meta?</summary>
+          <p>Esse é o cenário ideal — e precisa estar previsto no teto orçamentário. Você aprende como proteger o caixa sem matar o incentivo.</p>
+        </details>
+
+        <details>
+          <summary>Como evitar conflito na equipe?</summary>
+          <p>Transparência + regras simples + comunicação presencial + piloto. O manual traz roteiro e modelo de implantação com calibração.</p>
+        </details>
+
+        <details>
+          <summary>Serve para Centro de Distribuição e operação industrial?</summary>
+          <p>Sim. O conteúdo cobre aplicação em CDs e também adaptações para ambiente industrial (abastecimento e ruptura).</p>
+        </details>
+
+        <details>
+          <summary>Como recebo o material?</summary>
+          <p>Você recebe acesso imediato após a confirmação do pagamento, com download do PDF.</p>
+        </details>
+      </div>
+    </div>
+
+    <!-- CTA FINAL -->
+    <div class="section">
+      <div class="card contentBox" style="display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;">
+        <div>
+          <h2 style="margin-bottom:6px;">Pronto para implantar em 90 dias?</h2>
+          <div style="color:rgba(255,255,255,.74);line-height:1.5">
+            De <span class="from">R$ 120,00</span> por <strong style="color:var(--ice)">R$ 19,90</strong>.
+            Acesso imediato + garantia de 7 dias.
+          </div>
+        </div>
+        <a class="btn" href="https://pay.kiwify.com.br/RK4zlAp" target="_blank" rel="noopener">
+          Comprar agora por R$ 19,90 →
+        </a>
+      </div>
+    </div>
+          <div style="text-align:center;">
+    <img src="../assets/selo-garantia.png" alt="selo garantia" width="130">
+</div>
+    <footer>
+      © <span id="year"></span> JGM4 Consultoria Logística. Todos os direitos reservados. <br />
+      <span style="color:rgba(255,255,255,.55)">Mais de 20 anos atuando em Gestão de Grandes Centros de Distribuição.</span>
+    </footer>
+  </div>
+
+  <!-- Sticky CTA (mobile) -->
+  <div class="sticky" role="region" aria-label="Compra rápida">
+    <div class="inner">
+      <div class="mini">
+        <span class="from">R$ 120,00</span>
+        <span class="to">R$ 19,90</span>
+      </div>
+      <a class="btn" href="https://pay.kiwify.com.br/RK4zlAp" target="_blank" rel="noopener">Comprar agora →</a>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

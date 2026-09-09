@@ -1,0 +1,860 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ebook de Fretes: Do Zero ao Preço Ideal | JGM4 Consultoria</title>
+  <link rel="icon" href="../assets/favicon.ico" type="image/x-icon">
+  <meta name="description" content="Aprenda a calcular fretes com segurança, competitividade e lucro. Ebook prático para transportadores iniciantes, autônomos e pequenas transportadoras. Compre agora por R$ 9,90." />
+  <meta name="keywords" content="ebook de fretes, cálculo de frete, planilha de frete, precificação de frete, transporte de cargas, transportador autônomo, logística de fretes" />
+  <meta name="theme-color" content="#0d1b3d" />
+  
+  
+  <style>
+    :root {
+      --bg: #071428;
+      --bg-2: #0d1b3d;
+      --card: rgba(255,255,255,0.08);
+      --line: rgba(255,255,255,0.14);
+      --text: #f5f7fb;
+      --muted: #cbd5e1;
+      --green: #1dd1a1;
+      --green-2: #11b981;
+      --blue: #60a5fa;
+      --orange: #ff8a00;
+      --shadow: 0 20px 50px rgba(0,0,0,.28);
+      --radius: 22px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(29,209,161,.18), transparent 30%),
+        radial-gradient(circle at top right, rgba(96,165,250,.16), transparent 35%),
+        linear-gradient(180deg, #081222 0%, #0b1730 45%, #091120 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    .container {
+      width: min(calc(100% - 32px), var(--max));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(14px);
+      background: rgba(7,20,40,.72);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: .2px;
+    }
+
+    .brand-badge {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--green), var(--blue));
+      display: grid;
+      place-items: center;
+      color: #04101f;
+      font-weight: 900;
+      box-shadow: var(--shadow);
+    }
+
+    .cta-top {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 18px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--green), var(--green-2));
+      color: #04101f;
+      font-weight: 800;
+      transition: .25s ease;
+      box-shadow: 0 14px 30px rgba(17,185,129,.24);
+    }
+
+    .cta-top:hover,
+    .btn-primary:hover,
+    .btn-secondary:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.03);
+    }
+
+    .hero {
+      padding: 64px 0 36px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 34px;
+      align-items: center;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(29,209,161,.3);
+      background: rgba(29,209,161,.10);
+      color: #d9fff3;
+      font-size: .92rem;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0 0 18px;
+      font-size: clamp(2.1rem, 4vw, 4.4rem);
+      line-height: 1.04;
+      letter-spacing: -1px;
+    }
+
+    .highlight {
+      color: var(--green);
+    }
+
+    .hero p.lead {
+      margin: 0 0 26px;
+      font-size: 1.13rem;
+      color: var(--muted);
+      max-width: 740px;
+    }
+
+    .hero-points {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 12px;
+      margin: 0 0 30px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .hero-points li,
+    .bullet-list li,
+    .chapter-list li,
+    .faq li {
+      position: relative;
+      padding-left: 28px;
+    }
+
+    .hero-points li::before,
+    .bullet-list li::before,
+    .chapter-list li::before,
+    .faq li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: var(--green);
+      font-weight: 900;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 24px;
+      border-radius: 16px;
+      font-weight: 800;
+      transition: .25s ease;
+      box-shadow: var(--shadow);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #f7d14a, #ffb703);
+      color: #201400;
+    }
+
+    .btn-secondary {
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+    }
+
+    .price-note {
+      font-size: .98rem;
+      color: #d9fff3;
+      font-weight: 700;
+    }
+
+    .hero-card {
+      background: linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.04));
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 26px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::after {
+      content: '';
+      position: absolute;
+      inset: auto -30px -50px auto;
+      width: 180px;
+      height: 180px;
+      background: radial-gradient(circle, rgba(29,209,161,.24), transparent 68%);
+      pointer-events: none;
+    }
+    
+
+    .ebook-cover {
+      border-radius: 18px;
+      background: linear-gradient(180deg, #13325f, #0a1c37);
+      border: 1px solid rgba(255,255,255,.1);
+      padding: 28px 24px;
+      min-height: 480px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ebook-cover::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(135deg, rgba(29,209,161,.24), transparent 34%),
+        linear-gradient(180deg, transparent, rgba(0,0,0,.28));
+      pointer-events: none;
+    }
+
+    .ebook-tag {
+      align-self: flex-start;
+      background: rgba(255,138,0,.16);
+      color: #ffe2be;
+      border: 1px solid rgba(255,138,0,.35);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: .86rem;
+      font-weight: 800;
+      position: relative;
+      z-index: 1;
+    }
+
+    .ebook-title {
+      position: relative;
+      z-index: 1;
+      font-size: clamp(1.7rem, 3vw, 2.8rem);
+      line-height: 1.08;
+      font-weight: 900;
+      margin: 18px 0 10px;
+    }
+
+    .ebook-desc {
+      position: relative;
+      z-index: 1;
+      color: #d6def0;
+      font-size: 1rem;
+      margin-bottom: 18px;
+    }
+
+    .mini-trucks {
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      gap: 10px;
+      position: relative;
+      z-index: 1;
+      margin-top: 16px;
+    }
+
+    .truck {
+      padding: 10px 8px;
+      border-radius: 14px;
+      text-align: center;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.08);
+      font-size: .82rem;
+      font-weight: 700;
+      color: #e8eefb;
+    }
+
+    .section {
+      padding: 34px 0;
+    }
+
+    .section-title {
+      font-size: clamp(1.6rem, 3vw, 2.6rem);
+      margin: 0 0 10px;
+      letter-spacing: -.5px;
+    }
+
+    .section-text {
+      margin: 0 0 26px;
+      color: var(--muted);
+      max-width: 840px;
+      font-size: 1.04rem;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .card h3 {
+      margin: 0 0 10px;
+      font-size: 1.18rem;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .content-box {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .bullet-list,
+    .chapter-list,
+    .faq {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 12px;
+    }
+
+    .chapter-list li {
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 16px;
+      padding: 14px 16px 14px 40px;
+      color: var(--muted);
+    }
+
+    .chapter-list strong {
+      display: block;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .price-section {
+      padding: 22px 0 8px;
+    }
+
+    .offer {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 18px;
+      align-items: center;
+      background: linear-gradient(135deg, rgba(29,209,161,.16), rgba(96,165,250,.12));
+      border: 1px solid rgba(29,209,161,.26);
+      border-radius: 26px;
+      padding: 26px;
+      box-shadow: var(--shadow);
+    }
+
+    .offer small {
+      display: block;
+      font-weight: 800;
+      color: #d4fff3;
+      text-transform: uppercase;
+      letter-spacing: .8px;
+      margin-bottom: 6px;
+    }
+
+    .offer h3 {
+      margin: 0 0 8px;
+      font-size: clamp(1.4rem, 2vw, 2.1rem);
+    }
+
+    .offer p {
+      margin: 0;
+      color: #e4eefb;
+    }
+
+    .price-badge {
+      min-width: 220px;
+      border-radius: 22px;
+      background: #06111f;
+      border: 1px solid rgba(255,255,255,.08);
+      padding: 18px 20px;
+      text-align: center;
+    }
+
+    .price-badge .old {
+      color: #aeb9cf;
+      text-decoration: line-through;
+      font-size: .95rem;
+      margin-bottom: 4px;
+    }
+
+    .price-badge .new {
+      font-size: 2.5rem;
+      font-weight: 900;
+      line-height: 1;
+      color: #fff8d6;
+      margin-bottom: 10px;
+    }
+
+    .price-badge .new span {
+      font-size: 1rem;
+      font-weight: 800;
+      opacity: .9;
+    }
+
+    .author-box {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 22px;
+      align-items: center;
+    }
+
+    .author-photo {
+      width: 180px;
+      height: 250px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, rgba(29,209,161,.24), rgba(96,165,250,.2));
+      border: 1px solid rgba(255,255,255,.1);
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      font-size: 2.4rem;
+      color: #e9fff7;
+    }
+
+    .author-box p {
+      margin: 0 0 14px;
+      color: var(--muted);
+    }
+
+    .linkedin-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 18px;
+      border-radius: 16px;
+      background: #0a66c2;
+      color: white;
+      font-weight: 800;
+      box-shadow: var(--shadow);
+    }
+
+    details {
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 18px;
+      padding: 18px 20px;
+    }
+
+    details + details { margin-top: 14px; }
+
+    summary {
+      cursor: pointer;
+      font-weight: 800;
+      color: var(--text);
+      list-style: none;
+    }
+
+    summary::-webkit-details-marker { display: none; }
+    details p {
+      margin: 14px 0 0;
+      color: var(--muted);
+    }
+
+    .final-cta {
+      text-align: center;
+      padding: 26px 20px 72px;
+    }
+
+    .final-cta h2 {
+      margin: 0 0 12px;
+      font-size: clamp(1.8rem, 3vw, 3rem);
+    }
+
+    .final-cta p {
+      margin: 0 auto 22px;
+      color: var(--muted);
+      max-width: 760px;
+      font-size: 1.06rem;
+    }
+
+    .trust {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+      color: #d8e4f6;
+      font-size: .94rem;
+    }
+
+    .trust span {
+      padding: 9px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.05);
+    }
+
+    footer {
+      border-top: 1px solid rgba(255,255,255,.08);
+      color: #9fb0cb;
+      text-align: center;
+      padding: 22px 0 36px;
+      font-size: .92rem;
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid,
+      .content-box,
+      .author-box,
+      .offer,
+      .grid-3,
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+
+      .price-badge {
+        min-width: 100%;
+      }
+
+      .hero-points {
+        grid-template-columns: 1fr;
+      }
+
+      .author-photo {
+        width: 140px;
+        height: 140px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .topbar-inner {
+        flex-direction: column;
+      }
+
+      .hero {
+        padding-top: 34px;
+      }
+
+      .ebook-cover {
+        min-height: auto;
+      }
+
+      .mini-trucks {
+        grid-template-columns: repeat(2,1fr);
+      }
+
+      .btn-primary,
+      .btn-secondary,
+      .cta-top,
+      .linkedin-btn {
+        width: 100%;
+      }
+
+      .hero-actions {
+        align-items: stretch;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">
+        <img src="../assets/logojgm4.png" alt="JGM4 Consultoria" style="height:40px;width:auto;border-radius:8px;">
+        <div>
+            
+          <div>JGM4 Consultoria</div>
+          <small style="color:#b9c7dd;font-weight:600;">Ebook de Fretes</small>
+        </div>
+      </div>
+      <a class="cta-top" href="https://pay.kiwify.com.br/0GP0XST" target="_blank" rel="noopener noreferrer">Comprar agora por R$ 9,90</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="pill">Para iniciantes • Guia prático de precificação de fretes</div>
+          <h1>Ebook de Fretes: <span class="highlight">Do Zero ao Preço Ideal</span></h1>
+          <p class="lead">Aprenda a calcular fretes com segurança, competitividade e lucro. Um material direto ao ponto para transportadores autônomos, pequenas frotas, motoristas de entrega e profissionais que querem cobrar o preço certo sem trabalhar no prejuízo.</p>
+
+          <ul class="hero-points">
+            <li>Planilha mental para montar seu cálculo de frete</li>
+            <li>Exemplos com Kombi, Fiorino, VUC e caminhão</li>
+            <li>Cubagem, custos, markup e preço final</li>
+            <li>Linguagem simples e aplicação imediata</li>
+          </ul>
+
+          <div class="hero-actions">
+            <a class="btn-primary" href="https://pay.kiwify.com.br/0GP0XST" target="_blank" rel="noopener noreferrer">Quero comprar por R$ 9,90</a>
+            <a class="btn-secondary" href="#conteudo">Ver conteúdo do ebook</a>
+          </div>
+
+          <div class="price-note">Acesso digital imediato após a compra.</div>
+        </div>
+        
+
+        <div class="hero-card">
+          <div class="ebook-cover">
+            <div>
+              <div class="ebook-tag">Atualizado e didático</div>
+              <div class="ebook-title">Ebook de Fretes:<br>Do Zero ao Preço Ideal</div>
+              <div class="ebook-desc">O guia prático para aprender a precificar fretes com mais segurança, clareza e resultado no mercado brasileiro.</div>
+            </div>
+            <div>
+              <div class="mini-trucks">
+                <div class="truck">Kombi</div>
+                <div class="truck">Fiorino</div>
+                <div class="truck">VUC</div>
+                <div class="truck">Caminhão</div>
+              </div>
+              <div style="margin-top:20px;padding:14px 16px;border-radius:16px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08);position:relative;z-index:1;">
+                <strong style="display:block;font-size:1.02rem;margin-bottom:4px;">Preço promocional</strong>
+                <span style="font-size:1.8rem;font-weight:900;color:#fff3bf;">R$ 9,90</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">Por que este ebook pode te ajudar</h2>
+        <p class="section-text">Muitos profissionais do transporte cobram fretes olhando apenas o valor do mercado, sem considerar todos os custos da operação. O resultado costuma ser margem apertada, dificuldade de negociação e prejuízo sem perceber. Este ebook foi criado para resolver exatamente esse problema.</p>
+        <div class="grid-3">
+          <div class="card">
+            <h3>Mais clareza na precificação</h3>
+            <p>Entenda o que realmente entra no custo do frete e como transformar isso em preço final com lógica e confiança.</p>
+          </div>
+          <div class="card">
+            <h3>Aplicação prática</h3>
+            <p>O conteúdo foi pensado para sair do campo da teoria e te ajudar a aplicar os cálculos no dia a dia da operação.</p>
+          </div>
+          <div class="card">
+            <h3>Ideal para iniciantes</h3>
+            <p>Você não precisa ser especialista em logística para entender. O material foi escrito de forma simples, didática e objetiva.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="conteudo">
+      <div class="container content-box">
+        <div class="card">
+          <h2 class="section-title" style="font-size:2rem;">O que você vai aprender</h2>
+          <p class="section-text" style="margin-bottom:18px;">Conteúdo organizado para te ajudar a entender a lógica da formação de preço do frete do início ao fim.</p>
+          <ul class="bullet-list">
+            <li>Como calcular o custo real de um frete</li>
+            <li>Os 4 grupos de custos que impactam o preço</li>
+            <li>Como montar sua planilha de cálculo</li>
+            <li>Como aplicar markup e margem com segurança</li>
+            <li>Como analisar cubagem e peso cubado</li>
+            <li>Como evitar os erros mais comuns de precificação</li>
+            <li>Como usar referências do mercado sem se prejudicar</li>
+            <li>Como vender seu serviço com mais valor agregado</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h2 class="section-title" style="font-size:2rem;">Para quem é este material</h2>
+          <ul class="bullet-list">
+            <li>Transportadores autônomos</li>
+            <li>Pequenas transportadoras</li>
+            <li>Motoristas de entrega</li>
+            <li>Profissionais de logística</li>
+            <li>Iniciantes no transporte de cargas</li>
+            <li>Pessoas que querem cobrar fretes com mais segurança</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">Capítulos e descritivo do ebook</h2>
+        <p class="section-text">A estrutura do ebook foi pensada para conduzir o leitor desde os conceitos básicos até a aplicação prática no cálculo de fretes.</p>
+        <div class="grid-2">
+          <div class="card">
+            <ul class="chapter-list">
+              <li><strong>1. O que você vai aprender</strong>Uma visão geral do método e dos principais resultados esperados com a leitura.</li>
+              <li><strong>2. Glossário essencial do transporte</strong>Entenda termos como markup, cubagem, RNTRC, TAC, frete-peso, piso mínimo e CTE.</li>
+              <li><strong>3. Por que precificar corretamente</strong>Veja por que cobrar sem critério reduz sua margem e pode comprometer a sustentabilidade da operação.</li>
+              <li><strong>4. Os custos que movem o seu preço</strong>Aprenda a considerar depreciação, combustível, manutenção, tributos e seguros.</li>
+              <li><strong>5. Montando a planilha</strong>Estrutura simples para organizar dados de entrada, custos fixos, cálculo e preço final.</li>
+              <li><strong>6. Como montar a planilha no Excel</strong>Passo a passo detalhado para você criar seu modelo de cálculo com mais segurança.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <ul class="chapter-list">
+              <li><strong>7. Exemplo prático com Kombi</strong>Simulação real para entender como os custos se transformam em preço de venda.</li>
+              <li><strong>8. Exemplo prático com VUC</strong>Aplicação em veículo de maior capacidade para comparação de cenário.</li>
+              <li><strong>9. Como calcular a cubagem da carga</strong>Saiba quando cobrar por volume e não apenas por peso real.</li>
+              <li><strong>10. Tabela de referência por veículo</strong>Base comparativa para ajudar na leitura do mercado e no posicionamento do seu preço.</li>
+              <li><strong>11. Valor agregado e modelo de proposta</strong>Entenda como apresentar melhor seu serviço e justificar preço com autoridade.</li>
+              <li><strong>12. Formalização, ferramentas e erros comuns</strong>Fechamento com recursos úteis, boas práticas e respostas às dúvidas frequentes.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section price-section">
+      <div class="container">
+        <div class="offer">
+          <div>
+            <small>Oferta de entrada</small>
+            <h3>Tenha acesso ao ebook completo por apenas R$ 9,90</h3>
+            <p>Um material direto, prático e acessível para começar a organizar sua precificação de fretes com mais profissionalismo.</p>
+          </div>
+          <div class="price-badge">
+            <div class="old">De R$ 29,90</div>
+            <div class="new"><span>R$</span> 9,90</div>
+            <a class="btn-primary" style="width:100%;padding:14px 16px;box-shadow:none;" href="https://pay.kiwify.com.br/0GP0XST" target="_blank" rel="noopener noreferrer">Comprar na Kiwify</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="grid-3">
+          <div class="card">
+            <h3>Formato digital</h3>
+            <p>Receba o material online e acesse pelo celular, computador ou tablet, no seu ritmo.</p>
+          </div>
+          <div class="card">
+            <h3>Leitura objetiva</h3>
+            <p>Conteúdo organizado para facilitar o entendimento e acelerar a aplicação prática na rotina.</p>
+          </div>
+          <div class="card">
+            <h3>Baixo investimento</h3>
+            <p>Uma oportunidade acessível para começar a melhorar sua lógica de precificação no transporte.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container card author-box">
+        <div class="author-photo"><img src="../assets/sua-foto.png" alt="Bruno Muniz - Autor do Ebook de Fretes" style="width:100%;height:100%;object-fit:cover;border-radius:24px;"></div>
+        <div>
+          <h2 class="section-title" style="font-size:2rem;margin-bottom:8px;">Sobre o autor</h2>
+          <p><strong>Bruno Muniz</strong> atua com foco em logística, transporte e estruturação de processos, reunindo experiência prática para transformar conhecimento técnico em materiais claros, aplicáveis e orientados a resultado.</p>
+          <p>Neste ebook, a proposta é ajudar profissionais do transporte a entenderem a precificação de fretes de forma objetiva, com linguagem acessível e visão de operação real.</p>
+          <a class="linkedin-btn" href="https://www.linkedin.com/in/brunomuniz72/" target="_blank" rel="noopener noreferrer">Ver LinkedIn do autor</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="container">
+        <h2 class="section-title">Perguntas frequentes</h2>
+        <p class="section-text">Um FAQ bem construído ajuda a reduzir objeções e aumenta a confiança de quem está pronto para comprar.</p>
+
+        <details open>
+          <summary>Este ebook é indicado para iniciantes?</summary>
+          <p>Sim. O conteúdo foi pensado justamente para quem ainda tem dúvidas sobre cálculo de frete, formação de preço, custos e margem no transporte.</p>
+        </details>
+
+        <details>
+          <summary>O material serve para transportador autônomo?</summary>
+          <p>Sim. O ebook é útil para autônomos, motoristas de entrega, pequenas frotas e profissionais que precisam cobrar fretes com mais segurança.</p>
+        </details>
+
+        <details>
+          <summary>O ebook mostra exemplos práticos?</summary>
+          <p>Sim. O conteúdo inclui exemplos aplicados a veículos como Kombi, Fiorino, VUC e outros cenários de transporte.</p>
+        </details>
+
+        <details>
+          <summary>Vou aprender a montar uma planilha de frete?</summary>
+          <p>Sim. O ebook apresenta a lógica de estruturação da planilha e o passo a passo para organizar os principais campos de cálculo.</p>
+        </details>
+
+        <details>
+          <summary>Como recebo o acesso após a compra?</summary>
+          <p>Após a confirmação do pagamento na Kiwify, o acesso ao material digital é liberado conforme as regras da plataforma.</p>
+        </details>
+
+        <details>
+          <summary>O pagamento é único?</summary>
+          <p>Sim. Esta oferta é de pagamento único no valor de R$ 9,90.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="final-cta">
+      <div class="container">
+        <h2>Comece hoje a cobrar fretes com mais segurança</h2>
+        <p>Por apenas R$ 9,90, você pode acessar um material direto, claro e pensado para ajudar quem precisa entender a lógica do frete sem complicação.</p>
+        <a class="btn-primary" href="https://pay.kiwify.com.br/0GP0XST" target="_blank" rel="noopener noreferrer">Comprar ebook agora</a>
+        <div class="trust">
+          
+          <span>Pagamento único</span>
+          <span>Acesso digital</span>
+          <span>Conteúdo prático</span>
+          <span>Ideal para iniciantes</span>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <footer>
+    <div class="container">© JGM4 Consultoria • Ebook de Fretes: Do Zero ao Preço Ideal</div>
+  </footer>
+  
+</body>
+</html>

@@ -1,0 +1,1317 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Diagnóstico Profissional de Estoque | JGM4 Consultoria</title>
+  <meta name="description" content="Descubra onde sua empresa perde dinheiro no estoque e receba um diagnóstico profissional com relatório, plano de ação e reunião estratégica.">
+  <meta name="keywords" content="diagnóstico de estoque, consultoria de estoque, gestão de estoque, acuracidade de estoque, perdas no estoque, organização de estoque, logística">
+  <meta name="theme-color" content="#0a2540">
+
+  <link rel="icon" href="../assets/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1QSQEF3EN"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-X1QSQEF3EN');
+  </script>
+
+  <style>
+    :root{
+      --bg:#071525;
+      --bg-2:#0a2540;
+      --bg-3:#123d68;
+      --green:#25D366;
+      --green-dark:#1faa52;
+      --white:#ffffff;
+      --text:#1f2937;
+      --muted:#667085;
+      --soft:#f5f8fc;
+      --soft-2:#eef4fb;
+      --border:#d9e5f2;
+      --danger:#d92d20;
+      --orange:#f79009;
+      --blue:#134a8e;
+      --shadow:0 18px 40px rgba(0,0,0,.14);
+      --radius:22px;
+      --max:1160px;
+    }
+
+    *{box-sizing:border-box}
+
+    html{scroll-behavior:smooth}
+
+    body{
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+      background:linear-gradient(180deg,#081521 0%, #0d1f31 100%);
+      color:var(--white);
+      line-height:1.6;
+    }
+
+    img{max-width:100%;display:block}
+    a{text-decoration:none}
+
+    .container{
+      width:min(var(--max), calc(100% - 32px));
+      margin:0 auto;
+    }
+
+    .header{
+      position:sticky;
+      top:0;
+      z-index:1000;
+      backdrop-filter:blur(10px);
+      background:rgba(255,255,255,.96);
+      border-bottom:1px solid rgba(19,74,142,.08);
+      box-shadow:0 8px 20px rgba(0,0,0,.04);
+    }
+
+    .header-wrap{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      padding:14px 0;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      min-width:0;
+    }
+
+    .brand img{
+      height:44px;
+      width:auto;
+    }
+
+    .brand-text{
+      color:var(--bg-2);
+      font-weight:900;
+      font-size:18px;
+      letter-spacing:-.4px;
+      border-left:1px solid #d6e0ec;
+      padding-left:14px;
+      white-space:nowrap;
+    }
+
+    .brand-text span{
+      color:var(--blue);
+    }
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+      padding:36px 0 90px;
+      background:
+        radial-gradient(circle at top right, rgba(37,211,102,.10), transparent 30%),
+        radial-gradient(circle at top left, rgba(247,144,9,.08), transparent 25%),
+        linear-gradient(135deg, rgba(10,37,64,.96), rgba(7,21,37,.98));
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.15fr .85fr;
+      gap:42px;
+      align-items:center;
+    }
+
+    .eyebrow{
+      display:inline-block;
+      padding:9px 14px;
+      border-radius:999px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.1);
+      color:#d7e7fb;
+      font-size:12px;
+      font-weight:800;
+      text-transform:uppercase;
+      letter-spacing:.14em;
+      margin-bottom:18px;
+    }
+
+    .hero h1{
+      margin:0;
+      font-size:clamp(36px, 5vw, 62px);
+      line-height:1.04;
+      font-weight:900;
+      letter-spacing:-1.4px;
+    }
+
+    .hero .subheadline{
+      font-size:clamp(18px, 2.2vw, 22px);
+      color:#d6e3f0;
+      margin:22px 0 0;
+      max-width:740px;
+    }
+
+    .hero-points{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+      margin:28px 0 32px;
+    }
+
+    .hero-point{
+      background:rgba(255,255,255,.07);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:16px;
+      padding:15px 14px;
+      color:#ebf3fb;
+      font-size:15px;
+    }
+
+    .hero-point strong{
+      color:#9ee7bc;
+    }
+
+    .cta-row{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      border:none;
+      border-radius:999px;
+      padding:18px 28px;
+      font-size:16px;
+      font-weight:900;
+      cursor:pointer;
+      transition:.25s ease;
+      text-align:center;
+    }
+
+    .btn-whatsapp{
+      background:linear-gradient(135deg, var(--green), var(--green-dark));
+      color:#fff;
+      box-shadow:0 16px 30px rgba(37,211,102,.24);
+      text-transform:uppercase;
+      letter-spacing:.02em;
+    }
+
+    .btn-whatsapp:hover{
+      transform:translateY(-2px);
+      box-shadow:0 20px 36px rgba(37,211,102,.3);
+    }
+
+    .btn-outline{
+      background:transparent;
+      color:#fff;
+      border:1px solid rgba(255,255,255,.18);
+    }
+
+    .btn-outline:hover{
+      background:rgba(255,255,255,.06);
+      transform:translateY(-2px);
+    }
+
+    .microcopy{
+      margin-top:14px;
+      font-size:13px;
+      color:#bdd0e4;
+    }
+
+    .hero-card{
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.1);
+      border-radius:26px;
+      padding:22px;
+      backdrop-filter:blur(8px);
+      box-shadow:0 24px 60px rgba(0,0,0,.28);
+    }
+
+    .offer-card{
+      background:#fff;
+      color:var(--text);
+      border-radius:22px;
+      padding:24px;
+    }
+
+    .offer-tag{
+      display:inline-block;
+      padding:7px 12px;
+      border-radius:999px;
+      background:#ecfdf3;
+      color:#15803d;
+      font-size:12px;
+      font-weight:900;
+      text-transform:uppercase;
+    }
+
+    .old-price{
+      margin-top:16px;
+      color:#98a2b3;
+      font-size:20px;
+      text-decoration:line-through;
+    }
+
+    .new-price{
+      font-size:58px;
+      line-height:1;
+      font-weight:900;
+      color:var(--bg-2);
+      margin-top:6px;
+      letter-spacing:-1.8px;
+    }
+
+    .new-price span{
+      font-size:20px;
+      font-weight:800;
+      letter-spacing:0;
+    }
+
+    .offer-card p{
+      color:#5f6b7a;
+      font-size:15px;
+      margin:14px 0 0;
+    }
+
+    .offer-list{
+      list-style:none;
+      padding:0;
+      margin:18px 0 0;
+    }
+
+    .offer-list li{
+      font-size:14px;
+      color:#334155;
+      margin-bottom:10px;
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+    }
+
+    .trust-strip{
+      position:relative;
+      margin-top:-34px;
+      z-index:3;
+    }
+
+    .trust-grid{
+      width:min(var(--max), calc(100% - 32px));
+      margin:0 auto;
+      background:#fff;
+      border-radius:22px;
+      box-shadow:var(--shadow);
+      color:var(--text);
+      padding:18px;
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:14px;
+    }
+
+    .trust-item{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      padding:10px;
+    }
+
+    .trust-icon{
+      width:46px;
+      height:46px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      background:#eff8f2;
+      color:#169c49;
+      font-size:18px;
+      flex-shrink:0;
+    }
+
+    .trust-item strong{
+      display:block;
+      color:#0f172a;
+      font-size:15px;
+      line-height:1.2;
+      margin-bottom:2px;
+    }
+
+    .trust-item span{
+      color:#667085;
+      font-size:13px;
+      line-height:1.35;
+    }
+
+    .main{
+      padding:52px 0 110px;
+    }
+
+    .section{
+      background:#fff;
+      color:var(--text);
+      border-radius:24px;
+      padding:44px 34px;
+      box-shadow:var(--shadow);
+      margin-bottom:26px;
+    }
+
+    .section-dark{
+      background:linear-gradient(135deg,#0a2540,#123d68);
+      color:#fff;
+    }
+
+    .section h2,
+    .section-dark h2{
+      margin:0 0 14px;
+      font-size:clamp(28px, 3.2vw, 40px);
+      line-height:1.08;
+      letter-spacing:-.6px;
+    }
+
+    .section h2{color:#0f172a}
+    .section-dark h2{color:#fff}
+
+    .lead{
+      margin:0;
+      color:var(--muted);
+      font-size:18px;
+    }
+
+    .section-dark .lead,
+.section-dark p,
+.section-dark li{
+  color:#ffffff;
+}
+
+.section-dark h2{
+  color:#ffffff;
+}
+
+.section-dark .list li{
+  color:#ffffff;
+}
+    
+
+    .grid-3{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:18px;
+      margin-top:24px;
+    }
+
+    .grid-2{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:22px;
+      margin-top:24px;
+    }
+
+    .card{
+      background:var(--soft);
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:24px 20px;
+      height:100%;
+    }
+
+    .card h3{
+      margin:0 0 10px;
+      color:#0f172a;
+      font-size:21px;
+      line-height:1.2;
+    }
+
+    .card p{
+      margin:0;
+      color:var(--muted);
+      font-size:15px;
+    }
+
+    .icon-box{
+      width:54px;
+      height:54px;
+      border-radius:16px;
+      display:grid;
+      place-items:center;
+      background:#ebf3fb;
+      color:var(--blue);
+      font-size:20px;
+      margin-bottom:14px;
+    }
+
+    .list{
+      list-style:none;
+      padding:0;
+      margin:22px 0 0;
+    }
+
+    .list li{
+      position:relative;
+      padding-left:30px;
+      margin-bottom:14px;
+      color:#374151;
+      font-size:16px;
+    }
+
+    .list li::before{
+      content:"✔";
+      position:absolute;
+      left:0;
+      top:0;
+      color:#16a34a;
+      font-weight:900;
+    }
+
+    .list-x li::before{
+      content:"✖";
+      color:#d92d20;
+    }
+
+    .risk-box{
+      background:linear-gradient(135deg,#fff7ed,#fff);
+      border:1px solid #fed7aa;
+      border-radius:22px;
+      padding:26px;
+      margin-top:22px;
+    }
+
+    .money-list li::before{
+      content:"💰";
+      left:0;
+    }
+
+    .method-steps{
+      display:grid;
+      grid-template-columns:repeat(5,1fr);
+      gap:16px;
+      margin-top:24px;
+    }
+
+    .step{
+      background:#fff;
+      border-radius:18px;
+      padding:22px 18px;
+      border:1px solid #d7e6f4;
+      color:#0f172a;
+    }
+
+    .step-number{
+      width:42px;
+      height:42px;
+      border-radius:50%;
+      background:#ebf3fb;
+      color:var(--blue);
+      display:grid;
+      place-items:center;
+      font-weight:900;
+      margin-bottom:12px;
+    }
+
+    .step h3{
+      font-size:17px;
+      margin:0 0 8px;
+      line-height:1.2;
+    }
+
+    .step p{
+      font-size:14px;
+      margin:0;
+      color:#667085;
+    }
+
+    .checklist-box{
+      background:#f8fbff;
+      padding:26px;
+      border-radius:18px;
+      border:1px solid #d5e6f7;
+      margin-top:18px;
+    }
+
+    .price-section{
+      text-align:center;
+      background:linear-gradient(180deg,#fff 0%, #f6fbff 100%);
+      border:2px solid #d6e8fa;
+    }
+
+    .timer-wrap{
+      margin-top:18px;
+      padding:20px;
+      background:#fff5f5;
+      border:1px solid #fecaca;
+      border-radius:18px;
+    }
+
+    .urgency{
+      color:#b42318;
+      font-size:16px;
+      font-weight:800;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+    }
+
+    .timer{
+      font-size:46px;
+      line-height:1;
+      color:#d92d20;
+      font-weight:900;
+      margin-top:8px;
+      font-family:"Courier New", monospace;
+    }
+
+    .price-note{
+      margin-top:18px;
+      color:#667085;
+      font-size:16px;
+    }
+
+    .testimonial{
+      background:#f7fafc;
+      border:1px solid #dde7f2;
+      border-left:5px solid #16a34a;
+      padding:22px;
+      border-radius:16px;
+    }
+
+    .testimonial p{
+      margin:0;
+      color:#334155;
+      font-size:16px;
+    }
+
+    .footer{
+      text-align:center;
+      color:#c5d2de;
+      font-size:14px;
+      padding:24px 0 95px;
+    }
+
+    .footer a{
+      color:#fff;
+      font-weight:800;
+    }
+
+    .popup{
+      display:none;
+      position:fixed;
+      left:16px;
+      right:16px;
+      bottom:16px;
+      z-index:999;
+      background:#0a2540;
+      color:#fff;
+      padding:18px;
+      border-radius:18px;
+      box-shadow:0 18px 40px rgba(0,0,0,.28);
+      max-width:460px;
+      margin:0 auto;
+    }
+
+    .popup p{
+      margin:0 0 12px;
+      font-size:15px;
+      color:#dce9f7;
+    }
+
+    .popup .btn{
+      width:100%;
+      padding:16px 18px;
+    }
+
+    .whatsapp-float{
+      position:fixed;
+      right:20px;
+      bottom:20px;
+      width:68px;
+      height:68px;
+      border-radius:50%;
+      background:linear-gradient(135deg,var(--green),var(--green-dark));
+      display:grid;
+      place-items:center;
+      color:#fff;
+      font-size:30px;
+      z-index:998;
+      box-shadow:0 14px 28px rgba(37,211,102,.34);
+    }
+
+    .sticky-cta{
+      display:none;
+      position:fixed;
+      left:0;
+      right:0;
+      bottom:0;
+      z-index:997;
+      background:rgba(7,21,37,.96);
+      border-top:1px solid rgba(255,255,255,.08);
+      backdrop-filter:blur(10px);
+      padding:10px 14px calc(10px + env(safe-area-inset-bottom));
+    }
+
+    .sticky-wrap{
+      width:min(760px,100%);
+      margin:0 auto;
+      display:flex;
+      gap:10px;
+      align-items:center;
+    }
+
+    .sticky-price{
+      color:#fff;
+      font-size:13px;
+      font-weight:800;
+      white-space:nowrap;
+    }
+
+    .sticky-price strong{
+      display:block;
+      font-size:18px;
+      color:#86efac;
+      line-height:1.1;
+    }
+
+    .sticky-cta .btn{
+      flex:1;
+      padding:16px 18px;
+      font-size:15px;
+    }
+
+    @media (max-width: 1080px){
+      .hero-grid,
+      .grid-2,
+      .grid-3,
+      .trust-grid,
+      .method-steps{
+        grid-template-columns:1fr;
+      }
+
+      .hero-points{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media (max-width: 768px){
+      .header-wrap{
+        padding:12px 0;
+      }
+
+      .brand-text{
+        display:none;
+      }
+
+      .section{
+        padding:30px 22px;
+        border-radius:18px;
+      }
+
+      .trust-strip{
+        margin-top:-22px;
+      }
+
+      .btn{
+        width:100%;
+      }
+
+      .whatsapp-float{
+        bottom:84px;
+      }
+
+      .sticky-cta{
+        display:block;
+      }
+
+      .footer{
+        padding-bottom:120px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="header">
+    <div class="container header-wrap">
+      <div class="brand">
+        <img src="../assets/logojgm4.png" alt="JGM4 Consultoria">
+        <div class="brand-text">Diagnóstico de <span>Estoque Profissional</span></div>
+      </div>
+
+      <a class="btn btn-whatsapp"
+         href="https://wa.me/5521996334768?text=Olá,%20quero%20contratar%20o%20Diagnóstico%20de%20Estoque"
+         target="_blank" rel="noopener">
+        <i class="fab fa-whatsapp"></i>
+        Solicitar diagnóstico
+      </a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div>
+          <span class="eyebrow">Consultoria especializada em performance logística</span>
+
+          <h1>Descubra onde sua empresa está <span style="color:#86efac;">perdendo dinheiro no estoque</span> e o que fazer para corrigir</h1>
+
+          <p class="subheadline">
+            Um diagnóstico profissional para identificar falhas, perdas, riscos operacionais e oportunidades de melhoria no estoque da sua empresa — com visão prática, técnica e executável.
+          </p>
+
+          <div class="hero-points">
+            <div class="hero-point"><strong>Clareza:</strong> entenda onde estão as falhas reais</div>
+            <div class="hero-point"><strong>Prioridade:</strong> saiba o que corrigir primeiro</div>
+            <div class="hero-point"><strong>Impacto financeiro:</strong> visualize o custo dos erros</div>
+            <div class="hero-point"><strong>Plano de ação:</strong> receba direcionamento prático</div>
+          </div>
+
+          <div class="cta-row">
+            <a class="btn btn-whatsapp"
+               href="https://wa.me/5521996334768?text=Olá,%20quero%20contratar%20o%20Diagnóstico%20de%20Estoque"
+               target="_blank" rel="noopener">
+              <i class="fab fa-whatsapp"></i>
+              Solicitar diagnóstico agora
+            </a>
+
+            <a class="btn btn-outline" href="#oferta">
+              Ver investimento
+            </a>
+          </div>
+
+          <div class="microcopy">
+            Atendimento direto • análise profissional • sem necessidade de acesso ao seu sistema
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <div class="offer-card">
+            <span class="offer-tag">Condição especial</span>
+
+            <div class="old-price">De R$ 997</div>
+            <div class="new-price"><span>R$</span> 497</div>
+
+            <p>
+              Uma versão inicial do nosso trabalho consultivo para ajudar sua empresa a enxergar perdas, riscos e oportunidades com muito mais clareza.
+            </p>
+
+            <ul class="offer-list">
+              <li><i class="fas fa-check-circle" style="color:#16a34a; margin-top:3px;"></i><span>Relatório completo</span></li>
+              <li><i class="fas fa-check-circle" style="color:#16a34a; margin-top:3px;"></i><span>Plano de ação priorizado</span></li>
+              <li><i class="fas fa-check-circle" style="color:#16a34a; margin-top:3px;"></i><span>Reunião estratégica</span></li>
+              <li><i class="fas fa-check-circle" style="color:#16a34a; margin-top:3px;"></i><span>Garantia de satisfação</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="trust-strip">
+    <div class="trust-grid">
+      <div class="trust-item">
+        <div class="trust-icon"><i class="fas fa-magnifying-glass-chart"></i></div>
+        <div>
+          <strong>Análise profissional</strong>
+          <span>Diagnóstico com metodologia estruturada.</span>
+        </div>
+      </div>
+
+      <div class="trust-item">
+        <div class="trust-icon"><i class="fas fa-coins"></i></div>
+        <div>
+          <strong>Foco em perdas</strong>
+          <span>Identificação de riscos financeiros ocultos.</span>
+        </div>
+      </div>
+
+      <div class="trust-item">
+        <div class="trust-icon"><i class="fas fa-clipboard-list"></i></div>
+        <div>
+          <strong>Plano prático</strong>
+          <span>Direcionamento objetivo para agir rápido.</span>
+        </div>
+      </div>
+
+      <div class="trust-item">
+        <div class="trust-icon"><i class="fas fa-user-tie"></i></div>
+        <div>
+          <strong>Atendimento consultivo</strong>
+          <span>Contato direto com especialista da JGM4.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="main">
+    <div class="container">
+
+      <section class="section">
+        <h2>Você enfrenta algum destes problemas?</h2>
+        <p class="lead">
+          Empresas com falhas na gestão de estoque perdem dinheiro todos os dias — muitas vezes sem perceber isso com clareza.
+        </p>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="icon-box"><i class="fas fa-circle-exclamation"></i></div>
+            <h3>Saldo do sistema não bate com o físico</h3>
+            <p>Quando a informação não é confiável, a empresa perde segurança para comprar, vender e planejar.</p>
+          </div>
+
+          <div class="card">
+            <div class="icon-box"><i class="fas fa-box-open"></i></div>
+            <h3>Produtos parados e itens em falta</h3>
+            <p>Excesso de estoque e ruptura ao mesmo tempo são sinais clássicos de controle deficiente.</p>
+          </div>
+
+          <div class="card">
+            <div class="icon-box"><i class="fas fa-arrows-rotate"></i></div>
+            <h3>Inventário que nunca fecha</h3>
+            <p>Retrabalho, divergências e baixa acuracidade geram desgaste operacional e prejuízo.</p>
+          </div>
+
+          <div class="card">
+            <div class="icon-box"><i class="fas fa-triangle-exclamation"></i></div>
+            <h3>Compras e decisões sem confiança</h3>
+            <p>Sem dados confiáveis, a empresa compra mal, ocupa espaço errado e perde competitividade.</p>
+          </div>
+        </div>
+
+        <div class="risk-box">
+          <p style="margin:0; color:#9a3412; font-weight:800;">
+            Esses problemas geram prejuízo financeiro, capital parado, retrabalho, ruptura, perda de margem e decisões equivocadas.
+          </p>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>O que muda quando o estoque passa a ser confiável</h2>
+        <p class="lead">
+          O diagnóstico ajuda sua empresa a sair do escuro e construir uma base mais segura para operação e gestão.
+        </p>
+
+        <ul class="list">
+          <li>Saber com mais confiança qual é o saldo real</li>
+          <li>Reduzir perdas financeiras e falhas operacionais</li>
+          <li>Melhorar a tomada de decisão em compras e abastecimento</li>
+          <li>Elevar organização, previsibilidade e controle</li>
+          <li>Fortalecer a operação sem depender de improviso</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>O que você vai receber</h2>
+        <p class="lead">
+          Não é uma análise superficial. É um material com valor real para orientar ação e decisão.
+        </p>
+
+        <div class="grid-3">
+          <div class="card">
+            <div class="icon-box"><i class="fas fa-file-lines"></i></div>
+            <h3>Relatório completo</h3>
+            <p>Visão estruturada das falhas encontradas e da situação atual do estoque.</p>
+          </div>
+
+          <div class="card">
+            <div class="icon-box"><i class="fas fa-chart-line"></i></div>
+            <h3>Identificação de perdas</h3>
+            <p>Mapeamento de riscos e oportunidades de melhoria com impacto operacional e financeiro.</p>
+          </div>
+
+          <div class="card">
+            <div class="icon-box"><i class="fas fa-list-check"></i></div>
+            <h3>Plano de ação priorizado</h3>
+            <p>Direcionamento prático para corrigir os principais pontos primeiro.</p>
+          </div>
+
+          <div class="card">
+            <div class="icon-box"><i class="fas fa-user-group"></i></div>
+            <h3>Reunião estratégica</h3>
+            <p>Apresentação dos achados e recomendações para esclarecer próximos passos.</p>
+          </div>
+
+          <div class="card">
+            <div class="icon-box"><i class="fas fa-screwdriver-wrench"></i></div>
+            <h3>Recomendações aplicáveis</h3>
+            <p>Orientações práticas adaptadas à realidade da sua operação.</p>
+          </div>
+
+          <div class="card">
+            <div class="icon-box"><i class="fas fa-shield-heart"></i></div>
+            <h3>Garantia de satisfação</h3>
+            <p>Você investe com muito mais tranquilidade e baixo risco.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Quanto sua empresa pode estar perdendo?</h2>
+        <p class="lead">
+          Um erro aparentemente pequeno no estoque pode gerar um efeito financeiro muito maior do que parece.
+        </p>
+
+        <div class="risk-box">
+          <p style="margin-top:0;">Empresas com faturamento de <strong>R$ 100.000 por mês</strong> e apenas <strong>3% de erro no estoque</strong> podem perder, em média:</p>
+
+          <ul class="list money-list">
+            <li>R$ 3.000 por mês</li>
+            <li>R$ 36.000 por ano</li>
+            <li>R$ 180.000 em 5 anos</li>
+          </ul>
+
+          <p style="margin-bottom:0; font-weight:800; color:#9a3412;">
+            O diagnóstico ajuda a identificar e atacar exatamente esse tipo de perda.
+          </p>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Exemplo do que você irá receber</h2>
+        <ul class="list">
+          <li>Relatório com falhas encontradas</li>
+          <li>Classificação do grau de risco do estoque</li>
+          <li>Plano de ação priorizado</li>
+          <li>Recomendações técnicas e operacionais</li>
+        </ul>
+
+        <p style="margin-top:18px; color:var(--muted);">
+          Esse é o mesmo raciocínio aplicado em projetos maiores de consultoria, adaptado para uma entrega inicial mais acessível.
+        </p>
+      </section>
+
+      <section class="section">
+        <h2>Quem irá conduzir seu diagnóstico</h2>
+        <div class="grid-2">
+          <div class="card">
+            <div class="icon-box"><i class="fas fa-user-tie"></i></div>
+            <h3>Especialista da equipe JGM4</h3>
+            <p>Seu diagnóstico será conduzido por profissional com experiência prática em gestão de estoques e operações logísticas reais.</p>
+          </div>
+
+          <div class="card">
+            <div class="icon-box"><i class="fas fa-award"></i></div>
+            <h3>Experiência aplicada</h3>
+            <p>Mais de 15 anos de atuação em logística, reorganização de estoques, WMS e melhoria operacional.</p>
+          </div>
+        </div>
+
+        <ul class="list" style="margin-top:24px;">
+          <li>Atuação em indústrias, distribuidoras e centros logísticos</li>
+          <li>Experiência em implantação de WMS e reorganização operacional</li>
+          <li>Metodologia estruturada e foco em resultado</li>
+          <li>Atendimento consultivo com visão prática de operação</li>
+        </ul>
+      </section>
+
+      <section class="section section-dark">
+        <h2>Nossa metodologia de diagnóstico</h2>
+        <p class="lead">
+          Aplicamos uma abordagem estruturada, inspirada em boas práticas de consultoria, adaptada à realidade operacional das empresas brasileiras.
+        </p>
+
+        <div class="method-steps">
+          <div class="step">
+            <div class="step-number">1</div>
+            <h3>Análise da estrutura atual</h3>
+            <p>Entendimento dos processos, rotinas e nível de controle existente.</p>
+          </div>
+
+          <div class="step">
+            <div class="step-number">2</div>
+            <h3>Identificação de falhas</h3>
+            <p>Mapeamento de riscos, perdas e pontos críticos do estoque.</p>
+          </div>
+
+          <div class="step">
+            <div class="step-number">3</div>
+            <h3>Classificação de impacto</h3>
+            <p>Leitura de criticidade operacional e potencial impacto financeiro.</p>
+          </div>
+
+          <div class="step">
+            <div class="step-number">4</div>
+            <h3>Plano de ação</h3>
+            <p>Priorização das melhorias com visão objetiva e executável.</p>
+          </div>
+
+          <div class="step">
+            <div class="step-number">5</div>
+            <h3>Apresentação estratégica</h3>
+            <p>Entrega dos achados com recomendações claras para decisão.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Por que empresas confiam na JGM4 Consultoria</h2>
+        <div class="grid-2">
+          <div class="card">
+            <div class="icon-box"><i class="fas fa-industry"></i></div>
+            <h3>Experiência prática</h3>
+            <p>Não trabalhamos apenas com teoria. Atuamos com a realidade de operações reais.</p>
+          </div>
+
+          <div class="card">
+            <div class="icon-box"><i class="fas fa-sack-dollar"></i></div>
+            <h3>Foco em lucro e perdas</h3>
+            <p>O objetivo é ajudar sua empresa a enxergar desperdícios e melhorar resultado.</p>
+          </div>
+
+          <div class="card">
+            <div class="icon-box"><i class="fas fa-gears"></i></div>
+            <h3>Metodologia aplicada</h3>
+            <p>Estrutura clara, profissional e voltada para ação.</p>
+          </div>
+
+          <div class="card">
+            <div class="icon-box"><i class="fas fa-handshake"></i></div>
+            <h3>Atendimento direto</h3>
+            <p>Contato consultivo e humano, sem enrolação e sem complexidade desnecessária.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>O que você precisará informar</h2>
+        <p class="lead">
+          Para garantir uma análise precisa e personalizada, solicitaremos algumas informações essenciais após a contratação.
+        </p>
+
+        <ul class="list">
+          <li>Quantidade aproximada de produtos (SKUs)</li>
+          <li>Segmento da empresa</li>
+          <li>Sistema utilizado atualmente, se houver</li>
+          <li>Último inventário realizado</li>
+          <li>Principais problemas enfrentados no estoque</li>
+          <li>Quantidade de pessoas que trabalham na operação</li>
+          <li>Faturamento médio mensal (opcional, para estimativa de perdas)</li>
+        </ul>
+
+        <div class="checklist-box">
+          <h3 style="margin:0 0 12px; color:#134a8e;">Checklist do diagnóstico</h3>
+
+          <ul class="list" style="margin-top:0;">
+            <li>Quantidade de produtos</li>
+            <li>Segmento da empresa</li>
+            <li>Sistema atual utilizado</li>
+            <li>Situação do inventário</li>
+            <li>Principais dificuldades</li>
+            <li>Estrutura da equipe</li>
+            <li>Faturamento mensal (opcional)</li>
+          </ul>
+
+          <p style="margin:14px 0 0; color:#15803d; font-weight:800;">✔ Resposta rápida</p>
+          <p style="margin:6px 0 0; color:#15803d; font-weight:800;">✔ Nenhum acesso ao seu sistema é necessário</p>
+          <p style="margin:6px 0 0; color:#15803d; font-weight:800;">✔ Informações 100% confidenciais</p>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Por que este diagnóstico custa apenas R$ 497?</h2>
+        <p class="lead">
+          Porque ele é uma porta de entrada acessível para empresas que precisam de clareza antes de partir para projetos maiores.
+        </p>
+
+        <p style="margin-top:18px; color:var(--muted);">
+          Este diagnóstico é uma versão inicial do nosso projeto completo de consultoria, que normalmente custa entre <strong>R$ 8.000 e R$ 25.000</strong>, dependendo da complexidade e do escopo.
+        </p>
+
+        <p style="color:var(--muted);">
+          O objetivo aqui é entregar valor real, gerar confiança e abrir a possibilidade de um relacionamento de longo prazo — sem obrigar sua empresa a assumir um projeto maior logo de início.
+        </p>
+      </section>
+
+      <section class="section price-section" id="oferta">
+        <h2>Solicite agora seu diagnóstico profissional</h2>
+        <p class="lead" style="max-width:760px; margin:0 auto;">
+          Um investimento pequeno diante das perdas que um estoque desorganizado pode gerar.
+        </p>
+
+        <div class="old-price" style="margin-top:22px;">De R$ 997</div>
+        <div class="new-price"><span>R$</span> 497</div>
+
+        <div class="timer-wrap">
+          <div class="urgency">Condição promocional termina em:</div>
+          <div class="timer" id="timer">10:00</div>
+        </div>
+
+        <p class="price-note">
+          Atendimento direto por WhatsApp • envio de instruções • início rápido do processo
+        </p>
+
+        <div style="margin-top:24px;">
+          <a class="btn btn-whatsapp"
+             href="https://wa.me/5521996334768?text=Olá,%20quero%20contratar%20o%20Diagnóstico%20de%20Estoque"
+             target="_blank" rel="noopener">
+            <i class="fab fa-whatsapp"></i>
+            Solicitar diagnóstico agora
+          </a>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Resultados típicos observados</h2>
+        <div class="grid-3">
+          <div class="card">
+            <div class="icon-box"><i class="fas fa-percent"></i></div>
+            <h3>Redução de perdas</h3>
+            <p>Possibilidade de redução de perdas entre 10% e 35%, conforme o cenário inicial.</p>
+          </div>
+
+          <div class="card">
+            <div class="icon-box"><i class="fas fa-boxes-stacked"></i></div>
+            <h3>Mais acuracidade</h3>
+            <p>Melhoria relevante na confiabilidade do estoque e maior segurança para gestão.</p>
+          </div>
+
+          <div class="card">
+            <div class="icon-box"><i class="fas fa-chart-column"></i></div>
+            <h3>Melhor decisão</h3>
+            <p>Mais visibilidade para compras, abastecimento, inventário e operação.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Depoimentos</h2>
+        <div class="grid-2">
+          <div class="testimonial">
+            <p>“Descobrimos falhas que causavam perdas importantes e não estavam claras para a operação.”</p>
+          </div>
+          <div class="testimonial">
+            <p>“Depois do diagnóstico, conseguimos reorganizar o estoque com muito mais direção e segurança.”</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-dark">
+        <h2>Próximo passo após o diagnóstico</h2>
+        <p class="lead">
+          Depois da entrega, sua empresa terá clareza sobre a situação atual e poderá decidir os próximos passos com muito mais segurança.
+        </p>
+
+        <ul class="list" style="margin-top:22px;">
+          <li>Implementar as melhorias com sua própria equipe</li>
+          <li>Contar com suporte especializado da JGM4</li>
+          <li>Contratar um projeto completo de implantação</li>
+        </ul>
+
+        <p style="margin-top:16px; font-weight:800;">
+          Você não tem obrigação nenhuma de continuar. O diagnóstico já entrega valor por si só.
+        </p>
+      </section>
+
+      <section class="section">
+        <h2>Como funciona o atendimento</h2>
+        <div class="grid-3">
+          <div class="card">
+            <div class="icon-box"><i class="fas fa-message"></i></div>
+            <h3>1. Solicitação</h3>
+            <p>Você entra em contato pelo WhatsApp e demonstra interesse no diagnóstico.</p>
+          </div>
+
+          <div class="card">
+            <div class="icon-box"><i class="fas fa-file-circle-check"></i></div>
+            <h3>2. Coleta de informações</h3>
+            <p>Recebe as instruções e responde um conjunto simples de perguntas.</p>
+          </div>
+
+          <div class="card">
+            <div class="icon-box"><i class="fas fa-magnifying-glass"></i></div>
+            <h3>3. Análise</h3>
+            <p>Nossa equipe realiza a leitura técnica da sua operação.</p>
+          </div>
+
+          <div class="card">
+            <div class="icon-box"><i class="fas fa-file-lines"></i></div>
+            <h3>4. Entrega do relatório</h3>
+            <p>Você recebe o material estruturado com riscos e oportunidades.</p>
+          </div>
+
+          <div class="card">
+            <div class="icon-box"><i class="fas fa-chalkboard-user"></i></div>
+            <h3>5. Reunião estratégica</h3>
+            <p>Apresentamos os achados e recomendamos os melhores caminhos.</p>
+          </div>
+
+          <div class="card">
+            <div class="icon-box"><i class="fas fa-arrow-right"></i></div>
+            <h3>6. Decisão com clareza</h3>
+            <p>Você escolhe os próximos passos com muito mais segurança.</p>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <p><strong>JGM4 Consultoria</strong></p>
+        <p>WhatsApp: <a href="https://wa.me/5521996334768" target="_blank" rel="noopener">(21) 99633-4768</a></p>
+        <p>© 2026 JGM4 Consultoria. Todos os direitos reservados.</p>
+      </footer>
+
+    </div>
+  </main>
+
+  <div class="popup" id="popup">
+    <p><strong>Ainda com dúvidas?</strong><br>Fale diretamente no WhatsApp e entenda se este diagnóstico faz sentido para sua empresa.</p>
+    <a class="btn btn-whatsapp"
+       href="https://wa.me/5521996334768?text=Tenho%20interesse%20no%20diagnóstico%20de%20estoque"
+       target="_blank" rel="noopener">
+      <i class="fab fa-whatsapp"></i>
+      Falar no WhatsApp
+    </a>
+  </div>
+
+  <a href="https://wa.me/5521996334768?text=Olá,%20quero%20mais%20informações%20sobre%20o%20Diagnóstico%20de%20Estoque"
+     class="whatsapp-float"
+     target="_blank" rel="noopener"
+     aria-label="Falar no WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+  <div class="sticky-cta">
+    <div class="sticky-wrap">
+      <div class="sticky-price">
+        Diagnóstico hoje
+        <strong>R$ 497</strong>
+      </div>
+
+      <a class="btn btn-whatsapp"
+         href="https://wa.me/5521996334768?text=Olá,%20quero%20contratar%20o%20Diagnóstico%20de%20Estoque"
+         target="_blank" rel="noopener">
+        Solicitar agora
+      </a>
+    </div>
+  </div>
+
+  <script>
+    // Popup de apoio
+    setTimeout(function () {
+      var popup = document.getElementById("popup");
+      if (popup) popup.style.display = "block";
+    }, 6000);
+
+    // Timer
+    var minutos = 10;
+    var segundos = 0;
+    var timerEl = document.getElementById("timer");
+
+    function atualizarTimer() {
+      if (!timerEl) return;
+
+      if (segundos === 0) {
+        if (minutos === 0) return;
+        minutos--;
+        segundos = 59;
+      } else {
+        segundos--;
+      }
+
+      timerEl.textContent = minutos + ":" + (segundos < 10 ? "0" : "") + segundos;
+    }
+
+    setInterval(atualizarTimer, 1000);
+  </script>
+
+</body>
+</html>

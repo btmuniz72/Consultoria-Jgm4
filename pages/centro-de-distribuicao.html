@@ -1,0 +1,546 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CD na Mão | Guia Prático para Centros de Distribuição</title>
+
+    <meta name="description" content="Aprenda na prática como organizar, controlar e elevar a eficiência de um Centro de Distribuição com um guia direto, profissional e aplicável à realidade operacional.">
+    <meta name="keywords" content="centro de distribuição, CD, logística, armazenagem, expedição, WMS, picking, gestão logística, operação de CD">
+    <meta name="theme-color" content="#0f172a">
+
+    <link rel="icon" type="image/png" href="../assets/favicon.ico">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1QSQEF3EN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-X1QSQEF3EN');
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        body{
+            font-family:'Inter', sans-serif;
+            scroll-behavior:smooth;
+        }
+
+        .hero-bg{
+            background:
+                radial-gradient(circle at top right, rgba(249,115,22,.18), transparent 28%),
+                linear-gradient(rgba(15,23,42,.93), rgba(15,23,42,.96)),
+                url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1350&q=80');
+            background-size:cover;
+            background-position:center;
+        }
+
+        .btn-hotmart{
+            background:linear-gradient(135deg,#f97316,#ea580c);
+            transition:all .3s ease;
+        }
+
+        .btn-hotmart:hover{
+            transform:translateY(-2px);
+            box-shadow:0 12px 25px rgba(249,115,22,.35);
+        }
+
+        .btn-outline{
+            transition:all .3s ease;
+        }
+
+        .btn-outline:hover{
+            transform:translateY(-2px);
+            background:rgba(255,255,255,.08);
+        }
+
+        details > summary{
+            list-style:none;
+        }
+
+        details > summary::-webkit-details-marker{
+            display:none;
+        }
+
+        .glass{
+            background:rgba(255,255,255,.08);
+            backdrop-filter:blur(8px);
+            border:1px solid rgba(255,255,255,.1);
+        }
+
+        .pulse-soft{
+            animation:pulseSoft 2s infinite;
+        }
+
+        @keyframes pulseSoft{
+            0%{transform:scale(1);}
+            50%{transform:scale(1.02);}
+            100%{transform:scale(1);}
+        }
+
+        .sticky-cta{
+            display:none;
+        }
+
+        @media (max-width: 768px){
+            .sticky-cta{
+                display:flex;
+            }
+        }
+    </style>
+
+    <script type="application/ld+json">
+    {
+      "@context":"https://schema.org",
+      "@type":"FAQPage",
+      "mainEntity":[
+        {
+          "@type":"Question",
+          "name":"Como recebo o eBook?",
+          "acceptedAnswer":{
+            "@type":"Answer",
+            "text":"Após a confirmação do pagamento, você recebe por e-mail o acesso liberado pela Hotmart com as instruções para baixar o material."
+          }
+        },
+        {
+          "@type":"Question",
+          "name":"O conteúdo serve para pequenos CDs?",
+          "acceptedAnswer":{
+            "@type":"Answer",
+            "text":"Sim. Os fundamentos apresentados podem ser aplicados em operações menores, médias ou mais estruturadas, pois envolvem processos essenciais de recebimento, armazenagem, separação e expedição."
+          }
+        },
+        {
+          "@type":"Question",
+          "name":"Por quanto tempo terei acesso?",
+          "acceptedAnswer":{
+            "@type":"Answer",
+            "text":"O acesso ao material é permanente, conforme disponibilização do produto na plataforma."
+          }
+        },
+        {
+          "@type":"Question",
+          "name":"Existe garantia?",
+          "acceptedAnswer":{
+            "@type":"Answer",
+            "text":"Sim. Você conta com 7 dias de garantia para avaliar o conteúdo com tranquilidade."
+          }
+        }
+      ]
+    }
+    </script>
+</head>
+
+<body class="bg-slate-50 text-slate-900">
+
+    <header class="bg-white/95 backdrop-blur-md py-4 shadow-md sticky top-0 z-50 border-b border-slate-200">
+        <div class="container mx-auto px-4 flex justify-between items-center gap-4">
+            <div class="flex items-center min-w-0">
+                <img src="../assets/logojgm4.png" alt="JGM4 Consultoria" class="h-10 md:h-12 mr-4">
+                <div class="font-black text-lg md:text-xl tracking-tight text-blue-950 border-l pl-4 hidden sm:block uppercase">
+                    Bruno <span class="text-orange-500">Muniz</span>
+                </div>
+            </div>
+
+            <a href="https://pay.hotmart.com/B86217978A?checkoutMode=10"
+               class="btn-hotmart text-white font-black py-3 px-5 md:px-6 rounded-xl shadow-lg text-sm md:text-base uppercase">
+                Quero o eBook
+            </a>
+        </div>
+    </header>
+
+    <section class="hero-bg text-white py-16 md:py-24 overflow-hidden">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="text-center md:text-left">
+                    <span class="inline-block bg-orange-500/15 border border-orange-400/30 text-orange-300 text-[11px] font-black px-4 py-2 rounded-full uppercase tracking-[0.18em]">
+                        Guia prático para Centros de Distribuição
+                    </span>
+
+                    <h1 class="text-4xl md:text-6xl font-black mt-6 leading-tight tracking-tight">
+                        Tenha uma visão mais <span class="text-orange-500">estratégica, prática e profissional</span> do seu CD
+                    </h1>
+
+                    <p class="text-lg md:text-xl text-slate-300 max-w-2xl leading-relaxed mt-6">
+                        Um material criado para quem quer entender melhor a operação de um Centro de Distribuição, organizar processos, elevar o controle e ganhar mais eficiência no dia a dia logístico.
+                    </p>
+
+                    <div class="grid sm:grid-cols-2 gap-3 mt-8 text-left">
+                        <div class="glass rounded-2xl p-4">
+                            <p class="text-sm text-slate-200"><strong class="text-white">Recebimento:</strong> entrada com mais controle e qualidade</p>
+                        </div>
+                        <div class="glass rounded-2xl p-4">
+                            <p class="text-sm text-slate-200"><strong class="text-white">Armazenagem:</strong> organização física e lógica do CD</p>
+                        </div>
+                        <div class="glass rounded-2xl p-4">
+                            <p class="text-sm text-slate-200"><strong class="text-white">Picking:</strong> separação mais eficiente e inteligente</p>
+                        </div>
+                        <div class="glass rounded-2xl p-4">
+                            <p class="text-sm text-slate-200"><strong class="text-white">Expedição:</strong> saída com mais segurança e menos falhas</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                        <a href="https://pay.hotmart.com/B86217978A?checkoutMode=10"
+                           class="btn-hotmart pulse-soft text-white text-center text-lg md:text-xl font-black py-5 px-8 rounded-2xl shadow-2xl inline-block uppercase">
+                            Quero prosperar agora
+                        </a>
+
+                        <a href="#oferta"
+                           class="btn-outline border border-white/20 text-white text-center text-lg font-bold py-5 px-8 rounded-2xl inline-block uppercase">
+                            Ver oferta
+                        </a>
+                    </div>
+
+                    <div class="mt-5 text-sm text-slate-400">
+                        Acesso digital • Compra segura • Garantia de 7 dias
+                    </div>
+                </div>
+
+                <div class="flex justify-center">
+                    <div class="glass rounded-[28px] p-5 md:p-6 shadow-2xl max-w-md w-full">
+                        <img src="../assets/capa_ebook_cd.png" alt="Capa eBook CD na Mão" class="rounded-2xl shadow-2xl mx-auto max-w-[280px] md:max-w-[340px] border border-white/10">
+
+                        <div class="bg-white rounded-2xl p-6 mt-6 text-slate-900">
+                            <span class="inline-block bg-orange-100 text-orange-600 text-[11px] font-black px-3 py-1 rounded-full uppercase tracking-wider">
+                                Condição especial
+                            </span>
+
+                            <div class="mt-4 text-slate-400 line-through text-lg">De R$ 39,90</div>
+                            <div class="text-5xl font-black text-blue-950 mt-1">R$ 19,90</div>
+
+                            <p class="text-slate-600 mt-3 text-sm leading-relaxed">
+                                Um investimento acessível para quem quer evoluir a visão operacional e profissionalizar a gestão de um Centro de Distribuição.
+                            </p>
+
+                            <ul class="mt-5 space-y-2 text-sm text-slate-700">
+                                <li>✔ Acesso digital imediato</li>
+                                <li>✔ Conteúdo direto ao ponto</li>
+                                <li>✔ Aplicação prática</li>
+                                <li>✔ Garantia de 7 dias</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="relative -mt-8 z-10">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-4 bg-white rounded-3xl shadow-2xl p-6 border border-slate-100">
+                <div class="flex items-center gap-3">
+                    <div class="w-11 h-11 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center font-black">✓</div>
+                    <div>
+                        <p class="font-bold text-slate-900">Conteúdo prático</p>
+                        <p class="text-sm text-slate-500">Foco no dia a dia da operação</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <div class="w-11 h-11 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center font-black">✓</div>
+                    <div>
+                        <p class="font-bold text-slate-900">Visão profissional</p>
+                        <p class="text-sm text-slate-500">Mais método e menos improviso</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <div class="w-11 h-11 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center font-black">✓</div>
+                    <div>
+                        <p class="font-bold text-slate-900">Compra segura</p>
+                        <p class="text-sm text-slate-500">Pagamento protegido</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <div class="w-11 h-11 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center font-black">✓</div>
+                    <div>
+                        <p class="font-bold text-slate-900">Garantia real</p>
+                        <p class="text-sm text-slate-500">7 dias para avaliar</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 bg-slate-50">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center mb-14">
+                <h2 class="text-3xl md:text-5xl font-black text-blue-950 uppercase tracking-tight">
+                    O que você irá encontrar no guia
+                </h2>
+                <p class="text-slate-600 text-lg mt-5 leading-relaxed">
+                    Um conteúdo pensado para ajudar profissionais e gestores a compreender melhor os principais pilares de um Centro de Distribuição moderno, organizado e eficiente.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 items-start">
+                <div class="bg-white p-8 rounded-3xl shadow-lg border border-slate-100">
+                    <ul class="space-y-5">
+                        <li class="flex items-start gap-3">
+                            <span class="text-orange-500 font-black text-xl">✓</span>
+                            <p class="text-slate-700"><strong>Fluxos detalhados:</strong> da recepção agendada à expedição mais organizada.</p>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-orange-500 font-black text-xl">✓</span>
+                            <p class="text-slate-700"><strong>Gestão de ativos:</strong> manutenção preventiva, controle e visão de suporte operacional.</p>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-orange-500 font-black text-xl">✓</span>
+                            <p class="text-slate-700"><strong>Padrões de qualidade:</strong> checklists, conferência e redução de falhas.</p>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-orange-500 font-black text-xl">✓</span>
+                            <p class="text-slate-700"><strong>Tecnologia aplicada:</strong> uso prático de WMS, coletores e visibilidade operacional.</p>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="bg-blue-950 p-8 rounded-3xl text-white shadow-2xl">
+                    <h3 class="text-2xl font-black mb-4">Mais do que teoria: aplicação prática</h3>
+                    <p class="text-slate-300 mb-6 leading-relaxed">
+                        Este material foi construído para aproximar você da realidade operacional dos Centros de Distribuição, com uma visão clara sobre processos, estrutura, organização e eficiência.
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <div class="h-1 w-12 bg-orange-500 rounded-full"></div>
+                        <span class="uppercase tracking-[0.18em] text-xs font-black text-orange-300">Bruno Muniz</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center mb-14">
+                <h2 class="text-3xl md:text-5xl font-black text-slate-900 uppercase tracking-tight">
+                    A estrutura do guia
+                </h2>
+                <p class="text-slate-600 text-lg mt-5">
+                    O conteúdo foi organizado para oferecer uma visão progressiva da operação de um CD, do básico ao olhar mais estratégico.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 text-left">
+                <div class="p-7 bg-slate-50 border-t-4 border-orange-500 rounded-2xl shadow-sm">
+                    <h4 class="font-black text-blue-950 uppercase">Fundamentos e Estrutura</h4>
+                    <p class="text-slate-500 text-sm mt-3">A base para organizar o fluxo físico e lógico da operação.</p>
+                </div>
+
+                <div class="p-7 bg-slate-50 border-t-4 border-orange-500 rounded-2xl shadow-sm">
+                    <h4 class="font-black text-blue-950 uppercase">Recepção e Qualidade</h4>
+                    <p class="text-slate-500 text-sm mt-3">Descarga, conferência e validação de mercadorias com mais controle.</p>
+                </div>
+
+                <div class="p-7 bg-slate-50 border-t-4 border-orange-500 rounded-2xl shadow-sm">
+                    <h4 class="font-black text-blue-950 uppercase">Armazenamento e Picking</h4>
+                    <p class="text-slate-500 text-sm mt-3">Endereçamento, organização e estratégias de separação mais eficientes.</p>
+                </div>
+
+                <div class="p-7 bg-slate-50 border-t-4 border-orange-500 rounded-2xl shadow-sm">
+                    <h4 class="font-black text-blue-950 uppercase">Montagem de Carga</h4>
+                    <p class="text-slate-500 text-sm mt-3">Cubagem, estruturação e melhor aproveitamento de carga e frete.</p>
+                </div>
+
+                <div class="p-7 bg-slate-50 border-t-4 border-orange-500 rounded-2xl shadow-sm">
+                    <h4 class="font-black text-blue-950 uppercase">Expedição e WMS</h4>
+                    <p class="text-slate-500 text-sm mt-3">Saída de mercadorias com mais rastreabilidade e segurança sistêmica.</p>
+                </div>
+
+                <div class="p-7 bg-slate-50 border-t-4 border-orange-500 rounded-2xl shadow-sm">
+                    <h4 class="font-black text-blue-950 uppercase">Melhores Práticas</h4>
+                    <p class="text-slate-500 text-sm mt-3">A visão aplicada de quem vive a logística de forma real.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 bg-slate-100">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white rounded-3xl p-8 shadow-md border border-slate-100">
+                    <h3 class="text-xl font-black text-blue-950 mb-3">Menos improviso</h3>
+                    <p class="text-slate-600">
+                        Entenda como processos mais claros reduzem falhas e melhoram a consistência operacional.
+                    </p>
+                </div>
+
+                <div class="bg-white rounded-3xl p-8 shadow-md border border-slate-100">
+                    <h3 class="text-xl font-black text-blue-950 mb-3">Mais controle</h3>
+                    <p class="text-slate-600">
+                        Ganhe uma visão mais organizada sobre fluxo, armazenagem, separação e expedição.
+                    </p>
+                </div>
+
+                <div class="bg-white rounded-3xl p-8 shadow-md border border-slate-100">
+                    <h3 class="text-xl font-black text-blue-950 mb-3">Mais eficiência</h3>
+                    <p class="text-slate-600">
+                        Uma operação melhor estruturada tende a gerar mais produtividade e menos retrabalho.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 bg-slate-900 text-white">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center gap-12">
+            <div class="md:w-1/3 flex justify-center">
+                <img src="../assets/sua-foto.png" alt="Bruno Muniz" class="rounded-3xl shadow-2xl border-2 border-white/10 w-full max-w-[300px]">
+            </div>
+
+            <div class="md:w-2/3 text-center md:text-left">
+                <h2 class="text-3xl md:text-4xl font-black mb-6 uppercase tracking-tight">Sobre o autor</h2>
+                <h3 class="text-2xl font-black text-orange-500 mb-4">Bruno Muniz</h3>
+                <p class="text-slate-300 text-lg leading-relaxed">
+                    Especialista em Logística e otimização de Centros de Distribuição, com experiência prática em operações, processos e melhoria contínua. Este material foi criado para transformar conhecimento operacional em conteúdo acessível, aplicável e útil para profissionais que desejam evoluir.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4 max-w-4xl">
+            <h2 class="text-3xl md:text-4xl font-black text-center text-slate-900 mb-12 uppercase tracking-tight">
+                Dúvidas frequentes
+            </h2>
+
+            <div class="space-y-4">
+                <details class="group bg-slate-50 p-6 rounded-2xl border border-slate-200" open>
+                    <summary class="font-black cursor-pointer flex justify-between items-center uppercase text-sm text-slate-900">
+                        Como recebo o eBook?
+                        <span class="text-orange-500 group-open:rotate-180 transition-transform">▼</span>
+                    </summary>
+                    <p class="mt-4 text-slate-600 text-sm leading-relaxed">
+                        Após a confirmação do pagamento, você recebe por e-mail o acesso liberado pela Hotmart com as instruções para baixar o arquivo.
+                    </p>
+                </details>
+
+                <details class="group bg-slate-50 p-6 rounded-2xl border border-slate-200">
+                    <summary class="font-black cursor-pointer flex justify-between items-center uppercase text-sm text-slate-900">
+                        O conteúdo serve para pequenos CDs?
+                        <span class="text-orange-500 group-open:rotate-180 transition-transform">▼</span>
+                    </summary>
+                    <p class="mt-4 text-slate-600 text-sm leading-relaxed">
+                        Sim. Os fundamentos abordados são aplicáveis a operações menores, médias ou maiores, pois tratam de processos essenciais da rotina logística.
+                    </p>
+                </details>
+
+                <details class="group bg-slate-50 p-6 rounded-2xl border border-slate-200">
+                    <summary class="font-black cursor-pointer flex justify-between items-center uppercase text-sm text-slate-900">
+                        Por quanto tempo terei acesso?
+                        <span class="text-orange-500 group-open:rotate-180 transition-transform">▼</span>
+                    </summary>
+                    <p class="mt-4 text-slate-600 text-sm leading-relaxed">
+                        O acesso ao material é permanente, conforme disponibilização do produto na plataforma.
+                    </p>
+                </details>
+
+                <details class="group bg-slate-50 p-6 rounded-2xl border border-slate-200">
+                    <summary class="font-black cursor-pointer flex justify-between items-center uppercase text-sm text-slate-900">
+                        Tem garantia?
+                        <span class="text-orange-500 group-open:rotate-180 transition-transform">▼</span>
+                    </summary>
+                    <p class="mt-4 text-slate-600 text-sm leading-relaxed">
+                        Sim. Você conta com 7 dias de garantia para avaliar o conteúdo com tranquilidade.
+                    </p>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <section id="oferta" class="py-24 bg-gradient-to-b from-orange-50 to-white text-center">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto bg-white p-8 md:p-12 rounded-[32px] border border-orange-200 shadow-2xl">
+                <span class="inline-block bg-orange-100 text-orange-600 text-xs font-black px-4 py-2 rounded-full uppercase tracking-[0.18em]">
+                    Oferta especial de lançamento
+                </span>
+
+                <h2 class="text-3xl md:text-4xl font-black text-slate-900 mt-6 tracking-tight">
+                    Garanta agora seu acesso ao guia <span class="text-orange-500">CD na Mão</span>
+                </h2>
+
+                <p class="text-slate-600 mt-5 text-lg leading-relaxed max-w-2xl mx-auto">
+                    Um material prático para quem quer melhorar a visão sobre Centros de Distribuição, fortalecer processos e crescer com mais segurança operacional.
+                </p>
+
+                <div class="my-8">
+                    <div class="text-slate-400 line-through text-2xl">De R$ 39,90</div>
+                    <div class="text-6xl md:text-7xl font-black text-blue-950 mt-2">R$ 19,90</div>
+                    <p class="text-slate-600 font-bold mt-3 text-lg">
+                        ou em até <span class="text-blue-950 font-black italic">2x</span> no cartão
+                    </p>
+                </div>
+
+                <a href="https://pay.hotmart.com/B86217978A?checkoutMode=10"
+                   class="block w-full btn-hotmart text-white font-black text-xl md:text-2xl py-5 md:py-6 rounded-2xl shadow-xl uppercase">
+                    Quero meu eBook agora
+                </a>
+
+                <div class="mt-8 flex flex-wrap justify-center items-center gap-4 text-slate-400 font-bold text-xs uppercase tracking-widest opacity-90">
+                    <span>💳 Cartão de Crédito</span>
+                    <span class="text-slate-300">|</span>
+                    <span>📱 PIX</span>
+                    <span class="text-slate-300">|</span>
+                    <span>📄 Boleto</span>
+                </div>
+
+                <div class="mt-12 pt-10 border-t border-slate-100">
+                    <div class="flex flex-col md:flex-row items-center justify-center gap-8">
+                        <div class="flex-shrink-0">
+                            <img src="../assets/selo-garantia.png" alt="Selo de garantia" class="w-28 h-28 object-contain mx-auto drop-shadow-lg">
+                        </div>
+
+                        <div class="text-center md:text-left max-w-md">
+                            <h4 class="font-black text-slate-900 uppercase text-sm tracking-wide">
+                                Garantia incondicional de 7 dias
+                            </h4>
+                            <p class="text-slate-500 text-sm mt-3 leading-relaxed">
+                                Você tem 7 dias para avaliar o conteúdo com calma. Se entender que o material não faz sentido para você, poderá solicitar o reembolso diretamente pela plataforma. Sua compra é protegida e seu risco é muito baixo.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 grid md:grid-cols-3 gap-4 text-left">
+                    <div class="bg-slate-50 rounded-2xl p-5 border border-slate-100">
+                        <p class="font-bold text-slate-900">✔ Acesso digital</p>
+                        <p class="text-sm text-slate-500 mt-1">Receba rapidamente após confirmação.</p>
+                    </div>
+                    <div class="bg-slate-50 rounded-2xl p-5 border border-slate-100">
+                        <p class="font-bold text-slate-900">✔ Compra segura</p>
+                        <p class="text-sm text-slate-500 mt-1">Pagamento protegido em ambiente confiável.</p>
+                    </div>
+                    <div class="bg-slate-50 rounded-2xl p-5 border border-slate-100">
+                        <p class="font-bold text-slate-900">✔ Conteúdo aplicável</p>
+                        <p class="text-sm text-slate-500 mt-1">Mais clareza para a rotina logística.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-white py-12 text-center text-xs text-slate-400 border-t border-slate-100">
+        <div class="container mx-auto px-4">
+            <img src="../assets/logojgm4.png" alt="JGM4" class="h-8 mx-auto mb-6 grayscale opacity-50">
+            <p>&copy; 2026 JGM4 Consultoria | Bruno Muniz. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <div class="sticky-cta fixed bottom-0 left-0 right-0 z-50 bg-slate-950/95 backdrop-blur-md border-t border-white/10 px-4 py-3 items-center gap-3">
+        <div class="text-white text-sm font-bold leading-tight min-w-fit">
+            Oferta hoje
+            <span class="block text-orange-400 text-base font-black">R$ 19,90</span>
+        </div>
+
+        <a href="https://pay.hotmart.com/B86217978A?checkoutMode=10"
+           class="btn-hotmart flex-1 text-white text-center font-black py-4 rounded-xl uppercase text-sm shadow-lg">
+            Comprar agora
+        </a>
+    </div>
+
+</body>
+</html>

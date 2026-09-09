@@ -1,0 +1,706 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Cursos e eBooks | JGM4 Consultoria Logística</title>
+  <meta name="description" content="Capacitação profissional em Logística, WMS, Estoques e Gestão. Curadoria JGM4: cursos e eBooks aplicáveis à realidade operacional.">
+  <meta name="robots" content="index,follow">
+
+  <link rel="icon" href="../assets/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/cursos.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <script src="../js/scripts.js" defer></script>
+
+  <!-- Google Ads Tag -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-11112817546"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'AW-11112817546');
+  </script>
+
+  <!-- Melhorias visuais e conversão (sem quebrar seu CSS atual) -->
+  <style>
+    :root{
+      /* Ajuste fino para “padrão JGM4” (azul + vermelho) */
+      --jgm4-navy:#071A38;
+      --jgm4-blue:#2EA7FF;
+      --jgm4-red:#E10616;
+      --jgm4-card: rgba(7, 26, 56, .55);
+      --jgm4-stroke: rgba(255,255,255,.12);
+      --jgm4-text: rgba(255,255,255,.86);
+      --jgm4-muted: rgba(255,255,255,.72);
+      --jgm4-shadow: 0 18px 55px rgba(0,0,0,.28);
+      --jgm4-radius: 16px;
+    }
+
+    /* Fundo e espaçamento do topo */
+    body{
+      background:
+        radial-gradient(900px 600px at 20% 10%, rgba(46,167,255,.16), transparent 55%),
+        radial-gradient(900px 600px at 80% 30%, rgba(225,6,22,.12), transparent 55%),
+        linear-gradient(180deg, var(--jgm4-navy) 0%, #041024 100%);
+      color:#fff;
+    }
+
+    /* Evita sobreposição do conteúdo por conta do header fixo */
+    .courses-hero{
+      margin-top: 110px;
+      padding: 0 16px;
+    }
+    @media (max-width: 768px){
+      .courses-hero{ margin-top: 130px; }
+    }
+
+    /* Caixa hero mais “consultoria” */
+    .hero-box{
+      max-width: 1100px;
+      margin: 0 auto 18px auto;
+      padding: 22px 18px;
+      border: 1px solid var(--jgm4-stroke);
+      background: rgba(255,255,255,.04);
+      border-radius: var(--jgm4-radius);
+      box-shadow: var(--jgm4-shadow);
+      backdrop-filter: blur(10px);
+    }
+    .hero-top{
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+      justify-content:space-between;
+      flex-wrap:wrap;
+    }
+    .hero-title{
+      margin: 0;
+      font-size: clamp(26px, 3vw, 40px);
+      letter-spacing: -0.4px;
+      line-height: 1.08;
+    }
+    .hero-sub{
+      margin: 10px 0 0 0;
+      max-width: 78ch;
+      color: var(--jgm4-muted);
+      line-height: 1.65;
+      font-size: 15.5px;
+      text-align: left;
+    }
+    .hero-pill{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(46,167,255,.25);
+      background: rgba(46,167,255,.12);
+      font-weight: 800;
+      color: rgba(255,255,255,.92);
+      white-space: nowrap;
+    }
+    .hero-actions{
+      margin-top: 16px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    .btn-jgm4{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      text-decoration:none;
+      font-weight: 900;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color:#fff;
+      transition: transform .12s ease, filter .12s ease;
+    }
+    .btn-jgm4:hover{ transform: translateY(-1px); filter:saturate(1.05); }
+    .btn-jgm4.primary{
+      border:0;
+      background: linear-gradient(135deg, var(--jgm4-red), #ff3b4a);
+      box-shadow: 0 14px 28px rgba(225,6,22,.22);
+    }
+    .btn-jgm4.outline{
+      border: 1px solid rgba(46,167,255,.28);
+      background: transparent;
+    }
+
+    /* Barra de busca e filtros */
+    .filters{
+      max-width: 1100px;
+      margin: 0 auto 18px auto;
+      padding: 14px;
+      border-radius: var(--jgm4-radius);
+      border: 1px solid var(--jgm4-stroke);
+      background: rgba(255,255,255,.04);
+      box-shadow: var(--jgm4-shadow);
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .filters .left{
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+      flex: 1 1 520px;
+    }
+    .search{
+      flex: 1 1 320px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(4,16,36,.30);
+    }
+    .search input{
+      width:100%;
+      border:0;
+      outline:none;
+      background:transparent;
+      color:#fff;
+      font-size: 14px;
+    }
+    .search input::placeholder{ color: rgba(255,255,255,.55); }
+
+    .chip{
+      cursor:pointer;
+      user-select:none;
+      padding: 9px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      color: rgba(255,255,255,.88);
+      font-weight: 800;
+      font-size: 12.5px;
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+    }
+    .chip.active{
+      border-color: rgba(46,167,255,.35);
+      background: rgba(46,167,255,.14);
+    }
+
+    /* Destaque para produto principal (fundo de funil) */
+    .featured{
+      max-width: 1100px;
+      margin: 0 auto 20px auto;
+      padding: 18px;
+      border-radius: var(--jgm4-radius);
+      border: 1px solid rgba(46,167,255,.22);
+      background:
+        radial-gradient(700px 400px at 15% 20%, rgba(46,167,255,.20), transparent 55%),
+        rgba(255,255,255,.04);
+      box-shadow: var(--jgm4-shadow);
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 16px;
+      align-items:center;
+    }
+    @media (max-width: 900px){
+      .featured{ grid-template-columns:1fr; }
+    }
+    .featured h2{
+      margin: 0;
+      font-size: 22px;
+      letter-spacing: -0.2px;
+    }
+    .featured p{
+      margin: 8px 0 0 0;
+      color: var(--jgm4-muted);
+      line-height: 1.6;
+    }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(225,6,22,.28);
+      background: rgba(225,6,22,.12);
+      font-weight: 900;
+      font-size: 12.5px;
+      margin-bottom: 10px;
+    }
+    .featured-right{
+      display:flex; gap:12px; flex-wrap:wrap; align-items:center; justify-content:flex-end;
+    }
+    .price{
+      display:flex;
+      align-items:baseline;
+      gap:10px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(4,16,36,.30);
+      font-weight: 900;
+    }
+    .price .old{ text-decoration: line-through; color: rgba(255,255,255,.65); font-weight: 800; }
+    .price .new{ font-size: 22px; color: #fff; }
+    .mini-note{
+      color: rgba(255,255,255,.70);
+      font-size: 12.5px;
+      margin-top: 10px;
+    }
+
+    /* Ajustes leves nos cards (sem depender do seu cursos.css) */
+    .course-card{
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      border-radius: var(--jgm4-radius);
+      box-shadow: var(--jgm4-shadow);
+      overflow:hidden;
+    }
+    .course-content p{ color: rgba(255,255,255,.78); }
+    .course-price{ font-weight: 900; color: rgba(255,255,255,.92); }
+    .btn-course{
+      font-weight: 900 !important;
+      border-radius: 12px !important;
+      background: linear-gradient(135deg, var(--jgm4-red), #ff3b4a) !important;
+      border: 0 !important;
+    }
+
+    /* Seção confiança */
+    .courses-trust{
+      max-width: 1100px;
+      margin: 22px auto 0 auto;
+      padding: 18px;
+      border-radius: var(--jgm4-radius);
+      border: 1px solid var(--jgm4-stroke);
+      background: rgba(255,255,255,.04);
+      box-shadow: var(--jgm4-shadow);
+      text-align:center;
+    }
+    .courses-trust h2{ margin: 10px 0 10px; }
+    .courses-trust p{
+      color: var(--jgm4-muted);
+      line-height: 1.7;
+      max-width: 90ch;
+      margin: 10px auto 0 auto;
+    }
+    .trust-icons{
+      margin-top: 12px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:center;
+    }
+    .trust-icons .t{
+      padding: 9px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      font-weight: 800;
+      font-size: 12.5px;
+      color: rgba(255,255,255,.88);
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+    }
+
+    /* Botão flutuante (Diagnóstico) */
+    .float-diagnostico{
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      z-index: 999;
+      display:flex;
+      gap:10px;
+      align-items:center;
+      padding: 12px 14px;
+      border-radius: 999px;
+      text-decoration:none;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--jgm4-blue), #3cc3ff);
+      color:#00142f;
+      box-shadow: 0 16px 35px rgba(46,167,255,.24);
+      border: 1px solid rgba(255,255,255,.14);
+    }
+    .float-diagnostico i{ color:#00142f; }
+    @media (max-width: 520px){
+      .float-diagnostico span{ display:none; }
+      .float-diagnostico{ padding: 12px 14px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header id="header">
+    <nav>
+      <img src="../assets/logojgm4.png" alt="JGM4 Consultoria Logística" class="logo">
+      <button class="menu-toggle" onclick="toggleMenu()" aria-label="Menu">☰</button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="../index.html#inicio" onclick="closeMenu()">Início</a></li>
+        <li><a href="../index.html#desafios" onclick="closeMenu()">Desafios</a></li>
+        <li><a href="../index.html#solucoes" onclick="closeMenu()">Soluções</a></li>
+        <li><a href="../index.html#contato" onclick="closeMenu()">Contato</a></li>
+        <li><a href="blog.html" onclick="closeMenu()">Blog</a></li>
+        <li><a href="sobre.html" onclick="closeMenu()">Sobre</a></li>
+        <!-- se este arquivo já estiver dentro /web, o correto costuma ser: href="analise.html" -->
+        <li><a href="./analise.html" class="nav-cta" onclick="closeMenu()">Faça seu Diagnóstico Grátis</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- HERO (mais vendável / mais consultoria) -->
+  <section class="courses-hero">
+    <div class="hero-box">
+      <div class="hero-top">
+        <div>
+          <h1 class="hero-title">Capacitação Profissional em Logística e Gestão</h1>
+          <p class="hero-sub">
+            Curadoria JGM4: cursos e eBooks práticos, atualizados e aplicáveis à realidade do CD.
+            Se você quer <b>reduzir erros</b>, <b>aumentar produtividade</b> e tomar decisões com mais segurança,
+            você está no lugar certo.
+          </p>
+        </div>
+        <div class="hero-pill">
+          <i class="fa-solid fa-shield-halved"></i> Curadoria + Conteúdo aplicável
+        </div>
+      </div>
+
+      <div class="hero-actions">
+        <a class="btn-jgm4 primary" href="#destaque"><i class="fa-solid fa-bolt"></i> Ver destaque</a>
+        <a class="btn-jgm4 outline" href="#lista"><i class="fa-solid fa-list"></i> Ver todos</a>
+        <a class="btn-jgm4" href="../index.html#contato"><i class="fa-solid fa-headset"></i> Falar com especialista</a>
+      </div>
+    </div>
+
+    <!-- FILTROS + BUSCA -->
+    <div class="filters" aria-label="Busca e filtros">
+      <div class="left">
+        <div class="search">
+          <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+          <input id="searchInput" type="text" placeholder="Buscar por curso, eBook, SAP, WMS, Estoques..." aria-label="Buscar cursos">
+        </div>
+
+        <div class="chip active" data-filter="all"><i class="fa-solid fa-layer-group"></i> Todos</div>
+        <div class="chip" data-filter="ebook"><i class="fa-solid fa-book"></i> eBooks</div>
+        <div class="chip" data-filter="curso"><i class="fa-solid fa-graduation-cap"></i> Cursos</div>
+        <div class="chip" data-filter="sistema"><i class="fa-solid fa-cubes"></i> Sistemas</div>
+      </div>
+
+      <a class="btn-jgm4 primary" href="../index.html#contato">
+        <i class="fa-solid fa-chart-line"></i> Quero orientação
+      </a>
+    </div>
+
+    <!-- DESTAQUE (Fundo de funil / mais conversão) -->
+    <div class="featured" id="destaque">
+      <div>
+        <div class="badge"><i class="fa-solid fa-star"></i> Destaque da JGM4</div>
+        <h2>Remuneração Variável em Operações Logísticas</h2>
+        <p>
+          Estruture um modelo meritocrático e sustentável para elevar produtividade,
+          reduzir erros e alinhar a equipe ao resultado — <b>sem aumentar custos fixos</b>.
+        </p>
+        <div class="mini-note">
+          <i class="fa-solid fa-circle-check"></i> Acesso imediato • PDF • Garantia • Implementação prática
+        </div>
+      </div>
+      <div class="featured-right">
+        <div class="price" aria-label="Preço do destaque">
+          <span class="old">R$ 120,00</span>
+          <span class="new">R$ 19,90</span>
+        </div>
+        <a class="btn-jgm4 primary" href="https://kiwify.app/PIeFdO2" target="_blank" rel="noopener">
+          Comprar agora <i class="fa-solid fa-arrow-right"></i>
+        </a>
+        <a class="btn-jgm4 outline" href="../assets/remunera.png" target="_blank" rel="noopener">
+          Ver capa <i class="fa-solid fa-image"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- LISTA DE CURSOS -->
+  <main class="courses-list container" id="lista">
+
+    <!-- CURSO 01 -->
+    <div class="course-card" data-type="curso" data-title="Academia SAP MM formação consultores gestão de materiais">
+      <div class="course-image">
+        <img src="../assets/SAP2.png" alt="Academia SAP MM">
+      </div>
+      <div class="course-content">
+        <h3>Academia SAP MM</h3>
+        <p>
+          Torne-se um Consultor SAP com <b>60 horas</b> de treinamento por especialistas. Saia do zero e avance na carreira.
+          Certificado profissional e acesso ao SAP por 6 meses totalmente gratuito.
+        </p>
+        <div class="course-footer">
+          <span class="course-price">R$ 489,00 em até 12x</span>
+          <a href="https://go.hotmart.com/Q104382621W" class="btn-course" target="_blank" rel="noopener">Comprar</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- CURSO 02 (eBook) -->
+    <div class="course-card" data-type="ebook" data-title="Centro de Distribuição na sua mão ebook cd estoques">
+      <div class="course-image">
+        <img src="../assets/capa_ebook_cd.png" alt="Centro de Distribuição na sua mão">
+      </div>
+      <div class="course-content">
+        <h3>Centro de Distribuição na sua mão</h3>
+        <p>
+          Aprenda a transformar a gestão do seu CD e dos estoques em uma operação mais estratégica, ágil e lucrativa.
+          Material direto ao ponto, com visão prática de chão de operação.
+        </p>
+        <div class="course-footer">
+          <span class="course-price">R$ 19,90</span>
+          <a href="https://go.hotmart.com/B86217978A" class="btn-course" target="_blank" rel="noopener">Comprar</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- CURSO 03 -->
+    <div class="course-card" data-type="curso" data-title="Consultoria currículo linkedin carreira">
+      <div class="course-image">
+        <img src="../assets/consultorialinkedin.jpg" alt="Consultoria CV e Linkedin">
+      </div>
+      <div class="course-content">
+        <h3>Consultoria Online – Currículo e LinkedIn</h3>
+        <p>
+          Seu currículo e perfil no LinkedIn são sua vitrine profissional. Ajustamos posicionamento, palavras-chave e narrativa
+          para aumentar entrevistas e oportunidades. <b>Fazemos para você</b>.
+        </p>
+        <div class="course-footer">
+          <span class="course-price">R$ 50,00</span>
+          <a href="https://go.hotmart.com/F87483317N?dp=1" class="btn-course" target="_blank" rel="noopener">Comprar</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- CURSO 04 -->
+    <div class="course-card" data-type="curso" data-title="Marketing digital pequenas empresas do zero ao sucesso">
+      <div class="course-image">
+        <img src="../assets/img_mkt_digital.png" alt="Marketing Digital para Pequenas Empresas">
+      </div>
+      <div class="course-content">
+        <h3>Guia Prático de Marketing Digital (PMEs)</h3>
+        <p>
+          Um caminho direto para fortalecer sua presença online e transformar audiência em clientes,
+          com passos práticos para quem quer começar com clareza.
+        </p>
+        <div class="course-footer">
+          <span class="course-price">R$ 19,90</span>
+          <a href="https://go.hotmart.com/F90526016Q" class="btn-course" target="_blank" rel="noopener">Comprar</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- CURSO 05 -->
+    <div class="course-card" data-type="curso" data-title="NR12 auditor instrutor segurança máquinas equipamentos">
+      <div class="course-image">
+        <img src="../assets/nr12.png" alt="Curso NR-12">
+      </div>
+      <div class="course-content">
+        <h3>Auditor e Instrutor em NR-12</h3>
+        <p>
+          Capacitação obrigatória para segurança em máquinas e equipamentos. Conteúdo objetivo, aplicável e com foco em conformidade.
+        </p>
+        <div class="course-footer">
+          <span class="course-price">R$ 147,00 em até 12x</span>
+          <a href="https://kiwify.app/Kx4ARjA?afid=jOXgTF3K" class="btn-course" target="_blank" rel="noopener">Comprar</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- CURSO 06 (Sistema) -->
+    <div class="course-card" data-type="sistema" data-title="Sistema de estoque gestão ágil sem assinaturas">
+      <div class="course-image">
+        <img src="../assets/gestao-e-controle-de-estoque.jpg" alt="Sistema de Estoque">
+      </div>
+      <div class="course-content">
+        <h3>Sistema de Estoque</h3>
+        <p>
+          Sistema simples e prático para gestão ágil de estoque, sem assinatura. Pronto para uso imediato e ideal para quem quer controle rápido.
+        </p>
+        <div class="course-footer">
+          <span class="course-price">R$ 100,00 em até 12x</span>
+          <a href="https://go.hotmart.com/D104196682G" class="btn-course" target="_blank" rel="noopener">Comprar</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- CURSO 07 -->
+    <div class="course-card" data-type="curso" data-title="Curso pacote office excel word power point online">
+      <div class="course-image">
+        <img src="../assets/pacote office.png" alt="Curso do Pacote Office 100% Online">
+      </div>
+      <div class="course-content">
+        <h3>Pacote Office 100% Online</h3>
+        <p>
+          Curso certificado, acesso vitalício. Aprenda Excel, Word e PowerPoint de forma clara e prática para o dia a dia.
+        </p>
+        <div class="course-footer">
+          <span class="course-price">R$ 147,00 em até 12x</span>
+          <a href="https://go.hotmart.com/H98470095E" class="btn-course" target="_blank" rel="noopener">Comprar</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- CURSO 08 (eBook) -->
+    <div class="course-card" data-type="ebook" data-title="Gestão de conflitos na logística ebook tomada de decisão">
+      <div class="course-image">
+        <img src="../assets/gestao-de-conflitos.png" alt="Gestão de Conflitos na logística">
+      </div>
+      <div class="course-content">
+        <h3>Gestão de Conflitos </h3>
+        <p>
+          eBook focado em soluções práticas para reduzir atritos operacionais e melhorar a tomada de decisão no dia a dia da logística e outras empresas.
+        </p>
+        <div class="course-footer">
+          <span class="course-price">R$ 19,90</span>
+          <a href="https://go.hotmart.com/T102756701O" class="btn-course" target="_blank" rel="noopener">Comprar</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- CURSO 09 (eBook WMS) -->
+    <div class="course-card" data-type="ebook" data-title="Guia mestre WMS warehouse management system alta performance">
+      <div class="course-image">
+        <img src="../assets/wm2.png" alt="Guia Mestre WMS">
+      </div>
+      <div class="course-content">
+        <h3>Guia Mestre WMS: O Cérebro da Logística de Alta Performance</h3>
+        <p>
+          Para gestores que cansaram do caos operacional e querem eficiência com tecnologia WMS: conceitos, aplicação e visão prática.
+        </p>
+        <div class="course-footer">
+          <span class="course-price">R$ 19,90</span>
+          <a href="https://go.hotmart.com/W104520595C" class="btn-course" target="_blank" rel="noopener">Comprar</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- CURSO 10 (eBook Estoques) -->
+    <div class="course-card" data-type="ebook" data-title="Do caos à confiabilidade gestão profissional de estoques ebook método jgm4">
+      <div class="course-image">
+        <img src="../assets/estoques-ebook.jpg" alt="Do Caos à Confiabilidade Gestão Profissional de Estoques">
+      </div>
+      <div class="course-content">
+        <h3>Do Caos à Confiabilidade: Gestão Profissional de Estoques</h3>
+        <p>
+          Método JGM4 para diagnosticar, reconstruir e elevar o nível de confiabilidade no controle de estoques com abordagem prática.
+        </p>
+        <div class="course-footer">
+          <span class="course-price">R$ 19,90</span>
+          <a href="https://go.hotmart.com/N104645661W" class="btn-course" target="_blank" rel="noopener">Comprar</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- CURSO 11 (eBook Remuneração Variável – KiWiFy) -->
+    <div class="course-card" data-type="ebook" data-title="Remuneração variável operações logísticas meritocracia produtividade">
+      <div class="course-image">
+        <img src="../assets/remunera.png" alt="Remuneração Variável em Operações Logísticas">
+      </div>
+      <div class="course-content">
+        <h3>Remuneração Variável em Operações Logísticas</h3>
+        <p>
+          Modelo meritocrático e sustentável para elevar produtividade, reduzir erros e alinhar o time ao resultado — sem aumentar custos fixos.
+        </p>
+        <div class="course-footer">
+          <span class="course-price">R$ 19,90</span>
+          <a href="https://kiwify.app/PIeFdO2" class="btn-course" target="_blank" rel="noopener">Comprar</a>
+        </div>
+      </div>
+    </div>
+<!-- CURSO 12 (eBook Engenharia de Fretes– KiWiFy) -->
+    <div class="course-card" data-type="ebook" data-title="Remuneração variável operações logísticas meritocracia produtividade">
+      <div class="course-image">
+        <img src="../assets/engenharia-do-frete.png" alt="Remuneração Variável em Operações Logísticas">
+      </div>
+      <div class="course-content">
+        <h3>Engenharia do Frete em Operações Logísticas</h3>
+        <p>
+          O guia prático para montar, analisar e negociar tabelas de transporte no Brasil.
+
+        A gestão de fretes é uma das áreas mais sensíveis da logística. Pequenas decisões podem gerar grandes impactos nos custos operacionais, no nível de serviço e na competitividade da empresa.
+        </p>
+        <div class="course-footer">
+          <span class="course-price">R$ 19,90</span>
+          <a href="https://kiwify.app/kIzj2df" class="btn-course" target="_blank" rel="noopener">Comprar</a>
+        </div>
+      </div>
+  </main>
+
+  <!-- GARANTIA / CONFIANÇA -->
+  <section class="courses-trust" aria-label="Garantia e Confiabilidade">
+    <div style="text-align:center;">
+      <img src="../assets/selo-garantia.png" alt="selo garantia" width="130">
+    </div>
+
+    <h2>Garantia, Qualidade e Confiabilidade</h2>
+    <p>
+      Todos os cursos e materiais divulgados nesta página passam por um processo de curadoria da JGM4.
+      Priorizamos conteúdos com aplicação prática e foco em resultado operacional.
+    </p>
+    <p>
+      Se você quiser, podemos indicar o melhor caminho conforme sua realidade (CD, indústria, WMS, estoques ou gestão).
+      <b>Fale com um especialista</b> e ganhe direcionamento.
+    </p>
+
+    <div class="trust-icons">
+      <span class="t"><i class="fa-solid fa-circle-check"></i> Curadoria JGM4</span>
+      <span class="t"><i class="fa-solid fa-user-tie"></i> Conteúdo aplicável</span>
+      <span class="t"><i class="fa-solid fa-lock"></i> Compra segura</span>
+      <span class="t"><i class="fa-solid fa-headset"></i> Suporte e orientação</span>
+    </div>
+  </section>
+
+  <!-- Botão flutuante Diagnóstico (alta conversão) -->
+  <a class="float-diagnostico" href="../index.html#contato" aria-label="Falar com especialista">
+    <i class="fa-solid fa-comments"></i> <span>Falar com especialista</span>
+  </a>
+
+  <!-- Busca / filtros (JS simples, leve e seguro) -->
+  <script>
+    (function(){
+      const chips = document.querySelectorAll('.chip');
+      const cards = document.querySelectorAll('.course-card');
+      const input = document.getElementById('searchInput');
+
+      let activeFilter = 'all';
+
+      function apply(){
+        const q = (input.value || '').toLowerCase().trim();
+
+        cards.forEach(card => {
+          const type = (card.getAttribute('data-type') || '').toLowerCase();
+          const title = (card.getAttribute('data-title') || '').toLowerCase();
+          const text = (card.innerText || '').toLowerCase();
+
+          const matchFilter = (activeFilter === 'all') ? true : (type === activeFilter);
+          const matchSearch = !q ? true : (title.includes(q) || text.includes(q));
+
+          card.style.display = (matchFilter && matchSearch) ? '' : 'none';
+        });
+      }
+
+      chips.forEach(chip => {
+        chip.addEventListener('click', () => {
+          chips.forEach(c => c.classList.remove('active'));
+          chip.classList.add('active');
+          activeFilter = chip.getAttribute('data-filter');
+          apply();
+        });
+      });
+
+      input.addEventListener('input', apply);
+      apply();
+    })();
+  </script>
+
+</body>
+</html>
