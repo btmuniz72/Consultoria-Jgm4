@@ -1,0 +1,4 @@
+DirectoryIndex index.html
+<Files "lead-service.php">
+  Require all denied
+</Files>
