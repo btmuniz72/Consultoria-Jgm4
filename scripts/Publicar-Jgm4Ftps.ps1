@@ -33,8 +33,7 @@ function Invoke-Jgm4CurlBatch {
 
     $startInfo = [Diagnostics.ProcessStartInfo]::new()
     $startInfo.FileName = (Get-Command curl.exe -ErrorAction Stop).Source
-    $startInfo.ArgumentList.Add('--config')
-    $startInfo.ArgumentList.Add('-')
+    $startInfo.Arguments = '--config -'
     $startInfo.UseShellExecute = $false
     $startInfo.RedirectStandardInput = $true
     $startInfo.RedirectStandardOutput = $true
