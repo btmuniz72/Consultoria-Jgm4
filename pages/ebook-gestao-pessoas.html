@@ -63,7 +63,7 @@
     "offers": {
       "@type": "Offer",
       "priceCurrency": "BRL",
-      "price": "20.00",
+      "price": "19.90",
       "availability": "https://schema.org/InStock",
       "url": "https://pay.kiwify.com.br/erkytXQ"
     }
@@ -381,6 +381,7 @@
       border-radius: var(--radius);
       box-shadow: 0 32px 80px rgba(0,0,0,.5);
       width: 100%;
+      height: auto;
     }
     .hero-img-badge {
       position: absolute;
@@ -399,7 +400,7 @@
     }
     @media (max-width: 900px) {
       .hero-grid { grid-template-columns: 1fr; gap: 40px; }
-      .hero-img-wrap { order: -1; max-width: 360px; margin: -12px auto 0; }
+      .hero-img-wrap { order: 2; max-width: 360px; margin: 8px auto 0; }
       .hero { text-align: center; }
       .hero-eyebrow, .hero-proof { justify-content: center; }
       .hero-purchase { justify-content: center; }
@@ -846,7 +847,10 @@
       gap: 14px;
       align-items: center;
       justify-content: space-between;
+      transform: translateY(110%);
+      transition: transform .25s ease;
     }
+    .sticky-cta.is-visible { transform: translateY(0); }
     .sticky-cta-price { font-size: 22px; font-weight: 900; color: #22c55e; letter-spacing: -.04em; }
     .sticky-cta-label { font-size: 11px; color: var(--muted); }
     .sticky-cta .btn-cta { padding: 14px 28px; font-size: 15px; }
@@ -854,6 +858,24 @@
       .sticky-cta { display: flex; }
       body { padding-bottom: 80px; }
     }
+
+    /* CRO: blocos compactos da jornada de compra */
+    .cro-section { padding: 52px 0; }
+    .cro-section .section-header { margin-bottom: 28px; }
+    .pain-grid, .receive-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+    .pain-card, .receive-card { background: var(--bg-2); border: 1px solid var(--stroke); border-radius: var(--radius-sm); padding: 18px 16px; }
+    .pain-card { border-color: rgba(248,113,113,.22); color: #e0e7ff; font-size: 14px; line-height: 1.5; }
+    .pain-card i { color: #f87171; margin-right: 7px; }
+    .receive-card { min-height: 130px; }
+    .receive-card .receive-icon { font-size: 25px; display: block; margin-bottom: 10px; }
+    .receive-card h3 { font-size: 14px; margin-bottom: 5px; }
+    .receive-card p { color: var(--muted); font-size: 13px; margin: 0; }
+    .cro-cta { text-align: center; margin-top: 26px; }
+    .cro-cta .btn-cta { min-height: 50px; }
+    /* A oferta de saída antiga tinha preço e checkout diferentes do preço principal. */
+    #exitPopup { display: none !important; }
+    @media (max-width: 900px) { .pain-grid, .receive-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 520px) { .pain-grid, .receive-grid { grid-template-columns: 1fr; } .cro-section { padding: 42px 0; } }
 
     /* ── CTA FINAL ── */
     .cta-section {
@@ -1213,14 +1235,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
         <h1>Gestão de Pessoas<br>na Prática</h1>
         <p class="hero-subtitle">
-          O guia completo para líderes que querem <strong style="color:#e0e7ff;">resultados reais com pessoas reais</strong> — com método, dados e ferramentas que você aplica a partir de amanhã cedo.
+          <strong style="color:#e0e7ff;">Lidere melhor. Cobre com clareza. Resolva conflitos sem improviso.</strong><br>
+          Um guia prático para gestores, supervisores e líderes que precisam melhorar engajamento, feedback, cobrança e desempenho da equipe.
         </p>
 
         <div class="hero-proof">
           <span class="proof-pill"><i class="fa-solid fa-book-open"></i> 8 capítulos completos</span>
           <span class="proof-pill"><i class="fa-solid fa-tools"></i> 4 ferramentas práticas</span>
-          <span class="proof-pill"><i class="fa-solid fa-chart-bar"></i> Dados Gallup 2024</span>
+          <span class="proof-pill"><i class="fa-solid fa-mobile-screen-button"></i> PDF para computador, tablet e celular</span>
           <span class="proof-pill"><i class="fa-solid fa-download"></i> Acesso imediato</span>
+          <span class="proof-pill"><i class="fa-solid fa-shield-halved"></i> Garantia de 7 dias</span>
         </div>
 
         <div class="hero-purchase">
@@ -1234,11 +1258,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <i class="fa-solid fa-cart-shopping"></i> Quero o eBook agora
           </a>
         </div>
-        <p class="hero-meta">Compra segura via Kiwify &bull; Garantia de 7 dias &bull; Acesso vitalício</p>
+        <p class="hero-meta">Compra segura pela Kiwify &bull; Acesso imediato &bull; Garantia de 7 dias</p>
       </div>
 
       <div class="hero-img-wrap">
-        <img src="../assets/gestao-pessoas-optimized.jpg" alt="eBook Gestão de Pessoas na Prática — Bruno Muniz JGM4" loading="eager" decoding="async" fetchpriority="high" />
+        <img src="../assets/gestao-pessoas-optimized.jpg" alt="eBook Gestão de Pessoas na Prática — Bruno Muniz JGM4" width="1054" height="1492" loading="eager" decoding="async" fetchpriority="high" />
         <div class="hero-img-badge">
           <i class="fa-solid fa-shield-halved" style="color:#22c55e;"></i>
           &nbsp;Garantia incondicional de 7 dias
@@ -1264,33 +1288,43 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </section>
 
-<!-- ═══════════════════ STATS STRIP ═══════════════════ -->
-<div class="stats-strip">
+<!-- ═══════════════════ CRO: DORES ═══════════════════ -->
+<section class="cro-section section-alt" id="dores">
   <div class="container">
-    <div class="stats-grid">
-      <div class="stat-item">
-        <div class="stat-number" style="color:#f87171;">23%</div>
-        <div class="stat-label">dos trabalhadores no mundo estão engajados<br><em style="font-size:10px;">(Gallup 2024)</em></div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-number" style="color:#fbbf24;">77%</div>
-        <div class="stat-label">estão desengajados ou ativamente desengajados<br><em style="font-size:10px;">(Gallup 2024)</em></div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-number" style="color:#f87171;">49%</div>
-        <div class="stat-label">dos colaboradores brasileiros confiam no próprio gestor<br><em style="font-size:10px;">(Flash/FGV 2024)</em></div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-number" style="color:#86efac;">70%</div>
-        <div class="stat-label">da variação no engajamento vem da qualidade da liderança<br><em style="font-size:10px;">(Gallup)</em></div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-number" style="color:#93c5fd;">2,4x</div>
-        <div class="stat-label">mais chance de atingir metas com liderança desenvolvida<br><em style="font-size:10px;">(McKinsey 2023)</em></div>
-      </div>
+    <div class="section-header">
+      <span class="badge badge-blue" style="margin-bottom:16px;">Isso acontece com você?</span>
+      <h2>Se você lidera pessoas, provavelmente já passou por isso.</h2>
     </div>
+    <div class="pain-grid">
+      <div class="pain-card"><i class="fa-solid fa-circle-xmark"></i>Precisa cobrar a mesma coisa várias vezes.</div>
+      <div class="pain-card"><i class="fa-solid fa-circle-xmark"></i>Evita conversas difíceis para não gerar conflito.</div>
+      <div class="pain-card"><i class="fa-solid fa-circle-xmark"></i>Sente que a equipe depende demais de você.</div>
+      <div class="pain-card"><i class="fa-solid fa-circle-xmark"></i>Percebe erros e retrabalho se repetindo.</div>
+      <div class="pain-card"><i class="fa-solid fa-circle-xmark"></i>Tem dificuldade para reconhecer e corrigir na medida certa.</div>
+    </div>
+    <p style="text-align:center; color:#b0c4de; margin:24px auto 0; max-width:700px;">Este eBook foi criado para transformar essas situações em processos claros de liderança.</p>
+    <div class="cro-cta"><a href="#receba" class="btn-cta" onclick="jgm4TrackEvent('ebook_cta_click',{product_name:'Gestão de Pessoas na Prática',product_type:'ebook',price:19.90,currency:'BRL',cta_location:'pain'});">Quero aprender como</a></div>
   </div>
-</div>
+</section>
+
+<!-- ═══════════════════ CRO: O QUE RECEBO ═══════════════════ -->
+<section class="cro-section" id="receba">
+  <div class="container">
+    <div class="section-header">
+      <span class="badge badge-green" style="margin-bottom:16px;">Material prático</span>
+      <h2>O que você recebe por R$ 19,90</h2>
+      <p>Material para consultar e aplicar na rotina, não apenas para ler.</p>
+    </div>
+    <div class="receive-grid">
+      <div class="receive-card"><span class="receive-icon">📘</span><h3>eBook Gestão de Pessoas na Prática</h3><p>8 capítulos completos.</p></div>
+      <div class="receive-card"><span class="receive-icon">💬</span><h3>Modelo de Feedback SCI</h3><p>Conduza feedbacks difíceis sem confronto.</p></div>
+      <div class="receive-card"><span class="receive-icon">📋</span><h3>Roteiro de reunião com equipe</h3><p>Reuniões com pauta e ação.</p></div>
+      <div class="receive-card"><span class="receive-icon">✅</span><h3>Checklist de Liderança Diária</h3><p>Saiba o que acompanhar todos os dias.</p></div>
+      <div class="receive-card"><span class="receive-icon">📊</span><h3>Indicadores essenciais</h3><p>Acompanhe se a gestão está melhorando.</p></div>
+    </div>
+    <div class="cro-cta"><a href="#comprar" class="btn-cta" onclick="jgm4TrackEvent('ebook_cta_click',{product_name:'Gestão de Pessoas na Prática',product_type:'ebook',price:19.90,currency:'BRL',cta_location:'benefits'});">Quero receber agora</a></div>
+  </div>
+</section>
 
 <!-- ═══════════════════ PROBLEMA ═══════════════════ -->
 <section class="section">
@@ -1457,7 +1491,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <div class="learn-icon"><i class="fa-solid fa-users"></i></div>
           <div class="learn-item-text">
             <h4>Menor rotatividade e mais retenção</h4>
-            <p>67% dos colaboradores pedem demissão do chefe, não da empresa. Mude isso com liderança intencional.</p>
+        <p>Com liderança intencional, você cria mais clareza, acompanhamento e espaço para o desenvolvimento da equipe.</p>
           </div>
         </div>
         <div class="learn-item">
@@ -1534,50 +1568,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </section>
 
-<!-- ═══════════════════ NÚMEROS QUE PROVAM ═══════════════════ -->
-<section class="section section-alt">
-  <div class="container">
-    <div class="section-header">
-      <span class="badge badge-blue" style="margin-bottom:16px;">Dados que Provam</span>
-      <h2>Os números por trás do desafio de liderar</h2>
-      <p>Cada capítulo deste eBook é fundamentado em pesquisas reais. Conheça os dados que guiam o conteúdo.</p>
-    </div>
-
-    <div class="proof-grid">
-      <div class="proof-card">
-        <div class="proof-num" style="color:#f87171;">67%</div>
-        <div class="proof-desc">dos colaboradores pedem demissão do chefe, não da organização</div>
-        <div class="proof-source">Gallup</div>
-      </div>
-      <div class="proof-card">
-        <div class="proof-num" style="color:#fbbf24;">85%</div>
-        <div class="proof-desc">dos empregados enfrentam conflitos em algum nível no trabalho</div>
-        <div class="proof-source">CPP Inc.</div>
-      </div>
-      <div class="proof-card">
-        <div class="proof-num" style="color:#86efac;">3,6x</div>
-        <div class="proof-desc">mais chances de engajamento com feedback regular e claro</div>
-        <div class="proof-source">Harvard Business Review</div>
-      </div>
-      <div class="proof-card">
-        <div class="proof-num" style="color:#86efac;">23%</div>
-        <div class="proof-desc">mais lucratividade em equipes no quartil superior de engajamento</div>
-        <div class="proof-source">Gallup</div>
-      </div>
-      <div class="proof-card">
-        <div class="proof-num" style="color:#93c5fd;">20%</div>
-        <div class="proof-desc">mais produtividade com líderes de alta inteligência emocional</div>
-        <div class="proof-source">TalentSmart</div>
-      </div>
-      <div class="proof-card">
-        <div class="proof-num" style="color:#93c5fd;">2,5x</div>
-        <div class="proof-desc">mais engajamento quando o gestor cobra responsabilidade com estrutura</div>
-        <div class="proof-source">Gallup</div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ═══════════════════ COMO USAR ═══════════════════ -->
 <section class="section">
   <div class="container">
@@ -1627,9 +1617,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <p>Formado em Administração com especialização em Gestão de Operações e Logística, é autor de múltiplos materiais sobre liderança, gestão de pessoas, processos e logística aplicada.</p>
         <div class="author-badges">
           <div class="author-badge"><strong>+10</strong><span>Anos de gestão</span></div>
-          <div class="author-badge"><strong>-35%</strong><span>Redução de custos</span></div>
-          <div class="author-badge"><strong>+50%</strong><span>Ganho de produtividade</span></div>
-          <div class="author-badge"><strong>+200</strong><span>Profissionais desenvolvidos</span></div>
         </div>
       </div>
     </div>
@@ -1758,54 +1745,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <div class="faq-list">
 
-      <div class="faq-item">
-        <details>
-          <summary>Quanto tempo leva para ler o eBook? <span class="faq-caret"><i class="fa-solid fa-chevron-down"></i></span></summary>
-          <p class="faq-answer">O eBook tem 8 capítulos densos e ferramentas práticas. Você pode ler os capítulos de forma linear em 2-3 horas, ou navegar pelos capítulos de acordo com o desafio que enfrenta no momento. O material é organizado para ser consultado quando você precisar.</p>
-        </details>
-      </div>
-
-      <div class="faq-item">
-        <details>
-          <summary>O conteúdo é aplicável a qualquer tipo de equipe ou setor? <span class="faq-caret"><i class="fa-solid fa-chevron-down"></i></span></summary>
-          <p class="faq-answer">Sim. Os princípios de liderança, engajamento, conflito e cobrança apresentados são universais. O eBook foi escrito para ser aplicado em logística, varejo, produção, serviços, saúde, tecnologia e qualquer outro contexto em que pessoas precisem ser geridas.</p>
-        </details>
-      </div>
-
-      <div class="faq-item">
-        <details>
-          <summary>Preciso de experiência prévia em liderança para aproveitar? <span class="faq-caret"><i class="fa-solid fa-chevron-down"></i></span></summary>
-          <p class="faq-answer">Não. O eBook foi escrito para líderes iniciantes e experientes. Se você está começando a liderar, encontrará um roteiro claro de como começar. Se já tem experiência, encontrará estrutura para corrigir padrões que podem estar limitando seus resultados.</p>
-        </details>
-      </div>
-
-      <div class="faq-item">
-        <details>
-          <summary>Como funciona o acesso ao material? <span class="faq-caret"><i class="fa-solid fa-chevron-down"></i></span></summary>
-          <p class="faq-answer">Após a compra via Kiwify, você recebe acesso imediato por e-mail com link para download do PDF. O material fica disponível para sempre em sua conta na plataforma, sem taxas adicionais ou prazo de expiração.</p>
-        </details>
-      </div>
-
-      <div class="faq-item">
-        <details>
-          <summary>Posso parcelar o pagamento? <span class="faq-caret"><i class="fa-solid fa-chevron-down"></i></span></summary>
-          <p class="faq-answer">Sim. Você pode pagar em 2x de R$ 9,95 no cartão de crédito. Também aceitamos PIX e boleto bancário para pagamento à vista. Todos os meios de pagamento são processados com segurança pela Kiwify.</p>
-        </details>
-      </div>
-
-      <div class="faq-item">
-        <details>
-          <summary>O eBook tem garantia de satisfação? <span class="faq-caret"><i class="fa-solid fa-chevron-down"></i></span></summary>
-          <p class="faq-answer">Sim, garantia incondicional de 7 dias. Se você comprar, ler e sentir que o material não atendeu às suas expectativas, devolvemos 100% do valor sem burocracia e sem perguntas — é só solicitar pelo suporte da Kiwify.</p>
-        </details>
-      </div>
-
-      <div class="faq-item">
-        <details>
-          <summary>Em qual formato vem o eBook? <span class="faq-caret"><i class="fa-solid fa-chevron-down"></i></span></summary>
-          <p class="faq-answer">O eBook é entregue em PDF de alta qualidade, compatível com qualquer dispositivo: computador, tablet e celular. Você pode ler online ou imprimir para consulta offline.</p>
-        </details>
-      </div>
+      <div class="faq-item"><details><summary>Para quem é este eBook? <span class="faq-caret"><i class="fa-solid fa-chevron-down"></i></span></summary><p class="faq-answer">Para gestores, supervisores, coordenadores, empreendedores e líderes de qualquer setor que precisam desenvolver equipes.</p></details></div>
+      <div class="faq-item"><details><summary>Preciso já ser gestor? <span class="faq-caret"><i class="fa-solid fa-chevron-down"></i></span></summary><p class="faq-answer">Não. O material atende líderes iniciantes e experientes, além de quem está se preparando para assumir uma equipe.</p></details></div>
+      <div class="faq-item"><details><summary>O conteúdo funciona para qualquer setor? <span class="faq-caret"><i class="fa-solid fa-chevron-down"></i></span></summary><p class="faq-answer">Sim. Os princípios de liderança, engajamento, conflitos e cobrança podem ser adaptados a logística, varejo, produção, serviços, saúde, tecnologia e outros contextos.</p></details></div>
+      <div class="faq-item"><details><summary>O que exatamente vou receber? <span class="faq-caret"><i class="fa-solid fa-chevron-down"></i></span></summary><p class="faq-answer">Você recebe o eBook em PDF, com 8 capítulos e ferramentas práticas: Modelo SCI, roteiro de reunião, checklist de liderança e indicadores essenciais.</p></details></div>
+      <div class="faq-item"><details><summary>Como recebo o eBook? <span class="faq-caret"><i class="fa-solid fa-chevron-down"></i></span></summary><p class="faq-answer">Após a compra via Kiwify, o acesso é enviado por e-mail com link para download do PDF.</p></details></div>
+      <div class="faq-item"><details><summary>Posso ler pelo celular? <span class="faq-caret"><i class="fa-solid fa-chevron-down"></i></span></summary><p class="faq-answer">Sim. O PDF é compatível com computador, tablet e celular e pode ser consultado online ou impresso.</p></details></div>
+      <div class="faq-item"><details><summary>O acesso expira? <span class="faq-caret"><i class="fa-solid fa-chevron-down"></i></span></summary><p class="faq-answer">Não. O material fica disponível em sua conta na plataforma, sem prazo de expiração.</p></details></div>
+      <div class="faq-item"><details><summary>Como funciona a garantia? <span class="faq-caret"><i class="fa-solid fa-chevron-down"></i></span></summary><p class="faq-answer">Você tem 7 dias para conhecer o material. Caso ele não faça sentido para você, utilize a garantia conforme as condições da plataforma Kiwify.</p></details></div>
+      <div class="faq-item"><details><summary>Quais formas de pagamento? <span class="faq-caret"><i class="fa-solid fa-chevron-down"></i></span></summary><p class="faq-answer">A Kiwify informa as opções disponíveis no checkout, incluindo cartão e PIX conforme a configuração atual da oferta.</p></details></div>
+      <div class="faq-item"><details><summary>Qual a diferença entre o eBook e o Kit Completo? <span class="faq-caret"><i class="fa-solid fa-chevron-down"></i></span></summary><p class="faq-answer">O eBook reúne os 8 capítulos e suas ferramentas. O Kit Completo inclui o eBook, o Kit Líder Organizado, modelos prontos e prompts de IA para líderes.</p></details></div>
 
     </div>
   </div>
@@ -1818,8 +1767,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="selo-img">
         <img src="../assets/selo-garantia.png" alt="Selo de Garantia de 7 dias — JGM4 Consultoria" />
       </div>
-      <h2>Sua compra é 100% segura</h2>
-      <p style="font-size:17px; color:#b0c4de; max-width:600px; margin:0 auto;">Trabalhamos com as melhores práticas do mercado para garantir uma experiência segura, com acesso imediato e suporte real.</p>
+      <h2>Você tem 7 dias para conhecer o material</h2>
+      <p style="font-size:17px; color:#b0c4de; max-width:600px; margin:0 auto;">Compre, acesse e avalie o conteúdo. Caso o material não faça sentido para você, utilize a garantia de 7 dias conforme as condições da plataforma.</p>
 
       <div class="guarantee-grid">
         <div class="guarantee-item">
@@ -1835,7 +1784,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="guarantee-item">
           <i class="fas fa-undo-alt"></i>
           <h3>Garantia de 7 Dias</h3>
-          <p>Não ficou satisfeito? Devolvemos 100% do valor sem burocracia e sem perguntas. Simples assim.</p>
+          <p>Você pode avaliar o conteúdo dentro do prazo de garantia informado pela plataforma Kiwify.</p>
         </div>
         <div class="guarantee-item">
           <i class="fas fa-infinity"></i>
@@ -1899,12 +1848,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <div class="kit-value-strip">
       <div class="kv-left">
-        <strong>Valor total dos materiais individualmente: R$ 157,00</strong>
-        <span>Ebook R$ 19,90 + Kit Líder Organizado R$ 97 + Bônus IA R$ 40</span>
+        <strong>Quer receber também os modelos prontos?</strong>
+        <span>O Kit Completo reúne o eBook e materiais extras para aplicar na rotina.</span>
       </div>
       <div class="kv-right">
         <strong>Kit Completo por apenas R$ 67,00</strong>
-        <span>Economia de mais de 57%</span>
+        <span>Uma opção mais completa para quem quer acelerar a aplicação.</span>
       </div>
     </div>
   </div>
@@ -2009,7 +1958,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="pricing-title">Somente o Ebook</div>
         <div class="pricing-subtitle">Para quem quer começar com o conteúdo principal</div>
         <div class="price-row-gp" style="text-align:center;flex-direction:column;align-items:center;">
-          <span class="price-old-gp">De R$ 97,00</span>
           <span class="price-val-gp">R$ 19,90</span>
         </div>
         <p class="price-copy-gp">Acesso imediato ao ebook digital completo após confirmação do pagamento.</p>
@@ -2028,14 +1976,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
 
       <div class="pricing-card featured">
-        <div class="pricing-badge">⭐ MAIS COMPLETO E ECONÔMICO</div>
+        <div class="pricing-badge">MAIS COMPLETO</div>
         <div class="pricing-title" style="margin-top:12px;">Kit Completo do Líder</div>
         <div class="pricing-subtitle">Ebook + Kit Líder Organizado + Bônus IA para Líderes</div>
         <div class="price-row-gp">
-          <span class="price-old-gp">De R$ 157,00</span>
           <span class="price-val-gp" style="color:#4ade80;">R$ 67,00</span>
         </div>
-        <p class="price-copy-gp">Tudo em um único acesso — economize mais de 57% em relação ao valor individual.</p>
+        <p class="price-copy-gp">Tudo em um único acesso, para quem quer os modelos prontos além do conteúdo principal.</p>
         <ul class="pricing-items">
           <li>Ebook completo com 8 capítulos práticos</li>
           <li>Método SCI, P.A.C.E., KPIs e alta performance</li>
@@ -2068,13 +2015,30 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- STICKY CTA MOBILE -->
 <div class="sticky-cta" id="stickyCta">
   <div>
-    <div class="sticky-cta-label">Ebook R$ 19,90 &bull; Kit Completo R$ 67</div>
-    <div class="sticky-cta-price" style="font-size:14px;">Escolha sua opção</div>
+    <div class="sticky-cta-label">Gestão de Pessoas na Prática</div>
+    <div class="sticky-cta-price">R$ 19,90</div>
   </div>
-  <a href="#comprar" class="btn-cta" rel="noopener noreferrer" style="background:linear-gradient(135deg,#22c55e,#16a34a); box-shadow:0 16px 35px rgba(34,197,94,.3);">
-    <i class="fa-solid fa-cart-shopping"></i> Ver opções
+  <a href="https://pay.kiwify.com.br/erkytXQ" class="btn-cta" rel="noopener noreferrer" style="background:linear-gradient(135deg,#22c55e,#16a34a); box-shadow:0 16px 35px rgba(34,197,94,.3);" onclick="jgm4TrackCheckout('gestao_pessoas_ebook_sticky_mobile', 19.90);">
+    <i class="fa-solid fa-cart-shopping"></i> Quero agora
   </a>
 </div>
+
+<script>
+  (function () {
+    var sticky = document.getElementById('stickyCta');
+    var hero = document.querySelector('.hero');
+    var footer = document.querySelector('footer');
+    if (!sticky || !hero) return;
+    function updateSticky() {
+      var pastHero = window.scrollY > hero.offsetTop + hero.offsetHeight;
+      var nearFooter = footer && footer.getBoundingClientRect().top < window.innerHeight;
+      sticky.classList.toggle('is-visible', pastHero && !nearFooter);
+    }
+    window.addEventListener('scroll', updateSticky, { passive: true });
+    window.addEventListener('resize', updateSticky);
+    updateSticky();
+  })();
+</script>
 
 <!-- ═══════════════════ EXIT INTENT POPUP ═══════════════════ -->
 <div id="exitPopup" style="
@@ -2134,15 +2098,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       padding:20px 24px;
       margin-bottom:24px;
     ">
-      <div style="font-size:11px;font-weight:700;color:#86efac;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px;">De <s style="color:#f87171;">R$ 19,90</s> &nbsp;por apenas</div>
-      <div style="font-size:clamp(52px,10vw,72px);font-weight:900;color:#22c55e;line-height:1;letter-spacing:-.04em;">R$ 15</div>
+      <div style="font-size:11px;font-weight:700;color:#86efac;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px;">Oferta do eBook</div>
+      <div style="font-size:clamp(52px,10vw,72px);font-weight:900;color:#22c55e;line-height:1;letter-spacing:-.04em;">R$ 19,90</div>
       <div style="font-size:13px;color:#86efac;margin-top:4px;">Oferta exclusiva · Acesso imediato · Garantia de 7 dias</div>
     </div>
 
     <a href="https://pay.kiwify.com.br/3Ay4cBl" class="btn-cta" rel="noopener noreferrer"
       style="width:100%;justify-content:center;font-size:17px;"
-      onclick="jgm4TrackCheckout('gestao_pessoas_exit_offer', 15); document.getElementById('exitPopup').style.display='none';">
-      <i class="fa-solid fa-bolt"></i> Quero por R$ 15,00 agora!
+      onclick="jgm4TrackCheckout('gestao_pessoas_exit_offer', 19.90); document.getElementById('exitPopup').style.display='none';">
+      <i class="fa-solid fa-bolt"></i> Quero o eBook por R$ 19,90
     </a>
     <p style="font-size:12px;color:#60748a;margin-top:14px;margin-bottom:0;">
       <button onclick="document.getElementById('exitPopup').style.display='none'" style="background:none;border:none;color:#60748a;font-size:12px;cursor:pointer;text-decoration:underline;">
@@ -2198,12 +2162,38 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     }
   }
 
+  jgm4TrackEvent('ebook_view', {
+    product_name: 'Gestão de Pessoas na Prática',
+    product_type: 'ebook',
+    price: 19.90,
+    currency: 'BRL',
+    cta_location: 'page_view'
+  });
+
 function jgm4TrackCheckout(label, value) {
+      var isKit = label.indexOf('_kit_') !== -1;
+      var productType = isKit ? 'kit' : 'ebook';
+      var location = label.replace('gestao_pessoas_' + productType + '_', '');
+      var common = {
+        product_name: isKit ? 'Kit Completo' : 'Gestão de Pessoas na Prática',
+        product_type: productType,
+        price: value,
+        currency: 'BRL',
+        cta_location: location
+      };
+      if (window.dataLayer) {
+        window.dataLayer.push(Object.assign({ event: isKit ? 'kit_cta_click' : 'ebook_cta_click' }, common));
+        window.dataLayer.push(Object.assign({ event: isKit ? 'kit_checkout_click' : 'ebook_checkout_click' }, common));
+      }
       var payload = {
         event_category: 'checkout',
         event_label: label,
         value: value,
-        currency: 'BRL'
+        currency: 'BRL',
+        product_name: common.product_name,
+        product_type: productType,
+        price: value,
+        cta_location: location
       };
     jgm4TrackEvent('begin_checkout', payload);
     if (typeof fbq === 'function') {
