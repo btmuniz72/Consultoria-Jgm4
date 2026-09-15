@@ -1,0 +1,119 @@
+.seo-breadcrumb {
+  display: block;
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 116px 16px 8px;
+  color: rgba(255, 255, 255, .62);
+  font-size: 13px;
+}
+
+.seo-breadcrumb a {
+  color: #76cdff;
+  text-decoration: none;
+}
+
+.seo-support {
+  max-width: 1120px;
+  margin: 28px auto;
+  padding: 0 16px;
+}
+
+.seo-support__box {
+  padding: clamp(22px, 4vw, 38px);
+  border: 1px solid rgba(46, 167, 255, .22);
+  border-radius: 18px;
+  background: rgba(46, 167, 255, .07);
+}
+
+.seo-support h2 {
+  margin: 0 0 12px;
+  color: #fff;
+  font-size: clamp(22px, 3vw, 32px);
+  line-height: 1.2;
+}
+
+.seo-support h3 {
+  margin: 0 0 8px;
+  color: #76cdff;
+  font-size: 18px;
+}
+
+.seo-support p,
+.seo-support li {
+  color: rgba(255, 255, 255, .78);
+  line-height: 1.7;
+}
+
+.seo-support__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.seo-support__card {
+  padding: 18px;
+  border: 1px solid rgba(255, 255, 255, .1);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, .04);
+}
+
+.seo-support__card p {
+  margin: 0;
+}
+
+.seo-support__links {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.seo-support__links a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  padding: 11px;
+  border: 1px solid rgba(46, 167, 255, .3);
+  border-radius: 9px;
+  color: #a8ddff;
+  text-align: center;
+  text-decoration: none;
+  font-weight: 800;
+}
+
+.seo-faq {
+  display: grid;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.seo-faq details {
+  padding: 15px 17px;
+  border: 1px solid rgba(255, 255, 255, .11);
+  border-radius: 11px;
+  background: rgba(255, 255, 255, .04);
+}
+
+.seo-faq summary {
+  color: #fff;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.seo-faq details p {
+  margin: 10px 0 0;
+}
+
+@media (max-width: 760px) {
+  .seo-support__grid,
+  .seo-support__links {
+    grid-template-columns: 1fr;
+  }
+
+  .seo-breadcrumb {
+    padding-top: 132px;
+  }
+}

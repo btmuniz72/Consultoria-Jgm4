@@ -1,27 +1,59 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+<script id="jgm4-consent-default">
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
+  gtag('consent', 'default', {
+    'analytics_storage': 'denied',
+    'ad_storage': 'denied',
+    'ad_user_data': 'denied',
+    'ad_personalization': 'denied',
+    'functionality_storage': 'granted',
+    'security_storage': 'granted',
+    'wait_for_update': 500
+  });
+</script>
+<!-- Google Tag Manager -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){
+    if (arguments[0] === 'event') {
+      dataLayer.push(Object.assign({ event: arguments[1] }, arguments[2] || {}));
+      return;
+    }
+    dataLayer.push(arguments);
+  }
+  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-NQGP74WJ');
+</script>
+<!-- End Google Tag Manager -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; block-all-mixed-content" />
 
   <title>Diagnóstico Profissional de Estoque | JGM4 Consultoria</title>
-  <meta name="description" content="Descubra onde sua empresa perde dinheiro no estoque e receba um diagnóstico profissional com relatório, plano de ação e reunião estratégica.">
-  <meta name="keywords" content="diagnóstico de estoque, consultoria de estoque, gestão de estoque, acuracidade de estoque, perdas no estoque, organização de estoque, logística">
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="Bruno Muniz — JGM4 Consultoria Logística" />
+  <link rel="canonical" href="https://www.jgm4consultoria.com.br/pages/estoques-venda.html" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Gestão de Estoques na Prática | JGM4" />
+  <meta property="og:description" content="Material prático de gestão de estoques para organizar controle, reduzir perdas, melhorar acuracidade e transformar estoque em resultado." />
+  <meta property="og:url" content="https://www.jgm4consultoria.com.br/pages/estoques-venda.html" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:site_name" content="JGM4 Consultoria Logística" />
+  <meta name="twitter:title" content="Gestão de Estoques na Prática | JGM4" />
+  <meta name="twitter:description" content="Material prático de gestão de estoques para organizar controle, reduzir perdas, melhorar acuracidade e transformar estoque em resultado." />
+  <meta name="description" content="Diagnóstico de estoque para identificar perdas, riscos operacionais, impacto financeiro e estruturar um plano de ação priorizado.">
   <meta name="theme-color" content="#0a2540">
-
-  <link rel="icon" href="../assets/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1QSQEF3EN"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-X1QSQEF3EN');
-  </script>
-
-  <style>
+    <script src="../js/lgpd-consent.js"></script>
+<style>
     :root{
       --bg:#071525;
       --bg-2:#0a2540;
@@ -279,6 +311,44 @@
       margin:14px 0 0;
     }
 
+    .executive-note{
+      margin-top:16px;
+      padding:14px 16px;
+      border-radius:14px;
+      background:#f8fbff;
+      border:1px solid #d6e8fa;
+      color:#334155;
+      font-size:14px;
+      line-height:1.5;
+    }
+
+    .deliverable-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:14px;
+      margin-top:24px;
+    }
+
+    .deliverable{
+      padding:18px;
+      border-radius:16px;
+      background:#f8fbff;
+      border:1px solid #d5e6f7;
+    }
+
+    .deliverable strong{
+      display:block;
+      color:#0f172a;
+      margin-bottom:5px;
+      font-size:15px;
+    }
+
+    .deliverable span{
+      color:#667085;
+      font-size:14px;
+      line-height:1.5;
+    }
+
     .offer-list{
       list-style:none;
       padding:0;
@@ -479,6 +549,25 @@
       margin-top:22px;
     }
 
+    .executive-box{
+      background:linear-gradient(135deg,#eef6ff,#ffffff);
+      border:1px solid #c8ddf0;
+      border-radius:22px;
+      padding:26px;
+      margin-top:22px;
+    }
+
+    .executive-box h3{
+      margin:0 0 10px;
+      color:#134a8e;
+      font-size:20px;
+    }
+
+    .executive-box p{
+      margin:0;
+      color:#475467;
+    }
+
     .money-list li::before{
       content:"💰";
       left:0;
@@ -540,13 +629,13 @@
     .timer-wrap{
       margin-top:18px;
       padding:20px;
-      background:#fff5f5;
-      border:1px solid #fecaca;
+      background:#f0faf5;
+      border:1px solid #bbf7d0;
       border-radius:18px;
     }
 
     .urgency{
-      color:#b42318;
+      color:#15803d;
       font-size:16px;
       font-weight:800;
       text-transform:uppercase;
@@ -554,12 +643,12 @@
     }
 
     .timer{
-      font-size:46px;
-      line-height:1;
-      color:#d92d20;
-      font-weight:900;
+      font-size:18px;
+      line-height:1.45;
+      color:#166534;
+      font-weight:800;
       margin-top:8px;
-      font-family:"Courier New", monospace;
+      font-family:Arial, Helvetica, sans-serif;
     }
 
     .price-note{
@@ -580,6 +669,13 @@
       margin:0;
       color:#334155;
       font-size:16px;
+    }
+
+    .testimonial strong{
+      display:block;
+      color:#0f172a;
+      margin-bottom:8px;
+      font-size:15px;
     }
 
     .footer{
@@ -678,6 +774,60 @@
       font-size:15px;
     }
 
+    .cookie-banner{
+      position:fixed;
+      left:18px;
+      right:18px;
+      bottom:18px;
+      z-index:10000;
+      display:none;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:16px 18px;
+      border-radius:14px;
+      background:rgba(7,21,37,.96);
+      border:1px solid rgba(255,255,255,.14);
+      box-shadow:0 22px 55px rgba(0,0,0,.45);
+      backdrop-filter:blur(14px);
+    }
+
+    .cookie-banner.is-visible{ display:flex; }
+
+    .cookie-banner p{
+      margin:0;
+      color:#d6e3f0;
+      font-size:13px;
+      line-height:1.55;
+    }
+
+    .cookie-banner a{
+      color:#9ee7bc;
+      text-decoration:underline;
+    }
+
+    .cookie-actions{
+      display:flex;
+      gap:10px;
+      flex-shrink:0;
+    }
+
+    .cookie-btn{
+      border:1px solid rgba(255,255,255,.16);
+      border-radius:999px;
+      padding:11px 16px;
+      color:#fff;
+      background:rgba(255,255,255,.06);
+      cursor:pointer;
+      font-weight:800;
+      font-size:13px;
+    }
+
+    .cookie-btn.accept{
+      border-color:rgba(37,211,102,.35);
+      background:linear-gradient(135deg,var(--green),var(--green-dark));
+    }
+
     @media (max-width: 1080px){
       .hero-grid,
       .grid-2,
@@ -688,6 +838,10 @@
       }
 
       .hero-points{
+        grid-template-columns:1fr;
+      }
+
+      .deliverable-grid{
         grid-template-columns:1fr;
       }
     }
@@ -722,25 +876,102 @@
         display:block;
       }
 
+      .cookie-banner{
+        align-items:stretch;
+        flex-direction:column;
+        bottom:96px;
+      }
+
+      .cookie-actions{ width:100%; }
+      .cookie-btn{ flex:1; }
+
       .footer{
         padding-bottom:120px;
       }
     }
   </style>
-</head>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Diagnóstico Profissional de Estoque",
+    "description": "Serviço de diagnóstico profissional de estoque com relatório executivo, plano de ação e reunião estratégica.",
+    "url": "https://www.jgm4consultoria.com.br/pages/estoques-venda.html",
+    "image": "https://www.jgm4consultoria.com.br/assets/estoques-ebook-optimized.jpg",
+    "inLanguage": "pt-BR",
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "JGM4 Consultoria Logística",
+      "url": "https://www.jgm4consultoria.com.br/"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "JGM4 Consultoria Logística",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://www.jgm4consultoria.com.br/assets/brand/logo-jgm4-google-ads-1200x1200.png"
+      }
+    },
+    "breadcrumb": {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "JGM4 Consultoria", "item": "https://www.jgm4consultoria.com.br/" },
+        { "@type": "ListItem", "position": 2, "name": "Diagnóstico Profissional de Estoque", "item": "https://www.jgm4consultoria.com.br/pages/estoques-venda.html" }
+      ]
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Diagnóstico Profissional de Estoque",
+    "description": "Diagnóstico especializado com análise de riscos, relatório executivo, plano de ação priorizado e reunião estratégica.",
+    "provider": { "@type": "Organization", "name": "JGM4 Consultoria Logística" },
+    "areaServed": "BR",
+    "offers": {
+      "@type": "Offer",
+      "price": "497",
+      "priceCurrency": "BRL",
+      "availability": "https://schema.org/InStock",
+      "url": "https://www.jgm4consultoria.com.br/pages/estoques-venda.html"
+    }
+  }
+  </script>
+  <link rel="stylesheet" href="/css/brand.css?v=20260811-2">
+  <link rel="icon" href="/assets/brand/favicon.ico?v=20260811-2" sizes="any">
+  <link rel="icon" type="image/png" sizes="48x48" href="/assets/brand/favicon-48x48.png?v=20260811-2">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/brand/favicon-96x96.png?v=20260811-2">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/brand/favicon-192x192.png?v=20260811-2">
+  <link rel="icon" type="image/png" sizes="512x512" href="/assets/brand/favicon-512x512.png?v=20260811-2">
+  <link rel="apple-touch-icon" sizes="192x192" href="/assets/brand/favicon-192x192.png?v=20260811-2">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta property="og:image" content="https://www.jgm4consultoria.com.br/assets/brand/og-jgm4-1200x630.jpg">
+  <meta property="og:image:secure_url" content="https://www.jgm4consultoria.com.br/assets/brand/og-jgm4-1200x630.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="JGM4 Consultoria Logística">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://www.jgm4consultoria.com.br/assets/brand/og-jgm4-1200x630.jpg">
+  <meta name="twitter:image:alt" content="JGM4 Consultoria Logística"></head>
 
 <body>
-
-  <header class="header">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NQGP74WJ"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<header class="header">
     <div class="container header-wrap">
       <div class="brand">
-        <img src="../assets/logojgm4.png" alt="JGM4 Consultoria">
+        <a href="/" aria-label="Página inicial JGM4"><picture class="brand-logo-picture brand-logo-picture-header"><source media="(max-width: 768px)" srcset="/assets/brand/logo-jgm4-compacta-nova.png" type="image/png"><img src="/assets/brand/logo-jgm4-horizontal-nova.png" alt="JGM4 Consultoria Logística" class="brand-logo brand-logo" width="1536" height="1024" decoding="async"></picture></a>
         <div class="brand-text">Diagnóstico de <span>Estoque Profissional</span></div>
       </div>
 
       <a class="btn btn-whatsapp"
          href="https://wa.me/5521996334768?text=Olá,%20quero%20contratar%20o%20Diagnóstico%20de%20Estoque"
-         target="_blank" rel="noopener">
+         target="_blank" rel="noopener noreferrer">
         <i class="fab fa-whatsapp"></i>
         Solicitar diagnóstico
       </a>
@@ -751,25 +982,25 @@
     <div class="container">
       <div class="hero-grid">
         <div>
-          <span class="eyebrow">Consultoria especializada em performance logística</span>
+          <span class="eyebrow">Diagnóstico executivo para decisão empresarial</span>
 
-          <h1>Descubra onde sua empresa está <span style="color:#86efac;">perdendo dinheiro no estoque</span> e o que fazer para corrigir</h1>
+          <h1>Descubra onde seu estoque está <span style="color:#86efac;">drenando margem</span> antes de investir em sistema, equipe ou consultoria completa</h1>
 
           <p class="subheadline">
-            Um diagnóstico profissional para identificar falhas, perdas, riscos operacionais e oportunidades de melhoria no estoque da sua empresa — com visão prática, técnica e executável.
+            Uma análise profissional para empresários e gestores que precisam enxergar perdas, riscos operacionais, impacto financeiro e prioridades de correção com clareza executiva.
           </p>
 
           <div class="hero-points">
-            <div class="hero-point"><strong>Clareza:</strong> entenda onde estão as falhas reais</div>
-            <div class="hero-point"><strong>Prioridade:</strong> saiba o que corrigir primeiro</div>
-            <div class="hero-point"><strong>Impacto financeiro:</strong> visualize o custo dos erros</div>
-            <div class="hero-point"><strong>Plano de ação:</strong> receba direcionamento prático</div>
+            <div class="hero-point"><strong>Diagnóstico:</strong> falhas, riscos e causas prováveis</div>
+            <div class="hero-point"><strong>Priorização:</strong> o que corrigir primeiro e por quê</div>
+            <div class="hero-point"><strong>Impacto:</strong> leitura financeira das perdas ocultas</div>
+            <div class="hero-point"><strong>Decisão:</strong> próximos passos sem achismo</div>
           </div>
 
           <div class="cta-row">
             <a class="btn btn-whatsapp"
                href="https://wa.me/5521996334768?text=Olá,%20quero%20contratar%20o%20Diagnóstico%20de%20Estoque"
-               target="_blank" rel="noopener">
+               target="_blank" rel="noopener noreferrer">
               <i class="fab fa-whatsapp"></i>
               Solicitar diagnóstico agora
             </a>
@@ -780,19 +1011,19 @@
           </div>
 
           <div class="microcopy">
-            Atendimento direto • análise profissional • sem necessidade de acesso ao seu sistema
+            Atendimento direto • informações confidenciais • sem necessidade de acesso ao seu sistema
           </div>
         </div>
 
         <div class="hero-card">
           <div class="offer-card">
-            <span class="offer-tag">Condição especial</span>
+            <span class="offer-tag">Entrada executiva</span>
 
             <div class="old-price">De R$ 997</div>
             <div class="new-price"><span>R$</span> 497</div>
 
             <p>
-              Uma versão inicial do nosso trabalho consultivo para ajudar sua empresa a enxergar perdas, riscos e oportunidades com muito mais clareza.
+              Uma entrega objetiva para sua empresa entender se o problema está em processo, controle, equipe, sistema, inventário ou decisão de gestão.
             </p>
 
             <ul class="offer-list">
@@ -801,6 +1032,10 @@
               <li><i class="fas fa-check-circle" style="color:#16a34a; margin-top:3px;"></i><span>Reunião estratégica</span></li>
               <li><i class="fas fa-check-circle" style="color:#16a34a; margin-top:3px;"></i><span>Garantia de satisfação</span></li>
             </ul>
+
+            <div class="executive-note">
+              Ideal para decidir com segurança antes de contratar um projeto maior, trocar sistema ou aumentar equipe.
+            </div>
           </div>
         </div>
       </div>
@@ -903,45 +1138,31 @@
       <section class="section">
         <h2>O que você vai receber</h2>
         <p class="lead">
-          Não é uma análise superficial. É um material com valor real para orientar ação e decisão.
+          Não é uma conversa solta. É uma entrega consultiva para orientar ação, prioridade e decisão.
         </p>
 
-        <div class="grid-3">
-          <div class="card">
-            <div class="icon-box"><i class="fas fa-file-lines"></i></div>
-            <h3>Relatório completo</h3>
-            <p>Visão estruturada das falhas encontradas e da situação atual do estoque.</p>
+        <div class="deliverable-grid">
+          <div class="deliverable">
+            <strong>Relatório executivo em PDF</strong>
+            <span>Diagnóstico da situação atual, principais riscos, causas prováveis e pontos críticos do estoque.</span>
           </div>
+          <div class="deliverable">
+            <strong>Plano de ação priorizado</strong>
+            <span>Lista objetiva do que atacar primeiro, separando urgência, impacto e facilidade de execução.</span>
+          </div>
+          <div class="deliverable">
+            <strong>Estimativa de perdas e impacto</strong>
+            <span>Leitura financeira com base nas informações fornecidas, quando houver dados suficientes.</span>
+          </div>
+          <div class="deliverable">
+            <strong>Reunião estratégica de apresentação</strong>
+            <span>Explicação dos achados e recomendação dos próximos passos para a empresa decidir com segurança.</span>
+          </div>
+        </div>
 
-          <div class="card">
-            <div class="icon-box"><i class="fas fa-chart-line"></i></div>
-            <h3>Identificação de perdas</h3>
-            <p>Mapeamento de riscos e oportunidades de melhoria com impacto operacional e financeiro.</p>
-          </div>
-
-          <div class="card">
-            <div class="icon-box"><i class="fas fa-list-check"></i></div>
-            <h3>Plano de ação priorizado</h3>
-            <p>Direcionamento prático para corrigir os principais pontos primeiro.</p>
-          </div>
-
-          <div class="card">
-            <div class="icon-box"><i class="fas fa-user-group"></i></div>
-            <h3>Reunião estratégica</h3>
-            <p>Apresentação dos achados e recomendações para esclarecer próximos passos.</p>
-          </div>
-
-          <div class="card">
-            <div class="icon-box"><i class="fas fa-screwdriver-wrench"></i></div>
-            <h3>Recomendações aplicáveis</h3>
-            <p>Orientações práticas adaptadas à realidade da sua operação.</p>
-          </div>
-
-          <div class="card">
-            <div class="icon-box"><i class="fas fa-shield-heart"></i></div>
-            <h3>Garantia de satisfação</h3>
-            <p>Você investe com muito mais tranquilidade e baixo risco.</p>
-          </div>
+        <div class="executive-box">
+          <h3>Entrega feita para decisão, não para enfeitar gaveta</h3>
+          <p>O material é pensado para ajudar o empresário a decidir o que corrigir, o que medir, o que delegar e onde pode existir perda financeira relevante.</p>
         </div>
       </section>
 
@@ -969,15 +1190,17 @@
       <section class="section">
         <h2>Exemplo do que você irá receber</h2>
         <ul class="list">
-          <li>Relatório com falhas encontradas</li>
-          <li>Classificação do grau de risco do estoque</li>
-          <li>Plano de ação priorizado</li>
-          <li>Recomendações técnicas e operacionais</li>
+          <li>Mapa dos principais riscos do estoque</li>
+          <li>Classificação do grau de risco por impacto operacional e financeiro</li>
+          <li>Plano de ação com prioridade, responsável sugerido e sequência de execução</li>
+          <li>Recomendações técnicas e operacionais adaptadas ao porte da empresa</li>
+          <li>Indicação do que pode ser resolvido internamente e do que exige apoio especializado</li>
         </ul>
 
-        <p style="margin-top:18px; color:var(--muted);">
-          Esse é o mesmo raciocínio aplicado em projetos maiores de consultoria, adaptado para uma entrega inicial mais acessível.
-        </p>
+        <div class="executive-box">
+          <h3>Para empresários, a pergunta central é simples</h3>
+          <p>Antes de gastar com sistema, contratar mais pessoas ou iniciar uma consultoria completa, sua empresa precisa saber qual problema realmente está custando dinheiro e qual correção traz maior retorno primeiro.</p>
+        </div>
       </section>
 
       <section class="section">
@@ -985,14 +1208,14 @@
         <div class="grid-2">
           <div class="card">
             <div class="icon-box"><i class="fas fa-user-tie"></i></div>
-            <h3>Especialista da equipe JGM4</h3>
-            <p>Seu diagnóstico será conduzido por profissional com experiência prática em gestão de estoques e operações logísticas reais.</p>
+            <h3>Bruno Muniz | JGM4 Consultoria</h3>
+            <p>Seu diagnóstico será conduzido com visão prática de operação, gestão de estoques, inventário, WMS, processos logísticos e tomada de decisão empresarial.</p>
           </div>
 
           <div class="card">
             <div class="icon-box"><i class="fas fa-award"></i></div>
-            <h3>Experiência aplicada</h3>
-            <p>Mais de 15 anos de atuação em logística, reorganização de estoques, WMS e melhoria operacional.</p>
+            <h3>Experiência aplicada em operação real</h3>
+            <p>Mais de 15 anos atuando com logística, reorganização de estoques, WMS, rotinas de controle e melhoria operacional.</p>
           </div>
         </div>
 
@@ -1110,30 +1333,30 @@
       <section class="section">
         <h2>Por que este diagnóstico custa apenas R$ 497?</h2>
         <p class="lead">
-          Porque ele é uma porta de entrada acessível para empresas que precisam de clareza antes de partir para projetos maiores.
+          Porque ele é uma porta de entrada objetiva para empresas que precisam de clareza antes de assumir um projeto maior.
         </p>
 
         <p style="margin-top:18px; color:var(--muted);">
-          Este diagnóstico é uma versão inicial do nosso projeto completo de consultoria, que normalmente custa entre <strong>R$ 8.000 e R$ 25.000</strong>, dependendo da complexidade e do escopo.
+          Este diagnóstico é uma versão inicial do nosso projeto completo de consultoria. O investimento de um projeto posterior é definido somente após a análise da complexidade, do escopo, das áreas envolvidas e do acompanhamento necessário.
         </p>
 
         <p style="color:var(--muted);">
-          O objetivo aqui é entregar valor real, gerar confiança e abrir a possibilidade de um relacionamento de longo prazo — sem obrigar sua empresa a assumir um projeto maior logo de início.
+          O objetivo é entregar valor real em uma primeira análise, reduzindo risco para a empresa e criando base para uma decisão mais segura. Você não assume compromisso com projeto maior.
         </p>
       </section>
 
       <section class="section price-section" id="oferta">
-        <h2>Solicite agora seu diagnóstico profissional</h2>
+        <h2>Solicite seu diagnóstico profissional de estoque</h2>
         <p class="lead" style="max-width:760px; margin:0 auto;">
-          Um investimento pequeno diante das perdas que um estoque desorganizado pode gerar.
+          Um investimento controlado para entender perdas, riscos e prioridades antes de tomar decisões maiores.
         </p>
 
         <div class="old-price" style="margin-top:22px;">De R$ 997</div>
         <div class="new-price"><span>R$</span> 497</div>
 
         <div class="timer-wrap">
-          <div class="urgency">Condição promocional termina em:</div>
-          <div class="timer" id="timer">10:00</div>
+          <div class="urgency">Entrada consultiva com vagas limitadas</div>
+          <div class="timer">A contratação é confirmada pelo WhatsApp para validar se o diagnóstico faz sentido para o cenário da sua empresa.</div>
         </div>
 
         <p class="price-note">
@@ -1143,7 +1366,7 @@
         <div style="margin-top:24px;">
           <a class="btn btn-whatsapp"
              href="https://wa.me/5521996334768?text=Olá,%20quero%20contratar%20o%20Diagnóstico%20de%20Estoque"
-             target="_blank" rel="noopener">
+             target="_blank" rel="noopener noreferrer">
             <i class="fab fa-whatsapp"></i>
             Solicitar diagnóstico agora
           </a>
@@ -1174,13 +1397,15 @@
       </section>
 
       <section class="section">
-        <h2>Depoimentos</h2>
+        <h2>Cenários empresariais em que o diagnóstico ajuda</h2>
         <div class="grid-2">
           <div class="testimonial">
-            <p>“Descobrimos falhas que causavam perdas importantes e não estavam claras para a operação.”</p>
+            <strong>Distribuidora com divergência entre sistema e físico</strong>
+            <p>O diagnóstico ajuda a separar erro de cadastro, falha de movimentação, inventário fraco e ausência de rotina de conferência.</p>
           </div>
           <div class="testimonial">
-            <p>“Depois do diagnóstico, conseguimos reorganizar o estoque com muito mais direção e segurança.”</p>
+            <strong>Empresa com ruptura e excesso ao mesmo tempo</strong>
+            <p>A análise mostra onde a perda está nascendo: compras, armazenagem, separação, contagem, baixa, processo ou indicador.</p>
           </div>
         </div>
       </section>
@@ -1200,6 +1425,25 @@
         <p style="margin-top:16px; font-weight:800;">
           Você não tem obrigação nenhuma de continuar. O diagnóstico já entrega valor por si só.
         </p>
+      </section>
+
+      <section class="section">
+        <h2>Curso complementar para evoluir depois do diagnóstico</h2>
+        <p class="lead">
+          Se o diagnóstico mostrar falhas entre estoque físico, sistema, compras e recebimento, a formação em SAP MM pode ajudar sua equipe a entender melhor a lógica de gestão de materiais.
+        </p>
+        <div class="card" style="max-width:760px; margin:24px auto 0;">
+          <img src="../assets/sap2-optimized.jpg" alt="Academia SAP MM" loading="lazy" style="width:100%; max-width:240px; display:block; margin:0 auto 18px; border-radius:14px; box-shadow:0 14px 30px rgba(15,23,42,.14);">
+          <div class="icon-box"><i class="fas fa-cubes"></i></div>
+          <h3>Academia SAP MM — Formação Completa</h3>
+          <p>Curso indicado para profissionais que querem avançar em ERP, gestão de materiais, processos de compras, entrada de mercadoria e controle sistêmico.</p>
+          <a class="btn"
+             href="https://go.hotmart.com/Q104382621W?utm_source=google&utm_medium=cpc&utm_campaign=cross_sell_cursos&utm_content=diagnostico_estoque_sap_mm"
+             target="_blank" rel="noopener noreferrer"
+             onclick="jgm4TrackEvent('click_curso_recomendado',{curso:'sap_mm',origem:'diagnostico_estoque'});">
+            Conhecer curso SAP MM
+          </a>
+        </div>
       </section>
 
       <section class="section">
@@ -1245,7 +1489,8 @@
 
       <footer class="footer">
         <p><strong>JGM4 Consultoria</strong></p>
-        <p>WhatsApp: <a href="https://wa.me/5521996334768" target="_blank" rel="noopener">(21) 99633-4768</a></p>
+        <p>WhatsApp: <a href="https://wa.me/5521996334768" target="_blank" rel="noopener noreferrer">(21) 99633-4768</a></p>
+        <p><a href="../pages/politica.html">Política de Privacidade</a></p>
         <p>© 2026 JGM4 Consultoria. Todos os direitos reservados.</p>
       </footer>
 
@@ -1256,7 +1501,7 @@
     <p><strong>Ainda com dúvidas?</strong><br>Fale diretamente no WhatsApp e entenda se este diagnóstico faz sentido para sua empresa.</p>
     <a class="btn btn-whatsapp"
        href="https://wa.me/5521996334768?text=Tenho%20interesse%20no%20diagnóstico%20de%20estoque"
-       target="_blank" rel="noopener">
+       target="_blank" rel="noopener noreferrer">
       <i class="fab fa-whatsapp"></i>
       Falar no WhatsApp
     </a>
@@ -1264,7 +1509,7 @@
 
   <a href="https://wa.me/5521996334768?text=Olá,%20quero%20mais%20informações%20sobre%20o%20Diagnóstico%20de%20Estoque"
      class="whatsapp-float"
-     target="_blank" rel="noopener"
+     target="_blank" rel="noopener noreferrer"
      aria-label="Falar no WhatsApp">
     <i class="fab fa-whatsapp"></i>
   </a>
@@ -1278,40 +1523,114 @@
 
       <a class="btn btn-whatsapp"
          href="https://wa.me/5521996334768?text=Olá,%20quero%20contratar%20o%20Diagnóstico%20de%20Estoque"
-         target="_blank" rel="noopener">
+         target="_blank" rel="noopener noreferrer">
         Solicitar agora
       </a>
     </div>
   </div>
+<script>
+    function jgm4TrackEvent(name, params){
+      if (typeof gtag === 'function') gtag('event', name, params || {});
+    }
+
+    function jgm4TrackLead(label, value){
+      var payload = {
+        event_category: 'lead',
+        event_label: label,
+        value: value || 497,
+        currency: 'BRL'
+      };
+    }
+
+    (function(){
+      var banner = document.getElementById('cookieBanner');
+      var accept = document.getElementById('cookieAccept');
+      var reject = document.getElementById('cookieReject');
+      var key = 'jgm4_cookie_consent';
+      var scrollMarks = { 50:false, 75:false, 90:false };
+
+      function getSavedConsent(){
+        try { return localStorage.getItem(key); } catch(e) { return null; }
+      }
+
+      function saveConsent(value){
+        try { localStorage.setItem(key, value); } catch(e) {}
+      }
+
+      function updateConsent(value){
+        var granted = value === 'accepted';
+        saveConsent(value);
+        if (typeof gtag === 'function') {
+          gtag('consent', 'update', {
+            'analytics_storage': granted ? 'granted' : 'denied',
+            'ad_storage': granted ? 'granted' : 'denied',
+            'ad_user_data': granted ? 'granted' : 'denied',
+            'ad_personalization': granted ? 'granted' : 'denied'
+          });
+        }
+        if (banner) banner.classList.remove('is-visible');
+      }
+
+      if (banner && !getSavedConsent()) banner.classList.add('is-visible');
+      if (accept) accept.addEventListener('click', function(){ updateConsent('accepted'); });
+      if (reject) reject.addEventListener('click', function(){ updateConsent('necessary'); });
+
+      document.addEventListener('click', function(event){
+        var whats = event.target.closest('a[href*="wa.me/5521996334768"]');
+        if (whats) {
+          var label = whats.closest('.sticky-cta') ? 'estoque_sticky_whatsapp' :
+                      whats.closest('#popup') ? 'estoque_popup_whatsapp' :
+                      'estoque_whatsapp_cta';
+          jgm4TrackLead(label, 497);
+          return;
+        }
+
+        var anchor = event.target.closest('a[href^="#"]');
+        if (anchor) {
+          jgm4TrackEvent('cta_click', {
+            event_category: 'navegacao',
+            event_label: 'estoque_' + (anchor.getAttribute('href') || '').replace('#', '')
+          });
+        }
+      }, true);
+
+      window.addEventListener('scroll', function(){
+        var doc = document.documentElement;
+        var max = doc.scrollHeight - window.innerHeight;
+        if (max <= 0) return;
+        var progress = Math.round((window.scrollY / max) * 100);
+        Object.keys(scrollMarks).forEach(function(mark){
+          if (!scrollMarks[mark] && progress >= Number(mark)) {
+            scrollMarks[mark] = true;
+            jgm4TrackEvent('scroll_depth', {
+              event_category: 'engajamento',
+              event_label: 'estoque_' + mark
+            });
+          }
+        });
+      }, { passive:true });
+    })();
+  </script>
 
   <script>
     // Popup de apoio
     setTimeout(function () {
       var popup = document.getElementById("popup");
-      if (popup) popup.style.display = "block";
+      if (popup) {
+        popup.style.display = "block";
+        if (typeof jgm4TrackEvent === 'function') {
+          jgm4TrackEvent('popup_view', {
+            event_category: 'engajamento',
+            event_label: 'estoque_popup_whatsapp'
+          });
+        }
+      }
     }, 6000);
 
-    // Timer
-    var minutos = 10;
-    var segundos = 0;
-    var timerEl = document.getElementById("timer");
-
-    function atualizarTimer() {
-      if (!timerEl) return;
-
-      if (segundos === 0) {
-        if (minutos === 0) return;
-        minutos--;
-        segundos = 59;
-      } else {
-        segundos--;
-      }
-
-      timerEl.textContent = minutos + ":" + (segundos < 10 ? "0" : "") + segundos;
-    }
-
-    setInterval(atualizarTimer, 1000);
   </script>
 
+  <script src="../js/sales-conversion.js" defer></script>
 </body>
 </html>
+
+

@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<job>
+<script language="JScript">
+<![CDATA[
+var window=this;
+if(!Number.isFinite)Number.isFinite=function(n){return typeof n==="number"&&isFinite(n)};
+if(!Number.isNaN)Number.isNaN=function(n){return n!==n};
+if(!Number.isInteger)Number.isInteger=function(n){return typeof n==="number"&&isFinite(n)&&Math.floor(n)===n};
+if(!Object.assign)Object.assign=function(a){for(var i=1;i<arguments.length;i++)for(var k in arguments[i])if(arguments[i].hasOwnProperty(k))a[k]=arguments[i][k];return a};
+if(!String.prototype.trim)String.prototype.trim=function(){return this.replace(/^\s+|\s+$/g,"")};
+if(!Array.prototype.map)Array.prototype.map=function(fn){var out=[];for(var i=0;i<this.length;i++)out.push(fn(this[i],i,this));return out};
+if(!Array.prototype.reduce)Array.prototype.reduce=function(fn,start){var i=arguments.length>1?0:1,acc=arguments.length>1?start:this[0];for(;i<this.length;i++)acc=fn(acc,this[i],i,this);return acc};
+var Intl={NumberFormat:function(){return{format:function(n){return String(n)}}}};
+var fso=new ActiveXObject("Scripting.FileSystemObject"),base=fso.GetParentFolderName(WScript.ScriptFullName);
+var file=fso.OpenTextFile(fso.BuildPath(base,"..\\..\\js\\logistica-facil-core.js"),1),source=file.ReadAll();file.Close();eval(source);
+var C=JGM4Calc,pass=0,fail=0;
+function near(a,b){return Math.abs(a-b)<.0000001}function t(name,ok){if(ok){pass++;WScript.Echo("OK - "+name)}else{fail++;WScript.Echo("FALHA - "+name)}}
+var box={length:61,width:48,height:34,unit:"cm",quantity:100},r=C.cubage([box],140,300),fr=C.freight(5000,450,6);
+t("cm para m",C.toMeters(100,"cm")===1);t("metros",C.toMeters(1.2,"m")===1.2);t("volume unitario",near(C.packageVolume(box),.099552));t("volume total",near(r.totalVolume,9.9552));
+t("multiplas embalagens",near(C.cubage([box,{length:1,width:1,height:1,unit:"m",quantity:2}],140,300).totalVolume,11.9552));t("fator 300",near(r.cubedWeight,2986.56));t("fator 167",near(C.cubage([box],140,167).cubedWeight,1662.5184));t("fator personalizado",near(C.cubage([box],140,200).cubedWeight,1991.04));
+t("real superior",C.cubage([{length:1,width:1,height:1,unit:"m",quantity:1}],400,300).consideredWeight===400);t("cubado superior",C.cubage([{length:1,width:1,height:1,unit:"m",quantity:1}],100,300).consideredWeight===300);t("iguais",C.cubage([{length:1,width:1,height:1,unit:"m",quantity:1}],300,300).difference===0);
+t("percentual",fr.realPercent===9);t("frete maximo",fr.maxFreight===300);t("diferenca",fr.differencePoints===3);t("reducao",fr.reduction===150);
+t("pedido minimo",C.minimum(300,6,4000).minimum===5000);t("pedido abaixo",C.minimum(300,6,4000).additional===1000);t("pedido igual",C.minimum(300,6,5000).difference===0);t("pedido acima",C.minimum(300,6,6000).margin===1000);
+var ma=C.minimumAdvanced(300,5,80,28,4800),ai=C.accuracyByItems(1000,970),aq=C.accuracyByQuantity(1000,970),av=C.accuracyByValue(10000,9800),cap=C.distributionCapacity(1200,20,85,5,180);
+t("pedido minimo avancado",ma.minimum===6000);t("percentual frete atual",near(ma.currentPercent,6.25));t("margem apos logistica",near(ma.marginAfterLogistics,20.083333333333332));
+t("acuracidade por itens",ai.accuracy===97&&ai.divergent===30);t("acuracidade por quantidade",aq.accuracy===97&&aq.difference===-30);t("acuracidade por valor",av.accuracy===98&&av.financialDifference===-200);
+t("capacidade com crescimento",cap.growthPositions===1440);t("capacidade necessaria",cap.requiredPositions===1695);t("capacidade no piso",cap.floorPositions===339);t("reserva de ocupacao",cap.reservePositions===255);
+t("ponto",C.parseBR("1234.56")===1234.56);t("virgula",C.parseBR("1.234,56")===1234.56);t("milhar brasileiro",C.parseBR("1.234")===1234);t("zero",C.parseBR("0")===0);t("negativo",C.parseBR("-1")===-1);t("vazio",Number.isNaN(C.parseBR("")));
+t("acima de 100",!C.validPercent(101));t("quantidade fracionada",!C.validQuantity(C.parseBR("1,5")));t("embalagem incompleta",Number.isNaN(C.packageVolume({length:1,width:NaN,height:1,unit:"m"})));
+t("saudavel",C.status(6,6)==="good");t("atencao",C.status(7.5,6)==="attention");t("critico",C.status(9,6)==="critical");
+WScript.Echo("TOTAL: "+pass+" aprovados; "+fail+" falharam");WScript.Quit(fail?1:0);
+]]>
+</script>
+</job>

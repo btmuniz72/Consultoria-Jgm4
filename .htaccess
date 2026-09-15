@@ -1,0 +1,106 @@
+Options -Indexes
+
+# Exibe a página institucional sem alterar o status HTTP 404 da resposta.
+ErrorDocument 404 /404.html
+
+# Compressão com detecção de módulos: Brotli quando disponível e Gzip como
+# alternativa em hospedagens Apache tradicionais.
+<IfModule mod_brotli.c>
+  AddOutputFilterByType BROTLI_COMPRESS text/html text/plain text/css text/javascript application/javascript application/json application/ld+json application/xml image/svg+xml
+</IfModule>
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css text/javascript application/javascript application/json application/ld+json application/xml image/svg+xml
+</IfModule>
+
+# Cache conservador para HTML e longo para assets estáticos. Como os arquivos
+# HTML referenciam assets com versão ou nomes estáveis, must-revalidate evita
+# conteúdo HTML antigo sem impedir o reaproveitamento de CSS, JS e imagens.
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/html "access plus 10 minutes"
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType text/javascript "access plus 1 year"
+  ExpiresByType image/avif "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType image/x-icon "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+</IfModule>
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.(?:css|js|avif|webp|jpe?g|png|svg|ico|woff2)$">
+    Header set Cache-Control "public, max-age=31536000"
+  </FilesMatch>
+  <FilesMatch "\.(?:html?)$">
+    Header set Cache-Control "public, max-age=600, must-revalidate"
+  </FilesMatch>
+  Header append Vary "Accept-Encoding"
+</IfModule>
+
+<IfModule mod_mime.c>
+  AddDefaultCharset UTF-8
+  AddCharset UTF-8 .html .htm .css .js .xml .txt
+  AddType image/avif .avif
+  AddType image/webp .webp
+  AddType font/woff2 .woff2
+  AddType application/ld+json .jsonld
+</IfModule>
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Compatibilidade com navegadores e robôs que solicitam o favicon na raiz.
+  RewriteRule ^favicon\.ico$ /assets/brand/favicon.ico [L]
+
+  # Rotas legadas com substitutos equivalentes. Destinos absolutos evitam
+  # cadeias quando a origem chega por HTTP ou pelo domínio sem www.
+  RewriteRule ^web/(?:web/)?sobre\.html$ https://www.jgm4consultoria.com.br/pages/sobre.html [R=301,L,NE]
+  RewriteRule ^web/(?:web/)?blog\.html$ https://www.jgm4consultoria.com.br/pages/blog.html [R=301,L,NE]
+  RewriteRule ^web/(?:web/)?analise\.html$ https://www.jgm4consultoria.com.br/pages/analise.html [R=301,L,NE]
+  RewriteRule ^web/(?:web/)?politica\.html$ https://www.jgm4consultoria.com.br/pages/politica.html [R=301,L,NE]
+  RewriteRule ^blog-logistica/?$ https://www.jgm4consultoria.com.br/pages/blog.html [R=301,L,NE]
+  RewriteRule ^contato-consultoria-logistica/?$ https://www.jgm4consultoria.com.br/#contato [R=301,L,NE]
+  RewriteRule ^categoria-produto/consultoria/?$ https://www.jgm4consultoria.com.br/pages/planos-atendimento.html [R=301,L,NE]
+  RewriteRule ^produto/consultoria-em-gestao-de-armazem/?$ https://www.jgm4consultoria.com.br/pages/consultoria-gestao-estoque.html [R=301,L,NE]
+  RewriteRule ^pages/consultor-logistico\.html$ https://www.jgm4consultoria.com.br/consultor-logistico/ [R=301,L,NE]
+  RewriteRule ^consultor-logistico\.html$ https://www.jgm4consultoria.com.br/consultor-logistico/ [R=301,L,NE]
+
+  # O arquivo físico existe apenas para servir a rota limpa.
+  RewriteCond %{THE_REQUEST} \s/+consultor-logistico/index\.html(?:[\s?]) [NC]
+  RewriteRule ^consultor-logistico/index\.html$ https://www.jgm4consultoria.com.br/consultor-logistico/ [R=301,L,NE]
+
+  RewriteCond %{THE_REQUEST} \s/+consultoria-logistica-para-pequenas-empresas/index\.html(?:[\s?]) [NC]
+  RewriteRule ^consultoria-logistica-para-pequenas-empresas/index\.html$ https://www.jgm4consultoria.com.br/consultoria-logistica-para-pequenas-empresas/ [R=301,L,NE]
+
+  # Conteúdos antigos removidos sem substituto editorial equivalente.
+  RewriteRule ^produto/ferramenta-de-planejamento-de-rotas/?$ - [R=410,L]
+  RewriteRule ^tag/(?:estoques|oportunidades|consultoria|logistica|empresa|pressao|linkedin|pequenas-empresas)/?$ - [R=410,L,NC]
+
+  # index.html nunca é a URL pública da home.
+  RewriteRule ^index\.html$ https://www.jgm4consultoria.com.br/ [R=301,L,NE]
+
+  # Canonicalização de protocolo e host em um único salto.
+  RewriteCond %{HTTPS} !=on [OR]
+  RewriteCond %{HTTP_HOST} !^www\.jgm4consultoria\.com\.br$ [NC]
+  RewriteRule ^ https://www.jgm4consultoria.com.br%{REQUEST_URI} [R=301,L,NE]
+
+  # A hospedagem não deve transformar URLs inexistentes em uma página 404 com
+  # status 200. Depois de canonicalizar protocolo e host, força o status real.
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^ - [R=404,L]
+</IfModule>
+
+<IfModule mod_headers.c>
+  Header set Content-Security-Policy "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self' https://wa.me https://api.whatsapp.com https://pay.hotmart.com https://go.hotmart.com https://pay.kiwify.com.br; img-src 'self' data: https:; font-src 'self' data: https://cdnjs.cloudflare.com https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://www.googleadservices.com https://www.google.com https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://cdnjs.cloudflare.com https://static.hotmart.com https://pay.hotmart.com https://go.hotmart.com; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://*.g.doubleclick.net https://ad.doubleclick.net https://googleads.g.doubleclick.net https://www.googleadservices.com https://pagead2.googlesyndication.com https://google.com https://www.google.com https://www.google.com.br; frame-src 'self' https://www.googletagmanager.com https://pay.hotmart.com https://go.hotmart.com https://pay.kiwify.com.br; upgrade-insecure-requests; block-all-mixed-content"
+  Header set Content-Security-Policy-Report-Only "require-trusted-types-for 'script'; trusted-types default jgm4 google-tag-manager"
+  Header set Cross-Origin-Opener-Policy "same-origin"
+  Header set X-Content-Type-Options "nosniff"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  Header set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
+  Header set X-Frame-Options "SAMEORIGIN"
+</IfModule>

@@ -1,0 +1,42 @@
+<!doctype html><html lang="pt-BR"><meta charset="utf-8"><title>Testes — JGM4 Logística Fácil</title>
+<body><h1>Testes do núcleo</h1><p id="summary">Executando…</p><ol id="results"></ol>
+<script src="../js/logistica-facil-core.js"></script><script>
+(function(){var C=JGM4Calc,pass=0,fail=0,out=document.querySelector("#results");
+function near(a,b){return Math.abs(a-b)<1e-7}
+function t(name,fn){var li=document.createElement("li");try{if(!fn())throw Error("valor inesperado");li.textContent="OK — "+name;pass++}catch(e){li.textContent="FALHA — "+name+" — "+e.message;fail++}out.appendChild(li)}
+var box={length:61,width:48,height:34,unit:"cm",quantity:100},r=C.cubage([box],140,300),f=C.freight(5000,450,6);
+t("centímetros para metros",function(){return C.toMeters(100,"cm")===1});
+t("dimensões em metros",function(){return C.toMeters(1.2,"m")===1.2});
+t("volume unitário",function(){return near(C.packageVolume(box),.099552)});
+t("volume total",function(){return near(r.totalVolume,9.9552)});
+t("soma de embalagens",function(){return near(C.cubage([box,{length:1,width:1,height:1,unit:"m",quantity:2}],140,300).totalVolume,11.9552)});
+t("fator 300",function(){return near(r.cubedWeight,2986.56)});
+t("fator 167",function(){return near(C.cubage([box],140,167).cubedWeight,1662.5184)});
+t("fator personalizado",function(){return near(C.cubage([box],140,200).cubedWeight,1991.04)});
+t("peso real superior",function(){return C.cubage([{length:1,width:1,height:1,unit:"m",quantity:1}],400,300).consideredWeight===400});
+t("peso cubado superior",function(){return C.cubage([{length:1,width:1,height:1,unit:"m",quantity:1}],100,300).consideredWeight===300});
+t("pesos iguais",function(){return C.cubage([{length:1,width:1,height:1,unit:"m",quantity:1}],300,300).difference===0});
+t("percentual do frete",function(){return f.realPercent===9});
+t("frete máximo",function(){return f.maxFreight===300});
+t("diferença percentual",function(){return f.differencePoints===3});
+t("redução necessária",function(){return f.reduction===150});
+t("pedido mínimo",function(){return C.minimum(300,6,4000).minimum===5000});
+t("pedido abaixo",function(){return C.minimum(300,6,4000).additional===1000});
+t("pedido igual",function(){return C.minimum(300,6,5000).difference===0});
+t("pedido acima",function(){return C.minimum(300,6,6000).margin===1000});
+t("valor com ponto",function(){return C.parseBR("1234.56")===1234.56});
+t("valor com vírgula",function(){return C.parseBR("1.234,56")===1234.56});
+t("separador de milhar brasileiro",function(){return C.parseBR("1.234")===1234});
+t("formatação brasileira",function(){return C.number(1234.56,2)==="1.234,56"});
+t("arredondamento",function(){return C.number(1.236,2)==="1,24"});
+t("zero",function(){return C.parseBR("0")===0});
+t("negativo",function(){return C.parseBR("-1")===-1});
+t("campo vazio",function(){return Number.isNaN(C.parseBR(""))});
+t("percentual acima de 100",function(){return !C.validPercent(101)});
+t("quantidade fracionada",function(){return !C.validQuantity(C.parseBR("1,5"))});
+t("embalagem incompleta",function(){return Number.isNaN(C.packageVolume({length:1,width:NaN,height:1,unit:"m"}))});
+t("status saudável",function(){return C.status(6,6)==="good"});
+t("status atenção",function(){return C.status(7.5,6)==="attention"});
+t("status crítico",function(){return C.status(9,6)==="critical"});
+document.querySelector("#summary").textContent=pass+" aprovados; "+fail+" falharam";document.body.dataset.fail=fail;document.title=(fail?"FALHA":"OK")+" "+pass+"/32";
+})();</script></body></html>

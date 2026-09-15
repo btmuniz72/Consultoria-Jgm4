@@ -20,6 +20,17 @@ $nivel         = $_POST['Nivel_Maturidade'] ?? '';
 $desc     = $_POST['Descricao'] ?? ''; // Chave corrigida para bater com o 'name' do HTML
 $prox = $_POST['Proximo_passo'] ?? ''; // Chave corrigida para bater com o 'name' do HTML
 
+function e($value) {
+    return htmlspecialchars((string) $value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+}
+
+$nome_safe = e($nome);
+$empresa_safe = e($empresa);
+$iml_safe = e($iml);
+$nivel_safe = nl2br(e($nivel));
+$desc_safe = nl2br(e($desc));
+$prox_safe = nl2br(e($prox));
+
 
 // ================= EMAIL HTML =================
 $mensagem = "
@@ -31,21 +42,25 @@ $mensagem = "
 
   <div style='max-width:600px; margin:auto; background:#ffffff; padding:30px; border-radius:8px;'>
 
-    <img src='https://jgm4consultoria.com.br/assets/logojgm4.png' style='max-width:180px; margin-bottom:20px;'>
+    <img src='https://www.jgm4consultoria.com.br/assets/brand/logo-jgm4-horizontal-nova.png'
+         alt='JGM4 Consultoria Logística'
+         width='1536'
+         height='1024'
+         style='display:block; width:180px; max-width:100%; height:auto; margin-bottom:20px;'>
 
     <h2 style='color:#1e90ff;'>Diagnóstico Logístico – JGM4</h2>
 
-    <p>Olá <strong>{$nome}</strong>,</p>
+    <p>Olá <strong>{$nome_safe}</strong>,</p>
 
     <p>
       Conforme suas respostas ao <strong>Questionário de Análise Logística</strong>,
-      avaliamos o nível de maturidade da operação da empresa <strong>{$empresa}</strong>.
+      avaliamos o nível de maturidade da operação da empresa <strong>{$empresa_safe}</strong>.
     </p>
 
     <div style='background:#f1f7ff; padding:20px; border-left:5px solid #1e90ff; margin:25px 0;'>
       <p style='margin:0; font-size:18px;'><strong>Índice de Maturidade Logística (IML)</strong></p>
-      <p style='font-size:32px; margin:10px 0; color:#1e90ff;'><strong>{$iml}/100</strong></p>
-      <p style='margin:0;'><strong>Enquadramento:</strong><br>{$nivel}</p>
+      <p style='font-size:32px; margin:10px 0; color:#1e90ff;'><strong>{$iml_safe}/100</strong></p>
+      <p style='margin:0;'><strong>Enquadramento:</strong><br>{$nivel_safe}</p>
     </div>
 
     <p>
@@ -53,9 +68,9 @@ $mensagem = "
       gestão, tecnologia e integração logística.
     </p>
 
-    <p>{$desc}</p>
+    <p>{$desc_safe}</p>
 
-    <p>{$prox}</p>
+    <p>{$prox_safe}</p>
 
     <p>
       Nossa equipe pode apresentar um plano prático para elevar o desempenho logístico
@@ -63,7 +78,7 @@ $mensagem = "
     </p>
 
     <div style='text-align:center; margin-top:30px;'>
-      <a href='https://www.jgm4consultoria.com.br/index.html#contato'
+      <a href='https://www.jgm4consultoria.com.br/#contato'
          style='background:#ff3333; color:#fff; padding:14px 28px;
                 text-decoration:none; border-radius:5px; font-weight:bold;'>
         Falar com um Consultor

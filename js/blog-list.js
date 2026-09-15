@@ -4,59 +4,62 @@ const blogList = document.getElementById("blogList");
 // =========================
 // ARTIGO EM DESTAQUE
 // =========================
-const featured = blogPosts[0];
+// Os cards e links são pré-renderizados no HTML para que rastreadores e
+// visitantes sem JavaScript encontrem todo o acervo. O JS apenas enriquece
+// os cards existentes com os metadados mantidos em blog-data.js.
+const cardsByUrl = new Map(
+  [...document.querySelectorAll("#featuredPost a[href], #blogList a[href]")]
+    .map(link => [link.getAttribute("href"), link.closest("article")])
+);
 
-featuredContainer.innerHTML = `
-  <article class="solution-card featured-article">
+blogPosts.forEach(post => {
+  const article = cardsByUrl.get(post.url);
+  if (!article) return;
+  article.dataset.category = post.category || "";
+  article.dataset.tag = `${post.category || ""} ${post.keywords || ""}`.trim();
 
-    <img 
-      src="${featured.image}" 
-      alt="${featured.title}"
-      loading="lazy"
-    >
+  if (!article.querySelector("img") && post.image) {
+    const image = document.createElement("img");
+    image.src = post.image;
+    image.alt = post.title;
+    image.width = 640;
+    image.height = 360;
+    image.loading = "lazy";
+    image.decoding = "async";
+    article.prepend(image);
+  }
 
-    <div class="featured-content">
-      <span class="section-label">Destaque</span>
-      <h2>${featured.title}</h2>
-      <p>${featured.description}</p>
-      <a href="${featured.url}" class="btn-primary">Ler artigo</a>
-    </div>
-
-  </article>
-`;
-
-// =========================
-// LISTA DE ARTIGOS
-// =========================
-blogPosts.slice(1).forEach(post => {
-  const article = document.createElement("article");
-  article.className = "solution-card";
-
-  article.innerHTML = `
-    <img 
-      src="${post.image}" 
-      alt="${post.title}"
-      loading="lazy"
-    >
-
-    <h3>${post.title}</h3>
-    <p>${post.description}</p>
-    <a href="${post.url}" class="btn-primary">Ler artigo</a>
-  `;
-
-  blogList.appendChild(article);
+  if (!article.querySelector("p") && post.description) {
+    const description = document.createElement("p");
+    description.textContent = post.description;
+    const heading = article.querySelector("h3");
+    if (heading) {
+      heading.insertAdjacentElement("afterend", description);
+    } else {
+      article.append(description);
+    }
+  }
 });
 
 // =========================
 // SCHEMA SEO DINÂMICO
 // =========================
+const siteUrl = "https://www.jgm4consultoria.com.br";
+const absoluteUrl = value => {
+  if (!value) return value;
+  if (/^https?:\/\//.test(value)) return value;
+  return `${siteUrl}${value.startsWith("/") ? value : `/${value.replace(/^\.\.\//, "")}`}`;
+};
+
 const schemaPosts = blogPosts.map(post => ({
   "@type": "BlogPosting",
   "headline": post.title,
   "description": post.description,
-  "image": post.image,
-  "url": post.url,
+  "image": absoluteUrl(post.image),
+  "url": absoluteUrl(post.url),
   "datePublished": post.datePublished,
+  "articleSection": post.category,
+  "keywords": post.keywords,
   "author": {
     "@type": "Organization",
     "name": "JGM4 Consultoria"

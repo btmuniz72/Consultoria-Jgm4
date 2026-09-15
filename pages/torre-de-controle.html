@@ -1,290 +1,427 @@
-﻿<!DOCTYPE html>
-<html lang="pt-br">
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Torre de Controle na Logística | Bruno Muniz</title>
-<meta name="description" content="Aprenda como estruturar uma Torre de Controle Logística com KPIs, dashboards e rotinas operacionais aplicáveis.">
+<script id="jgm4-consent-default">
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
+  gtag('consent', 'default', {
+    'analytics_storage': 'denied',
+    'ad_storage': 'denied',
+    'ad_user_data': 'denied',
+    'ad_personalization': 'denied',
+    'functionality_storage': 'granted',
+    'security_storage': 'granted',
+    'wait_for_update': 500
+  });
+</script>
+<!-- Google Tag Manager -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){
+    if (arguments[0] === 'event') {
+      dataLayer.push(Object.assign({ event: arguments[1] }, arguments[2] || {}));
+      return;
+    }
+    dataLayer.push(arguments);
+  }
+  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-NQGP74WJ');
+</script>
+<!-- End Google Tag Manager -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; block-all-mixed-content" />
 
-<link rel="icon" href="../assets/favicon.ico">
+  <title>Torre de Controle Logística | eBook de KPIs | JGM4</title>
+  <meta name="description" content="Aprenda a estruturar uma Torre de Controle Logística com KPIs, dashboards, rituais de gestão, plano de ação e rotina operacional. Ebook prático por Bruno Muniz." />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="Bruno Muniz — JGM4 Consultoria Logística" />
+  <link rel="canonical" href="https://www.jgm4consultoria.com.br/pages/torre-de-controle.html" />
+  <meta name="theme-color" content="#071A38" />
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <meta property="og:type" content="product" />
+  <meta property="og:title" content="Torre de Controle na Logística | KPIs e Dashboards | JGM4" />
+  <meta property="og:description" content="Método prático para transformar indicadores logísticos em rotina, decisão e plano de ação." />
+  <meta property="og:url" content="https://www.jgm4consultoria.com.br/pages/torre-de-controle.html" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:site_name" content="JGM4 Consultoria Logística" />
+  <meta name="twitter:title" content="Torre de Controle na Logística | JGM4" />
+  <meta name="twitter:description" content="KPIs, dashboards, rituais de gestão e rotina operacional para sair do modo reativo." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
-<style>
-body{
-margin:0;
-font-family:'Inter',sans-serif;
-background:#0f172a;
-color:#fff;
-overflow-x:hidden;
-}
+  <script src="../js/lgpd-consent.js"></script>
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": ["Product", "Book"],
+        "name": "Torre de Controle na Logística",
+        "description": "Ebook prático para estruturar KPIs, dashboards, rotinas de gestão, plano de ação e governança operacional em logística.",
+        "url": "https://www.jgm4consultoria.com.br/pages/torre-de-controle.html",
+        "image": "https://www.jgm4consultoria.com.br/assets/torre-de-controle-optimized.jpg",
+        "author": { "@type": "Person", "name": "Bruno Muniz", "url": "https://www.linkedin.com/in/brunomuniz72/" },
+        "publisher": { "@type": "Organization", "name": "JGM4 Consultoria Logística", "logo": { "@type": "ImageObject", "url": "https://www.jgm4consultoria.com.br/assets/brand/logo-jgm4-google-ads-1200x1200.png" } },
+        "offers": { "@type": "Offer", "price": "19.90", "priceCurrency": "BRL", "availability": "https://schema.org/InStock", "url": "https://pay.kiwify.com.br/BgrBAeS" },
+        "inLanguage": "pt-BR",
+        "genre": "Logística / Gestão Operacional"
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "JGM4 Consultoria", "item": "https://www.jgm4consultoria.com.br/" },
+          { "@type": "ListItem", "position": 2, "name": "Cursos e eBooks", "item": "https://www.jgm4consultoria.com.br/pages/cursos.html" },
+          { "@type": "ListItem", "position": 3, "name": "Torre de Controle na Logística", "item": "https://www.jgm4consultoria.com.br/pages/torre-de-controle.html" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "Preciso de sistema avançado para montar uma Torre de Controle?", "acceptedAnswer": { "@type": "Answer", "text": "Não. Você pode começar com Excel, planilhas bem estruturadas e uma rotina de indicadores. Sistemas como WMS, TMS e Power BI ajudam a evoluir a maturidade, mas não substituem método." } },
+          { "@type": "Question", "name": "O conteúdo serve para operações pequenas?", "acceptedAnswer": { "@type": "Answer", "text": "Sim. A metodologia pode ser aplicada em operações pequenas, médias ou grandes, porque trabalha com fundamentos: indicadores, rotina, visibilidade e plano de ação." } },
+          { "@type": "Question", "name": "Em quanto tempo consigo aplicar?", "acceptedAnswer": { "@type": "Answer", "text": "Você pode estruturar uma primeira versão em até 30 dias, começando por poucos indicadores críticos e evoluindo para dashboards, rituais e governança." } },
+          { "@type": "Question", "name": "O ebook é mais teórico ou prático?", "acceptedAnswer": { "@type": "Answer", "text": "É um guia prático. O foco é ajudar você a sair do modo reativo e organizar a gestão da operação com indicadores, reuniões, responsáveis e ações." } }
+        ]
+      }
+    ]
+  }
+  </script>
 
-.section{
-padding:100px 20px;
-position:relative;
-}
+  <style>
+    :root {
+      --navy:#071A38;
+      --navy2:#041024;
+      --blue:#2EA7FF;
+      --red:#E10616;
+      --green:#22c55e;
+      --ink:#0f172a;
+      --muted:#64748b;
+      --line:#e2e8f0;
+      --soft:#f8fafc;
+      --shadow:0 18px 55px rgba(2,8,23,.16);
+      --radius:18px;
+      --font:'Inter',system-ui,sans-serif;
+    }
 
-.container{
-max-width:1100px;
-margin:auto;
-}
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; font-family:var(--font); color:var(--ink); background:#fff; -webkit-font-smoothing:antialiased; }
+    img { max-width:100%; display:block; }
+    a { text-decoration:none; }
 
-.hero{
-background:url('ebook-capa.jpg') center center / cover no-repeat;
-position:relative;
-}
+    .topbar { position:sticky; top:0; z-index:50; background:rgba(255,255,255,.94); border-bottom:1px solid rgba(15,23,42,.08); backdrop-filter:blur(10px); }
+    .nav { max-width:1120px; margin:0 auto; padding:14px 16px; display:flex; align-items:center; justify-content:space-between; gap:16px; }
+    .brand { display:flex; align-items:center; gap:12px; min-width:0; color:var(--navy); font-weight:900; text-transform:uppercase; letter-spacing:.02em; }
+    .brand img { height:42px; width:auto; }
+    .nav-links { display:flex; gap:14px; align-items:center; flex-wrap:wrap; justify-content:flex-end; }
+    .nav-links a { color:#334155; font-size:13px; font-weight:800; }
+    .nav-cta { color:#fff !important; background:linear-gradient(135deg,var(--red),#ff3b4a); padding:11px 16px; border-radius:10px; box-shadow:0 10px 24px rgba(225,6,22,.20); }
+    @media(max-width:760px){ .brand span { display:none; } .nav-links a:not(.nav-cta) { display:none; } }
 
-.hero::before{
-content:'';
-position:absolute;
-top:0;left:0;right:0;bottom:0;
-background:rgba(0,0,0,0.75);
-}
+    .hero { position:relative; overflow:hidden; color:#fff; background:linear-gradient(135deg,rgba(7,26,56,.96),rgba(4,16,36,.98)), url("../assets/torre-de-controle-optimized.jpg") center right/contain no-repeat; }
+    .hero::after { content:""; position:absolute; inset:0; pointer-events:none; background:radial-gradient(760px 420px at 14% 16%,rgba(46,167,255,.20),transparent 60%), radial-gradient(760px 420px at 82% 8%,rgba(225,6,22,.12),transparent 58%); }
+    .hero-inner { position:relative; z-index:1; max-width:1120px; margin:0 auto; padding:76px 16px 64px; display:grid; grid-template-columns:1.05fr .95fr; gap:42px; align-items:center; }
+    @media(max-width:900px){ .hero { background:linear-gradient(135deg,rgba(7,26,56,.97),rgba(4,16,36,.98)); } .hero-inner { grid-template-columns:1fr; padding-top:46px; } }
+    .eyebrow { display:inline-flex; gap:8px; align-items:center; color:#a8d8ff; background:rgba(46,167,255,.12); border:1px solid rgba(46,167,255,.24); border-radius:999px; padding:7px 13px; font-size:11px; font-weight:900; letter-spacing:.09em; text-transform:uppercase; }
+    .hero h1 { margin:18px 0 14px; font-size:clamp(32px,5vw,58px); line-height:1.04; letter-spacing:-.04em; font-weight:900; }
+    .hero h1 em { color:#7dd3fc; font-style:normal; }
+    .lead { margin:0; color:rgba(255,255,255,.76); font-size:clamp(16px,2vw,19px); line-height:1.72; max-width:700px; }
+    .hero-actions { display:flex; gap:12px; flex-wrap:wrap; margin-top:28px; }
+    .btn { display:inline-flex; align-items:center; justify-content:center; gap:9px; min-height:48px; padding:14px 22px; border-radius:12px; font-weight:900; color:#fff; transition:transform .14s,filter .14s; border:1px solid transparent; }
+    .btn:hover { transform:translateY(-2px); filter:brightness(1.05); }
+    .btn-primary { background:linear-gradient(135deg,var(--red),#ff3b4a); box-shadow:0 14px 34px rgba(225,6,22,.26); }
+    .btn-secondary { background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.18); color:#fff; }
+    .trust { display:flex; gap:14px; flex-wrap:wrap; margin-top:18px; color:rgba(255,255,255,.62); font-size:13px; font-weight:700; }
+    .cover-card { justify-self:center; width:min(380px,100%); border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.06); border-radius:26px; padding:22px; box-shadow:0 24px 80px rgba(0,0,0,.34); backdrop-filter:blur(10px); }
+    .cover-card img { border-radius:18px; box-shadow:0 18px 45px rgba(0,0,0,.34); }
+    .price-box { margin-top:18px; background:#fff; color:var(--ink); border-radius:18px; padding:18px; }
+    .price-box span { display:inline-block; color:var(--green); font-size:11px; font-weight:900; text-transform:uppercase; letter-spacing:.08em; }
+    .price { margin-top:6px; color:var(--navy); font-weight:900; font-size:44px; letter-spacing:-.04em; }
+    .price-box p { margin:4px 0 0; color:var(--muted); font-size:13px; line-height:1.45; }
 
-.hero-content{
-position:relative;
-z-index:2;
-text-align:center;
-}
-
-h1{
-font-size:48px;
-font-weight:800;
-margin-bottom:20px;
-}
-
-h2{
-font-size:34px;
-font-weight:800;
-margin-bottom:20px;
-}
-
-p{
-font-size:19px;
-line-height:1.8;
-color:#e5e7eb;
-}
-
-.btn{
-display:inline-block;
-background:#22c55e;
-color:#fff;
-padding:18px 38px;
-border-radius:8px;
-text-decoration:none;
-font-weight:700;
-margin-top:30px;
-transition:.3s;
-}
-
-.btn:hover{
-background:#16a34a;
-}
-
-.dark-section{
-background:#111827;
-}
-
-.light-section{
-background:#1f2937;
-}
-
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-gap:40px;
-margin-top:50px;
-}
-
-.card{
-background:#111827;
-padding:30px;
-border-radius:12px;
-box-shadow:0 10px 30px rgba(0,0,0,.4);
-}
-
-.faq-item{
-margin-bottom:25px;
-}
-
-.footer{
-background:#000;
-text-align:center;
-padding:40px;
-font-size:14px;
-color:#9ca3af;
-}
-
-@media(max-width:768px){
-h1{font-size:32px;}
-h2{font-size:26px;}
-}
-</style>
-</head>
+    .section { padding:72px 16px; }
+    .section-soft { background:var(--soft); }
+    .wrap { max-width:1120px; margin:0 auto; }
+    .section-head { max-width:760px; margin:0 auto 36px; text-align:center; }
+    .section-kicker { display:inline-flex; padding:6px 12px; border-radius:999px; background:rgba(46,167,255,.10); color:#0369a1; font-size:11px; font-weight:900; letter-spacing:.08em; text-transform:uppercase; }
+    .section h2 { margin:14px 0 10px; color:var(--navy); font-size:clamp(26px,3vw,40px); line-height:1.12; letter-spacing:-.035em; font-weight:900; }
+    .section-head p { margin:0; color:var(--muted); font-size:16px; line-height:1.7; }
+    .grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+    .grid-2 { display:grid; grid-template-columns:repeat(2,1fr); gap:18px; }
+    @media(max-width:820px){ .grid-3,.grid-2 { grid-template-columns:1fr; } }
+    .card { background:#fff; border:1px solid var(--line); border-radius:var(--radius); padding:24px; box-shadow:0 12px 34px rgba(2,8,23,.06); }
+    .card.dark { background:linear-gradient(135deg,var(--navy),var(--navy2)); color:#fff; border-color:rgba(255,255,255,.10); }
+    .icon { width:42px; height:42px; display:grid; place-items:center; color:#fff; border-radius:12px; background:linear-gradient(135deg,var(--blue),#0284c7); margin-bottom:14px; }
+    .card h3 { margin:0 0 8px; color:var(--navy); font-size:18px; font-weight:900; letter-spacing:-.015em; }
+    .card.dark h3 { color:#fff; }
+    .card p { margin:0; color:var(--muted); font-size:14.5px; line-height:1.65; }
+    .card.dark p { color:rgba(255,255,255,.76); }
+    .check-list { list-style:none; padding:0; margin:0; display:grid; gap:12px; }
+    .check-list li { display:flex; gap:10px; color:#334155; line-height:1.58; font-size:15px; }
+    .check-list i { color:var(--green); margin-top:3px; }
+    .steps { counter-reset:step; display:grid; gap:14px; }
+    .step { display:grid; grid-template-columns:54px 1fr; gap:16px; align-items:start; background:#fff; border:1px solid var(--line); border-radius:16px; padding:18px; }
+    .step-num { width:54px; height:54px; border-radius:16px; display:grid; place-items:center; background:linear-gradient(135deg,var(--red),#ff3b4a); color:#fff; font-weight:900; font-size:20px; }
+    .step h3 { margin:0 0 6px; color:var(--navy); font-size:17px; }
+    .step p { margin:0; color:var(--muted); line-height:1.62; font-size:14.5px; }
+    .offer { background:linear-gradient(135deg,var(--navy),var(--navy2)); color:#fff; }
+    .offer-box { max-width:850px; margin:0 auto; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); border-radius:26px; padding:34px; text-align:center; box-shadow:0 24px 70px rgba(0,0,0,.28); }
+    .offer h2 { color:#fff; }
+    .offer p { color:rgba(255,255,255,.76); }
+    .offer .price { color:#fff; font-size:60px; }
+    .guarantee { display:flex; align-items:center; justify-content:center; gap:18px; max-width:620px; margin:26px auto 0; text-align:left; }
+    .guarantee img { width:92px; flex:0 0 auto; }
+    @media(max-width:560px){ .guarantee { flex-direction:column; text-align:center; } .btn { width:100%; } }
+    details { background:#fff; border:1px solid var(--line); border-radius:14px; padding:16px 18px; }
+    details + details { margin-top:10px; }
+    summary { cursor:pointer; list-style:none; display:flex; justify-content:space-between; gap:12px; color:var(--navy); font-weight:900; }
+    summary::-webkit-details-marker { display:none; }
+    details p { margin:10px 0 0; color:var(--muted); line-height:1.65; font-size:14.5px; }
+    .recommend-card { max-width:760px; margin:0 auto; display:grid; grid-template-columns:180px 1fr; gap:22px; align-items:center; }
+    .recommend-card img { border-radius:14px; box-shadow:0 12px 28px rgba(2,8,23,.16); }
+    @media(max-width:620px){ .recommend-card { grid-template-columns:1fr; text-align:center; } .recommend-card img { max-width:220px; margin:0 auto; } }
+    .footer { padding:30px 16px; border-top:1px solid var(--line); text-align:center; color:#94a3b8; font-size:13px; }
+    .footer a { color:#64748b; font-weight:800; margin:0 7px; }
+    .sticky-buy { display:none; }
+    @media(max-width:760px){ .sticky-buy { display:flex; position:fixed; z-index:60; left:0; right:0; bottom:0; background:rgba(4,16,36,.96); padding:10px 12px; gap:10px; align-items:center; border-top:1px solid rgba(255,255,255,.12); } .sticky-buy div { color:#fff; font-size:12px; font-weight:800; min-width:82px; } .sticky-buy strong { display:block; color:#7dd3fc; font-size:18px; } .sticky-buy .btn { flex:1; min-height:44px; padding:11px 12px; font-size:13px; } body { padding-bottom:74px; } }
+  </style>
+  <link rel="stylesheet" href="/css/brand.css?v=20260811-2">
+  <link rel="icon" href="/assets/brand/favicon.ico?v=20260811-2" sizes="any">
+  <link rel="icon" type="image/png" sizes="48x48" href="/assets/brand/favicon-48x48.png?v=20260811-2">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/brand/favicon-96x96.png?v=20260811-2">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/brand/favicon-192x192.png?v=20260811-2">
+  <link rel="icon" type="image/png" sizes="512x512" href="/assets/brand/favicon-512x512.png?v=20260811-2">
+  <link rel="apple-touch-icon" sizes="192x192" href="/assets/brand/favicon-192x192.png?v=20260811-2">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta property="og:image" content="https://www.jgm4consultoria.com.br/assets/brand/og-jgm4-1200x630.jpg">
+  <meta property="og:image:secure_url" content="https://www.jgm4consultoria.com.br/assets/brand/og-jgm4-1200x630.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="JGM4 Consultoria Logística">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://www.jgm4consultoria.com.br/assets/brand/og-jgm4-1200x630.jpg">
+  <meta name="twitter:image:alt" content="JGM4 Consultoria Logística"></head>
 
 <body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NQGP74WJ"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<header class="topbar">
+    <nav class="nav" aria-label="Navegação principal">
+      <a class="brand" href="../">
+        <picture class="brand-logo-picture brand-logo-picture-header"><source media="(max-width: 768px)" srcset="/assets/brand/logo-jgm4-compacta-nova.png" type="image/png"><img src="/assets/brand/logo-jgm4-horizontal-nova.png" alt="JGM4 Consultoria Logística" class="brand-logo brand-logo" width="1536" height="1024" decoding="async"></picture>
+        <span>Torre de Controle</span>
+      </a>
+      <div class="nav-links">
+        <a href="cursos.html">Cursos</a>
+        <a href="blog.html">Blog</a>
+        <a href="#conteudo">Conteúdo</a>
+        <a href="#oferta" class="nav-cta">Comprar eBook</a>
+      </div>
+    </nav>
+  </header>
 
-<!-- HERO COM IMAGEM DE FUNDO -->
-<section class="section hero">
-<div class="container hero-content">
-    <img src="../assets/logojgm4.png" width="100">
-<h1>E-book Torre de Controle na Logística</h1>
+  <main>
+    <section class="hero">
+      <div class="hero-inner">
+        <div>
+          <div class="eyebrow"><i class="fa-solid fa-chart-line"></i> Ebook prático de gestão logística</div>
+          <h1>Monte uma <em>Torre de Controle Logística</em> com KPIs, dashboards e rotina de decisão</h1>
+          <p class="lead">Pare de gerenciar a operação no susto. Este guia mostra como transformar dados logísticos em visibilidade, priorização, rituais de gestão e plano de ação para CD, transporte e supply chain.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="https://pay.kiwify.com.br/BgrBAeS" onclick="if(typeof gtag==='function') gtag('event','begin_checkout',{produto:'torre_de_controle',origem:'hero'});"><i class="fa-solid fa-lock"></i> Garantir acesso</a>
+            <a class="btn btn-secondary" href="#conteudo"><i class="fa-solid fa-list-check"></i> Ver conteúdo</a>
+          </div>
+          <div class="trust">
+            <span><i class="fa-solid fa-check"></i> Acesso imediato</span>
+            <span><i class="fa-solid fa-shield-halved"></i> Garantia de 7 dias</span>
+            <span><i class="fa-solid fa-file-lines"></i> Aplicável em 30 dias</span>
+          </div>
+        </div>
 
-<p>
-A metodologia prática para transformar sua operação em uma estrutura previsível, orientada por dados e com tomada de decisão estruturada.
-</p>
+        <aside class="cover-card" aria-label="Resumo da oferta">
+          <img src="../assets/torre-de-controle-optimized.jpg" alt="Capa do eBook Torre de Controle na Logística" width="1536" height="1024" decoding="async" fetchpriority="high" />
+          <div class="price-box">
+            <span>Oferta digital</span>
+            <div class="price">R$ 19,90</div>
+            <p>Material direto ao ponto para líderes, analistas e gestores que precisam enxergar e controlar a operação.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
 
-<p>
-Pare de apagar incêndios. Comece a operar com visão estratégica.
-</p>
-<section class="section dark-section">
-<div class="container" style="text-align:center;">
+    <section class="section section-soft">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="section-kicker">O problema</span>
+          <h2>Sem visibilidade, a logística vira urgência atrás de urgência</h2>
+          <p>Pedidos atrasados, backlog, ruptura, estoque desbalanceado, frete emergencial e equipe sobrecarregada têm uma coisa em comum: falta de gestão visual, indicadores e cadência de decisão.</p>
+        </div>
 
-<h2>Conheça o Guia Completo</h2>
+        <div class="grid-3">
+          <article class="card">
+            <div class="icon"><i class="fa-solid fa-fire-flame-curved"></i></div>
+            <h3>Operação reativa</h3>
+            <p>O time descobre o problema tarde, corre para corrigir e repete o mesmo ciclo no dia seguinte.</p>
+          </article>
+          <article class="card">
+            <div class="icon"><i class="fa-solid fa-table-cells"></i></div>
+            <h3>Dados espalhados</h3>
+            <p>Planilhas, ERP, WMS, TMS e mensagens soltas dificultam leitura rápida da realidade operacional.</p>
+          </article>
+          <article class="card">
+            <div class="icon"><i class="fa-solid fa-person-chalkboard"></i></div>
+            <h3>Reuniões sem ação</h3>
+            <p>Indicador sem dono, sem causa e sem prazo vira decoração. Torre de Controle precisa gerar decisão.</p>
+          </article>
+        </div>
+      </div>
+    </section>
 
-<img src="../assets/torre-de-controle.png" alt="Torre de Controle na Logística - Bruno Muniz" 
-style="max-width:350px;width:100%;border-radius:12px;box-shadow:0 20px 40px rgba(0,0,0,.6);margin-top:30px;">
+    <section class="section" id="conteudo">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="section-kicker">O que você aprende</span>
+          <h2>Um método simples para sair do dado bruto e chegar no plano de ação</h2>
+          <p>O guia foi criado para quem precisa estruturar controle operacional sem complicar demais a rotina.</p>
+        </div>
 
-<p style="margin-top:30px;">
-Um material estruturado para sair da operação reativa e assumir o controle estratégico da sua logística.
-</p>
+        <div class="grid-2">
+          <div class="card">
+            <ul class="check-list">
+              <li><i class="fa-solid fa-check"></i><span><strong>KPIs essenciais:</strong> OTIF, SLA, lead time, backlog, ruptura, capacidade, produtividade e acuracidade.</span></li>
+              <li><i class="fa-solid fa-check"></i><span><strong>Dashboards práticos:</strong> como organizar informação para leitura rápida e tomada de decisão.</span></li>
+              <li><i class="fa-solid fa-check"></i><span><strong>Rituais de gestão:</strong> reuniões curtas, checkpoints, responsáveis e cadência de acompanhamento.</span></li>
+              <li><i class="fa-solid fa-check"></i><span><strong>Plano de ação:</strong> como sair do indicador vermelho para causa, dono, prazo e correção.</span></li>
+              <li><i class="fa-solid fa-check"></i><span><strong>Maturidade:</strong> como começar com Excel e evoluir para BI, WMS, TMS e automações.</span></li>
+            </ul>
+          </div>
 
-</div>
-</section>
-<a href="https://pay.kiwify.com.br/BgrBAeS" class="btn">Quero Implementar Minha Torre</a>
-</div>
-</section>
+          <div class="card dark">
+            <h3>Para quem é este material?</h3>
+            <p>Líderes, analistas, supervisores, coordenadores e gestores de logística que precisam melhorar previsibilidade, visibilidade e disciplina de execução.</p>
+            <p style="margin-top:14px;">Também ajuda profissionais em crescimento que querem falar a língua de indicadores, custo, nível de serviço e melhoria contínua.</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<!-- SEÇÃO PROFUNDA -->
-<section class="section dark-section">
-<div class="container">
+    <section class="section section-soft">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="section-kicker">Aplicação</span>
+          <h2>Como implementar sua primeira Torre de Controle em 30 dias</h2>
+          <p>Comece pequeno, com indicadores críticos e rotina disciplinada. A sofisticação vem depois.</p>
+        </div>
 
-<h2>O problema que quase toda operação enfrenta</h2>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div><h3>Escolha os indicadores críticos</h3><p>Defina poucos KPIs que realmente mexem no resultado: prazo, acuracidade, backlog, produtividade e custo.</p></div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div><h3>Organize as fontes de dados</h3><p>Mapeie de onde vem cada número: ERP, WMS, TMS, planilha, transportadora ou controle operacional.</p></div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div><h3>Crie leitura visual e rotina</h3><p>Monte um painel simples e defina quando a equipe olha, quem atualiza e qual reunião decide ações.</p></div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div><h3>Transforme desvio em plano de ação</h3><p>Cada problema precisa ter causa, responsável, prazo e acompanhamento. É aqui que o controle vira resultado.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<p>
-Pedidos atrasados. Falta de visibilidade. Estoque desbalanceado.
-Equipe trabalhando muito, mas sem clareza do que realmente impacta resultado.
-</p>
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="section-kicker">Resultados esperados</span>
+          <h2>O que muda quando a operação passa a enxergar seus números</h2>
+        </div>
+        <div class="grid-3">
+          <article class="card"><h3>Mais previsibilidade</h3><p>Você deixa de depender só de sensação e passa a acompanhar os desvios antes que virem crise.</p></article>
+          <article class="card"><h3>Melhor priorização</h3><p>O time entende o que resolver primeiro, com base em impacto operacional e financeiro.</p></article>
+          <article class="card"><h3>Gestão mais madura</h3><p>Indicador, rotina e plano de ação criam uma cultura mais profissional e menos improvisada.</p></article>
+        </div>
+      </div>
+    </section>
 
-<p>
-Sem uma Torre de Controle, a operação vive no modo reativo.
-Com ela, você passa a operar com previsibilidade.
-</p>
+    <section class="section offer" id="oferta">
+      <div class="wrap">
+        <div class="offer-box">
+          <span class="section-kicker" style="background:rgba(255,255,255,.10);color:#a8d8ff;">Acesso imediato</span>
+          <h2>Garanta o eBook Torre de Controle na Logística</h2>
+          <p>Um material prático para estruturar KPIs, dashboards e rotina de gestão sem depender de projetos caros para começar.</p>
+          <div class="price">R$ 19,90</div>
+          <a class="btn btn-primary" href="https://pay.kiwify.com.br/BgrBAeS" onclick="if(typeof gtag==='function') gtag('event','begin_checkout',{produto:'torre_de_controle',origem:'oferta'});"><i class="fa-solid fa-lock"></i> Garantir acesso agora</a>
+          <div class="guarantee">
+            <img src="../assets/selo-garantia.png" alt="Garantia de 7 dias" />
+            <p><strong>Garantia de 7 dias.</strong><br>Você pode avaliar o conteúdo com calma. Se não fizer sentido, solicite reembolso pela plataforma.</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-</div>
-</section>
+    <section class="section section-soft">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="section-kicker">Complementar</span>
+          <h2>Curso recomendado para dashboards e relatórios</h2>
+          <p>Para montar controles melhores, o domínio de Excel, Word e PowerPoint ajuda bastante na rotina de indicadores.</p>
+        </div>
+        <div class="card recommend-card">
+          <img src="../assets/pacote-office-optimized.jpg" alt="Pacote Office 100% Online" />
+          <div>
+            <h3>Pacote Office 100% Online</h3>
+            <p>Curso certificado, acesso vitalício e indicado para quem quer melhorar controles, planilhas e apresentações.</p>
+            <a class="btn btn-secondary" style="background:var(--navy);margin-top:14px;" href="https://go.hotmart.com/H98470095E?utm_source=google&utm_medium=cpc&utm_campaign=cross_sell_cursos&utm_content=torre_de_controle_office" target="_blank" rel="noopener noreferrer" onclick="if(typeof gtag==='function') gtag('event','click_curso_recomendado',{curso:'pacote_office',origem:'torre_de_controle'});">Conhecer curso</a>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<!-- O QUE VOCÊ VAI APRENDER -->
-<section class="section light-section">
-<div class="container">
+    <section class="section">
+      <div class="wrap" style="max-width:850px;">
+        <div class="section-head">
+          <span class="section-kicker">FAQ</span>
+          <h2>Dúvidas frequentes</h2>
+        </div>
+        <details open><summary>Preciso de sistema avançado?<i class="fa-solid fa-chevron-down"></i></summary><p>Não. Você pode começar com Excel e evoluir conforme a maturidade da operação. O mais importante é método, rotina e confiabilidade dos dados.</p></details>
+        <details><summary>É aplicável para CDs menores?<i class="fa-solid fa-chevron-down"></i></summary><p>Sim. A metodologia é escalável e pode ser aplicada em operações pequenas, médias ou grandes.</p></details>
+        <details><summary>O material é teórico ou prático?<i class="fa-solid fa-chevron-down"></i></summary><p>É prático. A proposta é ajudar você a estruturar indicadores, dashboards, reuniões e planos de ação.</p></details>
+        <details><summary>Como recebo o acesso?<i class="fa-solid fa-chevron-down"></i></summary><p>Após a confirmação do pagamento, a plataforma libera o acesso ao conteúdo digital.</p></details>
+      </div>
+    </section>
+  </main>
 
-<h2>O que você vai aprender neste guia</h2>
+  <footer class="footer">
+    <p>© 2026 JGM4 Consultoria Logística — Bruno Muniz. Todos os direitos reservados.</p>
+    <p>
+      <a href="../">Início</a>
+      <a href="cursos.html">Cursos</a>
+      <a href="blog.html">Blog</a>
+      <a href="politica.html">Política de Privacidade</a>
+    </p>
+  </footer>
 
-<div class="grid">
-
-<div class="card">
-<h3>Fundamentos Estratégicos</h3>
-<p>Como estruturar a base da Torre de Controle dentro do CD ou transporte.</p>
-</div>
-
-<div class="card">
-<h3>KPIs Essenciais</h3>
-<p>OTIF, SLA, Lead Time, Backlog, Ruptura, Capacidade Operacional.</p>
-</div>
-
-<div class="card">
-<h3>Dashboards Práticos</h3>
-<p>Modelos aplicáveis para Excel, BI, WMS e TMS.</p>
-</div>
-
-<div class="card">
-<h3>Rotinas e Protocolos</h3>
-<p>Ritmo diário, checkpoints e governança operacional.</p>
-</div>
-
-</div>
-
-</div>
-</section>
-
-<!-- TRANSFORMAÇÃO -->
-<section class="section dark-section">
-<div class="container">
-
-<h2>O resultado esperado</h2>
-
-<p>
-✔ Clareza operacional diária  
-✔ Redução de erros  
-✔ Melhoria no nível de serviço  
-✔ Tomada de decisão baseada em dados  
-✔ Maior controle da performance da equipe  
-</p>
-
-</div>
-</section>
-
-<!-- FAQ -->
-<section class="section light-section">
-<div class="container">
-
-<h2>Perguntas Frequentes</h2>
-
-<div class="faq-item">
-<strong>Preciso de sistema avançado?</strong>
-<p>Não. Você pode começar estruturando no Excel e evoluir conforme maturidade.</p>
-</div>
-
-<div class="faq-item">
-<strong>É aplicável para CDs menores?</strong>
-<p>Sim. A metodologia é escalável.</p>
-</div>
-
-<div class="faq-item">
-<strong>É teórico ou prático?</strong>
-<p>Prático, com estrutura implementável em até 30 dias.</p>
-</div>
-
-</div>
-</section>
-
-<!-- OFERTA -->
-<section class="section dark-section" id="oferta">
-<div class="container" style="text-align:center;">
-
-<h2>Investimento</h2>
-
-<p style="font-size:32px;font-weight:800;">R$ 19,90</p>
-
-
-<p>Acesso imediato.</p>
-
-<a href="https://pay.kiwify.com.br/BgrBAeS" class="btn">Garantir Acesso Agora</a>
-
-<p style="margin-top:20px;font-size:14px;color:#9ca3af;">
-Garantia de 7 dias. Produto educacional.
-</p>
-<h2>🔒 Compra 100% Segura</h2>
-
-
-<div class="box" style="text-align:center">
-
-<img src="../assets/selo-garantia.png" width="150">
-
-<p style="margin-top:15px">
-
-Ambiente seguro e criptografado
-
-Processado pela Hotmart
-
-Seus dados protegidos
-</div>
-
-</section>
-
-<div class="footer">
-© 2026 Bruno Muniz/JGM4 Consultoria Logística - Todos os direitos reservados
-</div>
-
+  <div class="sticky-buy">
+    <div>Hoje <strong>R$ 19,90</strong></div>
+    <a class="btn btn-primary" href="https://pay.kiwify.com.br/BgrBAeS">Comprar agora</a>
+  </div>
+  <script src="../js/sales-conversion.js" defer></script>
 </body>
 </html>
+
+

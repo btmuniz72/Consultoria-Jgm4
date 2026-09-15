@@ -1,0 +1,28 @@
+# Configurações e resíduos locais
+.edge-test-profile/
+**/.edge-test-profile/
+.artifacts/
+.uv-cache/
+test-artifacts-*/
+*.tmp
+*.temp
+*.bak
+*.log
+Thumbs.db
+Desktop.ini
+
+# Pacotes e relatórios são artefatos gerados localmente
+deploy/
+deploy-*/
+pacote-*/
+documentacao/relatorios/
+
+# Cópias históricas não fazem parte do site publicado
+arquivo-morto/
+backup-*-jgm4-*/
+
+# Backups baixados automaticamente antes de publicacoes FTPS
+backups-remotos-ftps/
+
+# Configurações locais com potencial de conter caminhos da máquina
+.claude/settings.local.json

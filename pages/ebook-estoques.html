@@ -1,49 +1,75 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+<script id="jgm4-consent-default">
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
+  gtag('consent', 'default', {
+    'analytics_storage': 'denied',
+    'ad_storage': 'denied',
+    'ad_user_data': 'denied',
+    'ad_personalization': 'denied',
+    'functionality_storage': 'granted',
+    'security_storage': 'granted',
+    'wait_for_update': 500
+  });
+</script>
+<!-- Google Tag Manager -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){
+    if (arguments[0] === 'event') {
+      dataLayer.push(Object.assign({ event: arguments[1] }, arguments[2] || {}));
+      return;
+    }
+    dataLayer.push(arguments);
+  }
+  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-NQGP74WJ');
+</script>
+<!-- End Google Tag Manager -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Do Caos à Confiabilidade | Gestão Profissional de Estoques</title>
-  <meta name="description" content="Aprenda a organizar estoque e almoxarifado, elevar a acuracidade de estoque e sair do improviso com um método profissional de gestão de estoque aplicável à realidade operacional.">
-  <meta name="keywords" content="gestão de estoque, organizar estoque, organizar almoxarifado, organização de estoque, acuracidade de estoque, métodos de estoque, controle de estoque excel, estoque bagunçado, controle de estoque, logística, inventário, confiabilidade de estoque">
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; block-all-mixed-content" />
+  <title>Gestão de Estoques e Inventário | eBook Prático | JGM4</title>
+  <meta name="author" content="Bruno Muniz — JGM4 Consultoria Logística" />
+  <link rel="canonical" href="https://www.jgm4consultoria.com.br/pages/ebook-estoques.html" />
+  <meta property="og:url" content="https://www.jgm4consultoria.com.br/pages/ebook-estoques.html" />
+  <meta property="og:site_name" content="JGM4 Consultoria Logística" />
+  <meta name="twitter:title" content="Do Caos à Confiabilidade | Gestão Profissional de Estoques" />
+  <meta name="twitter:description" content="eBook Do Caos à Confiabilidade: método prático para organizar estoque, elevar acuracidade e implantar gestão profissional de estoques." />
+  <meta name="description" content="Aprenda a organizar estoque e almoxarifado, elevar a acuracidade e aplicar um método profissional de gestão na rotina operacional.">
   <meta name="theme-color" content="#060e18">
   <meta name="robots" content="index,follow">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Do Caos à Confiabilidade | Gestão Profissional de Estoques">
   <meta property="og:description" content="Método profissional, prático e aplicável para elevar o controle e a confiabilidade do estoque.">
-  <meta property="og:image" content="../assets/estoques-ebook.jpg">
   <meta property="og:locale" content="pt_BR">
-
-  <link rel="icon" href="../assets/favicon.ico" type="image/x-icon">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="preconnect" href="https://static.hotmart.com" crossorigin>
   <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
 
-  <script>
+    <script src="../js/lgpd-consent.min.js" defer></script>
+<script>
     function importHotmart(){
       var imported = document.createElement('script');
       imported.src = 'https://static.hotmart.com/checkout/widget.min.js';
+      imported.defer = true;
       document.head.appendChild(imported);
       var link = document.createElement('link');
       link.rel = 'stylesheet';
       link.href = 'https://static.hotmart.com/css/hotmart-fb.min.css';
       document.head.appendChild(link);
     }
-    importHotmart();
+    window.addEventListener('load', function(){ setTimeout(importHotmart, 1200); });
   </script>
-
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1QSQEF3EN"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-X1QSQEF3EN');
-  </script>
-
-  <style>
+<style>
     :root{
       --bg:#060e18;
       --bg-2:#0a1624;
@@ -263,7 +289,7 @@
         radial-gradient(ellipse 90% 60% at 70% -10%, rgba(34,197,94,.12), transparent),
         radial-gradient(ellipse 60% 50% at 100% 50%, rgba(34,197,94,.07), transparent),
         radial-gradient(ellipse 80% 60% at 0% 80%, rgba(14,31,48,.8), transparent),
-        url("../assets/estoques-ebook.jpg") center/cover no-repeat;
+        url("../assets/estoques-ebook-optimized.jpg") center/cover no-repeat;
       opacity:.18;
       filter:saturate(0.5);
     }
@@ -1599,13 +1625,13 @@
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
-    "@type":"Product",
+    "@type":["Product","Book"],
     "name":"Do Caos à Confiabilidade | Gestão Profissional de Estoques",
-    "image":"../assets/estoques-ebook.jpg",
+    "image":"../assets/estoques-ebook-optimized.jpg",
     "description":"Material digital prático para diagnosticar falhas, reconstruir processos e elevar a confiabilidade do estoque.",
     "brand":{"@type":"Brand","name":"JGM4 Consultoria"},
     "offers":{
-      "@type":"Offer","priceCurrency":"BRL","price":"19.90",
+      "@type":"Offer","priceCurrency":"BRL","price":"9.99",
       "availability":"https://schema.org/InStock",
       "url":"https://pay.hotmart.com/N104645661W"
     }
@@ -1624,10 +1650,29 @@
     ]
   }
   </script>
-</head>
+  <link rel="stylesheet" href="/css/brand.css?v=20260811-2">
+  <link rel="icon" href="/assets/brand/favicon.ico?v=20260811-2" sizes="any">
+  <link rel="icon" type="image/png" sizes="48x48" href="/assets/brand/favicon-48x48.png?v=20260811-2">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/brand/favicon-96x96.png?v=20260811-2">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/brand/favicon-192x192.png?v=20260811-2">
+  <link rel="icon" type="image/png" sizes="512x512" href="/assets/brand/favicon-512x512.png?v=20260811-2">
+  <link rel="apple-touch-icon" sizes="192x192" href="/assets/brand/favicon-192x192.png?v=20260811-2">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta property="og:image" content="https://www.jgm4consultoria.com.br/assets/brand/og-jgm4-1200x630.jpg">
+  <meta property="og:image:secure_url" content="https://www.jgm4consultoria.com.br/assets/brand/og-jgm4-1200x630.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="JGM4 Consultoria Logística">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://www.jgm4consultoria.com.br/assets/brand/og-jgm4-1200x630.jpg">
+  <meta name="twitter:image:alt" content="JGM4 Consultoria Logística"></head>
 <body>
-
-  <div class="progress-bar" id="progressBar"></div>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NQGP74WJ"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<div class="progress-bar" id="progressBar"></div>
 
   <!-- HERO -->
   <section class="hero">
@@ -1636,7 +1681,7 @@
 
     <div class="container">
       <div class="topbar">
-        <img src="../assets/logojgm4.png" alt="JGM4 Consultoria" class="logo">
+        <a href="/" aria-label="Página inicial JGM4"><picture class="brand-logo-picture brand-logo-picture-square"><img src="/assets/brand/logo-jgm4-compacta-nova.png" alt="JGM4 Consultoria Logística" class="logo brand-logo brand-logo" width="1024" height="1024" decoding="async"></picture></a>
         <div class="top-tags" aria-label="benefícios principais">
           <span class="top-tag">🔒 Compra segura</span>
           <span class="top-tag">📱 Acesso digital</span>
@@ -1690,7 +1735,7 @@
               <div class="stat-label">Capítulos estruturados</div>
             </div>
             <div class="stat-item">
-              <div class="stat-number">R$&nbsp;19</div>
+              <div class="stat-number">R$&nbsp;9,99</div>
               <div class="stat-label">Investimento único</div>
             </div>
             <div class="stat-item">
@@ -1700,7 +1745,7 @@
           </div>
 
           <div class="cta-group anim-fade-up delay-4" style="margin-top:28px;">
-            <a onclick="return false;" href="https://pay.hotmart.com/N104645661W" class="hotmart-fb hotmart__button-checkout btn btn-primary btn-lg" aria-label="Comprar agora por R$ 19,90">
+            <a href="https://pay.hotmart.com/N104645661W" target="_blank" rel="noopener noreferrer" class="hotmart-fb hotmart__button-checkout btn btn-primary btn-lg" aria-label="Comprar agora por R$ 9,99">
               Quero acesso imediato &rarr;
             </a>
             <a href="#oferta" class="btn btn-secondary">Ver oferta completa</a>
@@ -1714,17 +1759,17 @@
         <aside class="hero-card" aria-label="Resumo da oferta">
           <div class="hero-card-inner">
             <div class="ebook-wrap">
-              <img src="../assets/estoques-ebook.jpg" alt="Ebook Gestão Profissional de Estoques" class="ebook-cover">
+              <img src="../assets/estoques-ebook-optimized.jpg" alt="Ebook Gestão Profissional de Estoques" class="ebook-cover" loading="eager" decoding="async" fetchpriority="high">
             </div>
 
             <div class="offer-card">
-              <span class="tag">🎯 Condição especial</span>
+              <span class="tag">🎯 Oferta especial R$ 9,99</span>
               <div class="price-line">
                 <div>
                   <div class="old-price">De R$ 39,90</div>
-                  <div class="new-price"><span>R$</span>19,90</div>
+                  <div class="new-price"><span>R$</span>9,99</div>
                 </div>
-                <div class="discount-badge">−50%</div>
+                <div class="discount-badge">−75%</div>
               </div>
               <p>Um investimento baixo para organizar o estoque com mais segurança e visão profissional.</p>
               <ul class="offer-list-mini">
@@ -1829,14 +1874,14 @@
               </ul>
 
               <div style="margin-top:28px;">
-                <a onclick="return false;" href="https://pay.hotmart.com/N104645661W" class="hotmart-fb hotmart__button-checkout btn btn-primary">
+                <a href="https://pay.hotmart.com/N104645661W" target="_blank" rel="noopener noreferrer" class="hotmart-fb hotmart__button-checkout btn btn-primary">
                   Quero comprar agora &rarr;
                 </a>
               </div>
             </div>
 
             <div class="visual-card">
-              <img src="../assets/estoques-ebook.jpg" alt="Ebook Estoques">
+              <img src="../assets/estoques-ebook-optimized.jpg" alt="Ebook Estoques">
             </div>
           </div>
         </section>
@@ -2019,6 +2064,39 @@
         </section>
       </div>
 
+      <!-- PROXIMO PASSO RECOMENDADO -->
+      <div class="section-shell reveal">
+        <section class="section">
+          <span class="eyebrow" style="background:rgba(37,99,235,.10); color:#2563eb; border-color:rgba(37,99,235,.22);">Próximo passo recomendado</span>
+          <h2 style="margin-top:16px;">Depois do estoque confiável, avance em <em>sistema e análise</em></h2>
+          <p class="lead">
+            Se você lida com saldos, compras, recebimento, inventário e relatórios, estes cursos complementam o ebook com habilidades práticas para a rotina.
+          </p>
+          <div class="grid-2">
+            <article class="audience-box yes">
+              <img src="../assets/sap2-optimized.jpg" alt="Academia SAP MM" style="width:100%; max-width:220px; display:block; margin:0 auto 16px; border-radius:14px; box-shadow:0 14px 28px rgba(15,23,42,.14);">
+              <h3 style="color:#2563eb;">Academia SAP MM</h3>
+              <p>Para entender gestão de materiais, ERP, integração entre áreas e processos de suprimentos.</p>
+              <a href="https://go.hotmart.com/Q104382621W?utm_source=google&utm_medium=cpc&utm_campaign=cross_sell_cursos&utm_content=ebook_estoques_sap_mm"
+                 target="_blank" rel="noopener noreferrer" class="btn-primary"
+                 onclick="if(typeof gtag==='function') gtag('event','click_curso_recomendado',{curso:'sap_mm',origem:'ebook_estoques'});">
+                Ver curso SAP MM
+              </a>
+            </article>
+            <article class="audience-box yes">
+              <img src="../assets/pacote-office-optimized.jpg" alt="Pacote Office 100% Online" loading="lazy" style="width:100%; max-width:220px; display:block; margin:0 auto 16px; border-radius:14px; box-shadow:0 14px 28px rgba(15,23,42,.14);">
+              <h3 style="color:var(--green-3);">Pacote Office</h3>
+              <p>Para melhorar Excel, Word e PowerPoint na criação de controles, relatórios e apresentações.</p>
+              <a href="https://go.hotmart.com/H98470095E?utm_source=google&utm_medium=cpc&utm_campaign=cross_sell_cursos&utm_content=ebook_estoques_office"
+                 target="_blank" rel="noopener noreferrer" class="btn-primary"
+                 onclick="if(typeof gtag==='function') gtag('event','click_curso_recomendado',{curso:'pacote_office',origem:'ebook_estoques'});">
+                Ver curso de Office
+              </a>
+            </article>
+          </div>
+        </section>
+      </div>
+
       <!-- FAQ -->
       <div class="section-shell reveal">
         <section class="section">
@@ -2095,7 +2173,7 @@
           <div class="offer-bg-blob"></div>
 
           <div class="offer-header">
-            <span class="badge">🎯 Condição especial disponível hoje</span>
+            <span class="badge">🎯 Oferta especial R$ 9,99 disponível hoje</span>
             <h2 style="max-width:660px; margin-inline:auto;">Garanta seu acesso ao método profissional de gestão de estoques</h2>
             <p class="lead" style="max-width:620px; margin:0 auto; color:#556070;">
               Um conteúdo para quem quer sair da desorganização, reduzir falhas e construir um estoque mais confiável.
@@ -2104,12 +2182,11 @@
             <div style="margin-top:16px;">
               <div class="old-price" style="color:#94a3b8; margin-bottom:4px;">De R$ 39,90</div>
               <div class="new-price" style="color:#0c1929; font-size:clamp(52px,10vw,72px);">
-                <span>R$</span>19,90
+                <span>R$</span>9,99
               </div>
             </div>
 
-            <div id="contador">15:00</div>
-            <div class="count-label">⏱ Oferta promocional com tempo limitado</div>
+            <div class="count-label">Acesso digital imediato após a confirmação do pagamento</div>
           </div>
 
           <div class="offer-grid">
@@ -2119,7 +2196,7 @@
             <div class="offer-item">Garantia de 7 dias pela Hotmart</div>
           </div>
 
-          <a onclick="return false;" href="https://pay.hotmart.com/N104645661W" class="hotmart-fb hotmart__button-checkout btn btn-primary btn-lg" style="animation:pulse-green 2.4s infinite;">
+          <a href="https://pay.hotmart.com/N104645661W" target="_blank" rel="noopener noreferrer" class="hotmart-fb hotmart__button-checkout btn btn-primary btn-lg" style="animation:pulse-green 2.4s infinite;">
             Quero acessar agora com segurança &rarr;
           </a>
 
@@ -2162,8 +2239,8 @@
         <p>
           Se você quer mais controle, mais previsibilidade e uma gestão operacional mais sólida, este material pode ser um ótimo próximo passo.
         </p>
-        <a onclick="return false;" href="https://pay.hotmart.com/N104645661W" class="hotmart-fb hotmart__button-checkout btn btn-primary btn-lg">
-          Comprar agora por R$ 19,90 &rarr;
+        <a href="https://pay.hotmart.com/N104645661W" target="_blank" rel="noopener noreferrer" class="hotmart-fb hotmart__button-checkout btn btn-primary btn-lg">
+          Comprar agora por R$ 9,99 &rarr;
         </a>
       </section>
 
@@ -2183,9 +2260,9 @@
     <div class="sticky-wrap">
       <div class="sticky-price">
         Oferta hoje
-        <strong>R$ 19,90</strong>
+        <strong>R$ 9,99</strong>
       </div>
-      <a onclick="return false;" href="https://pay.hotmart.com/N104645661W" class="hotmart-fb hotmart__button-checkout btn btn-primary">
+      <a href="https://pay.hotmart.com/N104645661W" target="_blank" rel="noopener noreferrer" class="hotmart-fb hotmart__button-checkout btn btn-primary">
         Comprar agora &rarr;
       </a>
     </div>
@@ -2208,18 +2285,6 @@
         }
       });
     });
-
-    // ── COUNTDOWN ──
-    var tempo = 15 * 60;
-    var elCount = document.getElementById('contador');
-    function tick(){
-      if(!elCount) return;
-      var m = Math.floor(tempo/60), s = tempo%60;
-      elCount.textContent = (m<10?'0'+m:m)+':'+(s<10?'0'+s:s);
-      if(tempo>0) tempo--;
-    }
-    tick();
-    setInterval(tick, 1000);
 
     // ── SCROLL REVEAL ──
     var revealEls = document.querySelectorAll('.reveal');
@@ -2257,6 +2322,19 @@
     }
     window.addEventListener('scroll', updateSticky, {passive:true});
 
+    // ── CHECKOUT CLICK TRACKING ──
+    document.querySelectorAll('.hotmart__button-checkout').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        gtag('event', 'begin_checkout', {
+          currency: 'BRL',
+          value: 9.99,
+          items: [{ item_id: 'ebook-estoques', item_name: 'Ebook Gestão Profissional de Estoques', price: 9.99, quantity: 1 }]
+        });
+        // Google Ads — substitua AW-XXXXXXX/YYYYYYY pelo seu ID de conversão
+        // Conversao de Ads deve ser configurada somente no GTM.
+      });
+    });
+
     // ── ANIMATED NUMBERS (ROI cards) ──
     function animateNumber(el, target, duration, prefix, suffix){
       var start = 0;
@@ -2289,5 +2367,10 @@
     }, {threshold:0.5});
     roiCards.forEach(function(el){ roiIO.observe(el); });
   </script>
+  <script src="../js/sales-conversion.js" defer></script>
 </body>
 </html>
+
+
+
+

@@ -1,33 +1,61 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+<script id="jgm4-consent-default">
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
+  gtag('consent', 'default', {
+    'analytics_storage': 'denied',
+    'ad_storage': 'denied',
+    'ad_user_data': 'denied',
+    'ad_personalization': 'denied',
+    'functionality_storage': 'granted',
+    'security_storage': 'granted',
+    'wait_for_update': 500
+  });
+</script>
+<!-- Google Tag Manager -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){
+    if (arguments[0] === 'event') {
+      dataLayer.push(Object.assign({ event: arguments[1] }, arguments[2] || {}));
+      return;
+    }
+    dataLayer.push(arguments);
+  }
+  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-NQGP74WJ');
+</script>
+<!-- End Google Tag Manager -->
   
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; block-all-mixed-content" />
 
   <title>Remuneração Variável em Operações Logísticas | JGM4 Consultoria</title>
+  <meta name="author" content="Bruno Muniz — JGM4 Consultoria Logística" />
+  <link rel="canonical" href="https://www.jgm4consultoria.com.br/pages/ebook-remuneracao-variavel.html" />
+  <meta property="og:url" content="https://www.jgm4consultoria.com.br/pages/ebook-remuneracao-variavel.html" />
+  <meta property="og:site_name" content="JGM4 Consultoria Logística" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta name="twitter:title" content="Remuneração Variável em Operações Logísticas | JGM4" />
+  <meta name="twitter:description" content="eBook sobre remuneração variável em operações logísticas: indicadores, metas, produtividade, meritocracia e gestão de desempenho." />
   <meta name="description" content="Manual executivo para implantar remuneração variável na logística com métricas, modelo matemático e plano de ação. De R$120 por R$19,90." />
   <meta name="robots" content="index,follow" />
 
   <!-- FAVICON (suba o arquivo no seu site) -->
-  <link rel="icon" href="../assets/favicon.ico" type="image/x-icon" />
 
   <!-- (Opcional) Open Graph -->
   <meta property="og:title" content="Remuneração Variável em Operações Logísticas | JGM4" />
   <meta property="og:description" content="Aprenda a estruturar um modelo de remuneração variável sustentável e aplicável em CDs." />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="../assets/remunera.png" />
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1QSQEF3EN"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-X1QSQEF3EN');
-</script>
-  
-
-  <style>
+    <script src="../js/lgpd-consent.js"></script>
+<style>
     :root{
       /* Paleta inspirada na logo JGM4 */
       --navy: #071A38;
@@ -47,6 +75,7 @@
     *{box-sizing:border-box}
     body{
       margin:0;
+      overflow-x: hidden;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Helvetica Neue", sans-serif;
       color: var(--white);
       background:
@@ -73,6 +102,8 @@
       color:rgba(255,255,255,.92);
       font-weight:600;font-size:13px;
       white-space:nowrap;
+      flex-shrink: 1;
+      min-width: 0;
     }
 
     .hero{
@@ -276,16 +307,103 @@
       font-size:12.5px;
       border-top:1px solid rgba(255,255,255,.10);
     }
+
+    @media (max-width: 600px) {
+      .wrap { padding: 16px 14px 80px; }
+      .topbar { flex-wrap: wrap; gap: 10px; border-radius: 14px; }
+      .pill { font-size: 12px; padding: 6px 10px; white-space: normal; }
+      .brand small { font-size: 12px; }
+      h1, h2 { font-size: 24px; text-align: center; }
+      .ctaRow { flex-direction: column; align-items: stretch; }
+      .priceBox { justify-content: center; }
+      .btn { justify-content: center; text-align: center; }
+      .hero-left { padding: 18px 16px; }
+      .hero-right { padding: 14px; }
+    }
+
+    @media (max-width: 400px) {
+      h1 { font-size: 22px; }
+      .topbar { padding: 8px 10px; }
+    }
   </style>
-</head>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Remuneração Variável em Operações Logísticas",
+    "description": "eBook sobre remuneração variável em operações logísticas: indicadores, metas, produtividade, meritocracia e gestão de desempenho.",
+    "url": "https://www.jgm4consultoria.com.br/pages/ebook-remuneracao-variavel.html",
+    "image": "https://www.jgm4consultoria.com.br/assets/remunera-optimized.jpg",
+    "inLanguage": "pt-BR",
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "JGM4 Consultoria Logística",
+      "url": "https://www.jgm4consultoria.com.br/"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "JGM4 Consultoria Logística",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://www.jgm4consultoria.com.br/assets/brand/logo-jgm4-google-ads-1200x1200.png"
+      }
+    },
+    "breadcrumb": {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "JGM4 Consultoria", "item": "https://www.jgm4consultoria.com.br/" },
+        { "@type": "ListItem", "position": 2, "name": "Remuneração Variável em Operações Logísticas", "item": "https://www.jgm4consultoria.com.br/pages/ebook-remuneracao-variavel.html" }
+      ]
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": ["Product", "Book"],
+    "name": "Remuneração Variável em Operações Logísticas",
+    "description": "Ebook sobre indicadores, metas e modelo de remuneração variável aplicável a operações logísticas.",
+    "image": "https://www.jgm4consultoria.com.br/assets/remunera-optimized.jpg",
+    "brand": { "@type": "Brand", "name": "JGM4 Consultoria" },
+    "offers": {
+      "@type": "Offer",
+      "url": "https://pay.kiwify.com.br/RK4zlAp",
+      "price": "19.90",
+      "priceCurrency": "BRL",
+      "availability": "https://schema.org/InStock"
+    }
+  }
+  </script>
+  <link rel="stylesheet" href="/css/brand.css?v=20260811-2">
+  <link rel="icon" href="/assets/brand/favicon.ico?v=20260811-2" sizes="any">
+  <link rel="icon" type="image/png" sizes="48x48" href="/assets/brand/favicon-48x48.png?v=20260811-2">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/brand/favicon-96x96.png?v=20260811-2">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/brand/favicon-192x192.png?v=20260811-2">
+  <link rel="icon" type="image/png" sizes="512x512" href="/assets/brand/favicon-512x512.png?v=20260811-2">
+  <link rel="apple-touch-icon" sizes="192x192" href="/assets/brand/favicon-192x192.png?v=20260811-2">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta property="og:image" content="https://www.jgm4consultoria.com.br/assets/brand/og-jgm4-1200x630.jpg">
+  <meta property="og:image:secure_url" content="https://www.jgm4consultoria.com.br/assets/brand/og-jgm4-1200x630.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="JGM4 Consultoria Logística">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://www.jgm4consultoria.com.br/assets/brand/og-jgm4-1200x630.jpg">
+  <meta name="twitter:image:alt" content="JGM4 Consultoria Logística"></head>
 
 <body>
-  <div class="wrap">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NQGP74WJ"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<div class="wrap">
     <!-- TOPO -->
     <div class="topbar">
       <div class="brand">
         <!-- LOGO (suba o arquivo no seu site) -->
-        <img src="/assets/logojgm4.png" alt="JGM4 Consultoria Logística" />
+        <a href="/" aria-label="Página inicial JGM4"><picture class="brand-logo-picture brand-logo-picture-square"><img src="/assets/brand/logo-jgm4-compacta-nova.png" alt="JGM4 Consultoria Logística" class="brand-logo brand-logo" width="1024" height="1024" decoding="async"></picture></a>
         <div>
           <strong>JGM4 Consultoria</strong>
           <small>Performance, métricas e eficiência operacional</small>
@@ -354,7 +472,7 @@
           </div>
 
           <!-- TROQUE o link abaixo pelo seu checkout Kiwify -->
-          <a class="btn" href="https://pay.kiwify.com.br/RK4zlAp" target="_blank" rel="noopener">
+          <a class="btn" href="https://pay.kiwify.com.br/RK4zlAp" target="_blank" rel="noopener noreferrer">
             Quero o manual agora
             <span aria-hidden="true">→</span>
           </a>
@@ -374,7 +492,7 @@
       <div class="card hero-right">
         <div class="cover">
           <!-- IMAGEM DO PRODUTO (suba no seu site) -->
-          <img src="../assets/remunera.png" alt="Capa do eBook Remuneração Variável em Operações Logísticas" />
+          <img src="../assets/remunera-optimized.jpg" alt="Capa do eBook Remuneração Variável em Operações Logísticas" loading="eager" decoding="async" fetchpriority="high" />
         </div>
 
         <div class="trust">
@@ -490,6 +608,25 @@
       </div>
     </div>
 
+    <!-- CURSO COMPLEMENTAR -->
+    <div class="section">
+      <div class="card contentBox" style="display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;">
+        <img src="../assets/nr12.png" alt="Auditor e Instrutor em NR-12" style="width:100%; max-width:210px; border-radius:14px; box-shadow:0 14px 30px rgba(0,0,0,.28);">
+        <div style="max-width:680px;">
+          <h2 style="margin-bottom:8px;">Curso complementar para produtividade com segurança</h2>
+          <p style="color:rgba(255,255,255,.74);line-height:1.6">
+            Se a operação usa metas, máquinas e equipamentos, a formação em NR-12 ajuda líderes a equilibrar produtividade, conformidade e prevenção.
+          </p>
+        </div>
+        <a class="btn"
+           href="https://kiwify.app/Kx4ARjA?afid=jOXgTF3K&utm_source=google&utm_medium=cpc&utm_campaign=cross_sell_cursos&utm_content=remuneracao_variavel_nr12"
+           target="_blank" rel="noopener noreferrer"
+           onclick="if(typeof gtag==='function') gtag('event','click_curso_recomendado',{curso:'nr12',origem:'remuneracao_variavel'});">
+          Conhecer NR-12 →
+        </a>
+      </div>
+    </div>
+
     <!-- CTA FINAL -->
     <div class="section">
       <div class="card contentBox" style="display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;">
@@ -500,7 +637,7 @@
             Acesso imediato + garantia de 7 dias.
           </div>
         </div>
-        <a class="btn" href="https://pay.kiwify.com.br/RK4zlAp" target="_blank" rel="noopener">
+        <a class="btn" href="https://pay.kiwify.com.br/RK4zlAp" target="_blank" rel="noopener noreferrer">
           Comprar agora por R$ 19,90 →
         </a>
       </div>
@@ -521,12 +658,15 @@
         <span class="from">R$ 120,00</span>
         <span class="to">R$ 19,90</span>
       </div>
-      <a class="btn" href="https://pay.kiwify.com.br/RK4zlAp" target="_blank" rel="noopener">Comprar agora →</a>
+      <a class="btn" href="https://pay.kiwify.com.br/RK4zlAp" target="_blank" rel="noopener noreferrer">Comprar agora →</a>
     </div>
   </div>
 
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
   </script>
+  <script src="../js/sales-conversion.js" defer></script>
 </body>
 </html>
+
+

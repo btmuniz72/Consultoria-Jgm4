@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <script id="jgm4-consent-default">window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('consent','default',{analytics_storage:'denied',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',functionality_storage:'granted',security_storage:'granted',wait_for_update:500});</script>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f)})(window,document,'script','dataLayer','GTM-NQGP74WJ');</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Inventário Cíclico: Como Fazer e Aumentar a Acuracidade | JGM4</title>
+  <meta name="description" content="Aprenda como fazer inventário cíclico, definir frequência de contagem, usar curva ABC, investigar divergências e aumentar a acuracidade do estoque.">
+  <meta name="author" content="Bruno Muniz — JGM4 Consultoria Logística">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+  <link rel="canonical" href="https://www.jgm4consultoria.com.br/blog/inventario-ciclico.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Inventário Cíclico: Como Fazer e Aumentar a Acuracidade | JGM4">
+  <meta property="og:description" content="Aprenda como implantar contagens cíclicas, definir frequência, aplicar curva ABC e tratar divergências sem depender apenas do inventário anual.">
+  <meta property="og:url" content="https://www.jgm4consultoria.com.br/blog/inventario-ciclico.html">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:site_name" content="JGM4 Consultoria Logística">
+  <meta property="og:image" content="https://www.jgm4consultoria.com.br/assets/inventario-ciclico-acuracidade-estoque.webp">
+  <meta property="og:image:type" content="image/webp">
+  <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Inventário cíclico e contagem de estoque em centro de distribuição">
+  <meta property="article:author" content="Bruno Muniz"><meta property="article:section" content="Estoque e armazenagem">
+  <meta property="article:published_time" content="2026-08-31T10:00:00-03:00"><meta property="article:modified_time" content="2026-08-31T10:00:00-03:00">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Inventário cíclico: como fazer e aumentar a acuracidade">
+  <meta name="twitter:description" content="Frequência, curva ABC, contagem cega, divergências e indicadores para uma rotina de inventário contínuo.">
+  <meta name="twitter:image" content="https://www.jgm4consultoria.com.br/assets/inventario-ciclico-acuracidade-estoque.webp">
+  <meta name="twitter:image:alt" content="Inventário cíclico e contagem de estoque em centro de distribuição">
+  <link rel="stylesheet" href="../css/seo-growth.css"><link rel="stylesheet" href="../css/inventario-ciclico.css"><link rel="stylesheet" href="../css/brand.css?v=20260811-2">
+  <link rel="icon" href="/assets/brand/favicon.ico?v=20260811-2" sizes="any"><link rel="manifest" href="/site.webmanifest">
+  <script src="../js/lgpd-consent.min.js" defer></script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@graph":[
+    {"@type":"BlogPosting","headline":"Inventário cíclico: como fazer, definir frequência e aumentar a acuracidade do estoque","description":"Aprenda como fazer inventário cíclico, definir frequência de contagem, usar curva ABC, investigar divergências e aumentar a acuracidade do estoque.","image":{"@type":"ImageObject","url":"https://www.jgm4consultoria.com.br/assets/inventario-ciclico-acuracidade-estoque.webp","width":1200,"height":630},"author":{"@type":"Person","name":"Bruno Muniz","url":"https://www.jgm4consultoria.com.br/pages/sobre.html"},"publisher":{"@type":"Organization","name":"JGM4 Consultoria Logística","logo":{"@type":"ImageObject","url":"https://www.jgm4consultoria.com.br/assets/brand/logo-jgm4-google-ads-1200x1200.png"}},"datePublished":"2026-08-31T10:00:00-03:00","dateModified":"2026-08-31T10:00:00-03:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.jgm4consultoria.com.br/blog/inventario-ciclico.html"}},
+    {"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Início","item":"https://www.jgm4consultoria.com.br/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://www.jgm4consultoria.com.br/pages/blog.html"},{"@type":"ListItem","position":3,"name":"Inventário Cíclico","item":"https://www.jgm4consultoria.com.br/blog/inventario-ciclico.html"}]},
+    {"@type":"FAQPage","mainEntity":[
+      {"@type":"Question","name":"O que é inventário cíclico?","acceptedAnswer":{"@type":"Answer","text":"Inventário cíclico é a contagem programada e recorrente de partes do estoque ao longo do ano. Em vez de esperar uma única paralisação geral, a empresa verifica grupos de SKUs ou endereços, compara físico e sistema e investiga rapidamente as divergências."}},
+      {"@type":"Question","name":"Inventário cíclico e inventário rotativo são iguais?","acceptedAnswer":{"@type":"Answer","text":"Sim. Na prática, inventário cíclico, inventário rotativo e contagem cíclica descrevem a mesma lógica de contagens recorrentes por grupos de itens ou endereços. O nome pode variar; o importante é ter plano, frequência, regras e tratamento das diferenças."}},
+      {"@type":"Question","name":"Com que frequência fazer inventário cíclico?","acceptedAnswer":{"@type":"Answer","text":"A frequência deve refletir risco e esforço operacional. Curva ABC, criticidade, movimentação, valor e histórico de divergência ajudam a decidir quais itens contar mais vezes. Não existe uma frequência universal adequada a todas as operações."}},
+      {"@type":"Question","name":"Posso usar curva ABC para definir a frequência?","acceptedAnswer":{"@type":"Answer","text":"Sim. A curva ABC é um bom ponto de partida: itens A tendem a receber maior frequência que B e C. Porém, a regra fica mais robusta quando também considera criticidade, giro, lote, validade, fracionamento, múltiplos endereços e recorrência de diferenças."}},
+      {"@type":"Question","name":"Como calcular a acuracidade do estoque?","acceptedAnswer":{"@type":"Answer","text":"Divida a quantidade de itens sem divergência pela quantidade total de itens contados e multiplique por 100. Se 192 dos 200 itens contados estiverem corretos, a acuracidade da amostra é 96%. Defina antes o critério de item correto."}},
+      {"@type":"Question","name":"Inventário cíclico substitui inventário geral?","acceptedAnswer":{"@type":"Answer","text":"Não necessariamente. A contagem cíclica melhora o controle contínuo e pode reduzir a dependência de grandes contagens, mas exigências contábeis, fiscais, auditorias e políticas da empresa podem manter a necessidade de inventário geral."}},
+      {"@type":"Question","name":"É possível fazer inventário cíclico sem WMS?","acceptedAnswer":{"@type":"Answer","text":"Sim. O inventário é um processo e o WMS é uma tecnologia de apoio. Planilhas, ERP ou formulários controlados podem sustentar a rotina, desde que existam endereçamento, responsabilidades, bloqueio de movimentações, registro e análise das divergências."}},
+      {"@type":"Question","name":"É possível fazer inventário sem parar a operação?","acceptedAnswer":{"@type":"Answer","text":"Sim. É possível contar em janelas de baixa movimentação, por rua, endereço ou SKU, no início ou final do turno, bloqueando temporariamente apenas a área contada. A regra precisa impedir entradas e saídas não registradas durante a contagem."}}
+    ]}
+  ]}
+  </script>
+</head>
+<body>
+  <a class="sg-skip" href="#conteudo">Ir para o conteúdo</a>
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NQGP74WJ" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <header class="sg-header"><nav class="sg-wrap sg-nav" aria-label="Navegação principal"><a href="../" aria-label="Página inicial JGM4"><picture class="brand-logo-picture brand-logo-picture-header"><source media="(max-width: 768px)" srcset="/assets/brand/logo-jgm4-compacta-nova.png" type="image/png"><img class="sg-logo brand-logo" src="/assets/brand/logo-jgm4-horizontal-nova.png" alt="JGM4 Consultoria Logística" width="1536" height="1024" decoding="async"></picture></a><button class="sg-menu-button" type="button" aria-expanded="false" aria-controls="menu-principal">Menu</button><ul id="menu-principal"><li><a href="../">Início</a></li><li><a href="../pages/planos-atendimento.html">Consultoria</a></li><li><a href="../pages/ferramentas-logisticas.html">Ferramentas</a></li><li><a href="../pages/cursos.html">Cursos</a></li><li><a href="../pages/blog.html">Blog</a></li><li><a class="sg-nav-cta" href="../#contato">Contato</a></li></ul></nav></header>
+  <nav class="sg-wrap sg-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="../">Início</a> ›</li><li><a href="../pages/blog.html">Blog</a> ›</li><li aria-current="page">Inventário Cíclico</li></ol></nav>
+  <main id="conteudo">
+    <section class="sg-hero"><div class="sg-wrap sg-hero-grid"><div><span class="sg-kicker">Estoque / Armazenagem</span><h1>Inventário cíclico: como fazer, definir frequência e aumentar a acuracidade do estoque</h1><p>Um método prático para contar de forma contínua, encontrar divergências mais cedo e transformar ajustes em melhoria de processo.</p><div class="sg-actions"><a class="sg-button" href="#como-fazer">Ver passo a passo</a><a class="sg-button secondary" href="#frequencia">Definir frequência</a></div></div><aside class="sg-hero-proof"><strong>Bruno Muniz — JGM4 Consultoria</strong><ul><li>Publicado em 31/08/2026</li><li>Atualizado em 31/08/2026</li><li>Categoria: Estoque / Armazenagem</li><li>Leitura estimada: 16 minutos</li></ul></aside></div></section>
+    <section class="sg-band"><div class="sg-wrap sg-article-shell"><article class="sg-article">
+      <figure class="ic-cover"><img src="../assets/inventario-ciclico-acuracidade-estoque.webp" alt="Inventário cíclico e contagem de estoque em centro de distribuição" width="1200" height="630" decoding="async" fetchpriority="high"><figcaption>Contagem recorrente aproxima o estoque físico do sistema e acelera a investigação das diferenças.</figcaption></figure>
+
+      <p class="ic-intro"><strong>O inventário cíclico permite descobrir divergências sem esperar o inventário anual.</strong> A operação conta grupos planejados de itens ou endereços ao longo do ano, compara o estoque físico e o sistema e investiga a causa enquanto as movimentações ainda estão recentes.</p>
+      <p>Essa velocidade importa. Uma diferença encontrada meses depois pode envolver dezenas de recebimentos, separações, transferências e devoluções. Quando a contagem cíclica identifica o erro rapidamente, o intervalo de investigação diminui e a possível causa fica mais visível.</p>
+      <div class="ic-answer"><strong>Resposta direta:</strong> inventário cíclico é uma metodologia contínua de controle. O objetivo não é apenas corrigir o saldo. É reduzir as causas que fazem o estoque ficar errado.</div>
+
+      <h2 id="conceito">O que é inventário cíclico e por que ele melhora a acuracidade?</h2>
+      <p>Inventário cíclico é a contagem programada e recorrente de uma parte do estoque. Também aparece no mercado como <strong>inventário rotativo</strong> ou <strong>contagem cíclica</strong>. Os termos costumam representar a mesma abordagem: dividir o universo de estoque em grupos e verificá-los com frequências definidas.</p>
+      <p>A rotina cria ciclos curtos de controle: selecionar, contar, confirmar, investigar, ajustar com autorização e agir sobre a causa. Ao repetir esse processo, a empresa passa a medir a acuracidade de estoque por item, curva, área e processo, em vez de receber uma fotografia tardia uma vez por ano.</p>
+      <div class="ic-table-wrap" role="region" aria-label="Comparação entre inventário cíclico e inventário geral" tabindex="0"><table class="ic-table"><caption>Inventário cíclico x inventário geral</caption><thead><tr><th>Critério</th><th>Inventário cíclico</th><th>Inventário geral</th></tr></thead><tbody>
+        <tr><th>Escopo</th><td>Parte dos SKUs ou endereços por ciclo</td><td>Todo o estoque em uma data de corte</td></tr>
+        <tr><th>Frequência</th><td>Recorrente, conforme risco e prioridade</td><td>Normalmente pontual ou periódico</td></tr>
+        <tr><th>Impacto operacional</th><td>Pode bloquear apenas uma área, rua ou item</td><td>Pode exigir paralisação ampla</td></tr>
+        <tr><th>Velocidade de detecção</th><td>Diferenças são encontradas mais perto do evento</td><td>Diferenças podem acumular até a data da contagem</td></tr>
+        <tr><th>Investigação</th><td>Menor janela de movimentações para analisar</td><td>Maior volume histórico para rastrear</td></tr>
+        <tr><th>Uso</th><td>Controle contínuo e melhoria de processos</td><td>Fechamento, auditoria ou fotografia completa</td></tr>
+      </tbody></table></div>
+      <p>Não é uma escolha obrigatoriamente excludente. O inventário geral pode continuar necessário por política interna, auditoria ou obrigação contábil e fiscal, enquanto o ciclo rotativo mantém o controle durante o ano.</p>
+
+      <h2 id="acuracidade">Como calcular a acuracidade do estoque</h2>
+      <p>Antes de medir, defina o que significa “item correto”. A comparação pode exigir igualdade exata de quantidade e, quando aplicável, também de endereço, lote, validade ou unidade de medida. Com o critério definido, use:</p>
+      <div class="ic-formula" aria-label="Fórmula da acuracidade do estoque"><code>Acuracidade (%) = itens corretos ÷ itens contados × 100</code><small>Considere como correto apenas o item que atende ao critério definido antes da contagem.</small></div>
+      <div class="sg-example"><strong>Exemplo prático:</strong> em uma contagem de 200 itens, 192 apresentaram saldo físico igual ao sistema. A acuracidade da amostra é 192 ÷ 200 × 100 = <strong>96%</strong>. Os oito itens divergentes precisam de segunda contagem e investigação; o percentual, sozinho, não explica a causa.</div>
+      <p>Também é útil acompanhar a divergência em unidades e em valor. Dois ciclos podem ter a mesma acuracidade por item e impactos financeiros muito diferentes. Evite adotar uma meta universal sem considerar criticidade, tipo de operação, risco e estágio de maturidade.</p>
+
+      <h2 id="frequencia">Como definir a frequência do inventário cíclico com curva ABC</h2>
+      <p>A <strong>curva ABC de estoque</strong> ajuda a direcionar esforço. Em geral, itens A concentram maior relevância econômica e merecem observação mais frequente; B ficam em uma faixa intermediária; C podem ter ciclos mais espaçados. Mas usar somente valor pode esconder riscos operacionais.</p>
+      <div class="ic-priority"><strong>Critério recomendado:</strong> combine <strong>ABC + criticidade + movimentação + histórico de divergência</strong>. Assim, um item C barato, mas indispensável à produção, pode receber prioridade maior; um item com alto giro e fracionamento pode ser contado mais vezes mesmo sem estar entre os de maior valor.</div>
+      <p>Priorize curva A, alto giro, alto valor, divergência recorrente, controle por lote ou validade, fracionamento, múltiplos endereços e itens críticos. O plano também deve considerar a capacidade diária de contagem e investigação.</p>
+      <div class="ic-table-wrap" role="region" aria-label="Exemplo ilustrativo de frequência por curva ABC" tabindex="0"><table class="ic-table"><caption>Exemplo ilustrativo para um estoque com 1.000 SKUs</caption><thead><tr><th>Grupo</th><th>Quantidade</th><th>Possibilidade de frequência</th><th>Justificativa</th></tr></thead><tbody>
+        <tr><th>Curva A</th><td>150 SKUs</td><td>Mensal</td><td>Maior valor ou impacto; dividir em lotes semanais</td></tr>
+        <tr><th>Curva B</th><td>300 SKUs</td><td>Trimestral</td><td>Risco intermediário; distribuir ao longo do trimestre</td></tr>
+        <tr><th>Curva C</th><td>550 SKUs</td><td>Semestral</td><td>Menor prioridade econômica, salvo exceções de risco</td></tr>
+      </tbody></table></div>
+      <p><strong>Este é apenas um exemplo ilustrativo.</strong> A frequência deve ser adaptada ao giro, à criticidade, ao número de endereços, à equipe disponível e ao comportamento real das divergências. Itens com recorrência podem entrar em um ciclo especial até que a causa seja controlada.</p>
+
+      <h2 id="como-fazer">Como fazer inventário cíclico: passo a passo</h2>
+      <ol class="ic-steps">
+        <li><div><strong>Definir o universo</strong>Liste SKUs, endereços, lotes e unidades de medida que entram no programa. Elimine ambiguidades de cadastro antes de contar.</div></li>
+        <li><div><strong>Definir a prioridade</strong>Classifique por curva ABC, criticidade, giro, valor, fracionamento e histórico de divergência.</div></li>
+        <li><div><strong>Definir a frequência</strong>Transforme a prioridade em um calendário executável, com volume diário ou semanal compatível com a operação.</div></li>
+        <li><div><strong>Definir responsáveis</strong>Separe quem prepara, conta, reconta, investiga e autoriza ajustes. Registre data, responsável e resultado.</div></li>
+        <li><div><strong>Controlar movimentações</strong>Bloqueie temporariamente o endereço ou estabeleça uma janela sem entradas, saídas e transferências não registradas.</div></li>
+        <li><div><strong>Realizar contagem cega</strong>Quando o processo permitir, o contador não deve conhecer previamente o saldo sistêmico. A <strong>contagem cega de estoque</strong> reduz a tendência de procurar o número esperado ou encerrar a conferência ao encontrá-lo.</div></li>
+        <li><div><strong>Realizar segunda contagem</strong>Uma pessoa diferente deve recontar as posições divergentes, verificando unidade, embalagem, endereço, lote e validade.</div></li>
+        <li><div><strong>Investigar a causa antes do ajuste</strong>Confirme as movimentações, identifique a possível origem, obtenha autorização e só então ajuste o saldo. Registre um plano de ação para evitar repetição.</div></li>
+      </ol>
+      <p>A contagem cega não significa trabalhar sem controle: o sistema ou formulário precisa saber o que deve ser contado, mas pode ocultar a quantidade esperada do executor. Em operações pequenas, se isso não for tecnicamente possível, crie ao menos uma revisão independente e documentada.</p>
+
+      <h2 id="sem-parar">Como fazer inventário sem parar a operação</h2>
+      <p>É possível realizar inventário sem parar toda a operação quando o bloqueio é delimitado e as movimentações ficam sob controle. O risco não está em contar com a empresa funcionando; está em permitir que o mesmo saldo mude durante a contagem sem rastreabilidade.</p>
+      <div class="ic-grid">
+        <section class="ic-card"><h3>Janelas de baixa movimentação</h3><p>Conte no início ou final do turno, entre ondas de picking ou em horários de menor recebimento.</p></section>
+        <section class="ic-card"><h3>Bloqueio por endereço</h3><p>Impeça temporariamente entradas, retiradas e transferências apenas nas posições em conferência.</p></section>
+        <section class="ic-card"><h3>Contagem por rua</h3><p>Libere o restante do armazém e avance por segmentos físicos com início e fim registrados.</p></section>
+        <section class="ic-card"><h3>Contagem por SKU</h3><p>Localize todos os endereços do item, inclusive picking, pulmão, quarentena, avaria e devolução.</p></section>
+      </div>
+      <p>O procedimento deve estabelecer o que acontece com uma necessidade urgente durante o bloqueio. Se a movimentação for inevitável, ela precisa ser autorizada, registrada e reconciliada antes do fechamento da contagem.</p>
+
+      <h2 id="divergencias">Como investigar divergência de estoque por processo</h2>
+      <p>A divergência é o início da análise, não o fim. Antes de ajustar, reconstrua as movimentações desde a última contagem confiável e verifique onde o físico pode ter se separado do sistema.</p>
+      <ol class="ic-flow" aria-label="Fluxo para tratamento de divergência"><li>Divergência identificada</li><li>Segunda contagem</li><li>Confirmação</li><li>Análise das movimentações</li><li>Identificação da possível causa</li><li>Ajuste autorizado</li><li>Plano de ação</li><li>Acompanhamento</li></ol>
+      <p>Classifique as causas de modo consistente para enxergar padrões. Uma estrutura inicial pode separar: <strong>recebimento, separação, abastecimento, devolução, avaria, cadastro, armazenagem e causa não identificada</strong>.</p>
+      <div class="ic-grid">
+        <section class="ic-card"><h3>Recebimento e cadastro</h3><p>Compare pedido, nota, unidade, conversão de embalagem, quantidade recebida, lote, validade e registro no sistema.</p></section>
+        <section class="ic-card"><h3>Armazenagem e abastecimento</h3><p>Verifique transferências não confirmadas, troca de endereço, material em trânsito e reposição do pulmão para o picking.</p></section>
+        <section class="ic-card"><h3>Separação e expedição</h3><p>Analise baixa antecipada ou ausente, troca de SKU, fracionamento, sobra de picking e cancelamentos.</p></section>
+        <section class="ic-card"><h3>Devolução e avaria</h3><p>Confirme quarentena, retorno ao disponível, descarte, bloqueio de qualidade e movimentações de perda.</p></section>
+      </div>
+      <p>Depois de acumular ocorrências, aplique uma <strong>análise de Pareto</strong> por quantidade de casos e por valor. As categorias que concentram recorrência orientam auditoria de processo, treinamento, revisão de cadastro ou mudança de regra. “Causa não identificada” deve permanecer visível, pois um volume alto nessa classe revela lacuna de rastreabilidade.</p>
+      <div class="ic-warning"><strong>Ajustar o saldo não é suficiente.</strong> Sem causa, responsável e ação, o sistema fica correto naquele momento, mas o processo continua produzindo a mesma diferença.</div>
+
+      <h2 id="indicadores">Indicadores para acompanhar o inventário cíclico</h2>
+      <p>Um painel útil combina resultado, execução e aprendizagem. Acompanhe tendências ao longo do tempo, segmentadas onde houver risco relevante:</p>
+      <ul>
+        <li><strong>Acuracidade:</strong> proporção de itens corretos entre os itens contados;</li>
+        <li><strong>Itens contados:</strong> volume executado no período;</li>
+        <li><strong>Cumprimento do plano:</strong> ciclos previstos versus realizados;</li>
+        <li><strong>Divergências:</strong> quantidade de itens e unidades divergentes;</li>
+        <li><strong>Valor dos ajustes:</strong> impacto financeiro autorizado;</li>
+        <li><strong>Recorrência:</strong> itens que voltam a divergir;</li>
+        <li><strong>Causa raiz:</strong> distribuição dos casos por processo;</li>
+        <li><strong>Acuracidade por curva:</strong> comparação entre A, B e C;</li>
+        <li><strong>Acuracidade por área:</strong> picking, pulmão, recebimento, devolução ou outras zonas.</li>
+      </ul>
+      <p>A <a href="../pages/calculadora-acuracidade-estoque.html">calculadora de acuracidade de estoque da JGM4</a> ajuda a aplicar a fórmula. Metas devem nascer da realidade operacional e do risco; não de um percentual copiado de outra empresa.</p>
+
+      <h2 id="wms">É necessário ter WMS para fazer inventário cíclico?</h2>
+      <p><strong>Não.</strong> Inventário é processo; WMS é tecnologia. Uma operação pode executar a rotina com ERP, planilha ou formulários controlados, desde que tenha endereçamento, responsabilidade, disciplina de movimentação e rastreabilidade suficiente.</p>
+      <p>Um WMS bem configurado pode apoiar tarefas de contagem, seleção de endereços, bloqueios, contagem cega, registro de movimentações, rastreabilidade e tratamento de divergências. Ainda assim, o sistema não substitui critérios de prioridade, investigação e ação sobre a causa. Veja também <a href="wms-importancia.html">como o WMS se relaciona com estoque, endereçamento e processos</a>.</p>
+
+      <h2 id="implantacao">Como implantar sem transformar a rotina em burocracia</h2>
+      <p>Comece com um piloto delimitado: uma família relevante ou uma área com divergências conhecidas. Teste formulário, bloqueio, segunda contagem, autorização e classificação de causas. Em seguida, ajuste a capacidade do calendário antes de expandir.</p>
+      <p>Conecte a rotina ao restante da gestão do centro de distribuição. Endereçamento, cadastro e disciplina de recebimento e picking determinam a qualidade da contagem. Para aprofundar o contexto, consulte o guia sobre <a href="../pages/centro-de-distribuicao.html">organização de centro de distribuição</a>, as <a href="../pages/ferramentas-logisticas.html">ferramentas logísticas e de estoque</a> e o <a href="../pages/ebook-estoques.html">eBook de gestão de estoques</a>.</p>
+      <p>Se a diferença já apareceu e você precisa separar sintoma de causa, leia <a href="estoque-nao-bate.html">por que o estoque não bate e quais falhas de processo provocam divergências</a>. O presente guia permanece focado no método contínuo para detectar, investigar e reduzir essas ocorrências.</p>
+
+      <section class="ic-cta" id="consultoria"><h2>Transforme contagem em controle de estoque</h2><p>A JGM4 pode avaliar inventário, acuracidade, recebimento, armazenagem, picking, endereçamento, cadastro, WMS e indicadores para construir um plano aderente à sua operação.</p><ul><li>Rotina e frequência de inventário</li><li>Acuracidade e divergências</li><li>Processos e responsabilidades</li><li>Tecnologia e indicadores</li></ul><a class="sg-button" href="../pages/consultoria-gestao-estoque.html">Conheça a Consultoria em Gestão de Estoques</a></section>
+
+      <section class="ic-faq" id="faq"><h2>Perguntas frequentes sobre inventário cíclico</h2>
+        <details><summary>O que é inventário cíclico?</summary><p>Inventário cíclico é a contagem programada e recorrente de partes do estoque ao longo do ano. Em vez de esperar uma única paralisação geral, a empresa verifica grupos de SKUs ou endereços, compara físico e sistema e investiga rapidamente as divergências.</p></details>
+        <details><summary>Inventário cíclico e inventário rotativo são iguais?</summary><p>Sim. Na prática, inventário cíclico, inventário rotativo e contagem cíclica descrevem a mesma lógica de contagens recorrentes por grupos de itens ou endereços. O nome pode variar; o importante é ter plano, frequência, regras e tratamento das diferenças.</p></details>
+        <details><summary>Com que frequência fazer inventário cíclico?</summary><p>A frequência deve refletir risco e esforço operacional. Curva ABC, criticidade, movimentação, valor e histórico de divergência ajudam a decidir quais itens contar mais vezes. Não existe uma frequência universal adequada a todas as operações.</p></details>
+        <details><summary>Posso usar curva ABC para definir a frequência?</summary><p>Sim. A curva ABC é um bom ponto de partida: itens A tendem a receber maior frequência que B e C. Porém, a regra fica mais robusta quando também considera criticidade, giro, lote, validade, fracionamento, múltiplos endereços e recorrência de diferenças.</p></details>
+        <details><summary>Como calcular a acuracidade do estoque?</summary><p>Divida a quantidade de itens sem divergência pela quantidade total de itens contados e multiplique por 100. Se 192 dos 200 itens contados estiverem corretos, a acuracidade da amostra é 96%. Defina antes o critério de item correto.</p></details>
+        <details><summary>Inventário cíclico substitui inventário geral?</summary><p>Não necessariamente. A contagem cíclica melhora o controle contínuo e pode reduzir a dependência de grandes contagens, mas exigências contábeis, fiscais, auditorias e políticas da empresa podem manter a necessidade de inventário geral.</p></details>
+        <details><summary>É possível fazer inventário cíclico sem WMS?</summary><p>Sim. O inventário é um processo e o WMS é uma tecnologia de apoio. Planilhas, ERP ou formulários controlados podem sustentar a rotina, desde que existam endereçamento, responsabilidades, bloqueio de movimentações, registro e análise das divergências.</p></details>
+        <details><summary>É possível fazer inventário sem parar a operação?</summary><p>Sim. É possível contar em janelas de baixa movimentação, por rua, endereço ou SKU, no início ou final do turno, bloqueando temporariamente apenas a área contada. A regra precisa impedir entradas e saídas não registradas durante a contagem.</p></details>
+      </section>
+
+      <nav class="ic-related" aria-label="Conteúdos relacionados"><a href="estoque-nao-bate.html">Estoque não bate? Entenda as causas das divergências</a><a href="wms-importancia.html">WMS, estoque e processos de armazenagem</a><a href="../pages/ferramentas-logisticas.html">Ferramentas para controle de estoque</a><a href="../pages/ebook-estoques.html">Material prático de gestão de estoques</a></nav>
+      <div class="sg-author"><img src="../assets/sua-foto.png" alt="Bruno Muniz" width="1152" height="1440" loading="lazy" decoding="async"><p><strong><a href="../pages/sobre.html">Bruno Muniz</a></strong><br>Autor e consultor da JGM4 Consultoria Logística.</p></div>
+    </article><aside class="sg-toc" aria-label="Índice do artigo"><strong>Neste artigo</strong><a href="#conceito">Conceito e diferenças</a><a href="#acuracidade">Cálculo da acuracidade</a><a href="#frequencia">Frequência e curva ABC</a><a href="#como-fazer">Passo a passo</a><a href="#sem-parar">Contar sem parar</a><a href="#divergencias">Tratar divergências</a><a href="#indicadores">Indicadores</a><a href="#wms">Inventário e WMS</a><a href="#faq">Perguntas frequentes</a><a class="sg-button" href="../pages/consultoria-gestao-estoque.html">Consultoria de estoque</a></aside></div></section>
+  </main>
+  <footer class="sg-footer"><div class="sg-wrap sg-footer-grid"><div><strong>JGM4 Consultoria Logística</strong><br>Conteúdo técnico para decisões logísticas melhores.</div><nav aria-label="Links do rodapé"><a href="../">Início</a> · <a href="../pages/blog.html">Blog</a> · <a href="../pages/sobre.html">Sobre</a> · <a href="../pages/politica.html">Privacidade</a></nav></div></footer>
+  <script>document.querySelector('.sg-menu-button')?.addEventListener('click',function(){const m=document.getElementById('menu-principal'),open=m.classList.toggle('is-open');this.setAttribute('aria-expanded',String(open))});</script>
+</body>
+</html>

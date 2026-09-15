@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<script id="jgm4-consent-default">
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
+  gtag('consent', 'default', {
+    'analytics_storage': 'denied',
+    'ad_storage': 'denied',
+    'ad_user_data': 'denied',
+    'ad_personalization': 'denied',
+    'functionality_storage': 'granted',
+    'security_storage': 'granted',
+    'wait_for_update': 500
+  });
+</script>
+<script src="../js/measurement.js" defer></script>
+<!-- Google Tag Manager -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){
+    if (arguments[0] === 'event') {
+      dataLayer.push(Object.assign({ event: arguments[1] }, arguments[2] || {}));
+      return;
+    }
+    dataLayer.push(arguments);
+  }
+  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-NQGP74WJ');
+</script>
+<!-- End Google Tag Manager -->
+  <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="Confirmação de compra concluída na JGM4 Consultoria.">
+  <title>Obrigado pela sua compra — JGM4 Consultoria</title>
+  <link rel="canonical" href="https://www.jgm4consultoria.com.br/pages/obrigado-final.html" />
+  <meta property="og:title" content="Compra confirmada | JGM4 Consultoria">
+  <meta property="og:description" content="Confirmação de compra concluída na JGM4 Consultoria.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <script src="../js/lgpd-consent.js"></script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:   #071A38;
+      --bg0:    #040d1c;
+      --bg1:    #07152b;
+      --bg2:    #0a1f3a;
+      --blue:   #2EA7FF;
+      --blue2:  #1a85d6;
+      --red:    #E10616;
+      --green:  #22c55e;
+      --green2: #16a34a;
+      --gold:   #f59e0b;
+      --white:  #ffffff;
+      --text:   rgba(255,255,255,.92);
+      --muted:  rgba(255,255,255,.60);
+      --stroke: rgba(255,255,255,.10);
+      --glass:  rgba(255,255,255,.05);
+      --glass2: rgba(255,255,255,.08);
+      --r-sm:   12px;
+      --r-md:   18px;
+      --r-lg:   24px;
+      --r-xl:   32px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg0);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Background ── */
+    .bg-scene {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .bg-scene::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% -10%, rgba(46,167,255,.18) 0%, transparent 65%),
+        radial-gradient(ellipse 55% 40% at 90% 80%,  rgba(46,167,255,.10) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 50% at 10% 90%,  rgba(34,197,94,.07)  0%, transparent 55%),
+        linear-gradient(170deg, #07152b 0%, #040d1c 60%, #071A38 100%);
+    }
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: .25;
+      animation: drift 18s ease-in-out infinite alternate;
+    }
+    .orb1 { width: 500px; height: 500px; background: #2EA7FF; top: -150px; right: -100px; animation-delay: 0s; }
+    .orb2 { width: 400px; height: 400px; background: #22c55e; bottom: -100px; left: -80px; animation-delay: -6s; }
+    .orb3 { width: 300px; height: 300px; background: #6366f1; top: 40%; left: 45%; animation-delay: -12s; }
+
+    @keyframes drift {
+      from { transform: translate(0, 0) scale(1); }
+      to   { transform: translate(30px, 40px) scale(1.08); }
+    }
+
+    /* ── Grid / Particles ── */
+    .grid-lines {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(46,167,255,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(46,167,255,.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    /* ── Layout ── */
+    main {
+      position: relative;
+      z-index: 1;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 20px 80px;
+      gap: 0;
+    }
+
+    .card-wrapper {
+      width: 100%;
+      max-width: 720px;
+      animation: riseIn .8s cubic-bezier(.22,.68,0,1.2) both;
+    }
+
+    @keyframes riseIn {
+      from { opacity: 0; transform: translateY(40px) scale(.97); }
+      to   { opacity: 1; transform: translateY(0)   scale(1); }
+    }
+
+    /* ── Success Icon ── */
+    .icon-ring {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(34,197,94,.22), rgba(34,197,94,.06));
+      border: 2px solid rgba(34,197,94,.40);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 28px;
+      position: relative;
+      animation: pulse-ring 3s ease-in-out infinite;
+    }
+    .icon-ring::before {
+      content: '';
+      position: absolute;
+      inset: -8px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(34,197,94,.18);
+      animation: pulse-ring 3s ease-in-out infinite .5s;
+    }
+    .icon-ring svg {
+      width: 44px;
+      height: 44px;
+      stroke: #22c55e;
+      animation: draw-check .7s ease .3s both;
+    }
+
+    @keyframes pulse-ring {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(34,197,94,.35); }
+      50%       { box-shadow: 0 0 0 14px rgba(34,197,94,0); }
+    }
+    @keyframes draw-check {
+      from { stroke-dashoffset: 60; opacity: 0; }
+      to   { stroke-dashoffset: 0;  opacity: 1; }
+    }
+    .icon-ring svg polyline { stroke-dasharray: 60; stroke-dashoffset: 0; }
+
+    /* ── Main Card ── */
+    .main-card {
+      background: rgba(255,255,255,.045);
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: var(--r-xl);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: clamp(36px, 6vw, 64px) clamp(28px, 6vw, 64px);
+      text-align: center;
+      box-shadow:
+        0 32px 80px rgba(0,0,0,.45),
+        0 0 0 1px rgba(46,167,255,.07) inset,
+        0 1px 0 rgba(255,255,255,.10) inset;
+      position: relative;
+      overflow: hidden;
+    }
+    .main-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #22c55e, #2EA7FF, transparent);
+    }
+
+    .badge-top {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(34,197,94,.12);
+      border: 1px solid rgba(34,197,94,.28);
+      color: #4ade80;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 999px;
+      margin-bottom: 24px;
+    }
+    .badge-top span.dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #22c55e;
+      display: inline-block;
+      animation: blink 1.4s ease-in-out infinite;
+    }
+    @keyframes blink {
+      0%,100% { opacity: 1; } 50% { opacity: .3; }
+    }
+
+    .main-title {
+      font-size: clamp(28px, 5vw, 50px);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -.02em;
+      margin-bottom: 16px;
+    }
+    .main-title .highlight {
+      background: linear-gradient(90deg, #22c55e, #2EA7FF);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .main-subtitle {
+      font-size: clamp(15px, 2vw, 18px);
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 520px;
+      margin: 0 auto 36px;
+    }
+
+    /* ── Explore Cards ── */
+    .explore-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .10em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.35);
+      margin-bottom: 14px;
+    }
+    .explore-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 36px;
+    }
+    .explore-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 20px 14px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: var(--r-md);
+      text-decoration: none;
+      color: var(--text);
+      transition: background .2s, border-color .2s, transform .2s, box-shadow .2s;
+      animation: riseIn .6s cubic-bezier(.22,.68,0,1.2) both;
+      text-align: center;
+    }
+    .explore-card:nth-child(1) { animation-delay: .3s; }
+    .explore-card:nth-child(2) { animation-delay: .42s; }
+    .explore-card:nth-child(3) { animation-delay: .54s; }
+    .explore-card:hover {
+      background: rgba(46,167,255,.08);
+      border-color: rgba(46,167,255,.28);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(0,0,0,.30);
+    }
+    .explore-icon {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(46,167,255,.20), rgba(46,167,255,.06));
+      border: 1px solid rgba(46,167,255,.28);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .explore-icon svg { width: 20px; height: 20px; stroke: var(--blue); }
+    .explore-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.3;
+    }
+    .explore-desc {
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .explore-arrow {
+      margin-top: auto;
+      font-size: 11px;
+      color: var(--blue);
+      font-weight: 600;
+      display: flex; align-items: center; gap: 4px;
+    }
+    .explore-arrow svg { width: 12px; height: 12px; stroke: var(--blue); }
+
+    @media (max-width: 520px) {
+      .explore-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── CTA Buttons ── */
+    .cta-group {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .btn-zap {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      max-width: 400px;
+      padding: 18px 32px;
+      background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+      color: #fff;
+      font-size: 16px;
+      font-weight: 800;
+      text-decoration: none;
+      border-radius: var(--r-md);
+      box-shadow: 0 8px 30px rgba(34,197,94,.40), 0 2px 8px rgba(0,0,0,.30);
+      transition: transform .2s, box-shadow .2s, filter .2s;
+      position: relative;
+      overflow: hidden;
+      letter-spacing: -.01em;
+    }
+    .btn-zap::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,.18), transparent 60%);
+    }
+    .btn-zap:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 45px rgba(34,197,94,.55), 0 4px 14px rgba(0,0,0,.35);
+      filter: saturate(1.1);
+    }
+    .btn-zap:active { transform: translateY(0); }
+    .btn-zap svg { width: 22px; height: 22px; flex-shrink: 0; }
+    .btn-zap .pulse-dot {
+      width: 9px; height: 9px;
+      border-radius: 50%;
+      background: #fff;
+      opacity: .9;
+      animation: blink 1.2s infinite;
+    }
+
+    .btn-home {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      padding: 10px 20px;
+      border: 1px solid var(--stroke);
+      border-radius: var(--r-sm);
+      transition: color .2s, border-color .2s, background .2s;
+    }
+    .btn-home:hover {
+      color: var(--white);
+      border-color: rgba(255,255,255,.25);
+      background: rgba(255,255,255,.05);
+    }
+
+    /* ── Trust Strip ── */
+    .trust-strip {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 28px;
+      flex-wrap: wrap;
+      margin-top: 36px;
+      padding-top: 28px;
+      border-top: 1px solid rgba(255,255,255,.07);
+    }
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+    .trust-item svg { width: 16px; height: 16px; color: #2EA7FF; flex-shrink: 0; }
+
+    /* ── Floating WhatsApp ── */
+    .float-zap {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 999;
+      width: 60px; height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #25D366, #128C7E);
+      color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      text-decoration: none;
+      box-shadow: 0 6px 24px rgba(37,211,102,.55), 0 2px 8px rgba(0,0,0,.30);
+      transition: transform .2s, box-shadow .2s;
+      animation: float-bob 4s ease-in-out infinite;
+    }
+    .float-zap:hover {
+      transform: scale(1.12);
+      box-shadow: 0 10px 36px rgba(37,211,102,.70);
+    }
+    .float-zap svg { width: 28px; height: 28px; }
+    .float-zap .badge {
+      position: absolute;
+      top: -4px; right: -4px;
+      background: #22c55e;
+      color: #fff;
+      font-size: 9px;
+      font-weight: 800;
+      padding: 2px 5px;
+      border-radius: 999px;
+      border: 2px solid var(--bg0);
+      white-space: nowrap;
+      letter-spacing: .03em;
+    }
+    @keyframes float-bob {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-7px); }
+    }
+
+    /* ── Header ── */
+    .site-header {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px clamp(20px, 5vw, 56px);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      background: rgba(4,13,28,.70);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+    .site-header .logo {
+      height: 40px;
+      width: auto;
+      display: block;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,.30));
+    }
+    .site-header .header-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 8px 16px;
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 999px;
+      transition: color .2s, border-color .2s, background .2s;
+    }
+    .site-header .header-link:hover {
+      color: var(--white);
+      border-color: rgba(255,255,255,.25);
+      background: rgba(255,255,255,.05);
+    }
+    .site-header .header-link svg { width: 14px; height: 14px; }
+
+    /* ── Footer ── */
+    footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 20px;
+      font-size: 12px;
+      color: rgba(255,255,255,.28);
+      border-top: 1px solid rgba(255,255,255,.05);
+    }
+    footer a { color: rgba(255,255,255,.40); text-decoration: none; }
+    footer a:hover { color: rgba(255,255,255,.70); }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .trust-strip { gap: 16px; }
+      .float-zap { bottom: 20px; right: 20px; width: 54px; height: 54px; }
+    }
+  </style>
+  <link rel="stylesheet" href="/css/brand.css?v=20260811-2">
+  <link rel="icon" href="/assets/brand/favicon.ico?v=20260811-2" sizes="any">
+  <link rel="icon" type="image/png" sizes="48x48" href="/assets/brand/favicon-48x48.png?v=20260811-2">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/brand/favicon-96x96.png?v=20260811-2">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/brand/favicon-192x192.png?v=20260811-2">
+  <link rel="icon" type="image/png" sizes="512x512" href="/assets/brand/favicon-512x512.png?v=20260811-2">
+  <link rel="apple-touch-icon" sizes="192x192" href="/assets/brand/favicon-192x192.png?v=20260811-2">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta property="og:image" content="https://www.jgm4consultoria.com.br/assets/brand/og-jgm4-1200x630.jpg">
+  <meta property="og:image:secure_url" content="https://www.jgm4consultoria.com.br/assets/brand/og-jgm4-1200x630.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="JGM4 Consultoria Logística">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://www.jgm4consultoria.com.br/assets/brand/og-jgm4-1200x630.jpg">
+  <meta name="twitter:image:alt" content="JGM4 Consultoria Logística"></head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NQGP74WJ"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<!-- Background -->
+<div class="bg-scene">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+  <div class="grid-lines"></div>
+</div>
+
+<!-- Header -->
+<header class="site-header">
+  <a href="../">
+    <picture class="brand-logo-picture brand-logo-picture-header"><source media="(max-width: 768px)" srcset="/assets/brand/logo-jgm4-compacta-nova.png" type="image/png"><img src="/assets/brand/logo-jgm4-horizontal-nova.png" alt="JGM4 Consultoria Logística" class="logo brand-logo brand-logo" width="1536" height="1024" decoding="async"></picture>
+  </a>
+  <a href="../" class="header-link">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path>
+      <polyline points="9 22 9 12 15 12 15 22"></polyline>
+    </svg>
+    jgm4consultoria.com.br
+  </a>
+</header>
+
+<!-- Main Content -->
+<main>
+  <div class="card-wrapper">
+
+    <!-- Success Icon -->
+    <div class="icon-ring">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+    </div>
+
+    <!-- Card -->
+    <div class="main-card">
+
+      <div class="badge-top">
+        <span class="dot"></span>
+        Compra confirmada
+      </div>
+
+      <h1 class="main-title">
+        Obrigado pela<br>
+        <span class="highlight">sua confiança!</span>
+      </h1>
+
+      <p class="main-subtitle">
+        Sua compra foi confirmada com sucesso. A equipe JGM4 Consultoria está
+        à sua disposição para garantir que você aproveite ao máximo cada
+        recurso adquirido. Qualquer dúvida, é só chamar!
+      </p>
+
+      <!-- Explore o site -->
+      <p class="explore-label">Continue explorando a JGM4</p>
+      <div class="explore-grid">
+
+        <a href="../" class="explore-card">
+          <div class="explore-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="8" r="4"></circle>
+              <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"></path>
+            </svg>
+          </div>
+          <span class="explore-title">Quem Somos</span>
+          <span class="explore-desc">Conheça nossa história, missão e como transformamos operações logísticas.</span>
+          <span class="explore-arrow">
+            Ver mais
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </span>
+        </a>
+
+        <a href="../pages/cursos.html" class="explore-card">
+          <div class="explore-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"></path>
+              <path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"></path>
+            </svg>
+          </div>
+          <span class="explore-title">Cursos &amp; Treinamentos</span>
+          <span class="explore-desc">Capacitação especializada em logística, estoques, fretes e gestão.</span>
+          <span class="explore-arrow">
+            Ver cursos
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </span>
+        </a>
+
+        <a href="../#servicos-consultoria" class="explore-card">
+          <div class="explore-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+            </svg>
+          </div>
+          <span class="explore-title">Consultoria &amp; Serviços</span>
+          <span class="explore-desc">Soluções sob medida para reduzir custos e elevar sua eficiência operacional.</span>
+          <span class="explore-arrow">
+            Ver serviços
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </span>
+        </a>
+
+      </div>
+
+      <!-- CTAs -->
+      <div class="cta-group">
+        <a
+          href="https://wa.me/5521996334768?text=Ol%C3%A1%2C%20acabei%20de%20realizar%20minha%20compra%20na%20JGM4%20e%20gostaria%20de%20tirar%20algumas%20d%C3%BAvidas!"
+          class="btn-zap"
+          target="_blank"
+          rel="noopener"
+          onclick="gtag('event','whatsapp_obrigado',{'event_category':'CTA'});"
+        >
+          <svg viewBox="0 0 32 32" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 2.933C8.8 2.933 2.933 8.8 2.933 16c0 2.4.64 4.747 1.867 6.8L2.667 29.333l6.72-1.76A13.013 13.013 0 0016 29.067c7.2 0 13.067-5.867 13.067-13.067S23.2 2.933 16 2.933zm0 23.947a10.784 10.784 0 01-5.493-1.494l-.4-.24-4 1.04 1.067-3.894-.267-.4A10.747 10.747 0 015.2 16C5.2 10.08 10.08 5.2 16 5.2S26.8 10.08 26.8 16 21.92 26.88 16 26.88zm5.947-8.027c-.32-.16-1.894-.934-2.187-1.04-.293-.107-.507-.16-.72.16-.213.32-.827 1.04-1.013 1.253-.187.213-.373.24-.694.08-.32-.16-1.347-.494-2.56-1.574-.947-.84-1.587-1.88-1.774-2.2-.186-.32-.02-.494.14-.654.147-.146.32-.373.48-.56.16-.187.213-.32.32-.534.107-.213.053-.4-.027-.56-.08-.16-.72-1.734-.987-2.374-.26-.626-.52-.534-.72-.547-.186-.013-.4-.013-.613-.013-.213 0-.56.08-.854.4-.293.32-1.12 1.094-1.12 2.667s1.147 3.094 1.307 3.307c.16.213 2.254 3.44 5.467 4.827.76.333 1.36.533 1.827.68.76.24 1.454.213 2 .133.614-.094 1.894-.774 2.16-1.52.267-.747.267-1.387.187-1.52-.08-.134-.293-.214-.614-.374z"/>
+          </svg>
+          Falar com a equipe no WhatsApp
+          <span class="pulse-dot"></span>
+        </a>
+
+        <a href="../" class="btn-home">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+          Ir para o site
+        </a>
+      </div>
+
+      <!-- Trust Strip -->
+      <div class="trust-strip">
+        <div class="trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          </svg>
+          Compra 100% segura
+        </div>
+        <div class="trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.5 19.79 19.79 0 01.22 4.82 2 2 0 012.18 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 9.91a16 16 0 006.06 6.06l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"></path>
+          </svg>
+          Suporte via WhatsApp
+        </div>
+        <div class="trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 00-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 010 7.75"></path>
+          </svg>
+          +500 empresas atendidas
+        </div>
+        <div class="trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+          </svg>
+          Especialistas certificados
+        </div>
+      </div>
+
+    </div><!-- /main-card -->
+  </div><!-- /card-wrapper -->
+</main>
+
+<!-- Footer -->
+<footer>
+  <p>© 2026 JGM4 Consultoria em Logística. Todos os direitos reservados. &nbsp;|&nbsp;
+    <a href="politica.html">Política de Privacidade</a>
+  </p>
+</footer>
+
+<!-- Floating WhatsApp -->
+<a
+  href="https://wa.me/5521996334768?text=Ol%C3%A1%2C%20gostaria%20de%20falar%20com%20um%20especialista%20em%20log%C3%ADstica!"
+  class="float-zap"
+  target="_blank"
+  rel="noopener"
+  title="Falar no WhatsApp"
+  onclick="gtag('event','whatsapp_obrigado',{'event_category':'CTA'});"
+>
+  <svg viewBox="0 0 32 32" fill="white" xmlns="http://www.w3.org/2000/svg">
+    <path d="M16 2.933C8.8 2.933 2.933 8.8 2.933 16c0 2.4.64 4.747 1.867 6.8L2.667 29.333l6.72-1.76A13.013 13.013 0 0016 29.067c7.2 0 13.067-5.867 13.067-13.067S23.2 2.933 16 2.933zm0 23.947a10.784 10.784 0 01-5.493-1.494l-.4-.24-4 1.04 1.067-3.894-.267-.4A10.747 10.747 0 015.2 16C5.2 10.08 10.08 5.2 16 5.2S26.8 10.08 26.8 16 21.92 26.88 16 26.88zm5.947-8.027c-.32-.16-1.894-.934-2.187-1.04-.293-.107-.507-.16-.72.16-.213.32-.827 1.04-1.013 1.253-.187.213-.373.24-.694.08-.32-.16-1.347-.494-2.56-1.574-.947-.84-1.587-1.88-1.774-2.2-.186-.32-.02-.494.14-.654.147-.146.32-.373.48-.56.16-.187.213-.32.32-.534.107-.213.053-.4-.027-.56-.08-.16-.72-1.734-.987-2.374-.26-.626-.52-.534-.72-.547-.186-.013-.4-.013-.613-.013-.213 0-.56.08-.854.4-.293.32-1.12 1.094-1.12 2.667s1.147 3.094 1.307 3.307c.16.213 2.254 3.44 5.467 4.827.76.333 1.36.533 1.827.68.76.24 1.454.213 2 .133.614-.094 1.894-.774 2.16-1.52.267-.747.267-1.387.187-1.52-.08-.134-.293-.214-.614-.374z"/>
+  </svg>
+  <span class="badge">Online</span>
+</a>
+
+</body>
+</html>
+
+

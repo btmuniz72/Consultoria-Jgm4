@@ -1,206 +1,478 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-
-    <title>Gestão de Estoques: Como Controlar com uma Planilha Simples | JGM4</title>
-
-    <meta name="description" content="Aprenda como fazer uma gestão de estoques eficiente usando uma planilha simples. Controle entradas, saídas, indicadores e evite prejuízos.">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link rel="canonical" href="https://www.jgm4consultoria.com.br/blog/gestao-de-estoques-planilha">
-
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="icon" href="../assets/favicon.ico" class="img-artigo">
-
-    <script src="../js/scripts.js" defer></script>
-     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1QSQEF3EN"></script>
-    <script>
+<script id="jgm4-consent-default">
   window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-X1QSQEF3EN');
-    </script>
-
-    
-
-    <!-- DADOS ESTRUTURADOS (SEO AUTORIDADE) -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Article",
-      "headline": "Gestão de Estoques: Como Controlar com uma Planilha Simples",
-      "description": "Entenda como uma planilha de estoque bem estruturada pode melhorar a gestão de estoques, gerar indicadores e reduzir prejuízos.",
-      "author": {
-        "@type": "Organization",
-        "name": "JGM4 Consultoria Logística"
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "JGM4 Consultoria Logística",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://www.jgm4consultoria.com.br/assets/logojgm4.png"
-        }
-      },
-      "datePublished": "2026-01-01",
-      "dateModified": "2026-01-01"
+  function gtag(){ dataLayer.push(arguments); }
+  gtag('consent', 'default', {
+    'analytics_storage': 'denied',
+    'ad_storage': 'denied',
+    'ad_user_data': 'denied',
+    'ad_personalization': 'denied',
+    'functionality_storage': 'granted',
+    'security_storage': 'granted',
+    'wait_for_update': 500
+  });
+</script>
+<!-- Google Tag Manager -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){
+    if (arguments[0] === 'event') {
+      dataLayer.push(Object.assign({ event: arguments[1] }, arguments[2] || {}));
+      return;
     }
-    </script>
-</head>
+    dataLayer.push(arguments);
+  }
+  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-NQGP74WJ');
+</script>
+<!-- End Google Tag Manager -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <title>Como Controlar Estoque com Planilha Simples | JGM4</title>
+  <meta name="description" content="Aprenda a controlar entradas, saídas, saldo, estoque mínimo e indicadores usando uma planilha simples." />
+  <meta name="author" content="Bruno Muniz — JGM4 Consultoria Logística" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://www.jgm4consultoria.com.br/blog/como_controlar_estoques.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Como Controlar Estoque com Planilha Simples" />
+  <meta property="og:description" content="Planilha de estoque profissional: controle de entradas, saídas, indicadores-chave e gestão de estoques mínimos. Método prático da JGM4 Consultoria." />
+  <meta property="og:url" content="https://www.jgm4consultoria.com.br/blog/como_controlar_estoques.html" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:site_name" content="JGM4 Consultoria" />
+  <meta property="article:author" content="Bruno Muniz" />
+  <meta property="article:published_time" content="2026-01-10" />
+  <meta property="article:modified_time" content="2026-04-25" />
+  <meta property="article:section" content="Gestão de Estoques" />
+  <meta name="twitter:title" content="Como Controlar Estoques com Planilha Simples | JGM4" />
+  <meta name="twitter:description" content="Gestão de estoques eficiente com planilha simples: controle entradas, saídas e indicadores. Guia prático JGM4." />
+  <link rel="stylesheet" href="../css/style.css" /><link rel="stylesheet" href="../css/blog-editorial.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script src="../js/scripts.js" defer></script>
+
+    <script src="../js/lgpd-consent.js"></script>
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": "Como Controlar Estoques com uma Planilha Simples — Guia Prático",
+        "description": "Aprenda como fazer uma gestão de estoques eficiente com uma planilha simples: controle entradas, saídas, indicadores e evite rupturas e prejuízos.",
+        "image": "https://www.jgm4consultoria.com.br/assets/estoque-planilha.jpg",
+        "datePublished": "2026-01-10",
+        "dateModified": "2026-04-25",
+        "author": { "@type": "Person", "name": "Bruno Muniz", "url": "https://www.jgm4consultoria.com.br/pages/sobre.html" },
+        "publisher": {
+          "@type": "Organization",
+          "name": "JGM4 Consultoria Logística",
+          "logo": { "@type": "ImageObject", "url": "https://www.jgm4consultoria.com.br/assets/brand/logo-jgm4-google-ads-1200x1200.png" }
+        },
+        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://www.jgm4consultoria.com.br/blog/como_controlar_estoques.html" },
+        "inLanguage": "pt-BR",
+        "keywords": "gestão de estoques, planilha de estoque, controle de estoque, giro de estoque, acuracidade"
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "JGM4 Consultoria", "item": "https://www.jgm4consultoria.com.br/" },
+          { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://www.jgm4consultoria.com.br/pages/blog.html" },
+          { "@type": "ListItem", "position": 3, "name": "Como Controlar Estoques com Planilha", "item": "https://www.jgm4consultoria.com.br/blog/como_controlar_estoques.html" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Uma planilha simples é suficiente para controlar estoques?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Sim. Para pequenas e médias empresas, uma planilha bem estruturada com controle de entradas, saídas, saldo atual e indicadores como giro e cobertura já é suficiente para uma gestão de estoques eficiente." }
+          },
+          {
+            "@type": "Question",
+            "name": "Quais indicadores devo incluir na planilha de estoque?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Os principais são: giro de estoque, cobertura em dias, estoque mínimo, ponto de pedido e acuracidade de inventário. Esses indicadores mostram se o estoque está equilibrado e quando comprar." }
+          },
+          {
+            "@type": "Question",
+            "name": "O que é acuracidade de estoque?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Acuracidade de estoque é a relação entre o estoque físico real e o estoque registrado no sistema. Quando baixa, gera rupturas, compras desnecessárias e erros operacionais." }
+          },
+          {
+            "@type": "Question",
+            "name": "Quando devo migrar da planilha para um WMS?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Quando o volume de movimentações cresce, o número de SKUs aumenta e as divergências de estoque se tornam frequentes. O WMS automatiza o controle e elimina erros manuais." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    #progress-bar { position: fixed; top: 0; left: 0; width: 0%; height: 3px; background: #2EA7FF; z-index: 9999; transition: width .1s linear; }
+    :root { --navy:#071A38; --navy-2:#041024; --blue:#2EA7FF; --red:#E10616; --stroke:rgba(255,255,255,.12); --glass:rgba(255,255,255,.04); --shadow:0 18px 55px rgba(0,0,0,.28); --radius:18px; --muted:rgba(255,255,255,.72); --muted-2:rgba(255,255,255,.55); --ink:rgba(255,255,255,.92); --font:'Inter',system-ui,sans-serif; }
+    *,*::before,*::after { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; font-family:var(--font); color:#fff; -webkit-font-smoothing:antialiased; background: radial-gradient(900px 600px at 20% 10%,rgba(46,167,255,.14),transparent 55%), radial-gradient(900px 600px at 80% 30%,rgba(225,6,22,.10),transparent 55%), linear-gradient(180deg,var(--navy) 0%,var(--navy-2) 100%); }
+    img { max-width:100%; display:block; } a { text-decoration:none; }
+    .bl-container { max-width:1120px; margin:0 auto; padding:0 16px; }
+
+    /* BREADCRUMB */
+    .bl-breadcrumb { padding: 118px 16px 0; }
+    @media(max-width:768px){ .bl-breadcrumb { padding-top:136px; } }
+    .bl-breadcrumb ol { max-width:1120px; margin:0 auto; display:flex; flex-wrap:wrap; gap:6px; list-style:none; padding:0; font-size:12.5px; color:var(--muted-2); }
+    .bl-breadcrumb li+li::before { content:"›"; margin-right:6px; }
+    .bl-breadcrumb a { color:var(--muted-2); } .bl-breadcrumb a:hover { color:#4FC3F7; }
+
+    /* HERO */
+    .bl-hero { padding: 18px 16px 0; }
+    .bl-hero-wrap { max-width:1120px; margin:0 auto; padding:28px 32px 24px; border:1px solid var(--stroke); border-radius:var(--radius); background:var(--glass); box-shadow:var(--shadow); backdrop-filter:blur(10px); }
+    @media(max-width:480px){ .bl-hero-wrap { padding:18px 16px; } }
+    .bl-eyebrow { display:inline-flex; align-items:center; gap:8px; padding:6px 13px; border-radius:999px; font-size:11.5px; font-weight:800; text-transform:uppercase; letter-spacing:.06em; color:#a8d8ff; background:rgba(46,167,255,.12); border:1px solid rgba(46,167,255,.25); margin-bottom:12px; }
+    .bl-title { margin:0 0 10px; font-size:clamp(22px,3vw,40px); font-weight:900; letter-spacing:-.04em; line-height:1.08; color:var(--ink); }
+    .bl-title em { font-style:normal; background:linear-gradient(135deg,#4FC3F7,var(--blue)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .bl-subtitle { margin:0 0 16px; color:var(--muted); line-height:1.7; font-size:16px; max-width:78ch; }
+    .bl-meta { display:flex; flex-wrap:wrap; gap:14px; align-items:center; color:var(--muted-2); font-size:13px; }
+    .bl-meta span { display:flex; align-items:center; gap:6px; }
+
+    /* LAYOUT */
+    .bl-layout { max-width:1120px; margin:0 auto; padding:20px 16px 32px; display:grid; grid-template-columns:1fr 296px; gap:22px; align-items:start; }
+    @media(max-width:1000px){ .bl-layout { grid-template-columns:1fr; } }
+
+    /* ARTICLE CARD */
+    .bl-article { border-radius:var(--radius); border:1px solid var(--stroke); background:var(--glass); padding:32px 36px; box-shadow:var(--shadow); }
+    @media(max-width:480px){ .bl-article { padding:20px 16px; } }
+    .bl-article img { width:100%; border-radius:12px; margin:0 auto 26px; border:1px solid var(--stroke); }
+    .bl-article h2 { margin:30px 0 12px; font-size:clamp(18px,2.2vw,23px); font-weight:800; letter-spacing:-.02em; color:var(--ink); }
+    .bl-article h2:first-child { margin-top:0; }
+    .bl-article h3 { margin:20px 0 8px; font-size:16.5px; font-weight:700; color:#4FC3F7; }
+    .bl-article p { margin:0 0 14px; color:rgba(255,255,255,.83); line-height:1.78; font-size:15.5px; }
+    .bl-article ul, .bl-article ol { margin:0 0 16px 20px; color:rgba(255,255,255,.83); font-size:15.5px; line-height:1.7; }
+    .bl-article li { margin-bottom:8px; }
+    .bl-article strong { color:var(--ink); }
+    .bl-article a { color:#4FC3F7; font-weight:600; }
+    .callout { border-left:4px solid var(--blue); background:rgba(46,167,255,.10); padding:16px 18px; border-radius:0 12px 12px 0; margin:22px 0; color:#bde0ff; font-size:15px; line-height:1.65; }
+    .callout strong { color:#fff; }
+    .callout-warn { border-left-color:var(--red); background:rgba(225,6,22,.09); color:#ffc5c9; }
+    .callout-warn strong { color:#fff; }
+
+    /* SIDEBAR */
+    .bl-sidebar { display:grid; gap:16px; position:sticky; top:100px; }
+    @media(max-width:1000px){ .bl-sidebar { position:static; } }
+    .side-box { border-radius:16px; border:1px solid var(--stroke); background:var(--glass); padding:20px; }
+    .side-box h3 { margin:0 0 12px; font-size:11.5px; font-weight:800; text-transform:uppercase; letter-spacing:.05em; color:var(--muted-2); }
+    .toc-list { list-style:none; padding:0; margin:0; display:grid; gap:2px; }
+    .toc-list a { display:block; padding:8px 10px; border-radius:8px; color:rgba(255,255,255,.78); font-size:13.5px; line-height:1.4; transition:background .14s,color .14s; }
+    .toc-list a:hover { background:rgba(46,167,255,.12); color:#4FC3F7; }
+    .side-cta { border:1px solid rgba(225,6,22,.28); background:linear-gradient(135deg,rgba(225,6,22,.10),rgba(225,6,22,.05)); }
+    .side-cta h3 { color:#fca5a5; }
+    .side-cta p { margin:0 0 14px; color:var(--muted); font-size:13.5px; line-height:1.55; }
+    .btn-side { display:flex; align-items:center; justify-content:center; gap:8px; padding:11px 16px; border-radius:11px; font-weight:800; font-size:13.5px; font-family:var(--font); transition:transform .14s,filter .14s; width:100%; }
+    .btn-side:hover { transform:translateY(-2px); filter:brightness(1.06); }
+    .btn-side-red { background:linear-gradient(135deg,var(--red),#ff3b4a); color:#fff; box-shadow:0 8px 22px rgba(225,6,22,.22); border:none; }
+    .btn-side-blue { background:rgba(46,167,255,.14); border:1px solid rgba(46,167,255,.30); color:#a8d8ff; }
+
+    /* FAQ */
+    .faq-grid { display:grid; gap:10px; margin-top:14px; }
+    .bl-article details { border-radius:12px; border:1px solid rgba(255,255,255,.10); background:rgba(255,255,255,.04); padding:14px 16px; }
+    .bl-article details[open] { background:rgba(255,255,255,.07); }
+    .bl-article summary { cursor:pointer; list-style:none; font-weight:800; font-size:14.5px; color:var(--ink); display:flex; align-items:center; justify-content:space-between; gap:12px; }
+    .bl-article summary::-webkit-details-marker { display:none; }
+    .faq-caret { width:26px; height:26px; border-radius:8px; display:grid; place-items:center; border:1px solid rgba(255,255,255,.12); background:rgba(4,16,36,.28); flex:0 0 auto; transition:transform .2s; }
+    .bl-article details[open] .faq-caret { transform:rotate(180deg); }
+    .faq-answer { margin:10px 0 0; color:rgba(255,255,255,.76); line-height:1.68; font-size:14.5px; }
+
+    /* BOTTOM CTA */
+    .bl-cta-wrap { max-width:1120px; margin:0 auto 32px; padding:0 16px; }
+    .bl-cta-box { border-radius:var(--radius); border:1px solid rgba(46,167,255,.20); background:linear-gradient(135deg,rgba(46,167,255,.10),rgba(225,6,22,.08)); padding:32px 36px; text-align:center; box-shadow:var(--shadow); }
+    @media(max-width:480px){ .bl-cta-box { padding:22px 16px; } }
+    .bl-cta-label { display:inline-flex; align-items:center; gap:7px; padding:5px 12px; border-radius:999px; font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.06em; color:#a8d8ff; background:rgba(46,167,255,.12); border:1px solid rgba(46,167,255,.22); margin-bottom:12px; }
+    .bl-cta-box h2 { margin:0 0 10px; font-size:clamp(20px,2.5vw,30px); font-weight:900; letter-spacing:-.03em; }
+    .bl-cta-box p { margin:0 0 22px; color:var(--muted); font-size:15.5px; line-height:1.7; max-width:600px; margin-left:auto; margin-right:auto; }
+    .bl-cta-btns { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+    .btn-cta-p { display:inline-flex; align-items:center; gap:9px; padding:14px 24px; border-radius:12px; font-weight:800; font-size:15px; font-family:var(--font); background:linear-gradient(135deg,var(--red),#ff3b4a); color:#fff; border:none; box-shadow:0 10px 26px rgba(225,6,22,.22); transition:transform .14s,filter .14s; }
+    .btn-cta-p:hover { transform:translateY(-2px); filter:brightness(1.05); }
+    .btn-cta-s { display:inline-flex; align-items:center; gap:9px; padding:14px 24px; border-radius:12px; font-weight:800; font-size:15px; font-family:var(--font); background:rgba(46,167,255,.12); color:#a8d8ff; border:1px solid rgba(46,167,255,.28); transition:transform .14s,filter .14s; }
+    .btn-cta-s:hover { transform:translateY(-2px); filter:brightness(1.08); }
+    @media(max-width:520px){ .btn-cta-p,.btn-cta-s { width:100%; justify-content:center; } }
+
+    /* FOOTER */
+    footer { border-top:1px solid rgba(255,255,255,.10); padding:24px 16px; color:rgba(255,255,255,.55); text-align:center; font-size:13.5px; }
+    footer a { color:#ff3333; font-weight:700; }
+    .ft-links { margin-top:8px; display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
+    .ft-links a { color:rgba(255,255,255,.55); font-weight:400; }
+    .ft-links a:hover { color:#4FC3F7; }
+  </style>
+  <link rel="stylesheet" href="/css/brand.css?v=20260811-2">
+  <link rel="icon" href="/assets/brand/favicon.ico?v=20260811-2" sizes="any">
+  <link rel="icon" type="image/png" sizes="48x48" href="/assets/brand/favicon-48x48.png?v=20260811-2">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/brand/favicon-96x96.png?v=20260811-2">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/brand/favicon-192x192.png?v=20260811-2">
+  <link rel="icon" type="image/png" sizes="512x512" href="/assets/brand/favicon-512x512.png?v=20260811-2">
+  <link rel="apple-touch-icon" sizes="192x192" href="/assets/brand/favicon-192x192.png?v=20260811-2">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta property="og:image" content="https://www.jgm4consultoria.com.br/assets/brand/og-jgm4-1200x630.jpg">
+  <meta property="og:image:secure_url" content="https://www.jgm4consultoria.com.br/assets/brand/og-jgm4-1200x630.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="JGM4 Consultoria Logística">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://www.jgm4consultoria.com.br/assets/brand/og-jgm4-1200x630.jpg">
+  <meta name="twitter:image:alt" content="JGM4 Consultoria Logística"></head>
 <body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NQGP74WJ"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<div id="progress-bar"></div>
 
 <header id="header">
-    <nav>
-        <img src="../assets/logojgm4.png" alt="JGM4 Consultoria Logística" class="logo">
-        <button class="menu-toggle" onclick="toggleMenu()" aria-label="Menu">☰</button>
-        <ul class="nav-links" id="navLinks">
-            <li><a href="../index.html#inicio">Início</a></li>
-            <li><a href="../index.html#desafios">Desafios</a></li>
-            <li><a href="../index.html#solucoes">Soluções</a></li>
-            <li><a href="../index.html#contato">Contato</a></li>
-            <li><a href="/pages/cursos.html">Cursos</a></li>
-            <li><a href="/pages/blog.html">Blog</a></li>
-            <li><a href="/pages/sobre.html">Sobre</a></li>
-            <li><a href="/pages/analise.html" class="nav-cta">Faça seu Diagnóstico Grátis</a></li>
-        </ul>
-    </nav>
+  <nav>
+    <a href="/" aria-label="Página inicial JGM4"><picture class="brand-logo-picture brand-logo-picture-header"><source media="(max-width: 768px)" srcset="/assets/brand/logo-jgm4-compacta-nova.png" type="image/png"><img src="/assets/brand/logo-jgm4-horizontal-nova.png" alt="JGM4 Consultoria Logística" class="logo brand-logo brand-logo" width="1536" height="1024" decoding="async"></picture></a>
+    <button class="menu-toggle" onclick="toggleMenu()" aria-label="Menu">☰</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../#inicio" onclick="closeMenu()">Início</a></li>
+      <li><a href="../#desafios" onclick="closeMenu()">Desafios</a></li>
+      <li><a href="../#solucoes" onclick="closeMenu()">Soluções</a></li>
+      <li><a href="../#contato" onclick="closeMenu()">Contato</a></li>
+      <li><a href="../pages/blog.html" onclick="closeMenu()">Blog</a></li>
+      <li><a href="../pages/cursos.html" onclick="closeMenu()">Cursos</a></li>
+      <li><a href="../pages/diagnostico-logistico-online.html" class="nav-cta" onclick="closeMenu()">Entrevista inicial</a></li>
+    </ul>
+  </nav>
 </header>
 
-<section class="hero-sobre">
-    <h1>Gestão de Estoques: Controle Simples, Resultados Reais</h1>
-    <p>Como uma planilha bem estruturada pode evitar prejuízos e melhorar sua tomada de decisão.</p>
-</section>
+<nav class="bl-breadcrumb" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="../">JGM4 Consultoria</a></li>
+    <li><a href="../pages/blog.html">Blog</a></li>
+    <li aria-current="page">Como Controlar Estoques com Planilha</li>
+  </ol>
+</nav>
 
-<main class="container-sobre" itemscope itemtype="https://schema.org/Article">
-
-    <meta itemprop="headline" content="Gestão de Estoques com Planilha">
-    <meta itemprop="author" content="JGM4 Consultoria Logística">
-    <meta itemprop="datePublished" content="2026-01-26">
-
-    <section class="section-sobre">
-        <div class="content-sobre">
-
-            <img src="../assets/estoque-planilha.jpg"
-                 alt="Gestão de estoques utilizando planilha de controle"
-                 class="img-artigo"
-                 loading="lazy">
-
-            <p itemprop="articleBody">
-                A <strong>gestão de estoques</strong> é um dos pontos mais críticos dentro de qualquer operação.
-                A falta de controle gera excesso de produtos parados, rupturas inesperadas e prejuízos silenciosos.
-                O que muitos gestores não sabem é que uma <strong>planilha de estoque bem estruturada</strong>
-                já é suficiente para manter o controle e tomar decisões mais assertivas.
-            </p>
-
-            <p>
-                Para pequenas e médias empresas, o problema não é a ausência de sistemas caros,
-                mas sim a falta de método. Com uma planilha correta, é possível transformar dados
-                simples em informações estratégicas.
-            </p>
-
-            <h2>Por que a gestão de estoques é tão importante?</h2>
-            <p>
-                Estoque é dinheiro parado. Sem uma boa <strong>gestão de estoque</strong>,
-                a empresa perde margem, compra errado e não consegue planejar.
-                Controlar estoques significa equilibrar compras, vendas e capital de giro.
-            </p>
-
-            <ul>
-                <li>Redução de perdas e desperdícios</li>
-                <li>Melhor planejamento de compras</li>
-                <li>Evita falta de produtos</li>
-                <li>Mais previsibilidade financeira</li>
-            </ul>
-
-            <h2>É possível controlar estoques apenas com uma planilha?</h2>
-            <p>
-                Sim. Uma <strong>planilha de controle de estoque</strong> funciona muito bem
-                quando é bem desenhada, atualizada diariamente e focada em indicadores claros.
-                Muitas operações se perdem não por falta de tecnologia, mas por falta de organização.
-            </p>
-
-            <h2>O que uma boa planilha de estoque deve conter?</h2>
-
-            <h3>Dados básicos dos produtos</h3>
-            <ul>
-                <li>Código do produto</li>
-                <li>Descrição</li>
-                <li>Categoria</li>
-                <li>Unidade de medida</li>
-            </ul>
-
-            <h3>Controle de entradas e saídas</h3>
-            <ul>
-                <li>Data da movimentação</li>
-                <li>Quantidade</li>
-                <li>Origem ou destino</li>
-            </ul>
-
-            <h3>Saldo atual e estoque mínimo</h3>
-            <p>
-                A planilha deve calcular automaticamente o saldo e sinalizar
-                quando o estoque atinge níveis críticos.
-            </p>
-
-            <h3>Indicadores e gráficos</h3>
-            <p>
-                Uma boa <strong>planilha de gestão de estoques</strong> permite gerar
-                indicadores como giro de estoque, consumo médio e cobertura em dias,
-                além de gráficos simples para apoiar a tomada de decisão.
-            </p>
-
-            <h2>Onde a maioria das empresas erra no controle de estoque</h2>
-            <ul>
-                <li>Planilhas sem padrão</li>
-                <li>Falta de atualização diária</li>
-                <li>Nenhum indicador definido</li>
-                <li>Ausência de responsável pelo controle</li>
-            </ul>
-
-            <h2>Como a consultoria ajuda a estruturar o controle de estoques</h2>
-            <p>
-                A <strong>JGM4 Consultoria Logística</strong> ajuda empresas a criarem
-                planilhas de estoque personalizadas, com campos essenciais,
-                indicadores claros e gráficos que realmente apoiam a gestão.
-            </p>
-
-            <p>
-                Mais do que uma planilha, entregamos método, padronização
-                e visão estratégica para sua operação crescer com segurança.
-            </p>
-
-            <h2>Conclusão</h2>
-            <p>
-                Não é preciso começar com sistemas complexos.
-                Começar certo é mais importante.
-                Uma <strong>planilha de estoque bem estruturada</strong>,
-                aliada a uma boa gestão, já gera ganhos reais e mensuráveis.
-            </p>
-
-        </div>
-    </section>
-</main>
-
-<section class="cta-section">
-    <div class="cta-box">
-        <h2>Quer montar uma planilha de estoque eficiente?</h2>
-        <p>
-            Fale com a JGM4 Consultoria e desenvolva uma planilha profissional,
-            com indicadores, gráficos e controle real da sua operação.
-        </p>
-        <a href="/index.html#contato" class="btn-primary">
-            Falar com um Consultor Especialista
-        </a>
+<section class="bl-hero">
+  <div class="bl-hero-wrap">
+    <div class="bl-eyebrow"><i class="fa-solid fa-boxes-stacked"></i> Gestão de Estoques</div>
+    <h1 class="bl-title">Como Controlar Estoques com uma <em>Planilha Simples</em> — Guia Prático</h1>
+    <p class="bl-subtitle">Uma planilha bem estruturada é suficiente para evitar rupturas, reduzir compras erradas e manter seu estoque sob controle. Veja o método.</p>
+    <div class="bl-meta">
+      <span><i class="fa-solid fa-user-tie"></i> Bruno Muniz — JGM4 Consultoria</span>
+      <span><i class="fa-regular fa-clock"></i> 7 min de leitura</span>
+      <span><i class="fa-regular fa-calendar"></i> Atualizado em abr/2026</span>
     </div>
+  </div>
 </section>
 
-<footer></footer>
+<div class="bl-layout">
+  <article class="bl-article" itemscope itemtype="https://schema.org/Article">
+    <meta itemprop="headline" content="Como Controlar Estoques com uma Planilha Simples" />
+    <meta itemprop="datePublished" content="2026-01-10" />
+    <meta itemprop="author" content="Bruno Muniz" />
 
-<script src="../js/main.js"></script>
+    <img src="../assets/estoque-planilha.jpg" alt="Gestão de estoques com planilha de controle — JGM4 Consultoria" loading="lazy" width="225" height="225" />
+
+    <p itemprop="articleBody">
+      A <strong>gestão de estoques</strong> é um dos pontos mais críticos dentro de qualquer operação. A falta de controle gera excesso de produtos parados, rupturas inesperadas e prejuízos silenciosos. O que muitos gestores não percebem é que uma <strong>planilha de estoque bem estruturada</strong> já é suficiente para manter o controle e tomar decisões mais assertivas — sem precisar investir em sistemas caros desde o início.
+    </p>
+
+    <div class="callout">
+      <strong>Por que isso importa:</strong> Para pequenas e médias empresas, o problema não é ausência de tecnologia cara — é falta de método. Com uma planilha correta, é possível transformar dados simples em informações estratégicas que protegem seu caixa.
+    </div>
+
+    <h2 id="importancia">Por que a gestão de estoques é tão importante?</h2>
+    <p>
+      Estoque é dinheiro parado. Sem uma boa <strong>gestão de estoque</strong>, a empresa perde margem, compra errado e não consegue planejar o capital de giro. Cada produto que fica parado na prateleira é recurso que poderia estar circulando — em vendas, em investimento, em liquidez.
+    </p>
+    <p>
+      Se você quer revisar os fundamentos antes de montar a planilha, veja também o guia sobre <a href="o-que-e-estoque-tipos-controle-almoxarifado.html">o que é estoque, tipos de estoque e diferença para almoxarifado</a>.
+    </p>
+    <ul>
+      <li><strong>Redução de perdas e desperdícios</strong> — produtos vencidos, obsoletos ou danificados</li>
+      <li><strong>Melhor planejamento de compras</strong> — comprar na hora certa, na quantidade certa</li>
+      <li><strong>Prevenção de rupturas</strong> — nunca perder venda por falta de produto</li>
+      <li><strong>Previsibilidade financeira</strong> — estoque equilibrado é caixa saudável</li>
+    </ul>
+
+    <h2 id="planilha-sim">É possível controlar estoques apenas com uma planilha?</h2>
+    <p>
+      Sim. Uma <strong>planilha de controle de estoque</strong> funciona muito bem quando é bem desenhada, atualizada diariamente e focada nos indicadores certos. Muitas operações se perdem não por falta de tecnologia, mas por falta de disciplina e organização. A planilha, quando bem feita, obriga o time a registrar cada movimentação e cria visibilidade real sobre o que entra e o que sai.
+    </p>
+    <p>
+      O WMS e o ERP entram quando o volume cresce e a complexidade aumenta. Mas partir de uma planilha sólida é muito melhor do que partir de planilhas improvisadas — ou de cabeça.
+    </p>
+
+    <h2 id="o-que-conter">O que uma boa planilha de estoque deve conter?</h2>
+
+    <h3>Dados básicos dos produtos</h3>
+    <ul>
+      <li>Código único do produto (SKU)</li>
+      <li>Descrição clara</li>
+      <li>Categoria / família</li>
+      <li>Unidade de medida</li>
+      <li>Fornecedor principal</li>
+    </ul>
+
+    <h3>Controle de entradas e saídas</h3>
+    <ul>
+      <li>Data da movimentação</li>
+      <li>Tipo: entrada (compra/devolução) ou saída (venda/perda)</li>
+      <li>Quantidade movimentada</li>
+      <li>Responsável pelo lançamento</li>
+    </ul>
+
+    <h3>Saldo atual e estoque mínimo</h3>
+    <p>
+      A planilha deve calcular automaticamente o saldo atual e sinalizar quando o produto atinge o <strong>estoque mínimo</strong> — o ponto de ressuprimento. Esse alerta evita rupturas antes que aconteçam, dando tempo para acionar o fornecedor.
+    </p>
+
+    <h3>Indicadores essenciais</h3>
+    <p>
+      Uma boa <strong>planilha de gestão de estoques</strong> precisa calcular automaticamente pelo menos três indicadores:
+    </p>
+    <ul>
+      <li><strong>Giro de estoque:</strong> quantas vezes o produto foi vendido no período em relação ao saldo médio</li>
+      <li><strong>Cobertura em dias:</strong> por quantos dias o estoque atual dura com o ritmo de saída atual</li>
+      <li><strong>Acuracidade:</strong> relação entre estoque físico e estoque registrado (meta: acima de 98%)</li>
+    </ul>
+
+    <h2 id="erros-comuns">Onde a maioria das empresas erra no controle de estoque</h2>
+    <p>A experiência em campo mostra que os erros mais comuns são:</p>
+    <ul>
+      <li><strong>Planilhas sem padrão</strong> — cada pessoa registra de um jeito diferente</li>
+      <li><strong>Falta de atualização diária</strong> — planilha acumulada perde a confiabilidade</li>
+      <li><strong>Nenhum indicador definido</strong> — números sem contexto não geram decisão</li>
+      <li><strong>Ausência de responsável fixo</strong> — "todo mundo controla" equivale a "ninguém controla"</li>
+      <li><strong>Inventário nunca realizado</strong> — sem contagem física periódica, divergências se acumulam</li>
+    </ul>
+
+    <div class="callout callout-warn">
+      <strong>Atenção:</strong> Uma planilha desatualizada é pior do que nenhuma planilha — ela passa uma falsa sensação de controle enquanto os problemas se acumulam em silêncio.
+    </div>
+    <p>
+      Quando o físico já não confere com o sistema, aprofunde no artigo sobre <a href="estoque-nao-bate.html">estoque que não bate e como resolver as causas reais</a>.
+    </p>
+
+    <h2 id="consultoria">Como a consultoria estrutura o controle de estoques</h2>
+    <p>
+      A <strong>JGM4 Consultoria Logística</strong> apoia empresas na criação de planilhas de estoque personalizadas — com campos essenciais, indicadores claros e alertas automatizados. Mas mais do que entregar uma planilha, o trabalho é implantar o método: rotina diária de lançamento, responsável definido, inventário programado e reunião semanal de análise dos indicadores.
+    </p>
+    <p>
+      O objetivo é criar um sistema de controle que funcione mesmo quando o responsável está ausente — porque o processo está documentado, padronizado e monitorado.
+    </p>
+
+    <h2 id="conclusao">Conclusão</h2>
+    <p>
+      Não é preciso começar com sistemas complexos. Começar certo é mais importante do que começar grande. Uma <strong>planilha de estoque bem estruturada</strong>, com disciplina de registro e indicadores simples, já gera ganhos reais e mensuráveis — e prepara o terreno para uma futura migração para WMS ou ERP sem perda de dados. Para pequenas empresas que precisam de endereçamento e movimentações mais estruturadas, conheça o <a href="../produtos/estoque-facil/">JGM4 Estoque Fácil</a>.
+    </p>
+
+    <h2 id="faq">Dúvidas frequentes</h2>
+    <div class="faq-grid">
+      <details>
+        <summary>Uma planilha simples é suficiente para controlar estoques? <span class="faq-caret"><i class="fa-solid fa-chevron-down"></i></span></summary>
+        <p class="faq-answer">Sim. Para pequenas e médias empresas, uma planilha com controle de entradas, saídas, saldo e indicadores como giro e cobertura já é suficiente para uma gestão eficiente — desde que seja atualizada diariamente com disciplina.</p>
+      </details>
+      <details>
+        <summary>Quais indicadores devo incluir na planilha de estoque? <span class="faq-caret"><i class="fa-solid fa-chevron-down"></i></span></summary>
+        <p class="faq-answer">Os principais são: giro de estoque, cobertura em dias, estoque mínimo, ponto de pedido e acuracidade de inventário. Esses indicadores mostram se o estoque está equilibrado e quando é hora de comprar.</p>
+      </details>
+      <details>
+        <summary>O que é acuracidade de estoque e por que é importante? <span class="faq-caret"><i class="fa-solid fa-chevron-down"></i></span></summary>
+        <p class="faq-answer">Acuracidade é a relação entre o estoque físico e o registrado no sistema. Quando baixa, gera rupturas, compras desnecessárias e erros operacionais. A meta deve ser acima de 98%.</p>
+      </details>
+      <details>
+        <summary>Quando devo migrar da planilha para um WMS? <span class="faq-caret"><i class="fa-solid fa-chevron-down"></i></span></summary>
+        <p class="faq-answer">Quando o volume de movimentações cresce, o número de SKUs aumenta e as divergências se tornam frequentes. O WMS automatiza o controle, elimina erros manuais e escala com a operação.</p>
+      </details>
+    </div>
+  <section class="editorial-silo-links" aria-label="Próximos passos sobre gestão de estoques">
+  <span class="editorial-silo-links__label">Continue no silo de estoques</span>
+  <h2>Transforme o conteúdo em controle de estoque real</h2>
+  <p>Depois da leitura, aprofunde o diagnóstico de acuracidade, inventário, perdas e rotina de almoxarifado com estes materiais da JGM4.</p>
+  <div class="editorial-silo-links__grid">
+    <a href="../pages/consultoria-gestao-estoque.html">Consultoria de estoque</a>
+    <a href="../pages/diagnostico-de-estoque.html">Diagnóstico de estoque</a>
+    <a href="../pages/ebook-estoques.html">E-book de gestão de estoques</a>
+  </div>
+  <a class="editorial-silo-links__cta" href="../pages/diagnostico-de-estoque.html" data-track="blog_cta_estoques">Avaliar meu estoque</a>
+</section></article>
+
+  <aside class="bl-sidebar" aria-label="Navegação do artigo">
+    <div class="side-box">
+      <h3>Neste artigo</h3>
+      <ul class="toc-list">
+        <li><a href="#importancia">Por que gestão de estoques importa</a></li>
+        <li><a href="#planilha-sim">Planilha resolve?</a></li>
+        <li><a href="#o-que-conter">O que a planilha deve conter</a></li>
+        <li><a href="#erros-comuns">Erros mais comuns</a></li>
+        <li><a href="#consultoria">Como a consultoria ajuda</a></li>
+        <li><a href="#conclusao">Conclusão</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+    </div>
+
+    <div class="side-box side-cta">
+      <h3>Aprenda na prática</h3>
+      <p>eBooks e cursos de gestão de estoques, WMS, KPIs e muito mais. Conteúdo aplicável à realidade da sua operação.</p>
+      <a href="../pages/cursos.html" class="btn-side btn-side-red"><i class="fa-solid fa-graduation-cap"></i> Ver eBooks de Estoque</a>
+    </div>
+
+    <div class="side-box">
+      <h3>Entrevista inicial</h3>
+      <p style="margin:0 0 12px; color:var(--muted); font-size:13.5px; line-height:1.55;">Descubra os gargalos que estão travando sua operação.</p>
+      <a href="../pages/diagnostico-logistico-online.html" class="btn-side btn-side-blue"><i class="fa-solid fa-magnifying-glass-chart"></i> Quero uma entrevista inicial</a>
+    </div>
+  </aside>
+</div>
+
+<div class="bl-cta-wrap">
+  <div class="bl-cta-box">
+    <div class="bl-cta-label"><i class="fa-solid fa-graduation-cap"></i> Próximo passo</div>
+    <h2>Quer dominar a gestão de estoques na prática?</h2>
+    <p>Conheça os eBooks e cursos de logística da JGM4 — conteúdo direto ao ponto, aplicável à realidade operacional de PMEs. Gestão de estoques, WMS, KPIs e muito mais.</p>
+    <div class="bl-cta-btns">
+      <a class="btn-cta-p" href="../pages/cursos.html"><i class="fa-solid fa-graduation-cap"></i> Ver cursos e eBooks</a>
+      <a class="btn-cta-s" href="../pages/diagnostico-logistico-online.html"><i class="fa-solid fa-magnifying-glass-chart"></i> Entrevista inicial</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>© 2025–2026 JGM4 Consultoria Logística — Bruno Muniz. Todos os direitos reservados.</p>
+  <div class="ft-links">
+    <a href="https://www.linkedin.com/in/brunomuniz72/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+    <a href="../pages/blog.html">Blog</a>
+    <a href="../pages/cursos.html">Cursos</a>
+    <a href="../pages/politica.html">Política de Privacidade</a>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var bar = document.getElementById('progress-bar');
+    if (!bar) return;
+    window.addEventListener('scroll', function(){
+      var h = document.documentElement;
+      var s = h.scrollTop || document.body.scrollTop;
+      var m = h.scrollHeight - h.clientHeight;
+      bar.style.width = (m > 0 ? (s / m * 100) : 0) + '%';
+    });
+  })();
+</script>
 </body>
 </html>
+
+
+
+
+

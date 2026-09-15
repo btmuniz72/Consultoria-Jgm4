@@ -1,22 +1,61 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+<script id="jgm4-consent-default">
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
+  gtag('consent', 'default', {
+    'analytics_storage': 'denied',
+    'ad_storage': 'denied',
+    'ad_user_data': 'denied',
+    'ad_personalization': 'denied',
+    'functionality_storage': 'granted',
+    'security_storage': 'granted',
+    'wait_for_update': 500
+  });
+</script>
+<!-- Google Tag Manager -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){
+    if (arguments[0] === 'event') {
+      dataLayer.push(Object.assign({ event: arguments[1] }, arguments[2] || {}));
+      return;
+    }
+    dataLayer.push(arguments);
+  }
+  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-NQGP74WJ');
+</script>
+<!-- End Google Tag Manager -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Guia Completo de Marketing Digital 2026 | Ebook</title>
-  <meta name="description" content="Aprenda marketing digital de forma prática para atrair clientes, criar conteúdo, vender todos os dias e crescer no Instagram, TikTok, YouTube e outros canais." />
-  <meta name="keywords" content="marketing digital, ebook marketing digital, instagram, tiktok, youtube, vendas online, conteúdo viral, tráfego, vendas todos os dias" />
+    <title>Guia de Marketing Digital 2026 | JGM4</title>
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="Bruno Muniz — JGM4 Consultoria Logística" />
+  <link rel="canonical" href="https://www.jgm4consultoria.com.br/pages/mkt-digital.html" />
+  <meta property="og:url" content="https://www.jgm4consultoria.com.br/pages/mkt-digital.html" />
+  <meta property="og:site_name" content="JGM4 Consultoria Logística" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta name="twitter:title" content="Marketing Digital para PMEs | Guia Prático JGM4" />
+  <meta name="twitter:description" content="Guia prático de marketing digital para PMEs: presença online, tráfego, conteúdo, vendas e estratégia para pequenos negócios crescerem." />
+    <meta name="description" content="Guia de marketing digital com Google Ads, Meta Ads, SEO, e-mail marketing, mídias sociais e funil de vendas." />
   <meta name="theme-color" content="#0f172a" />
 
-  <link rel="icon" href="../assets/favicon.ico" type="image/x-icon" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Guia Completo de Marketing Digital 2026 — R$ 9,99" />
+  <meta property="og:description" content="10 capítulos práticos: público-alvo, SEO, Google Ads, Meta Ads, Instagram, e-mail marketing, analytics e muito mais. Por Bruno Muniz, gestor de tráfego." />
+  <meta property="og:type" content="product" />
 
   <script type="text/javascript">
     function importHotmart() {
       var imported = document.createElement('script');
       imported.src = 'https://static.hotmart.com/checkout/widget.min.js';
       document.head.appendChild(imported);
-
       var link = document.createElement('link');
       link.rel = 'stylesheet';
       link.type = 'text/css';
@@ -26,15 +65,8 @@
     importHotmart();
   </script>
 
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1QSQEF3EN"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-X1QSQEF3EN');
-  </script>
-
-  <style>
+    <script src="../js/lgpd-consent.js"></script>
+<style>
     :root{
       --bg:#081120;
       --bg-2:#0f172a;
@@ -53,15 +85,8 @@
       --radius:18px;
     }
 
-    *{
-      box-sizing:border-box;
-      margin:0;
-      padding:0;
-    }
-
-    html{
-      scroll-behavior:smooth;
-    }
+    *{ box-sizing:border-box; margin:0; padding:0; }
+    html{ scroll-behavior:smooth; }
 
     body{
       font-family:Arial, sans-serif;
@@ -69,22 +94,18 @@
       color:var(--text);
       line-height:1.6;
       text-align:center;
+      overflow-x:hidden;
     }
 
-    img{
-      max-width:100%;
-      display:block;
-    }
-
-    a{
-      text-decoration:none;
-    }
+    img{ max-width:100%; display:block; }
+    a{ text-decoration:none; }
 
     .container{
       width:min(100% - 32px, var(--max));
       margin:0 auto;
     }
 
+    /* ── TOP BAR ── */
     .topbar{
       position:sticky;
       top:0;
@@ -94,11 +115,13 @@
       font-weight:700;
       font-size:14px;
       box-shadow:0 10px 25px rgba(0,0,0,.22);
+      word-break:break-word;
     }
 
+    /* ── HERO ── */
     .hero{
       background:
-        linear-gradient(rgba(15,23,42,0.82),rgba(2,6,23,0.92)),
+        linear-gradient(rgba(15,23,42,0.84),rgba(2,6,23,0.94)),
         url('../assets/img_mkt_digital.png');
       background-size:cover;
       background-position:center;
@@ -112,6 +135,7 @@
       align-items:center;
       text-align:left;
     }
+    .hero-wrap > * { min-width: 0; }
 
     .badge{
       display:inline-block;
@@ -123,22 +147,30 @@
       font-size:13px;
       font-weight:700;
       margin-bottom:18px;
+      word-break:break-word;
+      max-width:100%;
+    }
+
+    .badge-green{
+      background:rgba(34,197,94,.12);
+      color:#86efac;
+      border-color:rgba(34,197,94,.22);
     }
 
     .hero h1{
-      font-size:clamp(2.2rem,4vw,4rem);
+      font-size:clamp(1.6rem,4vw,3.8rem);
       line-height:1.05;
       margin-bottom:16px;
+      overflow-wrap:break-word;
+      word-break:break-word;
     }
 
-    .hero h1 span{
-      color:var(--secondary);
-    }
+    .hero h1 span{ color:var(--secondary); }
 
     .hero .subheadline{
       font-size:1.1rem;
       color:var(--muted);
-      max-width:700px;
+      max-width:680px;
       margin-bottom:22px;
     }
 
@@ -153,9 +185,9 @@
       background:rgba(255,255,255,.04);
       border:1px solid var(--line);
       border-radius:14px;
-      padding:14px 16px;
+      padding:13px 16px;
       color:#e2e8f0;
-      font-size:.96rem;
+      font-size:.93rem;
     }
 
     .cta-row{
@@ -185,9 +217,7 @@
       color:#fff;
     }
 
-    .btn-primary:hover{
-      transform:translateY(-2px);
-    }
+    .btn-primary:hover{ transform:translateY(-2px); }
 
     .btn-secondary{
       background:rgba(255,255,255,.05);
@@ -213,7 +243,7 @@
     }
 
     .hero-card img{
-      max-width:380px;
+      max-width:360px;
       margin:0 auto 20px;
       border-radius:16px;
       box-shadow:0 16px 36px rgba(0,0,0,.35);
@@ -221,7 +251,7 @@
 
     .offer-box{
       background:#0b1323;
-      border:1px solid rgba(34,197,94,.16);
+      border:1px solid rgba(34,197,94,.18);
       border-radius:18px;
       padding:20px;
     }
@@ -230,6 +260,9 @@
       display:block;
       color:#94a3b8;
       margin-bottom:8px;
+      font-size:.85rem;
+      text-transform:uppercase;
+      letter-spacing:.06em;
     }
 
     .price-old{
@@ -240,16 +273,21 @@
 
     .price-now{
       display:block;
-      font-size:3rem;
+      font-size:3.2rem;
       line-height:1;
       color:var(--primary);
       font-weight:900;
       margin:8px 0 10px;
     }
 
-    section{
-      padding:72px 0;
+    .price-installment{
+      color:#86efac;
+      font-size:.9rem;
+      margin-bottom:12px;
     }
+
+    /* ── SECTIONS ── */
+    section{ padding:72px 0; }
 
     .section-title{
       font-size:clamp(1.8rem,3vw,2.7rem);
@@ -263,19 +301,10 @@
       font-size:1.05rem;
     }
 
-    .grid-3,
-    .grid-4{
-      display:grid;
-      gap:20px;
-    }
-
-    .grid-3{
-      grid-template-columns:repeat(3,minmax(0,1fr));
-    }
-
-    .grid-4{
-      grid-template-columns:repeat(4,minmax(0,1fr));
-    }
+    .grid-2,.grid-3,.grid-4{ display:grid; gap:20px; }
+    .grid-2{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .grid-3{ grid-template-columns:repeat(3,minmax(0,1fr)); }
+    .grid-4{ grid-template-columns:repeat(4,minmax(0,1fr)); }
 
     .card{
       background:rgba(255,255,255,.04);
@@ -286,44 +315,193 @@
       box-shadow:var(--shadow);
     }
 
-    .card h3{
-      margin-bottom:10px;
-      font-size:1.1rem;
-    }
+    .card h3{ margin-bottom:10px; font-size:1.05rem; }
+    .card p{ color:var(--muted); font-size:.94rem; line-height:1.55; }
 
-    .card p{
-      color:var(--muted);
-      font-size:.97rem;
-    }
+    /* ── PERSONA ── */
+    .persona-section{ background:linear-gradient(180deg,rgba(59,130,246,.07),rgba(59,130,246,.02)); }
 
-    .content-list{
-      display:grid;
-      gap:16px;
-      margin-top:24px;
-    }
-
-    .content-item{
-      background:#1e293b;
-      border:1px solid rgba(255,255,255,.06);
-      border-radius:14px;
-      padding:18px 20px;
+    .persona-card{
+      background:rgba(255,255,255,.04);
+      border:2px solid rgba(59,130,246,.22);
+      border-radius:22px;
+      padding:30px 28px;
       text-align:left;
-      color:#e2e8f0;
-      font-size:1rem;
     }
 
-    .content-item strong{
+    .persona-card .persona-name{
+      font-size:1.4rem;
+      font-weight:800;
+      color:#93c5fd;
+      margin-bottom:6px;
+    }
+
+    .persona-card .persona-role{
+      color:var(--muted);
+      margin-bottom:16px;
+      font-size:.95rem;
+    }
+
+    .persona-tags{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-bottom:16px;
+    }
+
+    .tag{
+      background:rgba(59,130,246,.12);
+      border:1px solid rgba(59,130,246,.22);
+      color:#93c5fd;
+      padding:5px 12px;
+      border-radius:999px;
+      font-size:.82rem;
+      font-weight:700;
+    }
+
+    .tag-green{
+      background:rgba(34,197,94,.10);
+      border-color:rgba(34,197,94,.22);
+      color:#86efac;
+    }
+
+    .tag-red{
+      background:rgba(239,68,68,.10);
+      border-color:rgba(239,68,68,.22);
+      color:#fca5a5;
+    }
+
+    /* ── CHAPTERS ── */
+    .chapters-section{ background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01)); }
+
+    .chapter-item{
+      background:#1e293b;
+      border:1px solid rgba(255,255,255,.07);
+      border-left:4px solid var(--secondary);
+      border-radius:14px;
+      padding:20px 22px;
+      text-align:left;
+      display:grid;
+      grid-template-columns:auto 1fr;
+      gap:16px;
+      align-items:start;
+    }
+
+    .chapter-num{
+      background:var(--secondary);
       color:#fff;
+      font-weight:900;
+      font-size:.9rem;
+      padding:6px 12px;
+      border-radius:8px;
+      min-width:44px;
+      text-align:center;
     }
 
-    .highlight{
-      background:linear-gradient(180deg,rgba(59,130,246,.09),rgba(59,130,246,.03));
+    .chapter-content h4{ font-size:1.05rem; margin-bottom:6px; }
+    .chapter-content p{ color:var(--muted); font-size:.9rem; line-height:1.5; }
+
+    /* ── HIGHLIGHT ── */
+    .highlight{ background:linear-gradient(180deg,rgba(59,130,246,.09),rgba(59,130,246,.03)); }
+    .forwho{ background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.02)); }
+
+    /* ── COMPARISON TABLE ── */
+    .compare-section{ background:linear-gradient(180deg,rgba(34,197,94,.06),rgba(34,197,94,.02)); }
+
+    .compare-table{
+      width:100%;
+      border-collapse:collapse;
+      border-radius:16px;
+      overflow:hidden;
+      box-shadow:var(--shadow);
     }
 
-    .forwho{
-      background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.02));
+    .compare-table th{
+      background:#162033;
+      padding:16px 12px;
+      font-size:.9rem;
+      font-weight:800;
+      color:#93c5fd;
     }
 
+    .compare-table th:first-child{ color:var(--muted); }
+
+    .compare-table td{
+      padding:14px 12px;
+      font-size:.9rem;
+      color:var(--muted);
+      border-bottom:1px solid rgba(255,255,255,.05);
+      vertical-align:middle;
+    }
+
+    .compare-table td:first-child{
+      font-weight:700;
+      color:#e2e8f0;
+    }
+
+    .compare-table tr:nth-child(even) td{ background:rgba(255,255,255,.02); }
+
+    .check{ color:#22c55e; font-size:1.2rem; }
+    .cross{ color:#ef4444; font-size:1.1rem; }
+    .partial{ color:#f59e0b; font-size:1.1rem; }
+
+    .compare-table .highlight-col{
+      background:rgba(34,197,94,.06);
+      font-weight:700;
+      color:#fff !important;
+    }
+
+    /* ── AUTHOR ── */
+    .author-section{ background:#030b18; }
+
+    .author-card{
+      max-width:860px;
+      margin:0 auto;
+      background:#0c1526;
+      border:1px solid rgba(59,130,246,.15);
+      border-radius:24px;
+      padding:36px 32px;
+      display:grid;
+      grid-template-columns:auto 1fr;
+      gap:32px;
+      align-items:center;
+      text-align:left;
+      box-shadow:var(--shadow);
+    }
+
+    .author-photo{
+      width:120px;
+      height:120px;
+      border-radius:50%;
+      object-fit:cover;
+      border:3px solid var(--secondary);
+      box-shadow:0 0 0 6px rgba(59,130,246,.12);
+    }
+
+    .author-name{ font-size:1.5rem; font-weight:800; margin-bottom:4px; }
+    .author-title{ color:#93c5fd; font-size:.95rem; margin-bottom:12px; }
+    .author-bio{ color:var(--muted); font-size:.96rem; line-height:1.6; margin-bottom:16px; }
+
+    .author-stats{
+      display:flex;
+      gap:24px;
+      flex-wrap:wrap;
+    }
+
+    .stat-item{
+      text-align:center;
+    }
+
+    .stat-num{
+      font-size:1.6rem;
+      font-weight:900;
+      color:var(--primary);
+      display:block;
+    }
+
+    .stat-label{ color:var(--muted); font-size:.8rem; }
+
+    /* ── TESTIMONIALS ── */
     .testimonial{
       background:#020617;
       padding:18px 20px;
@@ -334,38 +512,42 @@
       box-shadow:var(--shadow);
     }
 
-    .testimonial strong{
-      display:block;
-      margin-bottom:6px;
-      color:#fff;
-    }
+    .testimonial strong{ display:block; margin-bottom:6px; color:#fff; }
 
-    .price-section{
-      background:linear-gradient(180deg,rgba(34,197,94,.06),rgba(34,197,94,.02));
-    }
+    /* ── PRICE ── */
+    .price-section{ background:linear-gradient(180deg,rgba(34,197,94,.06),rgba(34,197,94,.02)); }
 
     .price-card{
-      max-width:760px;
+      max-width:780px;
       margin:0 auto;
       background:#0c1526;
-      border:1px solid rgba(34,197,94,.16);
+      border:2px solid rgba(34,197,94,.22);
       border-radius:24px;
-      padding:34px 28px;
-      box-shadow:var(--shadow);
+      padding:38px 30px;
+      box-shadow:0 24px 60px rgba(34,197,94,.08);
     }
 
-    .guarantee{
-      margin-top:20px;
-      color:var(--muted);
-      font-size:.96rem;
-    }
-
-    .faq-list{
-      max-width:900px;
-      margin:0 auto;
+    .price-features{
       display:grid;
-      gap:14px;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:10px;
+      margin:22px 0 28px;
     }
+
+    .price-feature{
+      background:rgba(34,197,94,.06);
+      border:1px solid rgba(34,197,94,.12);
+      border-radius:10px;
+      padding:10px 14px;
+      font-size:.9rem;
+      color:#86efac;
+      text-align:left;
+    }
+
+    .guarantee{ margin-top:14px; color:var(--muted); font-size:.9rem; }
+
+    /* ── FAQ ── */
+    .faq-list{ max-width:900px; margin:0 auto; display:grid; gap:14px; }
 
     .faq{
       background:#1e293b;
@@ -390,23 +572,71 @@
       align-items:center;
     }
 
-    .resposta{
-      display:none;
-      padding:0 20px 20px;
-      color:var(--muted);
+    .resposta{ display:none; padding:0 20px 20px; color:var(--muted); }
+
+    /* ── SEO BLOCK ── */
+    .seo-section{
+      background:#020917;
+      border-top:1px solid rgba(59,130,246,.12);
+      padding:56px 0;
     }
 
+    .seo-block{
+      background:#0c1526;
+      border:1px solid rgba(59,130,246,.12);
+      border-radius:16px;
+      padding:24px 28px;
+      text-align:left;
+      margin-bottom:20px;
+    }
+
+    .seo-block h4{
+      color:#93c5fd;
+      font-size:1rem;
+      margin-bottom:14px;
+      text-transform:uppercase;
+      letter-spacing:.06em;
+      font-size:.85rem;
+    }
+
+    .seo-tag-list{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+
+    .seo-tag{
+      background:rgba(59,130,246,.08);
+      border:1px solid rgba(59,130,246,.18);
+      color:#93c5fd;
+      padding:5px 12px;
+      border-radius:8px;
+      font-size:.82rem;
+    }
+
+    .seo-item{
+      background:rgba(255,255,255,.03);
+      border-radius:10px;
+      padding:12px 16px;
+      margin-bottom:10px;
+    }
+
+    .seo-item strong{ color:#e2e8f0; display:block; font-size:.95rem; margin-bottom:4px; }
+    .seo-item span{ color:var(--muted); font-size:.85rem; }
+
+    /* ── URGENCY ── */
     .urgency-box{
       max-width:860px;
       margin:0 auto 30px;
       background:linear-gradient(90deg,#7f1d1d,#b91c1c);
       border-radius:16px;
       padding:18px 20px;
-      font-size:1.1rem;
+      font-size:1.05rem;
       font-weight:700;
       box-shadow:var(--shadow);
     }
 
+    /* ── STICKY ── */
     .sticky-cta{
       position:fixed;
       right:18px;
@@ -422,8 +652,10 @@
       padding:16px 22px;
       border-radius:999px;
       box-shadow:0 12px 30px rgba(0,0,0,.25);
+      font-size:.95rem;
     }
 
+    /* ── POPUP ── */
     .popup{
       position:fixed;
       bottom:20px;
@@ -444,122 +676,172 @@
       padding:32px 16px 44px;
       color:#94a3b8;
       border-top:1px solid rgba(255,255,255,.06);
+      font-size:.9rem;
     }
 
+    footer a{ color:#64748b; }
+    footer a:hover{ color:var(--muted); }
+
+    /* ── RESPONSIVE ── */
     @media(max-width:1024px){
-      .hero-wrap{
-        grid-template-columns:1fr;
-        text-align:center;
-      }
-
-      .hero-points,
-      .grid-3,
-      .grid-4{
-        grid-template-columns:repeat(2,minmax(0,1fr));
-      }
-
-      .hero .subheadline{
-        margin-left:auto;
-        margin-right:auto;
-      }
+      .hero-wrap{ grid-template-columns:1fr; text-align:center; }
+      .hero-points,.grid-3,.grid-4{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .hero .subheadline{ margin-left:auto; margin-right:auto; }
+      .author-card{ grid-template-columns:1fr; text-align:center; }
+      .author-photo{ margin:0 auto; }
+      .author-stats{ justify-content:center; }
+      .badge{ display:inline-block; text-align:center; }
     }
 
     @media(max-width:768px){
-      .hero{
-        padding:52px 0 42px;
-      }
-
-      .hero-points,
-      .grid-3,
-      .grid-4{
-        grid-template-columns:1fr;
-      }
-
-      .cta-row{
-        flex-direction:column;
-      }
-
-      .btn{
-        width:100%;
-      }
-
-      .popup{
-        left:10px;
-        right:10px;
-        bottom:10px;
-        max-width:none;
-      }
-
-      .sticky-cta{
-        left:12px;
-        right:12px;
-        bottom:12px;
-      }
-
-      .sticky-cta a{
-        display:block;
-        text-align:center;
-      }
+      .hero{ padding:52px 0 42px; }
+      .hero-points,.grid-3,.grid-4,.grid-2{ grid-template-columns:1fr; }
+      .cta-row{ flex-direction:column; }
+      .btn{ width:100%; }
+      .price-features{ grid-template-columns:1fr; }
+      .popup{ left:10px; right:10px; bottom:10px; max-width:none; }
+      .sticky-cta{ left:12px; right:12px; bottom:12px; }
+      .sticky-cta a{ display:block; text-align:center; }
+      .compare-table { font-size:.82rem; }
+      .compare-table th, .compare-table td { padding:10px 8px; }
     }
 
     @media(max-width:480px){
-      .hero h1{
-        font-size:2rem;
-      }
+      .hero h1{ font-size:2rem; }
+      .price-now{ font-size:2.8rem; }
+    }
 
-      .price-now{
-        font-size:2.6rem;
-      }
+    @media(max-width:420px){
+      h1, h2 { text-align: center; }
+      .hero h1{ font-size:1.7rem; }
+      .topbar{ font-size:12px; padding:8px 12px; }
+      .badge{ font-size:11px; padding:6px 10px; }
+      .hero{ padding:40px 0 32px; }
+      .hero-wrap{ gap:28px; }
+      .hero-card{ padding:16px; }
+      .offer-box{ padding:14px; }
+      .price-now{ font-size:2.4rem; }
+      .btn{ font-size:.9rem; padding:14px 20px; }
+      .section-title{ font-size:1.6rem; }
+      .compare-table{ font-size:.75rem; }
+      .compare-table th, .compare-table td{ padding:8px 5px; }
     }
   </style>
-</head>
-<body>
 
-  <div class="topbar" id="topbar">
-    Oferta especial por tempo limitado • Acesso imediato • Garantia de 7 dias
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Marketing Digital para PMEs",
+    "description": "Guia prático de marketing digital para PMEs: presença online, tráfego, conteúdo, vendas e estratégia para pequenos negócios crescerem.",
+    "url": "https://www.jgm4consultoria.com.br/pages/mkt-digital.html",
+    "image": "https://www.jgm4consultoria.com.br/assets/img_mkt_digital.png",
+    "inLanguage": "pt-BR",
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "JGM4 Consultoria Logística",
+      "url": "https://www.jgm4consultoria.com.br/"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "JGM4 Consultoria Logística",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://www.jgm4consultoria.com.br/assets/brand/logo-jgm4-google-ads-1200x1200.png"
+      }
+    },
+    "breadcrumb": {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "JGM4 Consultoria", "item": "https://www.jgm4consultoria.com.br/" },
+        { "@type": "ListItem", "position": 2, "name": "Marketing Digital para PMEs", "item": "https://www.jgm4consultoria.com.br/pages/mkt-digital.html" }
+      ]
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "Guia Completo de Marketing Digital 2026",
+    "description": "Ebook de marketing digital para pequenas empresas com conteúdo sobre SEO, anúncios, redes sociais e funil de vendas.",
+    "image": "https://www.jgm4consultoria.com.br/assets/img_mkt_digital.png",
+    "brand": { "@type": "Brand", "name": "JGM4 Consultoria" },
+    "offers": {
+      "@type": "Offer",
+      "url": "https://pay.hotmart.com/F90526016Q?checkoutMode=2",
+      "price": "9.99",
+      "priceCurrency": "BRL",
+      "availability": "https://schema.org/InStock"
+    }
+  }
+  </script>
+  <link rel="stylesheet" href="/css/brand.css?v=20260811-2">
+  <link rel="icon" href="/assets/brand/favicon.ico?v=20260811-2" sizes="any">
+  <link rel="icon" type="image/png" sizes="48x48" href="/assets/brand/favicon-48x48.png?v=20260811-2">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/brand/favicon-96x96.png?v=20260811-2">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/brand/favicon-192x192.png?v=20260811-2">
+  <link rel="icon" type="image/png" sizes="512x512" href="/assets/brand/favicon-512x512.png?v=20260811-2">
+  <link rel="apple-touch-icon" sizes="192x192" href="/assets/brand/favicon-192x192.png?v=20260811-2">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta property="og:image" content="https://www.jgm4consultoria.com.br/assets/brand/og-jgm4-1200x630.jpg">
+  <meta property="og:image:secure_url" content="https://www.jgm4consultoria.com.br/assets/brand/og-jgm4-1200x630.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="JGM4 Consultoria Logística">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://www.jgm4consultoria.com.br/assets/brand/og-jgm4-1200x630.jpg">
+  <meta name="twitter:image:alt" content="JGM4 Consultoria Logística"></head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NQGP74WJ"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<div class="topbar" id="topbar">
+    Acesso imediato • Pagamento seguro • Garantia de 7 dias
   </div>
 
+  <!-- ═══════════════ HERO ═══════════════ -->
   <header class="hero">
     <div class="container hero-wrap">
       <div>
-        <div class="badge">EBOOK PRÁTICO PARA QUEM QUER VENDER ONLINE</div>
+        <div class="badge">EDIÇÃO 2026 — GUIA PRÁTICO DO ZERO AO SUCESSO</div>
 
         <h1>
-          Aprenda <span>Marketing Digital</span> de forma simples e comece a vender todos os dias
+          Domine o <span>Marketing Digital</span> e transforme cliques em clientes todos os dias
         </h1>
 
         <p class="subheadline">
-          Descubra como usar Instagram, TikTok, YouTube e estratégias de conteúdo para atrair clientes, crescer sua presença digital e aumentar suas vendas com consistência.
+          10 capítulos práticos sobre público-alvo, SEO, Google Ads, Meta Ads, Instagram, e-mail marketing e funil de vendas. Sem enrolação, com estratégia real para pequenas empresas e empreendedores.
         </p>
 
         <div class="hero-points">
-          <div class="hero-point">Instagram, TikTok e YouTube</div>
-          <div class="hero-point">Conteúdo que chama atenção</div>
-          <div class="hero-point">Estratégias para iniciantes</div>
-          <div class="hero-point">Métodos para vender online</div>
+          <div class="hero-point">✔ Google Ads passo a passo</div>
+          <div class="hero-point">✔ Meta Ads + Instagram Ads</div>
+          <div class="hero-point">✔ Funil de vendas completo</div>
+          <div class="hero-point">✔ SEO, e-mail e analytics</div>
         </div>
 
         <div class="cta-row">
-          <a href="https://pay.hotmart.com/F90526016Q?checkoutMode=2" class="hotmart-fb hotmart__button-checkout btn btn-primary">
-            QUERO ACESSO AGORA
+          <a href="https://pay.hotmart.com/F90526016Q?checkoutMode=2" class="hotmart-fb hotmart__button-checkout btn btn-primary" onclick="gtag('event','begin_checkout',{'value':9.99,'currency':'BRL','item_name':'Marketing Digital'});">
+            QUERO ACESSO AGORA POR R$ 9,99
           </a>
-
-          <a href="#conteudo" class="btn btn-secondary">
-            VER CONTEÚDO
-          </a>
+          <a href="#capitulos" class="btn btn-secondary">VER CAPÍTULOS</a>
         </div>
 
-        <div class="countdown" id="contadorHero">Oferta expira em 15:00</div>
+        <div class="countdown">Acesso digital imediato após confirmação do pagamento</div>
       </div>
 
       <div class="hero-card">
         <img src="../assets/img_mkt_digital.png" alt="Ebook Guia Completo de Marketing Digital 2026" />
 
         <div class="offer-box">
-          <small>OFERTA DE HOJE</small>
+          <small>Oferta de hoje — pagamento único</small>
           <span class="price-old">De R$ 57,00</span>
-          <span class="price-now">R$ 19,90</span>
-          <p>Acesso imediato, pagamento único e material direto ao ponto para quem quer sair do zero ou vender mais.</p>
+          <span class="price-now">R$ 9,99</span>
+          <p class="price-installment">Acesso imediato após confirmação</p>
+          <p style="color:var(--muted);font-size:.88rem;">Material completo, direto ao ponto. Garantia incondicional de 7 dias.</p>
         </div>
       </div>
     </div>
@@ -567,200 +849,565 @@
 
   <main>
 
+    <!-- ═══════════════ URGÊNCIA ═══════════════ -->
     <section class="highlight">
       <div class="container">
         <div class="urgency-box">
-          🔥 Restam poucas vagas promocionais com desconto nesta oferta
+          Conteúdo digital com acesso imediato e garantia de 7 dias
         </div>
 
-        <h2 class="section-title">O que você vai aprender</h2>
+        <h2 class="section-title">O que você vai dominar neste guia</h2>
         <p class="section-subtitle">
-          Um conteúdo pensado para quem quer entender o digital de forma prática, sem enrolação e com foco em resultado.
+          Conteúdo 100% prático desenvolvido por um gestor de tráfego com 2 anos impulsionando campanhas reais para empresas e negócios próprios.
         </p>
 
         <div class="grid-3">
           <div class="card">
-            <h3>Criação de conteúdo</h3>
-            <p>Aprenda a criar conteúdos que chamam atenção, geram conexão e aumentam suas chances de venda.</p>
+            <h3>📣 Publicidade Paga</h3>
+            <p>Google Ads, Meta Ads e Instagram Ads com passo a passo detalhado: criação de conta, segmentação, criativos, orçamento, remarketing e os 10 erros mais comuns que destroem campanhas.</p>
           </div>
-
           <div class="card">
-            <h3>Redes sociais</h3>
-            <p>Entenda como usar Instagram, TikTok e YouTube com estratégia, constância e posicionamento.</p>
+            <h3>🔍 Tráfego Orgânico & SEO</h3>
+            <p>Como ser encontrado no Google sem pagar por clique: palavras-chave, backlinks, conteúdo de qualidade, Google Meu Negócio e otimização técnica que realmente funciona.</p>
           </div>
-
           <div class="card">
-            <h3>Vendas online</h3>
-            <p>Descubra como transformar atenção em interesse e interesse em clientes de forma mais previsível.</p>
+            <h3>📊 Analytics & Funil de Vendas</h3>
+            <p>Como usar dados para tomar decisões, entender o comportamento do usuário, configurar metas no Google Analytics 4 e estruturar um funil de conversão do topo ao fundo.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="conteudo">
+    <!-- ═══════════════ PERSONA ═══════════════ -->
+    <section class="persona-section" id="persona">
       <div class="container">
-        <h2 class="section-title">Conteúdo do ebook</h2>
+        <h2 class="section-title">Este ebook foi feito para você?</h2>
         <p class="section-subtitle">
-          Tudo organizado para facilitar sua aplicação, mesmo que você esteja começando agora.
+          Conheça as personas que mais se beneficiam deste guia e veja se você se encaixa em alguma delas.
         </p>
 
-        <div class="content-list">
-          <div class="content-item"><strong>Módulo 1:</strong> Fundamentos do marketing digital</div>
-          <div class="content-item"><strong>Módulo 2:</strong> Como criar presença forte no Instagram</div>
-          <div class="content-item"><strong>Módulo 3:</strong> Estratégias para TikTok e vídeos curtos</div>
-          <div class="content-item"><strong>Módulo 4:</strong> YouTube para autoridade e vendas</div>
-          <div class="content-item"><strong>Módulo 5:</strong> Conteúdo viral e conteúdo estratégico</div>
-          <div class="content-item"><strong>Módulo 6:</strong> Como vender todos os dias com consistência</div>
+        <div class="grid-2" style="gap:24px;">
+
+          <div class="persona-card">
+            <div class="persona-name">Marcos — Pequeno Empresário</div>
+            <div class="persona-role">Dono de salão, restaurante, loja ou clínica · 28–50 anos</div>
+            <div class="persona-tags">
+              <span class="tag tag-red">Sente que concorrentes crescem mais rápido</span>
+              <span class="tag tag-red">Não sabe onde anunciar nem quanto investir</span>
+              <span class="tag tag-green">Quer atrair mais clientes locais</span>
+              <span class="tag tag-green">Precisa de um ponto de partida claro</span>
+            </div>
+            <p style="color:var(--muted);font-size:.93rem;">Marcos tem o negócio funcionando mas sente que o digital ainda é um mistério. Ele precisa de um guia prático que explique Google Ads, Instagram e e-mail marketing sem jargões complicados — e é exatamente isso que este ebook entrega.</p>
+          </div>
+
+          <div class="persona-card">
+            <div class="persona-name">Juliana — Empreendedora Digital</div>
+            <div class="persona-role">Infoprodutora, afiliada ou prestadora de serviços · 22–38 anos</div>
+            <div class="persona-tags">
+              <span class="tag tag-red">Investe em anúncios mas não vê retorno</span>
+              <span class="tag tag-red">Quer escalar vendas sem dobrar o orçamento</span>
+              <span class="tag tag-green">Domina redes sociais, quer entender tráfego pago</span>
+              <span class="tag tag-green">Busca estratégias de remarketing e funil</span>
+            </div>
+            <p style="color:var(--muted);font-size:.93rem;">Juliana já vende online mas quer parar de desperdiçar verba em campanhas sem estratégia. Ela precisa entender remarketing, orçamento por funil, comparativo entre plataformas e os erros que estão consumindo seu dinheiro.</p>
+          </div>
+
+          <div class="persona-card">
+            <div class="persona-name">Rafael — Profissional em Transição</div>
+            <div class="persona-role">CLT querendo migrar para o digital · 25–40 anos</div>
+            <div class="persona-tags">
+              <span class="tag tag-red">Nenhuma experiência com marketing digital</span>
+              <span class="tag tag-red">Não sabe por onde começar</span>
+              <span class="tag tag-green">Quer aprender do zero com linguagem simples</span>
+              <span class="tag tag-green">Busca uma fonte confiável e acessível</span>
+            </div>
+            <p style="color:var(--muted);font-size:.93rem;">Rafael quer entrar para o mercado digital mas não sabe por onde começar. Este guia apresenta todos os fundamentos — público-alvo, presença online, SEO, e-mail, redes sociais e publicidade paga — em linguagem acessível e progressiva.</p>
+          </div>
+
+          <div class="persona-card">
+            <div class="persona-name">Ana — Gestora de Marketing</div>
+            <div class="persona-role">Analista ou coordenadora de marketing · 28–45 anos</div>
+            <div class="persona-tags">
+              <span class="tag tag-red">Precisa justificar ROI para a diretoria</span>
+              <span class="tag tag-red">Quer comparar Google vs. Meta Ads com dados</span>
+              <span class="tag tag-green">Busca estrutura de calendário editorial</span>
+              <span class="tag tag-green">Quer aprimorar conhecimento em remarketing</span>
+            </div>
+            <p style="color:var(--muted);font-size:.93rem;">Ana já trabalha com marketing mas quer um material de referência atualizado para 2026. O guia traz comparativos detalhados, tabelas de orçamento, sinais para escalar ou pausar campanhas e ferramentas essenciais.</p>
+          </div>
+
         </div>
       </div>
     </section>
 
+    <!-- ═══════════════ CAPÍTULOS ═══════════════ -->
+    <section class="chapters-section" id="capitulos">
+      <div class="container">
+        <h2 class="section-title">Os 10 capítulos do guia</h2>
+        <p class="section-subtitle">
+          Conteúdo progressivo do zero ao avançado — cada capítulo resolve um problema real do empreendedor digital.
+        </p>
+
+        <div style="display:grid;gap:14px;">
+
+          <div class="chapter-item">
+            <div class="chapter-num">01</div>
+            <div class="chapter-content">
+              <h4>Entendendo o Público-Alvo</h4>
+              <p>Aprenda a criar personas detalhadas, conduzir pesquisas de mercado e adaptar sua linguagem, tom e canais para atingir exatamente quem tem potencial de compra. Inclui exemplos práticos de segmentação por demografia, comportamento e interesse.</p>
+            </div>
+          </div>
+
+          <div class="chapter-item">
+            <div class="chapter-num">02</div>
+            <div class="chapter-content">
+              <h4>Presença Online Eficaz</h4>
+              <p>Como construir um site funcional, rápido e responsivo que converta visitantes em clientes. Aborda design intuitivo, velocidade de carregamento, CTAs estratégicos, depoimentos e como mapear a jornada do visitante para maximizar conversão.</p>
+            </div>
+          </div>
+
+          <div class="chapter-item">
+            <div class="chapter-num">03</div>
+            <div class="chapter-content">
+              <h4>SEO Simplificado</h4>
+              <p>Desmistifica o SEO com foco em resultados: escolha de palavras-chave, backlinks de qualidade, conteúdo relevante, meta descrições, responsividade mobile e Google Meu Negócio. Ferramentas recomendadas: Google Search Console e Analytics.</p>
+            </div>
+          </div>
+
+          <div class="chapter-item">
+            <div class="chapter-num">04</div>
+            <div class="chapter-content">
+              <h4>Publicidade Online Completa — Google, Meta e Instagram Ads</h4>
+              <p>O capítulo mais extenso do guia: passo a passo para criar campanhas no Google Ads (6 etapas), Facebook Ads (7 etapas) e Instagram Ads. Inclui comparativo detalhado entre as plataformas, os 10 erros que destroem campanhas, planejamento de orçamento por fase (teste, otimização e escala), estratégias de remarketing e funil de vendas.</p>
+            </div>
+          </div>
+
+          <div class="chapter-item">
+            <div class="chapter-num">05</div>
+            <div class="chapter-content">
+              <h4>Estratégias de E-mail Marketing</h4>
+              <p>Como construir uma lista de contatos qualificada, segmentar inteligentemente, criar conteúdo relevante, automatizar sequências (boas-vindas, carrinho abandonado, pós-venda) e analisar taxas de abertura e conversão para melhorar continuamente.</p>
+            </div>
+          </div>
+
+          <div class="chapter-item">
+            <div class="chapter-num">06</div>
+            <div class="chapter-content">
+              <h4>Mídias Sociais Estratégicas</h4>
+              <p>Guia prático das principais plataformas em 2026: Instagram/Reels, TikTok, LinkedIn, YouTube Shorts e Pinterest. Estratégias de Reels, Stories, hashtags, influenciadores e passo a passo para criar um calendário editorial consistente. Ferramentas: Buffer, Hootsuite, Later, Canva e TubeBuddy.</p>
+            </div>
+          </div>
+
+          <div class="chapter-item">
+            <div class="chapter-num">07</div>
+            <div class="chapter-content">
+              <h4>Analytics e Monitoramento de Desempenho</h4>
+              <p>Como configurar e interpretar o Google Analytics 4: taxa de rejeição, taxa de conversão, tempo na página e fontes de tráfego. Configuração de alertas automáticos, identificação de páginas de alto desempenho e ajuste de estratégias com base em dados concretos.</p>
+            </div>
+          </div>
+
+          <div class="chapter-item">
+            <div class="chapter-num">08</div>
+            <div class="chapter-content">
+              <h4>Construindo Relacionamentos Online</h4>
+              <p>Como usar dados e analytics para tomar decisões informadas, otimizar continuamente e entender o comportamento do seu público. A diferença entre intuição e decisão baseada em dado — e por que isso define a longevidade do seu negócio digital.</p>
+            </div>
+          </div>
+
+          <div class="chapter-item">
+            <div class="chapter-num">09</div>
+            <div class="chapter-content">
+              <h4>Vendas Online: Técnicas e Ferramentas</h4>
+              <p>Jornada do cliente desde a navegação até a fidelização: fotos e descrições que vendem, checkout simplificado, ofertas irresistíveis, psicologia das cores, depoimentos e atendimento ao cliente. Ferramentas práticas: Shopify, WooCommerce, Mailchimp e Google Shopping.</p>
+            </div>
+          </div>
+
+          <div class="chapter-item">
+            <div class="chapter-num">10</div>
+            <div class="chapter-content">
+              <h4>Próximos Passos para o Sucesso Digital</h4>
+              <p>Como consolidar as estratégias aprendidas, explorar novos canais, investir em educação continuada e aprofundar a análise de dados. Um roadmap claro para crescer com consistência, construir relacionamentos duradouros e manter a presença digital sempre relevante.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ PARA QUEM É ═══════════════ -->
     <section class="forwho">
       <div class="container">
         <h2 class="section-title">Para quem este ebook é indicado</h2>
         <p class="section-subtitle">
-          Ideal para quem quer começar certo ou melhorar seus resultados no digital.
+          Se você se identifica com pelo menos uma dessas situações, este guia é o próximo passo certo.
         </p>
 
         <div class="grid-4">
           <div class="card">
-            <h3>Iniciantes</h3>
-            <p>Para quem quer aprender marketing digital sem complicação e com uma direção clara.</p>
+            <h3>Iniciantes no digital</h3>
+            <p>Quer aprender do zero com linguagem simples, progressiva e sem jargão técnico desnecessário.</p>
           </div>
-
           <div class="card">
-            <h3>Empreendedores</h3>
-            <p>Para quem precisa vender mais usando redes sociais e conteúdo estratégico.</p>
+            <h3>Donos de negócio local</h3>
+            <p>Precisa de mais clientes e quer entender como usar Google Ads, Instagram e SEO local para crescer.</p>
           </div>
-
           <div class="card">
-            <h3>Afiliados e infoprodutores</h3>
-            <p>Para quem deseja melhorar divulgação, posicionamento e conversão.</p>
+            <h3>Empreendedores digitais</h3>
+            <p>Já vende online mas quer escalar com funil de vendas, remarketing e gestão de orçamento inteligente.</p>
           </div>
-
           <div class="card">
             <h3>Prestadores de serviço</h3>
-            <p>Para quem quer atrair clientes e fortalecer sua autoridade online.</p>
+            <p>Quer atrair mais leads qualificados e construir autoridade online de forma consistente.</p>
           </div>
         </div>
       </div>
     </section>
 
+    <!-- ═══════════════ COMPARATIVO ═══════════════ -->
+    <section class="compare-section" id="comparativo">
+      <div class="container">
+        <h2 class="section-title">O que você recebe vs. o que pagaria em outro lugar</h2>
+        <p class="section-subtitle">
+          Veja o que este guia entrega e o quanto custaria aprender isso em cursos separados.
+        </p>
+
+        <div style="overflow-x:auto;">
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th style="text-align:left;">Conteúdo / Habilidade</th>
+                <th>Curso Separado</th>
+                <th>YouTube Gratuito</th>
+                <th class="highlight-col" style="color:#86efac;">Guia R$ 9,99</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Público-alvo e personas detalhadas</td>
+                <td>R$ 97–297</td>
+                <td class="partial">⚡ Fragmentado</td>
+                <td class="highlight-col"><span class="check">✔</span></td>
+              </tr>
+              <tr>
+                <td>SEO completo + Google Meu Negócio</td>
+                <td>R$ 197–497</td>
+                <td class="partial">⚡ Fragmentado</td>
+                <td class="highlight-col"><span class="check">✔</span></td>
+              </tr>
+              <tr>
+                <td>Google Ads passo a passo (6 etapas)</td>
+                <td>R$ 297–997</td>
+                <td class="partial">⚡ Fragmentado</td>
+                <td class="highlight-col"><span class="check">✔</span></td>
+              </tr>
+              <tr>
+                <td>Facebook Ads + Instagram Ads (7 etapas)</td>
+                <td>R$ 297–997</td>
+                <td class="partial">⚡ Fragmentado</td>
+                <td class="highlight-col"><span class="check">✔</span></td>
+              </tr>
+              <tr>
+                <td>Remarketing e funil de vendas</td>
+                <td>R$ 197–497</td>
+                <td class="cross">✗ Raro</td>
+                <td class="highlight-col"><span class="check">✔</span></td>
+              </tr>
+              <tr>
+                <td>Planejamento de orçamento por fase</td>
+                <td>R$ 197–497</td>
+                <td class="cross">✗ Raro</td>
+                <td class="highlight-col"><span class="check">✔</span></td>
+              </tr>
+              <tr>
+                <td>Os 10 erros que destroem campanhas</td>
+                <td>—</td>
+                <td class="cross">✗ Não existe</td>
+                <td class="highlight-col"><span class="check">✔</span></td>
+              </tr>
+              <tr>
+                <td>E-mail marketing + automação</td>
+                <td>R$ 97–297</td>
+                <td class="partial">⚡ Fragmentado</td>
+                <td class="highlight-col"><span class="check">✔</span></td>
+              </tr>
+              <tr>
+                <td>Calendário editorial + mídias sociais 2026</td>
+                <td>R$ 97–297</td>
+                <td class="partial">⚡ Fragmentado</td>
+                <td class="highlight-col"><span class="check">✔</span></td>
+              </tr>
+              <tr>
+                <td>Google Analytics 4 + KPIs práticos</td>
+                <td>R$ 97–297</td>
+                <td class="partial">⚡ Fragmentado</td>
+                <td class="highlight-col"><span class="check">✔</span></td>
+              </tr>
+              <tr>
+                <td style="font-weight:800;color:#fff;">Total estimado se comprado separado</td>
+                <td style="font-weight:800;color:#ef4444;">R$ 1.500–4.000+</td>
+                <td style="color:#94a3b8;">Dias pesquisando</td>
+                <td class="highlight-col" style="font-size:1.2rem;font-weight:900;color:#22c55e;">R$ 9,99</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div style="margin-top:28px;">
+          <a href="https://pay.hotmart.com/F90526016Q?checkoutMode=2" class="hotmart-fb hotmart__button-checkout btn btn-primary" style="max-width:440px;margin:0 auto;display:flex;" onclick="gtag('event','begin_checkout',{'value':9.99,'currency':'BRL','item_name':'Marketing Digital'});">
+            QUERO TUDO ISSO POR APENAS R$ 9,99
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ AUTOR ═══════════════ -->
+    <section class="author-section" id="autor">
+      <div class="container">
+        <h2 class="section-title">Sobre o autor</h2>
+        <p class="section-subtitle">
+          Quem escreveu este guia e por que você pode confiar no conteúdo.
+        </p>
+
+        <div class="author-card">
+          <img src="../assets/sua-foto.png" alt="Bruno Muniz — Gestor de Tráfego" class="author-photo" />
+
+          <div>
+            <div class="author-name">Bruno Muniz</div>
+            <div class="author-title">Gestor de Tráfego Pago · Especialista em Google Ads e Meta Ads · JGM4 Consultoria</div>
+
+            <p class="author-bio">
+              Com 2 anos de experiência gerenciando campanhas pagas para empresas de diferentes segmentos e para negócios próprios, Bruno Muniz acumulou conhecimento prático sobre o que funciona — e o que drena orçamento — no universo do tráfego pago. Ao longo da sua trajetória, impulsionou campanhas nos setores logístico, educacional e de serviços, testando centenas de combinações de criativos, públicos e estratégias de lances.
+            </p>
+            <p class="author-bio" style="margin-top:-6px;">
+              Este guia reúne os aprendizados mais valiosos dessa experiência: nada de teoria vazia, apenas o que gera resultado real para quem está começando ou quer escalar de forma inteligente.
+            </p>
+
+            <div class="author-stats">
+              <div class="stat-item">
+                <span class="stat-num">2+</span>
+                <span class="stat-label">anos gerenciando campanhas</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-num">3</span>
+                <span class="stat-label">plataformas dominadas</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-num">10</span>
+                <span class="stat-label">capítulos de conteúdo prático</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-num">R$9,99</span>
+                <span class="stat-label">preço de lançamento</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ BENEFÍCIOS ═══════════════ -->
     <section>
       <div class="container">
         <h2 class="section-title">Por que este material pode te ajudar</h2>
         <p class="section-subtitle">
-          Porque ele foi pensado para simplificar o processo e acelerar sua tomada de ação.
+          Escrito por quem gerencia campanhas todos os dias — não por quem apenas ensina teoria.
         </p>
 
         <div class="grid-3">
           <div class="testimonial">
-            <strong>Conteúdo direto</strong>
-            Sem excesso de teoria e com foco em aplicação prática.
+            <strong>Conteúdo escrito por praticante</strong>
+            Cada capítulo foi estruturado com base em experiência real de gestão de tráfego, não apenas em conceitos acadêmicos.
           </div>
-
           <div class="testimonial">
-            <strong>Linguagem simples</strong>
-            Ideal para quem quer entender rápido e colocar em prática.
+            <strong>Linguagem direta e aplicável</strong>
+            Sem enrolação. Cada página entrega uma informação que você pode usar hoje no seu negócio ou nas suas campanhas.
           </div>
-
           <div class="testimonial">
-            <strong>Mais clareza para vender</strong>
-            Um guia para ajudar você a estruturar melhor sua presença digital.
+            <strong>Comparativos e tabelas práticas</strong>
+            Google Ads vs. Meta Ads vs. Instagram Ads, fases de orçamento, sinais para escalar ou pausar — tudo organizado para decisão rápida.
           </div>
         </div>
       </div>
     </section>
 
-    <section class="price-section">
+    <!-- ═══════════════ PREÇO ═══════════════ -->
+    <section class="price-section" id="comprar">
       <div class="container">
         <div class="price-card">
-          <h2 class="section-title">Invista no seu crescimento digital hoje</h2>
+          <div class="badge badge-green" style="display:inline-block;margin-bottom:16px;">OFERTA ESPECIAL 2026</div>
+          <h2 class="section-title">Acesso completo ao Guia de Marketing Digital</h2>
           <p class="section-subtitle" style="margin-bottom:20px;">
-            Tenha acesso imediato ao material e comece a aplicar ainda hoje.
+            10 capítulos, comparativos, checklists, ferramentas recomendadas e estratégias que funcionam. Por menos do que um café.
           </p>
 
-          <div class="price-old">De R$ 57,00</div>
-          <span class="price-now">R$ 19,90</span>
+          <span class="price-old">De R$ 57,00</span>
+          <span class="price-now">R$ 9,99</span>
+
+          <div class="price-features">
+            <div class="price-feature">✔ Acesso imediato e vitalício</div>
+            <div class="price-feature">✔ 10 capítulos completos</div>
+            <div class="price-feature">✔ Google Ads + Meta Ads passo a passo</div>
+            <div class="price-feature">✔ Remarketing e funil de vendas</div>
+            <div class="price-feature">✔ Calendário editorial 2026</div>
+            <div class="price-feature">✔ Ferramentas essenciais listadas</div>
+            <div class="price-feature">✔ Comparativo Google vs. Meta vs. Instagram</div>
+            <div class="price-feature">✔ Garantia incondicional de 7 dias</div>
+          </div>
+
+          <a href="https://pay.hotmart.com/F90526016Q?checkoutMode=2" class="hotmart-fb hotmart__button-checkout btn btn-primary" style="width:100%;max-width:420px;margin:0 auto;display:flex;font-size:1.1rem;" onclick="gtag('event','begin_checkout',{'value':9.99,'currency':'BRL','item_name':'Marketing Digital'});">
+            COMPRAR AGORA — R$ 9,99
+          </a>
 
           <p class="guarantee">
-            Pagamento único • Acesso vitalício • Garantia de 7 dias
+            Pagamento único seguro via Hotmart • Acesso imediato após confirmação • 7 dias de garantia sem perguntas
           </p>
 
-          <div style="margin-top:24px;">
-            <a href="https://pay.hotmart.com/F90526016Q?checkoutMode=2" class="hotmart-fb hotmart__button-checkout btn btn-primary">
-              COMPRAR AGORA
-            </a>
-          </div>
+          <img src="../assets/selo-garantia.png" alt="Garantia 7 dias" style="max-width:80px;margin:14px auto 0;" />
         </div>
       </div>
     </section>
 
+    <!-- ═══════════════ FAQ ═══════════════ -->
     <section>
       <div class="container">
         <h2 class="section-title">Perguntas frequentes</h2>
-        <p class="section-subtitle">
-          Tire suas dúvidas antes de comprar.
-        </p>
+        <p class="section-subtitle">Tire suas dúvidas antes de comprar.</p>
 
         <div class="faq-list">
           <div class="faq">
-            <button onclick="toggleFaq(this)">
-              <span>Como recebo o ebook?</span>
-              <span>+</span>
-            </button>
-            <div class="resposta">
-              Você recebe o acesso por e-mail logo após a confirmação do pagamento.
-            </div>
+            <button onclick="toggleFaq(this)"><span>Como recebo o ebook após a compra?</span><span>+</span></button>
+            <div class="resposta">Você recebe o acesso por e-mail logo após a confirmação do pagamento pela plataforma Hotmart. O processo é imediato.</div>
           </div>
-
           <div class="faq">
-            <button onclick="toggleFaq(this)">
-              <span>Funciona para iniciantes?</span>
-              <span>+</span>
-            </button>
-            <div class="resposta">
-              Sim. O material foi pensado justamente para ser simples, prático e fácil de aplicar.
-            </div>
+            <button onclick="toggleFaq(this)"><span>Funciona para quem nunca fez marketing digital?</span><span>+</span></button>
+            <div class="resposta">Sim. O guia começa pelos fundamentos de público-alvo e presença online e avança progressivamente até Google Ads, remarketing e funil de vendas. Não é necessário nenhum conhecimento prévio.</div>
           </div>
-
           <div class="faq">
-            <button onclick="toggleFaq(this)">
-              <span>Tem garantia?</span>
-              <span>+</span>
-            </button>
-            <div class="resposta">
-              Sim. Você tem 7 dias de garantia para testar o conteúdo com tranquilidade.
-            </div>
+            <button onclick="toggleFaq(this)"><span>Serve para quem já anuncia no Google e no Meta?</span><span>+</span></button>
+            <div class="resposta">Com certeza. O capítulo 4 traz comparativo detalhado, estratégias de remarketing, planejamento de orçamento por fase, os 10 erros mais comuns e táticas avançadas de lookalike audiences e exclusão de convertidos.</div>
           </div>
-
           <div class="faq">
-            <button onclick="toggleFaq(this)">
-              <span>Por quanto tempo tenho acesso?</span>
-              <span>+</span>
-            </button>
-            <div class="resposta">
-              O acesso é vitalício, de acordo com as regras da plataforma.
-            </div>
+            <button onclick="toggleFaq(this)"><span>Tem garantia?</span><span>+</span></button>
+            <div class="resposta">Sim. Você tem 7 dias de garantia incondicional. Se não gostar por qualquer motivo, basta solicitar o reembolso e você recebe seu dinheiro de volta, sem perguntas.</div>
           </div>
-
           <div class="faq">
-            <button onclick="toggleFaq(this)">
-              <span>Esse conteúdo serve para quem já vende?</span>
-              <span>+</span>
-            </button>
-            <div class="resposta">
-              Sim. Ele pode ajudar tanto quem está começando quanto quem quer organizar melhor suas estratégias para vender mais.
-            </div>
+            <button onclick="toggleFaq(this)"><span>Por quanto tempo tenho acesso?</span><span>+</span></button>
+            <div class="resposta">O acesso é vitalício, de acordo com as regras da plataforma Hotmart. Você poderá rever o material quantas vezes quiser.</div>
+          </div>
+          <div class="faq">
+            <button onclick="toggleFaq(this)"><span>Esse preço de R$ 9,99 vai mudar?</span><span>+</span></button>
+            <div class="resposta">Este é um preço de lançamento e pode ser ajustado a qualquer momento. Quem comprar agora garante o acesso a este valor independentemente de atualizações futuras de preço.</div>
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ SEO ADMIN BLOCK ═══════════════ -->
+    <section class="seo-section" id="seo-dados">
+      <div class="container">
+        <h2 class="section-title" style="font-size:1.6rem;">Dados para campanhas e SEO</h2>
+        <p class="section-subtitle" style="font-size:.95rem;">
+          Referência de palavras-chave, títulos de anúncio, descrições e sitelinks recomendados para divulgar este produto.
+        </p>
+
+        <!-- PALAVRAS-CHAVE -->
+        <div class="seo-block">
+          <h4>Palavras-Chave Recomendadas</h4>
+          <div class="seo-tag-list">
+            <span class="seo-tag">ebook marketing digital</span>
+            <span class="seo-tag">guia marketing digital 2026</span>
+            <span class="seo-tag">google ads para iniciantes</span>
+            <span class="seo-tag">como anunciar no google</span>
+            <span class="seo-tag">facebook ads passo a passo</span>
+            <span class="seo-tag">instagram ads como fazer</span>
+            <span class="seo-tag">trafego pago para pequenas empresas</span>
+            <span class="seo-tag">remarketing google ads</span>
+            <span class="seo-tag">funil de vendas digital</span>
+            <span class="seo-tag">seo simplificado</span>
+            <span class="seo-tag">marketing digital do zero</span>
+            <span class="seo-tag">como vender online</span>
+            <span class="seo-tag">email marketing estrategia</span>
+            <span class="seo-tag">google analytics 4 tutorial</span>
+            <span class="seo-tag">comparativo google ads meta ads</span>
+            <span class="seo-tag">ebook trafego pago barato</span>
+            <span class="seo-tag">curso marketing digital barato</span>
+            <span class="seo-tag">calendário editorial redes sociais</span>
+            <span class="seo-tag">bruno muniz gestor de trafego</span>
+            <span class="seo-tag">jgm4 marketing digital</span>
+          </div>
+        </div>
+
+        <!-- TÍTULOS GOOGLE ADS -->
+        <div class="seo-block">
+          <h4>Títulos para Google Ads (máx. 30 caracteres cada)</h4>
+          <div class="seo-item"><strong>Guia Marketing Digital 2026</strong><span>Ideal para anúncios na Rede de Pesquisa</span></div>
+          <div class="seo-item"><strong>Ebook por Apenas R$ 9,99</strong><span>Destaca o preço acessível de lançamento</span></div>
+          <div class="seo-item"><strong>Google Ads e Meta Ads — Passo a Passo</strong><span>Para buscas de quem quer aprender anúncios</span></div>
+          <div class="seo-item"><strong>Do Zero ao Sucesso Digital</strong><span>Apelo para iniciantes e empreendedores</span></div>
+          <div class="seo-item"><strong>10 Capítulos de Marketing Digital</strong><span>Evidencia a abrangência do conteúdo</span></div>
+          <div class="seo-item"><strong>Funil de Vendas + Remarketing</strong><span>Para quem já anuncia e quer escalar</span></div>
+        </div>
+
+        <!-- DESCRIÇÕES GOOGLE ADS -->
+        <div class="seo-block">
+          <h4>Descrições para Google Ads (máx. 90 caracteres cada)</h4>
+          <div class="seo-item"><strong>Desc. 1:</strong><span>Guia completo com Google Ads, Meta Ads, SEO e remarketing. Acesso imediato por R$ 9,99.</span></div>
+          <div class="seo-item"><strong>Desc. 2:</strong><span>Escrito por gestor de tráfego com 2 anos de experiência. Garantia de 7 dias sem riscos.</span></div>
+          <div class="seo-item"><strong>Desc. 3:</strong><span>10 capítulos práticos do zero ao avançado. Pare de perder dinheiro em anúncios mal feitos.</span></div>
+          <div class="seo-item"><strong>Desc. 4:</strong><span>Aprenda a criar campanhas lucrativas no Google e no Meta. Preço de lançamento: R$ 9,99.</span></div>
+        </div>
+
+        <!-- TÍTULOS META ADS -->
+        <div class="seo-block">
+          <h4>Títulos para Meta Ads / Instagram Ads</h4>
+          <div class="seo-item"><strong>Criativo 1 (dor):</strong><span>"Está perdendo dinheiro com anúncios que não convertem? Este guia resolve isso por R$ 9,99."</span></div>
+          <div class="seo-item"><strong>Criativo 2 (solução):</strong><span>"10 capítulos de marketing digital: Google Ads, Meta Ads, SEO, funil e remarketing. Do zero ao avançado."</span></div>
+          <div class="seo-item"><strong>Criativo 3 (urgência):</strong><span>"Preço de lançamento: R$ 9,99. O guia completo de marketing digital 2026 que pequenas empresas precisam."</span></div>
+          <div class="seo-item"><strong>Criativo 4 (prova):</strong><span>"Escrito por quem gerencia campanhas todos os dias. 2 anos de experiência em Google e Meta Ads em um único guia."</span></div>
+        </div>
+
+        <!-- SITELINKS -->
+        <div class="seo-block">
+          <h4>Sitelinks Recomendados para Google Ads</h4>
+          <div class="seo-item">
+            <strong>Ver os 10 Capítulos</strong>
+            <span>URL: /pages/mkt-digital.html#capitulos — Descrição: Google Ads, Meta Ads, SEO, funil, analytics e mais.</span>
+          </div>
+          <div class="seo-item">
+            <strong>Para Quem é este Guia</strong>
+            <span>URL: /pages/mkt-digital.html#persona — Descrição: Iniciantes, empreendedores, donos de negócio local e gestores.</span>
+          </div>
+          <div class="seo-item">
+            <strong>Comparativo de Plataformas</strong>
+            <span>URL: /pages/mkt-digital.html#comparativo — Descrição: Google Ads vs. Facebook Ads vs. Instagram Ads.</span>
+          </div>
+          <div class="seo-item">
+            <strong>Sobre o Autor</strong>
+            <span>URL: /pages/mkt-digital.html#autor — Descrição: Bruno Muniz, gestor de tráfego com 2 anos de experiência.</span>
+          </div>
+          <div class="seo-item">
+            <strong>Comprar por R$ 9,99</strong>
+            <span>URL: /pages/mkt-digital.html#comprar — Descrição: Acesso imediato, pagamento único e garantia de 7 dias.</span>
+          </div>
+          <div class="seo-item">
+            <strong>Outros Ebooks de Logística</strong>
+            <span>URL: / — Descrição: Conheça também os guias de logística, gestão de estoques e fretes da JGM4.</span>
+          </div>
+        </div>
+
       </div>
     </section>
 
   </main>
 
   <footer>
-    © 2026 • Todos os direitos reservados
+    <div class="container">
+      <p>© 2026 JGM4 Consultoria em Logística • Todos os direitos reservados</p>
+      <p style="margin-top:8px;">
+        <a href="politica.html">Política de Privacidade</a> &nbsp;|&nbsp;
+        <a href="../">Voltar ao Site</a>
+      </p>
+    </div>
   </footer>
 
   <div class="popup" id="popup">
@@ -768,8 +1415,8 @@
   </div>
 
   <div class="sticky-cta">
-    <a href="https://pay.hotmart.com/F90526016Q?checkoutMode=2" class="hotmart-fb hotmart__button-checkout">
-      Comprar por R$ 19,90
+    <a href="https://pay.hotmart.com/F90526016Q?checkoutMode=2" class="hotmart-fb hotmart__button-checkout" onclick="gtag('event','begin_checkout',{'value':9.99,'currency':'BRL','item_name':'Marketing Digital'});">
+      Comprar por R$ 9,99
     </a>
   </div>
 
@@ -778,41 +1425,17 @@
       const resposta = button.nextElementSibling;
       const icon = button.querySelector('span:last-child');
       const isOpen = resposta.style.display === 'block';
-
-      document.querySelectorAll('.resposta').forEach(item => item.style.display = 'none');
-      document.querySelectorAll('.faq button span:last-child').forEach(item => item.textContent = '+');
-
-      if(!isOpen){
-        resposta.style.display = 'block';
-        icon.textContent = '−';
-      }
+      document.querySelectorAll('.resposta').forEach(i => i.style.display = 'none');
+      document.querySelectorAll('.faq button span:last-child').forEach(i => i.textContent = '+');
+      if(!isOpen){ resposta.style.display = 'block'; icon.textContent = '−'; }
     }
 
-    const contadorHero = document.getElementById('contadorHero');
-    const topbar = document.getElementById('topbar');
-    let duration = 15 * 60;
-
-    setInterval(() => {
-      const minutes = String(Math.floor(duration / 60)).padStart(2, '0');
-      const seconds = String(duration % 60).padStart(2, '0');
-
-      contadorHero.textContent = `Oferta expira em ${minutes}:${seconds}`;
-      topbar.textContent = `Oferta especial por tempo limitado • Termina em ${minutes}:${seconds} • Garantia de 7 dias`;
-
-      duration--;
-      if(duration < 0){
-        duration = 15 * 60;
-      }
-    }, 1000);
-
-    const popup = document.getElementById('popup');
-    setInterval(() => {
-      popup.style.display = 'block';
-      setTimeout(() => {
-        popup.style.display = 'none';
-      }, 3200);
-    }, 9000);
   </script>
 
 </body>
 </html>
+
+
+
+
+

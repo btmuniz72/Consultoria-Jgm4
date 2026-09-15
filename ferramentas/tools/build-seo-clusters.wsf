@@ -1,0 +1,82 @@
+<job>
+<script language="JScript"><![CDATA[
+var fso=new ActiveXObject("Scripting.FileSystemObject");
+var toolsDir=WScript.Arguments.length?WScript.Arguments(0):fso.GetParentFolderName(WScript.ScriptFullName);
+var root=fso.GetParentFolderName(fso.GetParentFolderName(toolsDir));
+var freightHub="../pages/auditoria-de-fretes.html";
+var wmsHub="../pages/consultoria-wms-tms.html";
+var updated="2026-08-02";
+
+function readUtf8(file){
+  var stream=new ActiveXObject("ADODB.Stream");
+  stream.Type=2;stream.Charset="utf-8";stream.Open();stream.LoadFromFile(file);
+  var value=stream.ReadText();stream.Close();return value;
+}
+function writeUtf8(file,value){
+  var stream=new ActiveXObject("ADODB.Stream");
+  stream.Type=2;stream.Charset="utf-8";stream.Open();stream.WriteText(value);
+  stream.Position=0;stream.SaveToFile(file,2);stream.Close();
+}
+function esc(value){
+  return String(value).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]});
+}
+function json(value){
+  var type=typeof value,i,parts=[];
+  if(value===null)return "null";
+  if(type==="string")return '"'+value.replace(/\\/g,"\\\\").replace(/"/g,'\\"').replace(/\r/g,"\\r").replace(/\n/g,"\\n")+'"';
+  if(type==="number"||type==="boolean")return String(value);
+  if(value instanceof Array){for(i=0;i<value.length;i++)parts.push(json(value[i]));return "["+parts.join(",")+"]"}
+  for(i in value)if(value.hasOwnProperty(i))parts.push(json(i)+":"+json(value[i]));
+  return "{"+parts.join(",")+"}";
+}
+var source=readUtf8(fso.BuildPath(toolsDir,"build-seo-clusters.js"));
+var start=source.indexOf("const articles = ")+17;
+var end=source.indexOf("\n\nfunction esc",start);
+var data=source.substring(start,end);
+eval("var articles="+data);
+
+function articleJson(article){
+  var canonical="https://www.jgm4consultoria.com.br/blog/"+article.file,entities=[],i;
+  for(i=0;i<article.faq.length;i++)entities.push({"@type":"Question",name:article.faq[i][0],acceptedAnswer:{"@type":"Answer",text:article.faq[i][1]}});
+  return json({"@context":"https://schema.org","@graph":[
+    {"@type":"Article",headline:article.h1,description:article.description,datePublished:updated,dateModified:updated,author:{"@type":"Person",name:"Bruno Muniz",url:"https://www.jgm4consultoria.com.br/pages/sobre.html"},publisher:{"@type":"Organization",name:"JGM4 Consultoria Logística",logo:{"@type":"ImageObject",url:"https://www.jgm4consultoria.com.br/assets/brand/logo-jgm4-google-ads-1200x1200.png"}},mainEntityOfPage:canonical,inLanguage:"pt-BR"},
+    {"@type":"BreadcrumbList",itemListElement:[{"@type":"ListItem",position:1,name:"Início",item:"https://www.jgm4consultoria.com.br/"},{"@type":"ListItem",position:2,name:"Blog",item:"https://www.jgm4consultoria.com.br/pages/blog.html"},{"@type":"ListItem",position:3,name:article.h1,item:canonical}]},
+    {"@type":"FAQPage",mainEntity:entities}
+  ]});
+}
+function render(article){
+  var canonical="https://www.jgm4consultoria.com.br/blog/"+article.file;
+  var sectionHtml="",toc="",related="",faq="",i,j,section,bullets;
+  for(i=0;i<article.sections.length;i++){
+    section=article.sections[i];
+    sectionHtml+='<h2 id="sec-'+(i+1)+'">'+esc(section[0])+'</h2>';
+    for(j=0;j<section[1].length;j++)sectionHtml+="<p>"+esc(section[1][j])+"</p>";
+    bullets=section.length>2?section[2]:null;
+    if(bullets){sectionHtml+="<ul>";for(j=0;j<bullets.length;j++)sectionHtml+="<li>"+esc(bullets[j])+"</li>";sectionHtml+="</ul>"}
+    toc+='<a href="#sec-'+(i+1)+'">'+esc(section[0])+"</a>";
+  }
+  for(i=0;i<article.related.length;i++)related+='<a href="'+article.related[i][1]+'">'+esc(article.related[i][0])+"</a>";
+  for(i=0;i<article.faq.length;i++)faq+="<details><summary>"+esc(article.faq[i][0])+"</summary><p>"+esc(article.faq[i][1])+"</p></details>";
+  return '<!doctype html>\n<html lang="pt-BR">\n<head>\n'+
+  '<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("consent","default",{analytics_storage:"denied",ad_storage:"denied",ad_user_data:"denied",ad_personalization:"denied",functionality_storage:"granted",security_storage:"granted",wait_for_update:500});<\/script>\n'+
+  '<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({"gtm.start":new Date().getTime(),event:"gtm.js"});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!="dataLayer"?"&l="+l:"";j.async=true;j.src="https://www.googletagmanager.com/gtm.js?id="+i+dl;f.parentNode.insertBefore(j,f)})(window,document,"script","dataLayer","GTM-NQGP74WJ");<\/script>\n'+
+  '<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">\n'+
+  "<title>"+esc(article.title)+'</title><meta name="description" content="'+esc(article.description)+'"><meta name="robots" content="index,follow,max-image-preview:large">\n'+
+  '<link rel="canonical" href="'+canonical+'"><meta property="og:type" content="article"><meta property="og:locale" content="pt_BR"><meta property="og:title" content="'+esc(article.title)+'"><meta property="og:description" content="'+esc(article.description)+'"><meta property="og:url" content="'+canonical+'"><meta property="og:image" content="https://www.jgm4consultoria.com.br/assets/brand/og-jgm4-1200x630.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="JGM4 Consultoria Logística"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://www.jgm4consultoria.com.br/assets/brand/og-jgm4-1200x630.jpg">\n'+
+  '<link rel="icon" href="/assets/brand/favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="48x48" href="/assets/brand/favicon-48x48.png"><link rel="icon" type="image/png" sizes="96x96" href="/assets/brand/favicon-96x96.png"><link rel="icon" type="image/png" sizes="192x192" href="/assets/brand/favicon-192x192.png"><link rel="icon" type="image/png" sizes="512x512" href="/assets/brand/favicon-512x512.png"><link rel="apple-touch-icon" sizes="192x192" href="/assets/brand/favicon-192x192.png"><link rel="manifest" href="/site.webmanifest"><link rel="stylesheet" href="/css/brand.css"><link rel="stylesheet" href="../css/seo-growth.css"><script src="../js/lgpd-consent.min.js" defer><\/script><script type="application/ld+json">'+articleJson(article)+"<\/script>\n</head>\n<body>\n"+
+  '<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NQGP74WJ" height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Manager"></iframe></noscript><a class="sg-skip" href="#conteudo">Pular para o conteúdo</a>\n'+
+  '<header class="sg-header"><nav class="sg-wrap sg-nav"><a href="../"><picture class="brand-logo-picture brand-logo-picture-header"><source media="(max-width: 768px)" srcset="/assets/brand/logo-jgm4-compacta-nova.png" type="image/png"><img class="sg-logo brand-logo" src="/assets/brand/logo-jgm4-horizontal-nova.png" alt="JGM4 Consultoria Logística" width="1536" height="1024" decoding="async"></picture></a><button class="sg-menu-button" type="button" aria-expanded="false">Menu</button><ul><li><a href="../pages/blog.html">Blog</a></li><li><a href="../pages/ferramentas-logisticas.html">Ferramentas</a></li><li><a href="../consultor-logistico/">Consultor logístico</a></li><li><a class="sg-nav-cta" data-track="article_nav_cta" href="'+article.hub+'">'+esc(article.hubLabel)+"</a></li></ul></nav></header>\n"+
+  '<main id="conteudo"><nav class="sg-wrap sg-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="../">Início</a></li><li>›</li><li><a href="../pages/blog.html">Blog</a></li><li>›</li><li>'+esc(article.h1)+"</li></ol></nav>\n"+
+  '<section class="sg-hero"><div class="sg-wrap"><span class="sg-kicker">'+esc(article.kicker)+"</span><h1>"+esc(article.h1)+"</h1><p>"+esc(article.summary)+'</p><div class="sg-actions"><a class="sg-button" data-track="article_hero_cta" href="'+article.hub+'">'+esc(article.hubLabel)+"</a></div></div></section>\n"+
+  '<section class="sg-band"><div class="sg-wrap sg-article-shell"><article class="sg-article"><div class="sg-summary"><strong>Resposta direta:</strong> '+esc(article.summary)+"</div>"+sectionHtml+
+  '<div class="sg-warning"><strong>Importante:</strong> exemplos e fórmulas deste conteúdo são referências gerenciais. Contratos, margens, impostos, engenharia, segurança e características da operação devem ser validados antes de uma decisão.</div>'+
+  '<h2 id="faq">Perguntas frequentes</h2><div class="sg-faq">'+faq+'</div><h2>Conteúdos e ferramentas relacionados</h2><div class="sg-related">'+related+'</div>'+
+  '<div class="sg-author"><img src="../assets/sua-foto.png" alt="Bruno Muniz" width="1152" height="1440" loading="lazy"><p><strong>Bruno Muniz</strong><br>Consultor Sênior de Logística e fundador da JGM4, com mais de 20 anos de experiência operacional.</p></div></article>'+
+  '<aside class="sg-toc"><strong>Neste artigo</strong>'+toc+'<a href="#faq">Perguntas frequentes</a><a class="sg-button" data-track="article_side_cta" href="'+article.hub+'">'+esc(article.hubLabel)+"</a></aside></div></section>\n"+
+  '<section class="sg-band alt"><div class="sg-wrap"><div class="sg-cta"><div><h2>Leve a análise para os dados da sua operação</h2><p>A JGM4 ajuda a transformar sintomas em causas, prioridades e plano de ação.</p></div><a class="sg-button" data-track="article_final_cta" href="'+article.hub+'">'+esc(article.hubLabel)+"</a></div></div></section>\n"+
+  '</main><footer class="sg-footer"><div class="sg-wrap sg-footer-grid"><div><strong>JGM4 Consultoria Logística</strong><br>Conteúdo técnico e atendimento em todo o Brasil</div><div><a href="../">Início</a> · <a href="../pages/blog.html">Blog</a> · <a href="../pages/politica.html">Privacidade</a></div></div></footer><script src="../js/seo-growth.js"><\/script>\n</body></html>\n';
+}
+for(var i=0;i<articles.length;i++)writeUtf8(fso.BuildPath(fso.BuildPath(root,"blog"),articles[i].file),render(articles[i]));
+WScript.Echo("Gerados "+articles.length+" artigos SEO.");
+]]></script>
+</job>

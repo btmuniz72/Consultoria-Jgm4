@@ -71,7 +71,10 @@
         }
 
         .logo {
+            width: 70px;
             height: 70px;
+            object-fit: contain;
+            flex: 0 0 70px;
             transition: transform 0.3s ease;
         }
 

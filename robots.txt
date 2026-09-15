@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+Disallow: /vendor/
+Disallow: /archive/
+Disallow: /arquivo-morto/
+Disallow: /deploy/
+Disallow: /documentacao/
+Disallow: /dados%20antgis%20jgm4/
+
+Sitemap: https://www.jgm4consultoria.com.br/sitemap.xml

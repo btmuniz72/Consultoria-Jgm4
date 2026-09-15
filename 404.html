@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Página não encontrada | JGM4</title>
+  <meta name="description" content="A página solicitada não foi encontrada. Acesse os serviços, o blog ou os canais de contato da JGM4 Consultoria Logística.">
+  <meta name="robots" content="noindex, follow">
+  <meta name="theme-color" content="#071a38">
+  <style>
+    :root {
+      color-scheme: dark;
+      --navy: #071a38;
+      --navy-light: #0b2c55;
+      --blue: #3eb1ff;
+      --red: #e82934;
+      --text: #f7faff;
+      --muted: #b8c7dc;
+      --line: rgba(255,255,255,.14);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { min-height: 100%; background: var(--navy); }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 12% 18%, rgba(62,177,255,.16), transparent 32rem),
+        radial-gradient(circle at 88% 82%, rgba(232,41,52,.11), transparent 27rem),
+        linear-gradient(145deg, #031126, var(--navy) 52%, #082447);
+      font-family: Inter, "Segoe UI", Arial, sans-serif;
+    }
+
+    a { color: inherit; }
+
+    .site-header {
+      width: min(1120px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 24px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--text);
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .brand img {
+      width: 58px;
+      height: 58px;
+      object-fit: contain;
+    }
+
+    .brand span {
+      display: grid;
+      gap: 2px;
+    }
+
+    .brand small {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    main {
+      width: min(1120px, calc(100% - 40px));
+      min-height: calc(100vh - 185px);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(300px, .9fr);
+      gap: clamp(40px, 8vw, 100px);
+      align-items: center;
+      padding: 64px 0 74px;
+    }
+
+    .error-code {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--blue);
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+
+    .error-code::before {
+      width: 42px;
+      height: 4px;
+      background: var(--red);
+      border-radius: 99px;
+      content: "";
+    }
+
+    h1 {
+      max-width: 720px;
+      margin: 20px 0 18px;
+      font-size: clamp(42px, 7vw, 78px);
+      line-height: .98;
+      letter-spacing: -.045em;
+    }
+
+    .lead {
+      max-width: 650px;
+      margin: 0;
+      color: var(--muted);
+      font-size: clamp(17px, 2vw, 20px);
+      line-height: 1.7;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 32px;
+    }
+
+    .button {
+      display: inline-flex;
+      min-height: 50px;
+      align-items: center;
+      justify-content: center;
+      padding: 13px 20px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      font-weight: 800;
+      text-decoration: none;
+      transition: transform .18s ease, border-color .18s ease, background .18s ease;
+    }
+
+    .button:hover,
+    .button:focus-visible {
+      transform: translateY(-2px);
+      border-color: rgba(62,177,255,.7);
+    }
+
+    .button-primary {
+      border-color: var(--red);
+      background: var(--red);
+      color: #fff;
+    }
+
+    .button-secondary { background: rgba(255,255,255,.06); }
+
+    .link-card {
+      padding: clamp(24px, 4vw, 38px);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(5,24,52,.72);
+      box-shadow: 0 28px 80px rgba(0,0,0,.28);
+      backdrop-filter: blur(12px);
+    }
+
+    .link-card h2 {
+      margin: 0 0 8px;
+      font-size: 22px;
+    }
+
+    .link-card > p {
+      margin: 0 0 20px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .quick-links {
+      display: grid;
+      gap: 10px;
+    }
+
+    .quick-links a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 15px 16px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: rgba(255,255,255,.035);
+      font-weight: 750;
+      text-decoration: none;
+      transition: border-color .18s ease, background .18s ease;
+    }
+
+    .quick-links a::after {
+      color: var(--blue);
+      content: "→";
+      font-size: 20px;
+    }
+
+    .quick-links a:hover,
+    .quick-links a:focus-visible {
+      border-color: rgba(62,177,255,.55);
+      background: rgba(62,177,255,.08);
+    }
+
+    footer {
+      width: min(1120px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 22px 0 28px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--blue);
+      outline-offset: 3px;
+    }
+
+    @media (max-width: 800px) {
+      main {
+        grid-template-columns: 1fr;
+        padding: 52px 0 64px;
+      }
+
+      .link-card { max-width: 620px; }
+    }
+
+    @media (max-width: 480px) {
+      .site-header,
+      main,
+      footer { width: min(100% - 28px, 1120px); }
+
+      .brand strong { font-size: 14px; }
+      .brand small { font-size: 10px; }
+      .actions { display: grid; }
+      .button { width: 100%; }
+    }
+  </style>
+  <link rel="stylesheet" href="/css/brand.css?v=20260811-2">
+  <link rel="icon" href="/assets/brand/favicon.ico?v=20260811-2" sizes="any">
+  <link rel="icon" type="image/png" sizes="48x48" href="/assets/brand/favicon-48x48.png?v=20260811-2">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/brand/favicon-96x96.png?v=20260811-2">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/brand/favicon-192x192.png?v=20260811-2">
+  <link rel="icon" type="image/png" sizes="512x512" href="/assets/brand/favicon-512x512.png?v=20260811-2">
+  <link rel="apple-touch-icon" sizes="192x192" href="/assets/brand/favicon-192x192.png?v=20260811-2">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta property="og:image" content="https://www.jgm4consultoria.com.br/assets/brand/og-jgm4-1200x630.jpg">
+  <meta property="og:image:secure_url" content="https://www.jgm4consultoria.com.br/assets/brand/og-jgm4-1200x630.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="JGM4 Consultoria Logística">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://www.jgm4consultoria.com.br/assets/brand/og-jgm4-1200x630.jpg">
+  <meta name="twitter:image:alt" content="JGM4 Consultoria Logística"></head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="Ir para a página inicial da JGM4">
+      <picture class="brand-logo-picture brand-logo-picture-header"><source media="(max-width: 768px)" srcset="/assets/brand/logo-jgm4-compacta-nova.png" type="image/png"><img src="/assets/brand/logo-jgm4-horizontal-nova.png" alt="JGM4 Consultoria Logística" class="brand-logo brand-logo" width="1536" height="1024" decoding="async"></picture>
+      <span>
+        <strong>JGM4 Consultoria Logística</strong>
+        <small>Gestão sob demanda</small>
+      </span>
+    </a>
+  </header>
+
+  <main>
+    <section aria-labelledby="titulo-404">
+      <span class="error-code">Erro 404</span>
+      <h1 id="titulo-404">Página não encontrada</h1>
+      <p class="lead">
+        O endereço pode ter mudado ou não estar mais disponível. Você pode voltar ao início
+        ou seguir diretamente para uma das áreas da JGM4.
+      </p>
+      <div class="actions">
+      <a class="button button-primary" href="/">Voltar ao início</a>
+      <a class="button button-secondary" href="/pages/planos-atendimento.html">Falar com a JGM4</a>
+      <button class="button button-secondary" type="button" onclick="history.back()">Voltar à página anterior</button>
+      </div>
+    </section>
+
+    <nav class="link-card" aria-label="Links úteis">
+      <h2>Encontre o que precisa</h2>
+      <p>Acesse nossos serviços, conteúdos e canais de atendimento.</p>
+      <div class="quick-links">
+        <a href="/#servicos-consultoria">Serviços de consultoria</a>
+        <a href="/pages/blog.html">Blog de logística</a>
+        <a href="/#contato">Contato</a>
+      </div>
+    </nav>
+  </main>
+
+  <footer>
+    &copy; 2026 JGM4 Consultoria Logística. Atendimento nacional.
+  </footer>
+</body>
+</html>

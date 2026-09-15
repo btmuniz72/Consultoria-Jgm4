@@ -1,161 +1,413 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <title>Gestão de Estoque e Fluxo de Caixa: Pontos de Controle Estratégicos | JGM4</title>
-    <meta name="description" content="Estoque não é apenas sobre caixas, é sobre fluxo de caixa. Aprenda a implementar pontos de controle estratégicos e KPIs de performance com a JGM4 Consultoria.">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <link rel="canonical" href="https://www.jgm4consultoria.com.br/blog/gestao-estoque-fluxo-caixa">
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="icon" href="../assets/favicon.ico" type="image/x-icon">
-    <script src="../js/scripts.js" defer></script>
-     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1QSQEF3EN"></script>
-    <script>
+<script id="jgm4-consent-default">
   window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  function gtag(){ dataLayer.push(arguments); }
+  gtag('consent', 'default', {
+    'analytics_storage': 'denied',
+    'ad_storage': 'denied',
+    'ad_user_data': 'denied',
+    'ad_personalization': 'denied',
+    'functionality_storage': 'granted',
+    'security_storage': 'granted',
+    'wait_for_update': 500
+  });
+</script>
+<!-- Google Tag Manager -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){
+    if (arguments[0] === 'event') {
+      dataLayer.push(Object.assign({ event: arguments[1] }, arguments[2] || {}));
+      return;
+    }
+    dataLayer.push(arguments);
+  }
+  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-NQGP74WJ');
+</script>
+<!-- End Google Tag Manager -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  gtag('config', 'G-X1QSQEF3EN');
-    </script>
+  <title>Gestão de Estoque: Indicadores e Fluxo de Caixa | JGM4</title>
+  <meta name="description" content="Aprenda como giro, cobertura, estoque mínimo e acuracidade impactam caixa e decisões da empresa." />
+  <meta name="author" content="Bruno Muniz — JGM4 Consultoria Logística" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://www.jgm4consultoria.com.br/blog/gestao_estoques.html" />
 
-<style>
-        .container-sobre {
-            max-width: 900px;
-            margin: 0 auto;
-            display: block;
-        }
-        .content-sobre {
-            text-align: justify;
-        }
-        .img-artigo {
-            width: 100%;
-            max-width: 500px;
-            height: auto;
-            border-radius: 8px;
-            margin: 20px auto;
-            display: block;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-        .content-sobre h2 {
-            margin-top: 30px;
-            margin-bottom: 15px;
-        }
-        /* Alinhamento centralizado para o título principal do artigo */
-        .hero-artigo h1 {
-            text-align: center;
-        }
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Gestão de Estoque: Indicadores e Fluxo de Caixa" />
+  <meta property="og:description" content="Aprenda a usar pontos de controle estratégicos e KPIs de estoque para transformar inventário parado em fluxo de caixa saudável." />
+  <meta property="og:url" content="https://www.jgm4consultoria.com.br/blog/gestao_estoques.html" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:site_name" content="JGM4 Consultoria" />
+  <meta property="article:author" content="Bruno Muniz" />
+  <meta property="article:published_time" content="2026-01-21" />
+  <meta property="article:modified_time" content="2026-04-25" />
+  <meta name="twitter:title" content="Gestão de Estoque e Fluxo de Caixa: Pontos de Controle | JGM4" />
+  <meta name="twitter:description" content="Como usar KPIs e pontos de controle estratégicos para converter estoque em fluxo de caixa. JGM4 Consultoria." />
+  <link rel="stylesheet" href="../css/style.css" /><link rel="stylesheet" href="../css/blog-editorial.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script src="../js/scripts.js" defer></script>
 
-/* Ajustes Responsivos Mantidos */
-@media (max-width: 1024px) {
-    .container-sobre { max-width: 90%; padding: 0 16px; }
-}
-@media (max-width: 768px) {
-    .container-sobre { max-width: 100%; padding: 0 16px; }
-    .content-sobre { text-align: left; font-size: 15px; line-height: 1.6; }
-    .img-artigo { margin: 16px auto; }
-    .content-sobre h2 { font-size: 20px; }
-}
-@media (min-width: 992px) {
-    .container-sobre { display: grid; grid-template-columns: 1fr; gap: 24px; }
-}
-    </style>
-</head>
+    <script src="../js/lgpd-consent.js"></script>
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": "Gestão de Estoque e Fluxo de Caixa: Pontos de Controle Estratégicos",
+        "description": "Aprenda a implementar pontos de controle estratégicos de estoque e KPIs de performance para transformar inventário em liquidez.",
+        "image": "https://www.jgm4consultoria.com.br/assets/estoques.jpg",
+        "datePublished": "2026-01-21",
+        "dateModified": "2026-07-26",
+        "author": { "@type": "Person", "name": "Bruno Muniz", "url": "https://www.jgm4consultoria.com.br/pages/sobre.html" },
+        "publisher": { "@type": "Organization", "name": "JGM4 Consultoria Logística", "logo": { "@type": "ImageObject", "url": "https://www.jgm4consultoria.com.br/assets/brand/logo-jgm4-google-ads-1200x1200.png" } },
+        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://www.jgm4consultoria.com.br/blog/gestao_estoques.html" },
+        "inLanguage": "pt-BR"
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "JGM4 Consultoria", "item": "https://www.jgm4consultoria.com.br/" },
+          { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://www.jgm4consultoria.com.br/pages/blog.html" },
+          { "@type": "ListItem", "position": 3, "name": "Gestão de Estoque e Fluxo de Caixa", "item": "https://www.jgm4consultoria.com.br/blog/gestao_estoques.html" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "O que é estoque mínimo (ponto de ressuprimento)?", "acceptedAnswer": { "@type": "Answer", "text": "É o nível mínimo de estoque em que o pedido de reposição deve ser disparado automaticamente para evitar ruptura. É calculado com base no consumo médio diário e no tempo de reposição do fornecedor." } },
+          { "@type": "Question", "name": "O que é Days on Hand (DOH) no estoque?", "acceptedAnswer": { "@type": "Answer", "text": "Days on Hand (DOH) é o número de dias que o estoque atual consegue suprir a demanda com o ritmo de saída atual. Se o DOH está muito alto (ex: 90 dias para um produto de giro de 10 dias), há excesso de capital imobilizado." } },
+          { "@type": "Question", "name": "Como reduzir o overstock sem perder vendas?", "acceptedAnswer": { "@type": "Answer", "text": "Com análise de giro de estoque e Curva ABC, é possível identificar produtos com excesso e acionar promoções, transferências ou renegociação de entregas com fornecedor — sem comprometer a disponibilidade dos itens de alta rotatividade." } },
+          { "@type": "Question", "name": "Por que estoque parado afeta o fluxo de caixa?", "acceptedAnswer": { "@type": "Answer", "text": "Porque o dinheiro já foi gasto na compra do produto. Enquanto ele fica na prateleira sem girar, esse capital não pode ser reinvestido em outras necessidades da empresa. Estoque é caixa imobilizado — e quanto mais tempo fica parado, mais custa." } }
+        ]
+      }
+    ]
+  }
+  </script>
 
+  <style>
+    #progress-bar { position:fixed; top:0; left:0; width:0%; height:3px; background:#2EA7FF; z-index:9999; transition:width .1s linear; }
+    :root { --navy:#071A38; --navy-2:#041024; --blue:#2EA7FF; --red:#E10616; --stroke:rgba(255,255,255,.12); --glass:rgba(255,255,255,.04); --shadow:0 18px 55px rgba(0,0,0,.28); --radius:18px; --muted:rgba(255,255,255,.72); --muted-2:rgba(255,255,255,.55); --ink:rgba(255,255,255,.92); --font:'Inter',system-ui,sans-serif; }
+    *,*::before,*::after { box-sizing:border-box; } html { scroll-behavior:smooth; }
+    body { margin:0; font-family:var(--font); color:#fff; -webkit-font-smoothing:antialiased; background: radial-gradient(900px 600px at 20% 10%,rgba(46,167,255,.14),transparent 55%), radial-gradient(900px 600px at 80% 30%,rgba(225,6,22,.10),transparent 55%), linear-gradient(180deg,var(--navy) 0%,var(--navy-2) 100%); }
+    img { max-width:100%; display:block; } a { text-decoration:none; }
+    .bl-breadcrumb { padding: 118px 16px 0; }
+    @media(max-width:768px){ .bl-breadcrumb { padding-top:136px; } }
+    .bl-breadcrumb ol { max-width:1120px; margin:0 auto; display:flex; flex-wrap:wrap; gap:6px; list-style:none; padding:0; font-size:12.5px; color:var(--muted-2); }
+    .bl-breadcrumb li+li::before { content:"›"; margin-right:6px; } .bl-breadcrumb a { color:var(--muted-2); } .bl-breadcrumb a:hover { color:#4FC3F7; }
+    .bl-hero { padding: 18px 16px 0; }
+    .bl-hero-wrap { max-width:1120px; margin:0 auto; padding:28px 32px 24px; border:1px solid var(--stroke); border-radius:var(--radius); background:var(--glass); box-shadow:var(--shadow); backdrop-filter:blur(10px); }
+    @media(max-width:480px){ .bl-hero-wrap { padding:18px 16px; } }
+    .bl-eyebrow { display:inline-flex; align-items:center; gap:8px; padding:6px 13px; border-radius:999px; font-size:11.5px; font-weight:800; text-transform:uppercase; letter-spacing:.06em; color:#a8d8ff; background:rgba(46,167,255,.12); border:1px solid rgba(46,167,255,.25); margin-bottom:12px; }
+    .bl-title { margin:0 0 10px; font-size:clamp(22px,3vw,40px); font-weight:900; letter-spacing:-.04em; line-height:1.08; color:var(--ink); }
+    .bl-title em { font-style:normal; background:linear-gradient(135deg,#4FC3F7,var(--blue)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .bl-subtitle { margin:0 0 16px; color:var(--muted); line-height:1.7; font-size:16px; max-width:78ch; }
+    .bl-meta { display:flex; flex-wrap:wrap; gap:14px; align-items:center; color:var(--muted-2); font-size:13px; }
+    .bl-meta span { display:flex; align-items:center; gap:6px; }
+    .bl-layout { max-width:1120px; margin:0 auto; padding:20px 16px 32px; display:grid; grid-template-columns:1fr 296px; gap:22px; align-items:start; }
+    @media(max-width:1000px){ .bl-layout { grid-template-columns:1fr; } }
+    .bl-article { border-radius:var(--radius); border:1px solid var(--stroke); background:var(--glass); padding:32px 36px; box-shadow:var(--shadow); }
+    @media(max-width:480px){ .bl-article { padding:20px 16px; } }
+    .bl-article img { width:100%; border-radius:12px; margin:0 auto 26px; border:1px solid var(--stroke); }
+    .bl-article h2 { margin:30px 0 12px; font-size:clamp(18px,2.2vw,23px); font-weight:800; letter-spacing:-.02em; color:var(--ink); }
+    .bl-article h2:first-child { margin-top:0; }
+    .bl-article h3 { margin:20px 0 8px; font-size:16.5px; font-weight:700; color:#4FC3F7; }
+    .bl-article p { margin:0 0 14px; color:rgba(255,255,255,.83); line-height:1.78; font-size:15.5px; }
+    .bl-article ul, .bl-article ol { margin:0 0 16px 20px; color:rgba(255,255,255,.83); font-size:15.5px; line-height:1.7; }
+    .bl-article li { margin-bottom:8px; } .bl-article strong { color:var(--ink); } .bl-article a { color:#4FC3F7; font-weight:600; }
+    .callout { border-left:4px solid var(--blue); background:rgba(46,167,255,.10); padding:16px 18px; border-radius:0 12px 12px 0; margin:22px 0; color:#bde0ff; font-size:15px; line-height:1.65; }
+    .callout strong { color:#fff; }
+    .callout-warn { border-left-color:var(--red); background:rgba(225,6,22,.09); color:#ffc5c9; }
+    .bl-sidebar { display:grid; gap:16px; position:sticky; top:100px; }
+    @media(max-width:1000px){ .bl-sidebar { position:static; } }
+    .side-box { border-radius:16px; border:1px solid var(--stroke); background:var(--glass); padding:20px; }
+    .side-box h3 { margin:0 0 12px; font-size:11.5px; font-weight:800; text-transform:uppercase; letter-spacing:.05em; color:var(--muted-2); }
+    .toc-list { list-style:none; padding:0; margin:0; display:grid; gap:2px; }
+    .toc-list a { display:block; padding:8px 10px; border-radius:8px; color:rgba(255,255,255,.78); font-size:13.5px; line-height:1.4; transition:background .14s,color .14s; }
+    .toc-list a:hover { background:rgba(46,167,255,.12); color:#4FC3F7; }
+    .side-cta { border:1px solid rgba(225,6,22,.28); background:linear-gradient(135deg,rgba(225,6,22,.10),rgba(225,6,22,.05)); }
+    .side-cta h3 { color:#fca5a5; }
+    .side-cta p { margin:0 0 14px; color:var(--muted); font-size:13.5px; line-height:1.55; }
+    .btn-side { display:flex; align-items:center; justify-content:center; gap:8px; padding:11px 16px; border-radius:11px; font-weight:800; font-size:13.5px; font-family:var(--font); transition:transform .14s,filter .14s; width:100%; }
+    .btn-side:hover { transform:translateY(-2px); filter:brightness(1.06); }
+    .btn-side-red { background:linear-gradient(135deg,var(--red),#ff3b4a); color:#fff; box-shadow:0 8px 22px rgba(225,6,22,.22); border:none; }
+    .btn-side-blue { background:rgba(46,167,255,.14); border:1px solid rgba(46,167,255,.30); color:#a8d8ff; }
+    .faq-grid { display:grid; gap:10px; margin-top:14px; }
+    .bl-article details { border-radius:12px; border:1px solid rgba(255,255,255,.10); background:rgba(255,255,255,.04); padding:14px 16px; }
+    .bl-article details[open] { background:rgba(255,255,255,.07); }
+    .bl-article summary { cursor:pointer; list-style:none; font-weight:800; font-size:14.5px; color:var(--ink); display:flex; align-items:center; justify-content:space-between; gap:12px; }
+    .bl-article summary::-webkit-details-marker { display:none; }
+    .faq-caret { width:26px; height:26px; border-radius:8px; display:grid; place-items:center; border:1px solid rgba(255,255,255,.12); background:rgba(4,16,36,.28); flex:0 0 auto; transition:transform .2s; }
+    .bl-article details[open] .faq-caret { transform:rotate(180deg); }
+    .faq-answer { margin:10px 0 0; color:rgba(255,255,255,.76); line-height:1.68; font-size:14.5px; }
+    .bl-cta-wrap { max-width:1120px; margin:0 auto 32px; padding:0 16px; }
+    .bl-cta-box { border-radius:var(--radius); border:1px solid rgba(46,167,255,.20); background:linear-gradient(135deg,rgba(46,167,255,.10),rgba(225,6,22,.08)); padding:32px 36px; text-align:center; box-shadow:var(--shadow); }
+    @media(max-width:480px){ .bl-cta-box { padding:22px 16px; } }
+    .bl-cta-label { display:inline-flex; align-items:center; gap:7px; padding:5px 12px; border-radius:999px; font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.06em; color:#a8d8ff; background:rgba(46,167,255,.12); border:1px solid rgba(46,167,255,.22); margin-bottom:12px; }
+    .bl-cta-box h2 { margin:0 0 10px; font-size:clamp(20px,2.5vw,30px); font-weight:900; letter-spacing:-.03em; }
+    .bl-cta-box p { margin:0 0 22px; color:var(--muted); font-size:15.5px; line-height:1.7; max-width:600px; margin-left:auto; margin-right:auto; }
+    .bl-cta-btns { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+    .btn-cta-p { display:inline-flex; align-items:center; gap:9px; padding:14px 24px; border-radius:12px; font-weight:800; font-size:15px; font-family:var(--font); background:linear-gradient(135deg,var(--red),#ff3b4a); color:#fff; border:none; box-shadow:0 10px 26px rgba(225,6,22,.22); transition:transform .14s,filter .14s; }
+    .btn-cta-p:hover { transform:translateY(-2px); filter:brightness(1.05); }
+    .btn-cta-s { display:inline-flex; align-items:center; gap:9px; padding:14px 24px; border-radius:12px; font-weight:800; font-size:15px; font-family:var(--font); background:rgba(46,167,255,.12); color:#a8d8ff; border:1px solid rgba(46,167,255,.28); transition:transform .14s,filter .14s; }
+    .btn-cta-s:hover { transform:translateY(-2px); filter:brightness(1.08); }
+    @media(max-width:520px){ .btn-cta-p,.btn-cta-s { width:100%; justify-content:center; } }
+    footer { border-top:1px solid rgba(255,255,255,.10); padding:24px 16px; color:rgba(255,255,255,.55); text-align:center; font-size:13.5px; }
+    footer a { color:#ff3333; font-weight:700; }
+    .ft-links { margin-top:8px; display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
+    .ft-links a { color:rgba(255,255,255,.55); font-weight:400; } .ft-links a:hover { color:#4FC3F7; }
+  </style>
+  <link rel="stylesheet" href="/css/brand.css?v=20260811-2">
+  <link rel="icon" href="/assets/brand/favicon.ico?v=20260811-2" sizes="any">
+  <link rel="icon" type="image/png" sizes="48x48" href="/assets/brand/favicon-48x48.png?v=20260811-2">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/brand/favicon-96x96.png?v=20260811-2">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/brand/favicon-192x192.png?v=20260811-2">
+  <link rel="icon" type="image/png" sizes="512x512" href="/assets/brand/favicon-512x512.png?v=20260811-2">
+  <link rel="apple-touch-icon" sizes="192x192" href="/assets/brand/favicon-192x192.png?v=20260811-2">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta property="og:image" content="https://www.jgm4consultoria.com.br/assets/brand/og-jgm4-1200x630.jpg">
+  <meta property="og:image:secure_url" content="https://www.jgm4consultoria.com.br/assets/brand/og-jgm4-1200x630.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="JGM4 Consultoria Logística">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://www.jgm4consultoria.com.br/assets/brand/og-jgm4-1200x630.jpg">
+  <meta name="twitter:image:alt" content="JGM4 Consultoria Logística"></head>
 <body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NQGP74WJ"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<div id="progress-bar"></div>
 
 <header id="header">
-    <nav>
-        <img src="../assets/logojgm4.png" alt="JGM4 Consultoria Logística" class="logo">
-        <button class="menu-toggle" onclick="toggleMenu()" aria-label="Menu">☰</button>
-        <ul class="nav-links" id="navLinks">
-            <li><a href="../index.html#inicio">Início</a></li>
-            <li><a href="../index.html#desafios">Desafios</a></li>
-            <li><a href="../index.html#solucoes">Soluções</a></li>
-            <li><a href="../index.html#contato">Contato</a></li>
-            <li><a href="/pages/cursos.html">Cursos</a></li> 
-            <li><a href="/pages/blog.html">Blog</a></li>
-            <li><a href="/pages/sobre.html">Sobre</a></li>
-            <li><a href="./pages/analise.html" class="nav-cta">Faça seu Diagnóstico Grátis</a></li>
-        </ul>
-    </nav>
+  <nav>
+    <a href="/" aria-label="Página inicial JGM4"><picture class="brand-logo-picture brand-logo-picture-header"><source media="(max-width: 768px)" srcset="/assets/brand/logo-jgm4-compacta-nova.png" type="image/png"><img src="/assets/brand/logo-jgm4-horizontal-nova.png" alt="JGM4 Consultoria Logística" class="logo brand-logo brand-logo" width="1536" height="1024" decoding="async"></picture></a>
+    <button class="menu-toggle" onclick="toggleMenu()" aria-label="Menu">☰</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../#inicio" onclick="closeMenu()">Início</a></li>
+      <li><a href="../#desafios" onclick="closeMenu()">Desafios</a></li>
+      <li><a href="../#solucoes" onclick="closeMenu()">Soluções</a></li>
+      <li><a href="../#contato" onclick="closeMenu()">Contato</a></li>
+      <li><a href="../pages/blog.html" onclick="closeMenu()">Blog</a></li>
+      <li><a href="../pages/cursos.html" onclick="closeMenu()">Cursos</a></li>
+      <li><a href="../pages/diagnostico-logistico-online.html" class="nav-cta" onclick="closeMenu()">Entrevista inicial</a></li>
+    </ul>
+  </nav>
 </header>
 
-<section class="hero-sobre">
-    <h1>Gestão de Estoque e Estratégia Financeira</h1>
-    <p>Transformando pilhas de produtos em fluxo de caixa saudável para sua operação.</p>
+<nav class="bl-breadcrumb" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="../">JGM4 Consultoria</a></li>
+    <li><a href="../pages/blog.html">Blog</a></li>
+    <li aria-current="page">Gestão de Estoque e Fluxo de Caixa</li>
+  </ol>
+</nav>
+
+<section class="bl-hero">
+  <div class="bl-hero-wrap">
+    <div class="bl-eyebrow"><i class="fa-solid fa-warehouse"></i> Gestão Estratégica de Estoque</div>
+    <h1 class="bl-title">Gestão de Estoque não é sobre caixas — é sobre <em>Fluxo de Caixa</em></h1>
+    <p class="bl-subtitle">Aprenda a implementar pontos de controle estratégicos e KPIs que transformam inventário parado em liquidez — e garantem nível de serviço sem travar o caixa.</p>
+    <div class="bl-meta">
+      <span><i class="fa-solid fa-user-tie"></i> Bruno Muniz — JGM4 Consultoria</span>
+      <span><i class="fa-regular fa-clock"></i> 8 min de leitura</span>
+      <span><i class="fa-regular fa-calendar"></i> Atualizado em 26 jul. 2026</span>
+    </div>
+  </div>
 </section>
 
-<main class="container-sobre" itemscope itemtype="https://schema.org/Article">
-    <meta itemprop="headline" content="Gestão de Estoque não é sobre caixas, é sobre Fluxo de Caixa">
-    <meta itemprop="author" content="JGM4 Consultoria">
-    <meta itemprop="datePublished" content="2026-01-21">
+<div class="bl-layout">
+  <article class="bl-article" itemscope itemtype="https://schema.org/Article">
+    <meta itemprop="headline" content="Gestão de Estoque e Fluxo de Caixa: Pontos de Controle Estratégicos" />
+    <meta itemprop="datePublished" content="2026-01-21" />
+    <meta itemprop="author" content="Bruno Muniz" />
 
-    <section class="hero-artigo">
-        <h1>Gestão de Estoque não é sobre caixas, é sobre Fluxo de Caixa: Como implementar Pontos de Controle Estratégicos</h1>
-        <p>Entenda como líderes transformam o estoque de um passivo pesado em um ativo gerador de liquidez.</p>
-</section>
-
-<main class="container-artigo">
-    <div class="content-sobre">
-            
-        <img src="../assets/estoques.jpg" alt="Gestão estratégica de estoque e fluxo de caixa - JGM4 Consultoria" class="img-artigo">
+    <img src="../assets/estoques.jpg" alt="Gestão estratégica de estoque e fluxo de caixa — JGM4 Consultoria" loading="lazy" width="1280" height="1920">
 
     <p itemprop="articleBody">
-        Para um líder, o estoque pode ser o maior ativo ou o maior passivo de uma empresa. Dinheiro parado na prateleira é capital que não está rendendo; prateleira vazia é venda perdida para a concorrência. O desafio da liderança moderna não é apenas "ter" o produto, mas sim dominar o equilíbrio entre demanda e suprimento. Para isso, é fundamental estabelecer pontos de controle que transformam dados brutos em inteligência logística.
+      Para um gestor, o estoque pode ser o maior ativo ou o maior passivo da empresa. Dinheiro parado na prateleira é capital que não rende. Prateleira vazia é venda perdida. O desafio da gestão moderna não é apenas "ter o produto" — é dominar o equilíbrio entre demanda e suprimento, transformando esse equilíbrio em liquidez real.
     </p>
 
-    <div class="destaque-box">
-        <strong>O dilema do gestor:</strong> O excesso drena o caixa, a falta drena a confiança do cliente. A precisão técnica é a única saída para a lucratividade sustentável.
+    <div class="callout">
+      <strong>O dilema do gestor:</strong> Excesso drena o caixa. Falta drena a confiança do cliente. A precisão técnica é a única saída para a lucratividade sustentável — e ela começa com os pontos de controle certos.
     </div>
 
-    <h2>1. Estabelecendo Pontos de Controle: Onde olhar?</h2>
+    <h2 id="dilema">Por que estoque impacta diretamente o fluxo de caixa?</h2>
     <p>
-        O controle começa com a definição de métricas claras. Sem marcos de referência, você está apenas reagindo ao caos. Os pontos essenciais incluem:
+      Quando uma empresa compra um produto, o dinheiro sai imediatamente do caixa. Esse produto só "volta" como caixa quando é vendido. Enquanto está na prateleira, ele é capital imobilizado — e quanto mais tempo fica sem girar, mais custa: ocupação de espaço, risco de obsolescência, financiamento e custo de oportunidade.
     </p>
-    <ul>
-        <li><strong>Estoque Mínimo (Ponto de Ressuprimento):</strong> O limite crítico. Quando atingido, o pedido de compra deve ser disparado automaticamente para evitar a ruptura.</li>
-        <li><strong>Estoque de Segurança:</strong> A margem para oscilações imprevistas na demanda ou atrasos de fornecedores.</li>
-        <li><strong>Giro de Estoque:</strong> Quantas vezes seu inventário se renova em um período. Giro baixo significa capital retido e risco de obsolescência.</li>
-    </ul>
+    <p>
+      Empresas com estoque mal gerenciado vivem uma contradição: parecem "ricas" no balanço (muito produto) mas estão "pobres" no caixa (sem liquidez para operar). A gestão de estoque correta resolve os dois lados ao mesmo tempo.
+    </p>
 
-    <h2>2. Gerando Indicativos de Performance (KPIs)</h2>
-    <p>Para gerir com precisão, sua equipe precisa de painéis que apontem três sinais vitais:</p>
-    
-    <h3>A. Indicador de Ruptura (Falta)</h3>
-    <p>A ruptura ocorre quando o cliente quer comprar e você não tem o produto. Meça através da <strong>Taxa de disponibilidade de estoque</strong> e <strong>Lost Sales (Vendas Perdidas)</strong>. A ação imediata deve ser analisar se o erro foi no planejamento de demanda ou na logística do fornecedor.</p>
+    <h2 id="pontos-controle">Pontos de Controle: Onde Olhar?</h2>
+    <p>
+      O controle começa com a definição de marcos claros. Sem eles, a operação reage ao caos em vez de antecipar problemas. Os três pontos essenciais são:
+    </p>
+
+    <h3>Estoque Mínimo (Ponto de Ressuprimento)</h3>
+    <p>
+      É o limite crítico — quando atingido, o pedido de compra deve ser disparado automaticamente para evitar a ruptura. Calculado com base no consumo médio diário e no tempo de reposição do fornecedor. Um item com consumo de 10 unidades/dia e lead time de fornecedor de 5 dias precisa de ponto de ressuprimento em 50 unidades.
+    </p>
+
+    <h3>Estoque de Segurança</h3>
+    <p>
+      A margem para absorver oscilações imprevisíveis na demanda ou atrasos de fornecedores. Não é desperdício — é proteção calculada. O erro está em dimensioná-lo sem base em histórico real.
+    </p>
+
+    <h3>Giro de Estoque</h3>
+    <p>
+      Quantas vezes o inventário é renovado em um período. Giro baixo significa capital retido, risco de obsolescência e custo de armazenagem crescente. Giro alto demais pode indicar falta de segurança e risco de ruptura. O ponto ótimo depende do segmento.
+    </p>
+
+    <h2 id="kpis">KPIs de Performance: Os 3 Sinais Vitais</h2>
+
+    <h3>A. Indicador de Ruptura (Falta de Produto)</h3>
+    <p>
+      A ruptura ocorre quando o cliente quer comprar e o produto não está disponível. Meça pela <strong>taxa de disponibilidade de estoque</strong> e monitore as <strong>vendas perdidas por falta</strong>. Toda ruptura é uma venda que foi para o concorrente — e um cliente que pode não voltar.
+    </p>
 
     <h3>B. Indicador de Excesso (Overstock)</h3>
-    <p>O excesso drena a lucratividade através de custos de armazenagem e risco de vencimento. Meça pelos <strong>Dias de estoque (DOH - Days on Hand)</strong>. Se você tem 90 dias de estoque para um produto que vende em 10, você tem um problema crítico de liquidez.</p>
+    <p>
+      O excesso drena a lucratividade via custos de armazenagem e risco de vencimento. Meça pelos <strong>Days on Hand (DOH)</strong> — dias de estoque disponível com o ritmo de saída atual. Se o DOH está em 90 dias para um produto que gira em 10 dias, há um problema crítico de liquidez exigindo ação imediata.
+    </p>
+
+    <div class="callout callout-warn">
+      <strong>Atenção:</strong> DOH acima do dobro do lead time de fornecedor é sinal de overstock. Cada dia a mais significa custo de oportunidade, custo de armazenagem e risco de obsolescência acumulando silenciosamente.
+    </div>
 
     <h3>C. Indicador de Avarias e Perdas</h3>
-    <p>Produtos danificados ou "desaparecidos" são prejuízo direto na veia do Ebitda. Monitore o <strong>Índice de Perdas</strong> e revise processos de manuseio e segurança patrimonial constantemente.</p>
-
-    <h2>3. O papel da Consultoria: Por que buscar ajuda externa?</h2>
     <p>
-        Muitas vezes, a operação está tão imersa no "incêndio do dia a dia" que não consegue enxergar as falhas estruturais. É aqui que a consultoria estratégica da <strong>JGM4</strong> agrega valor através de:
-    </p>
-    <p>
-        <strong>Visão Isenta:</strong> Identificamos gargalos que a equipe interna já normalizou. <br>
-        <strong>Tecnologia e Metodologia:</strong> Implementação de ferramentas de previsão de demanda e metodologias como Curva ABC e XYZ. <br>
-        <strong>Desenho de Processos:</strong> Criação de POPs que garantem que o controle não dependa apenas de pessoas, mas de um sistema robusto.
+      Produtos danificados ou "desaparecidos" são prejuízo direto no resultado. Monitore o <strong>índice de perdas</strong> e revise processos de manuseio, embalagem, segurança patrimonial e controle de validade. Em muitas operações, as perdas são o componente de custo mais subestimado.
     </p>
 
-    <h2>Conclusão</h2>
+    <h2 id="consultoria">O Papel da Consultoria na Gestão de Estoque</h2>
     <p>
-        Liderar o estoque é uma ciência de precisão. Quando você domina os pontos de controle, você não apenas reduz custos, mas melhora o nível de serviço ao cliente e a saúde financeira da companhia.
+      Muitas operações estão tão imersas no "incêndio do dia a dia" que não conseguem enxergar as falhas estruturais. É nesse ponto que uma consultoria especializada agrega valor real:
+    </p>
+    <ul>
+      <li><strong>Visão isenta:</strong> identificamos gargalos que a equipe interna já normalizou como "parte do processo"</li>
+      <li><strong>Metodologia:</strong> implementação de Curva ABC, XYZ, previsão de demanda e pontos de controle calibrados</li>
+      <li><strong>Desenho de processos:</strong> POPs que garantem controle consistente — independente de pessoas específicas</li>
+      <li><strong>Implantação de KPIs:</strong> indicadores simples, auditáveis e com governança de acompanhamento</li>
+    </ul>
+
+    <h2 id="conclusao">Conclusão</h2>
+    <p>
+      Liderar o estoque é uma ciência de precisão. Quando você domina os pontos de controle e acompanha os KPIs certos, não apenas reduz custos — melhora o nível de serviço ao cliente e fortalece a saúde financeira da empresa ao mesmo tempo.
     </p>
 
-</main>
-
-<section class="cta-section">
-    <div class="cta-box">
-        <h2>Sua empresa sabe quanto dinheiro está parado no estoque?</h2>
-        <p>A JGM4 Consultoria oferece o diagnóstico estratégico para transformar sua gestão de estoque em uma máquina de fluxo de caixa.</p><br>
-        <a href="/index.html#contato" class="btn-primary">Falar com um Consultor JGM4</a>
+    <h2 id="faq">Dúvidas frequentes</h2>
+    <div class="faq-grid">
+      <details>
+        <summary>O que é estoque mínimo (ponto de ressuprimento)? <span class="faq-caret"><i class="fa-solid fa-chevron-down"></i></span></summary>
+        <p class="faq-answer">É o nível de estoque em que o pedido de compra deve ser disparado para evitar ruptura. Calculado com base no consumo médio e no tempo de reposição do fornecedor.</p>
+      </details>
+      <details>
+        <summary>O que é Days on Hand (DOH)? <span class="faq-caret"><i class="fa-solid fa-chevron-down"></i></span></summary>
+        <p class="faq-answer">É o número de dias que o estoque atual sustenta a demanda com o ritmo de saída atual. DOH muito alto indica overstock e capital imobilizado desnecessário.</p>
+      </details>
+      <details>
+        <summary>Como reduzir o overstock sem perder vendas? <span class="faq-caret"><i class="fa-solid fa-chevron-down"></i></span></summary>
+        <p class="faq-answer">Com análise de giro e Curva ABC, identifique produtos com excesso e acione promoções, transferências ou renegociação de entregas — sem comprometer a disponibilidade dos itens de alta rotatividade.</p>
+      </details>
+      <details>
+        <summary>Por que estoque parado afeta o fluxo de caixa? <span class="faq-caret"><i class="fa-solid fa-chevron-down"></i></span></summary>
+        <p class="faq-answer">Porque o dinheiro já foi gasto na compra. Enquanto o produto fica na prateleira sem girar, esse capital não pode ser reinvestido. Estoque é caixa imobilizado — quanto mais tempo parado, mais custa.</p>
+      </details>
     </div>
-</section>
+  <section class="editorial-silo-links" aria-label="Próximos passos sobre gestão de estoques">
+  <span class="editorial-silo-links__label">Continue no silo de estoques</span>
+  <h2>Transforme o conteúdo em controle de estoque real</h2>
+  <p>Depois da leitura, aprofunde o diagnóstico de acuracidade, inventário, perdas e rotina de almoxarifado com estes materiais da JGM4.</p>
+  <div class="editorial-silo-links__grid">
+    <a href="../pages/consultoria-gestao-estoque.html">Consultoria de estoque</a>
+    <a href="../pages/diagnostico-de-estoque.html">Diagnóstico de estoque</a>
+    <a href="../pages/ebook-estoques.html">E-book de gestão de estoques</a>
+    <a href="estoque-nao-bate.html">Como corrigir divergências de estoque</a>
+    <a href="como_controlar_estoques.html">Controle de estoque com planilha</a>
+    <a href="../pages/ferramentas-logisticas.html">Ferramentas logísticas gratuitas</a>
+    <a href="../pages/blog.html">Todos os artigos do blog</a>
+  </div>
+  <a class="editorial-silo-links__cta" href="../pages/diagnostico-de-estoque.html" data-track="blog_cta_estoques">Avaliar meu estoque</a>
+</section></article>
 
+  <aside class="bl-sidebar" aria-label="Navegação do artigo">
+    <div class="side-box">
+      <h3>Neste artigo</h3>
+      <ul class="toc-list">
+        <li><a href="#dilema">Estoque e fluxo de caixa</a></li>
+        <li><a href="#pontos-controle">Pontos de controle</a></li>
+        <li><a href="#kpis">KPIs de performance</a></li>
+        <li><a href="#consultoria">Papel da consultoria</a></li>
+        <li><a href="#conclusao">Conclusão</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+    </div>
+    <div class="side-box side-cta">
+      <h3>Aprofunde o tema</h3>
+      <p>eBook de Gestão de Estoques: controle de inventário, KPIs e pontos de ressuprimento na prática.</p>
+      <a href="../pages/cursos.html" class="btn-side btn-side-red"><i class="fa-solid fa-graduation-cap"></i> Ver eBook de Estoques</a>
+    </div>
+    <div class="side-box">
+      <h3>Entrevista inicial</h3>
+      <p style="margin:0 0 12px; color:var(--muted); font-size:13.5px; line-height:1.55;">Descubra quanto capital está parado no seu estoque e como liberar esse caixa.</p>
+      <a href="../pages/diagnostico-logistico-online.html" class="btn-side btn-side-blue"><i class="fa-solid fa-magnifying-glass-chart"></i> Solicitar entrevista inicial</a>
+    </div>
+  </aside>
+</div>
+
+<div class="bl-cta-wrap">
+  <div class="bl-cta-box">
+    <div class="bl-cta-label"><i class="fa-solid fa-graduation-cap"></i> Continue aprendendo</div>
+    <h2>Quer dominar a gestão de estoques de verdade?</h2>
+    <p>Acesse o eBook de Gestão de Estoques da JGM4: controle de inventário, KPIs, pontos de ressuprimento e muito mais — aplicável à realidade operacional de PMEs.</p>
+    <div class="bl-cta-btns">
+      <a class="btn-cta-p" href="../pages/cursos.html#estoque"><i class="fa-solid fa-graduation-cap"></i> Ver materiais de gestão de estoque</a>
+      <a class="btn-cta-s" href="../pages/diagnostico-logistico-online.html"><i class="fa-solid fa-magnifying-glass-chart"></i> Entrevista inicial</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>© 2025–2026 JGM4 Consultoria Logística — Bruno Muniz. Todos os direitos reservados.</p>
+  <div class="ft-links">
+    <a href="https://www.linkedin.com/in/brunomuniz72/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+    <a href="../pages/blog.html">Blog</a>
+    <a href="../pages/cursos.html">Cursos</a>
+    <a href="../pages/politica.html">Política de Privacidade</a>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var bar = document.getElementById('progress-bar');
+    if (!bar) return;
+    window.addEventListener('scroll', function(){
+      var h = document.documentElement;
+      var s = h.scrollTop || document.body.scrollTop;
+      var m = h.scrollHeight - h.clientHeight;
+      bar.style.width = (m > 0 ? (s / m * 100) : 0) + '%';
+    });
+  })();
+</script>
 </body>
 </html>
+
+
+
+
+

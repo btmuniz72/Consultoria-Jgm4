@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<script id="jgm4-consent-default">
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
+  gtag('consent', 'default', {
+    'analytics_storage': 'denied',
+    'ad_storage': 'denied',
+    'ad_user_data': 'denied',
+    'ad_personalization': 'denied',
+    'functionality_storage': 'granted',
+    'security_storage': 'granted',
+    'wait_for_update': 500
+  });
+</script>
+<!-- Google Tag Manager -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){
+    if (arguments[0] === 'event') {
+      dataLayer.push(Object.assign({ event: arguments[1] }, arguments[2] || {}));
+      return;
+    }
+    dataLayer.push(arguments);
+  }
+  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-NQGP74WJ');
+</script>
+<!-- End Google Tag Manager -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Pedido Mínimo: Frete, Margem e Logística | JGM4</title>
+  <meta name="description" content="Aprenda a definir pedido mínimo considerando frete, margem, região, operação e nível de serviço sem destruir o lucro." />
+  <meta name="author" content="Bruno Muniz - JGM4 Consultoria Logística" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://www.jgm4consultoria.com.br/blog/pedido-minimo-inteligente-logistica-frete-margem.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Pedido Mínimo: Frete, Margem e Logística" />
+  <meta property="og:description" content="Pedido mínimo não é só regra comercial. Veja como frete, margem, região e operação definem se uma venda realmente dá lucro." />
+  <meta property="og:url" content="https://www.jgm4consultoria.com.br/blog/pedido-minimo-inteligente-logistica-frete-margem.html" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:site_name" content="JGM4 Consultoria" />
+  <meta property="article:author" content="Bruno Muniz" />
+  <meta property="article:published_time" content="2026-06-06" />
+  <meta property="article:modified_time" content="2026-06-06" />
+  <meta name="twitter:title" content="Pedido Mínimo Inteligente e Margem Logística | JGM4" />
+  <meta name="twitter:description" content="Como definir pedido mínimo considerando frete, margem, região, ticket médio e nível de serviço." />
+  <link rel="stylesheet" href="../css/style.css" /><link rel="stylesheet" href="../css/blog-editorial.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script src="../js/scripts.js" defer></script>
+
+  <script src="../js/lgpd-consent.js"></script>
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": "Pedido Mínimo Inteligente: Como Vender sem Destruir a Margem Logística",
+        "description": "Entenda como definir um pedido mínimo inteligente considerando frete, margem, região, ticket médio, operação logística e nível de serviço.",
+        "image": "https://www.jgm4consultoria.com.br/assets/imagem_blog_loginteligente.png",
+        "datePublished": "2026-06-06",
+        "dateModified": "2026-06-06",
+        "author": { "@type": "Person", "name": "Bruno Muniz", "url": "https://www.jgm4consultoria.com.br/pages/sobre.html" },
+        "publisher": { "@type": "Organization", "name": "JGM4 Consultoria Logística", "logo": { "@type": "ImageObject", "url": "https://www.jgm4consultoria.com.br/assets/brand/logo-jgm4-google-ads-1200x1200.png" } },
+        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://www.jgm4consultoria.com.br/blog/pedido-minimo-inteligente-logistica-frete-margem.html" },
+        "inLanguage": "pt-BR"
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "JGM4 Consultoria", "item": "https://www.jgm4consultoria.com.br/" },
+          { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://www.jgm4consultoria.com.br/pages/blog.html" },
+          { "@type": "ListItem", "position": 3, "name": "Pedido Mínimo Inteligente", "item": "https://www.jgm4consultoria.com.br/blog/pedido-minimo-inteligente-logistica-frete-margem.html" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "O que é pedido mínimo inteligente?", "acceptedAnswer": { "@type": "Answer", "text": "Pedido mínimo inteligente é uma política de venda definida com base em dados comerciais, logísticos e financeiros. Ele considera valor do pedido, margem, custo de frete, região atendida, capacidade operacional e nível de serviço." } },
+          { "@type": "Question", "name": "Como calcular pedido mínimo na logística?", "acceptedAnswer": { "@type": "Answer", "text": "O cálculo deve considerar valor médio dos pedidos, custo de frete por região, percentual de frete sobre a nota, margem dos produtos, custo operacional por pedido e estratégia comercial da empresa." } },
+          { "@type": "Question", "name": "Pedido mínimo deve ser igual para todas as regiões?", "acceptedAnswer": { "@type": "Answer", "text": "Nem sempre. Regiões com custos logísticos diferentes podem exigir pedidos mínimos diferentes. Uma política única pode prejudicar a margem em regiões distantes ou dificultar vendas em regiões próximas." } },
+          { "@type": "Question", "name": "Qual a relação entre pedido mínimo e frete CIF?", "acceptedAnswer": { "@type": "Answer", "text": "No frete CIF, a empresa assume o custo da entrega. Por isso, o pedido mínimo precisa ser suficiente para absorver o frete sem comprometer a margem da venda." } },
+          { "@type": "Question", "name": "Como saber se meu pedido mínimo está errado?", "acceptedAnswer": { "@type": "Answer", "text": "Alguns sinais são frete percentual muito alto, muitos pedidos pequenos, margens apertadas, aumento de reclamações, atrasos frequentes, pressão operacional e dificuldade para fechar a conta logística." } }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    #progress-bar { position:fixed; top:0; left:0; width:0%; height:3px; background:#2EA7FF; z-index:9999; transition:width .1s linear; }
+    :root { --navy:#071A38; --navy-2:#041024; --blue:#2EA7FF; --red:#E10616; --green:#22c55e; --stroke:rgba(255,255,255,.12); --glass:rgba(255,255,255,.04); --shadow:0 18px 55px rgba(0,0,0,.28); --radius:18px; --muted:rgba(255,255,255,.72); --muted-2:rgba(255,255,255,.55); --ink:rgba(255,255,255,.92); --font:'Inter',system-ui,sans-serif; }
+    *,*::before,*::after { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; font-family:var(--font); color:#fff; -webkit-font-smoothing:antialiased; background:radial-gradient(900px 600px at 20% 10%,rgba(46,167,255,.14),transparent 55%), radial-gradient(900px 600px at 80% 30%,rgba(225,6,22,.10),transparent 55%), linear-gradient(180deg,var(--navy) 0%,var(--navy-2) 100%); }
+    img { max-width:100%; display:block; }
+    a { text-decoration:none; }
+    .bl-breadcrumb { padding:118px 16px 0; }
+    @media(max-width:768px){ .bl-breadcrumb { padding-top:136px; } }
+    .bl-breadcrumb ol { max-width:1120px; margin:0 auto; display:flex; flex-wrap:wrap; gap:6px; list-style:none; padding:0; font-size:12.5px; color:var(--muted-2); }
+    .bl-breadcrumb li+li::before { content:"›"; margin-right:6px; }
+    .bl-breadcrumb a { color:var(--muted-2); }
+    .bl-breadcrumb a:hover { color:#4FC3F7; }
+    .bl-hero { padding:18px 16px 0; }
+    .bl-hero-wrap { max-width:1120px; margin:0 auto; padding:28px 32px 24px; border:1px solid var(--stroke); border-radius:var(--radius); background:var(--glass); box-shadow:var(--shadow); backdrop-filter:blur(10px); }
+    @media(max-width:480px){ .bl-hero-wrap { padding:18px 16px; } }
+    .bl-eyebrow { display:inline-flex; align-items:center; gap:8px; padding:6px 13px; border-radius:999px; font-size:11.5px; font-weight:800; text-transform:uppercase; letter-spacing:.06em; color:#a8d8ff; background:rgba(46,167,255,.12); border:1px solid rgba(46,167,255,.25); margin-bottom:12px; }
+    .bl-title { margin:0 0 10px; font-size:clamp(24px,3.1vw,42px); font-weight:900; letter-spacing:-.04em; line-height:1.08; color:var(--ink); }
+    .bl-title em { font-style:normal; background:linear-gradient(135deg,#4FC3F7,var(--blue)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .bl-subtitle { margin:0 0 16px; color:var(--muted); line-height:1.7; font-size:16px; max-width:80ch; }
+    .bl-meta { display:flex; flex-wrap:wrap; gap:14px; align-items:center; color:var(--muted-2); font-size:13px; }
+    .bl-meta span { display:flex; align-items:center; gap:6px; }
+    .bl-layout { max-width:1120px; margin:0 auto; padding:20px 16px 32px; display:grid; grid-template-columns:1fr 296px; gap:22px; align-items:start; }
+    @media(max-width:1000px){ .bl-layout { grid-template-columns:1fr; } }
+    .bl-article { border-radius:var(--radius); border:1px solid var(--stroke); background:var(--glass); padding:32px 36px; box-shadow:var(--shadow); }
+    @media(max-width:480px){ .bl-article { padding:20px 16px; } }
+    .bl-article img.hero-img { width:100%; border-radius:12px; margin:0 auto 26px; border:1px solid var(--stroke); max-height:430px; object-fit:cover; }
+    .bl-article h2 { margin:30px 0 12px; font-size:clamp(18px,2.2vw,23px); font-weight:800; letter-spacing:-.02em; color:var(--ink); }
+    .bl-article h2:first-child { margin-top:0; }
+    .bl-article h3 { margin:20px 0 8px; font-size:16.5px; font-weight:700; color:#4FC3F7; }
+    .bl-article p { margin:0 0 14px; color:rgba(255,255,255,.83); line-height:1.78; font-size:15.5px; }
+    .bl-article ul, .bl-article ol { margin:0 0 16px 20px; color:rgba(255,255,255,.83); font-size:15.5px; line-height:1.7; }
+    .bl-article li { margin-bottom:8px; }
+    .bl-article strong { color:var(--ink); }
+    .bl-article a { color:#4FC3F7; font-weight:700; }
+    .callout { border-left:4px solid var(--blue); background:rgba(46,167,255,.10); padding:16px 18px; border-radius:0 12px 12px 0; margin:22px 0; color:#bde0ff; font-size:15px; line-height:1.65; }
+    .callout strong { color:#fff; }
+    .callout-warn { border-left-color:var(--red); background:rgba(225,6,22,.09); color:#ffc5c9; }
+    .formula-box { display:grid; gap:8px; border-radius:14px; border:1px solid rgba(46,167,255,.22); background:rgba(46,167,255,.08); padding:18px; margin:20px 0; }
+    .formula-box strong { font-size:14px; text-transform:uppercase; letter-spacing:.05em; color:#a8d8ff; }
+    .formula-box code { display:block; padding:14px 16px; border-radius:10px; background:rgba(4,16,36,.55); border:1px solid rgba(255,255,255,.10); color:#fff; font-size:15px; white-space:normal; line-height:1.55; }
+    .scenario-table { width:100%; border-collapse:separate; border-spacing:0; overflow:hidden; border-radius:12px; border:1px solid rgba(255,255,255,.11); margin:18px 0 22px; font-size:14px; }
+    .scenario-table th, .scenario-table td { padding:12px 14px; text-align:left; border-bottom:1px solid rgba(255,255,255,.09); color:rgba(255,255,255,.82); }
+    .scenario-table th { background:rgba(255,255,255,.07); color:#fff; font-size:12px; text-transform:uppercase; letter-spacing:.05em; }
+    .scenario-table tr:last-child td { border-bottom:0; }
+    .scenario-table .risk { color:#fca5a5; font-weight:800; }
+    .scenario-table .ok { color:#86efac; font-weight:800; }
+    @media(max-width:620px){
+      .scenario-table { display:block; overflow-x:auto; white-space:nowrap; }
+    }
+    .metric-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin:16px 0; }
+    @media(max-width:640px){ .metric-grid { grid-template-columns:1fr; } }
+    .metric-card { border-radius:12px; border:1px solid rgba(255,255,255,.10); background:rgba(255,255,255,.04); padding:14px; }
+    .metric-card h3 { margin:0 0 6px; color:#fff; font-size:15px; }
+    .metric-card p { margin:0; font-size:13.5px; line-height:1.55; color:var(--muted); }
+    .product-strip { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin:18px 0; }
+    @media(max-width:680px){ .product-strip { grid-template-columns:1fr; } }
+    .product-mini { border-radius:12px; border:1px solid rgba(255,255,255,.10); background:rgba(255,255,255,.045); padding:16px; }
+    .product-mini span { display:inline-flex; margin-bottom:7px; color:#a8d8ff; font-size:11px; font-weight:900; text-transform:uppercase; letter-spacing:.06em; }
+    .product-mini h3 { margin:0 0 7px; color:#fff; }
+    .product-mini p { margin:0 0 12px; font-size:13.5px; }
+    .product-mini a { display:inline-flex; align-items:center; gap:8px; color:#fff; background:rgba(46,167,255,.14); border:1px solid rgba(46,167,255,.28); padding:9px 12px; border-radius:10px; font-size:13px; }
+    .bl-sidebar { display:grid; gap:16px; position:sticky; top:100px; }
+    @media(max-width:1000px){ .bl-sidebar { position:static; } }
+    .side-box { border-radius:16px; border:1px solid var(--stroke); background:var(--glass); padding:20px; }
+    .side-box h3 { margin:0 0 12px; font-size:11.5px; font-weight:800; text-transform:uppercase; letter-spacing:.05em; color:var(--muted-2); }
+    .toc-list { list-style:none; padding:0; margin:0; display:grid; gap:2px; }
+    .toc-list a { display:block; padding:8px 10px; border-radius:8px; color:rgba(255,255,255,.78); font-size:13.5px; line-height:1.4; transition:background .14s,color .14s; }
+    .toc-list a:hover { background:rgba(46,167,255,.12); color:#4FC3F7; }
+    .side-cta { border:1px solid rgba(225,6,22,.28); background:linear-gradient(135deg,rgba(225,6,22,.10),rgba(225,6,22,.05)); }
+    .side-cta h3 { color:#fca5a5; }
+    .side-box p { margin:0 0 14px; color:var(--muted); font-size:13.5px; line-height:1.55; }
+    .btn-side { display:flex; align-items:center; justify-content:center; gap:8px; padding:11px 16px; border-radius:11px; font-weight:800; font-size:13.5px; font-family:var(--font); transition:transform .14s,filter .14s; width:100%; }
+    .btn-side:hover { transform:translateY(-2px); filter:brightness(1.06); }
+    .btn-side-red { background:linear-gradient(135deg,var(--red),#ff3b4a); color:#fff; box-shadow:0 8px 22px rgba(225,6,22,.22); border:none; }
+    .btn-side-blue { background:rgba(46,167,255,.14); border:1px solid rgba(46,167,255,.30); color:#a8d8ff; }
+    .faq-grid { display:grid; gap:10px; margin-top:14px; }
+    .bl-article details { border-radius:12px; border:1px solid rgba(255,255,255,.10); background:rgba(255,255,255,.04); padding:14px 16px; }
+    .bl-article details[open] { background:rgba(255,255,255,.07); }
+    .bl-article summary { cursor:pointer; list-style:none; font-weight:800; font-size:14.5px; color:var(--ink); display:flex; align-items:center; justify-content:space-between; gap:12px; }
+    .bl-article summary::-webkit-details-marker { display:none; }
+    .faq-caret { width:26px; height:26px; border-radius:8px; display:grid; place-items:center; border:1px solid rgba(255,255,255,.12); background:rgba(4,16,36,.28); flex:0 0 auto; transition:transform .2s; }
+    .bl-article details[open] .faq-caret { transform:rotate(180deg); }
+    .faq-answer { margin:10px 0 0; color:rgba(255,255,255,.76); line-height:1.68; font-size:14.5px; }
+    .bl-cta-wrap { max-width:1120px; margin:0 auto 32px; padding:0 16px; }
+    .bl-cta-box { border-radius:var(--radius); border:1px solid rgba(46,167,255,.20); background:linear-gradient(135deg,rgba(46,167,255,.10),rgba(225,6,22,.08)); padding:32px 36px; text-align:center; box-shadow:var(--shadow); }
+    @media(max-width:480px){ .bl-cta-box { padding:22px 16px; } }
+    .bl-cta-label { display:inline-flex; align-items:center; gap:7px; padding:5px 12px; border-radius:999px; font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.06em; color:#a8d8ff; background:rgba(46,167,255,.12); border:1px solid rgba(46,167,255,.22); margin-bottom:12px; }
+    .bl-cta-box h2 { margin:0 0 10px; font-size:clamp(20px,2.5vw,30px); font-weight:900; letter-spacing:-.03em; }
+    .bl-cta-box p { margin:0 0 22px; color:var(--muted); font-size:15.5px; line-height:1.7; max-width:660px; margin-left:auto; margin-right:auto; }
+    .bl-cta-btns { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+    .btn-cta-p { display:inline-flex; align-items:center; gap:9px; padding:14px 24px; border-radius:12px; font-weight:800; font-size:15px; font-family:var(--font); background:linear-gradient(135deg,var(--red),#ff3b4a); color:#fff; border:none; box-shadow:0 10px 26px rgba(225,6,22,.22); transition:transform .14s,filter .14s; }
+    .btn-cta-p:hover { transform:translateY(-2px); filter:brightness(1.05); }
+    .btn-cta-s { display:inline-flex; align-items:center; gap:9px; padding:14px 24px; border-radius:12px; font-weight:800; font-size:15px; font-family:var(--font); background:rgba(46,167,255,.12); color:#a8d8ff; border:1px solid rgba(46,167,255,.28); transition:transform .14s,filter .14s; }
+    .btn-cta-s:hover { transform:translateY(-2px); filter:brightness(1.08); }
+    @media(max-width:520px){ .btn-cta-p,.btn-cta-s { width:100%; justify-content:center; } }
+    footer { border-top:1px solid rgba(255,255,255,.10); padding:24px 16px; color:rgba(255,255,255,.55); text-align:center; font-size:13.5px; }
+    footer a { color:#ff3333; font-weight:700; }
+    .ft-links { margin-top:8px; display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
+    .ft-links a { color:rgba(255,255,255,.55); font-weight:400; }
+    .ft-links a:hover { color:#4FC3F7; }
+  </style>
+  <link rel="stylesheet" href="/css/brand.css?v=20260811-2">
+  <link rel="icon" href="/assets/brand/favicon.ico?v=20260811-2" sizes="any">
+  <link rel="icon" type="image/png" sizes="48x48" href="/assets/brand/favicon-48x48.png?v=20260811-2">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/brand/favicon-96x96.png?v=20260811-2">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/brand/favicon-192x192.png?v=20260811-2">
+  <link rel="icon" type="image/png" sizes="512x512" href="/assets/brand/favicon-512x512.png?v=20260811-2">
+  <link rel="apple-touch-icon" sizes="192x192" href="/assets/brand/favicon-192x192.png?v=20260811-2">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta property="og:image" content="https://www.jgm4consultoria.com.br/assets/brand/og-jgm4-1200x630.jpg">
+  <meta property="og:image:secure_url" content="https://www.jgm4consultoria.com.br/assets/brand/og-jgm4-1200x630.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="JGM4 Consultoria Logística">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://www.jgm4consultoria.com.br/assets/brand/og-jgm4-1200x630.jpg">
+  <meta name="twitter:image:alt" content="JGM4 Consultoria Logística"></head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NQGP74WJ"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<div id="progress-bar"></div>
+
+<header id="header">
+  <nav>
+    <a href="/" aria-label="Página inicial JGM4"><picture class="brand-logo-picture brand-logo-picture-header"><source media="(max-width: 768px)" srcset="/assets/brand/logo-jgm4-compacta-nova.png" type="image/png"><img src="/assets/brand/logo-jgm4-horizontal-nova.png" alt="JGM4 Consultoria Logística" class="logo brand-logo brand-logo" width="1536" height="1024" decoding="async"></picture></a>
+    <button class="menu-toggle" onclick="toggleMenu()" aria-label="Menu">☰</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../#inicio" onclick="closeMenu()">Início</a></li>
+      <li><a href="../#desafios" onclick="closeMenu()">Desafios</a></li>
+      <li><a href="../#solucoes" onclick="closeMenu()">Soluções</a></li>
+      <li><a href="../#contato" onclick="closeMenu()">Contato</a></li>
+      <li><a href="../pages/blog.html" onclick="closeMenu()">Blog</a></li>
+      <li><a href="../pages/cursos.html" onclick="closeMenu()">Cursos</a></li>
+      <li><a href="../pages/diagnostico-logistico-online.html" class="nav-cta" onclick="closeMenu()">Entrevista inicial</a></li>
+    </ul>
+  </nav>
+</header>
+
+<nav class="bl-breadcrumb" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="../">JGM4 Consultoria</a></li>
+    <li><a href="../pages/blog.html">Blog</a></li>
+    <li aria-current="page">Pedido mínimo inteligente</li>
+  </ol>
+</nav>
+
+<section class="bl-hero">
+  <div class="bl-hero-wrap">
+    <div class="bl-eyebrow"><i class="fa-solid fa-truck-fast"></i> Frete, margem e rentabilidade</div>
+    <h1 class="bl-title">Pedido mínimo inteligente: como vender sem <em>destruir a margem logística</em></h1>
+    <p class="bl-subtitle">Pedido mínimo não deve ser uma regra definida apenas pelo comercial. Ele precisa conversar com frete, margem, região, ticket médio, nível de serviço e capacidade operacional.</p>
+    <div class="bl-meta">
+      <span><i class="fa-solid fa-user-tie"></i> Bruno Muniz - JGM4 Consultoria</span>
+      <span><i class="fa-regular fa-clock"></i> 9 min de leitura</span>
+      <span><i class="fa-regular fa-calendar"></i> Publicado em jun/2026</span>
+    </div>
+  </div>
+</section>
+
+<div class="bl-layout">
+  <article class="bl-article" itemscope itemtype="https://schema.org/Article">
+    <meta itemprop="headline" content="Pedido Mínimo Inteligente: Como Vender sem Destruir a Margem Logística" />
+    <meta itemprop="datePublished" content="2026-06-06" />
+    <meta itemprop="author" content="Bruno Muniz" />
+
+    <img class="hero-img" src="../assets/imagem_blog_loginteligente.png" alt="Pedido mínimo inteligente com análise de frete e margem logística" loading="lazy" / width="1536" height="1024">
+
+    <p itemprop="articleBody">
+      Muitas empresas definem pedido mínimo olhando apenas para o lado comercial. A lógica parece simples: quanto menor o pedido mínimo, maior a chance de vender.
+    </p>
+    <p>
+      Na prática, nem sempre isso acontece de forma saudável. Um pedido pode parecer bom no faturamento, mas ruim no resultado. Ele pode gerar venda, movimentar estoque, ocupar equipe, consumir frete, gerar custo administrativo e, no final, deixar pouca ou nenhuma margem para a empresa.
+    </p>
+
+    <div class="callout">
+      <strong>Ideia central:</strong> pedido mínimo não é apenas uma regra comercial. É uma decisão estratégica que envolve vendas, logística, financeiro, margem, região atendida, custo de entrega, nível de serviço e capacidade operacional.
+    </div>
+
+    <h2 id="erro-valor">O erro de olhar apenas para o valor do pedido</h2>
+    <p>
+      É comum encontrar empresas que definem pedido mínimo por percepção: "R$ 500,00 porque o mercado aceita", "R$ 1.000,00 para facilitar a venda" ou "vamos reduzir o mínimo para não perder cliente".
+    </p>
+    <p>
+      Essas decisões podem fazer sentido em alguns momentos, mas precisam ser acompanhadas de análise. O valor do pedido sozinho não mostra se aquela venda é saudável.
+    </p>
+    <p>
+      Um pedido de R$ 1.500,00 pode ser ótimo em uma região próxima, com frete baixo e entrega consolidada. O mesmo pedido pode ser ruim em uma região distante, com frete alto, baixa ocupação, risco de atraso e maior custo operacional.
+    </p>
+    <p>
+      A pergunta correta não é apenas: <strong>"qual pedido mínimo ajuda a vender mais?"</strong>. A pergunta estratégica é: <strong>"qual pedido mínimo permite vender com margem, atender bem e manter a operação sustentável?"</strong>
+    </p>
+
+    <h2 id="impactos">Pedido mínimo impacta mais áreas do que parece</h2>
+    <p>
+      Na logística, o pedido mínimo influencia custo de frete, ocupação dos veículos, volume de separação, produtividade da equipe, quantidade de entregas e nível de serviço.
+    </p>
+    <p>
+      No financeiro, afeta margem, fluxo de caixa, custo por pedido e rentabilidade por região. No comercial, interfere na negociação, no comportamento do cliente e na estratégia de crescimento.
+    </p>
+    <p>Quando ele é mal calculado, surgem problemas como:</p>
+    <ul>
+      <li>frete representando percentual alto da nota;</li>
+      <li>muitos pedidos pequenos consumindo estrutura;</li>
+      <li>margem comprimida ou negativa;</li>
+      <li>baixa produtividade na separação;</li>
+      <li>maior custo administrativo por pedido;</li>
+      <li>mais reclamações por atraso e reentrega;</li>
+      <li>dificuldade para saber se a venda realmente deu lucro.</li>
+    </ul>
+
+    <h2 id="frete">O frete é um dos principais pontos da análise</h2>
+    <p>
+      Em muitas empresas, o maior impacto do pedido mínimo aparece no frete, principalmente quando a empresa trabalha com <strong>frete CIF</strong>, assumindo o custo de entrega para o cliente.
+    </p>
+    <p>
+      Nesse modelo, cada pedido precisa pagar a conta logística. Se o pedido é baixo e o frete é alto, o percentual de frete sobre a nota pode destruir a margem.
+    </p>
+
+    <div class="formula-box">
+      <strong>Indicador essencial</strong>
+      <code>% Frete sobre a venda = Custo do frete / Valor do pedido x 100</code>
+    </div>
+
+    <table class="scenario-table">
+      <thead>
+        <tr>
+          <th>Pedido</th>
+          <th>Frete</th>
+          <th>% sobre venda</th>
+          <th>Leitura logística</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>R$ 1.000,00</td>
+          <td>R$ 120,00</td>
+          <td>12%</td>
+          <td class="risk">Risco de margem</td>
+        </tr>
+        <tr>
+          <td>R$ 3.000,00</td>
+          <td>R$ 120,00</td>
+          <td>4%</td>
+          <td class="ok">Mais sustentável</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>
+      O custo em reais é o mesmo. Mas o impacto percentual é completamente diferente. É aqui que muitas empresas se enganam: olham apenas o valor absoluto do frete e não analisam quanto ele representa dentro da venda.
+    </p>
+
+    <h2 id="regiao">Nem toda região deve ter o mesmo pedido mínimo</h2>
+    <p>
+      Aplicar o mesmo pedido mínimo para todas as regiões parece simples para o comercial, mas nem sempre é correto do ponto de vista logístico.
+    </p>
+    <p>
+      Algumas regiões têm maior concentração de clientes, melhor malha de transportadoras, mais frequência de entrega e custo menor. Outras têm baixa densidade, maior distância, menor frequência, maior risco de reentrega, prazos longos e frete mais caro.
+    </p>
+    <p>
+      Se o custo logístico muda por região, o pedido mínimo também precisa ser analisado por região. Uma regra única pode ficar alta demais em áreas próximas e baixa demais em áreas distantes.
+    </p>
+    <p>Uma política inteligente deve considerar:</p>
+    <ul>
+      <li>custo médio de frete por região;</li>
+      <li>ticket médio dos pedidos;</li>
+      <li>percentual de frete sobre a nota;</li>
+      <li>prazo de entrega e nível de serviço esperado;</li>
+      <li>histórico de vendas;</li>
+      <li>densidade de clientes;</li>
+      <li>estratégia comercial para aquela área.</li>
+    </ul>
+
+    <h2 id="margem">Pedido mínimo também precisa conversar com a margem</h2>
+    <p>
+      Não adianta definir pedido mínimo olhando apenas para frete. A margem do produto também precisa entrar na análise.
+    </p>
+    <p>
+      Existem produtos com margem maior, produtos com margem menor, produtos leves, produtos volumosos, itens de giro rápido e itens com maior complexidade operacional. Um pedido de R$ 2.000,00 com boa margem pode ser melhor do que um pedido de R$ 3.000,00 com margem apertada.
+    </p>
+    <p>
+      Da mesma forma, um pedido com muitos itens fracionados pode exigir mais da operação do que um pedido com poucas caixas fechadas. Por isso, a análise precisa considerar margem comercial e esforço logístico.
+    </p>
+
+    <div class="callout callout-warn">
+      <strong>Ponto de atenção:</strong> nem toda venda boa para o faturamento é boa para a empresa. Algumas vendas aumentam trabalho, risco e custo sem aumentar resultado.
+    </div>
+
+    <h2 id="pedidos-pequenos">O impacto dos pedidos pequenos na operação</h2>
+    <p>
+      Pedido pequeno não impacta apenas o frete. Ele consome estrutura operacional. Cada pedido exige processamento, análise, separação, conferência, faturamento, expedição, transporte, acompanhamento e atendimento ao cliente.
+    </p>
+    <p>
+      Mesmo um pedido pequeno passa por praticamente as mesmas etapas de um pedido maior. Quanto maior o número de pedidos pequenos, maior tende a ser o custo operacional por pedido.
+    </p>
+    <p>
+      A equipe separa mais pedidos. O faturamento emite mais notas. A expedição organiza mais volumes. O transporte faz mais entregas. O atendimento acompanha mais ocorrências. O financeiro lida com mais documentos.
+    </p>
+    <p>
+      Quando esse custo não é medido, a empresa pode achar que está vendendo mais, quando na verdade está apenas aumentando a complexidade da operação.
+    </p>
+
+    <h2 id="equilibrio">O pedido mínimo ideal não é o maior possível</h2>
+    <p>
+      Pedido mínimo inteligente não significa aumentar o valor de forma exagerada. Também não significa dificultar a venda. A ideia é encontrar um ponto de equilíbrio.
+    </p>
+    <p>
+      Um pedido mínimo muito alto pode reduzir a entrada de pedidos, afastar clientes menores e prejudicar o crescimento em determinadas regiões. Um pedido mínimo muito baixo pode aumentar o volume operacional e comprometer a margem.
+    </p>
+    <p>O melhor pedido mínimo equilibra:</p>
+    <ul>
+      <li>competitividade comercial;</li>
+      <li>custo logístico;</li>
+      <li>margem;</li>
+      <li>capacidade operacional;</li>
+      <li>nível de serviço;</li>
+      <li>estratégia da empresa.</li>
+    </ul>
+    <p>
+      Em alguns casos, a resposta pode ser aumentar o pedido mínimo. Em outros, criar faixas por região. Também pode fazer sentido manter o mínimo, mas alterar a política de frete, trabalhar com CIF acima de determinado valor e FOB abaixo dele, ou criar condições diferentes para regiões mais distantes.
+    </p>
+
+    <h2 id="indicadores">Indicadores que ajudam a definir o pedido mínimo</h2>
+    <p>
+      Para tirar a decisão do achismo, alguns indicadores precisam aparecer na mesa:
+    </p>
+    <div class="metric-grid">
+      <div class="metric-card">
+        <h3>Valor médio do pedido</h3>
+        <p>Mostra se o pedido mínimo atual está próximo ou distante do comportamento real de compra.</p>
+      </div>
+      <div class="metric-card">
+        <h3>% de frete sobre a nota</h3>
+        <p>Revela quanto o frete consome da venda, especialmente em operações CIF.</p>
+      </div>
+      <div class="metric-card">
+        <h3>Custo de frete por região</h3>
+        <p>Ajuda a identificar áreas que exigem política comercial específica.</p>
+      </div>
+      <div class="metric-card">
+        <h3>Margem média por pedido</h3>
+        <p>Mostra se a venda suporta frete, operação e custo administrativo.</p>
+      </div>
+      <div class="metric-card">
+        <h3>Pedidos por faixa de valor</h3>
+        <p>Permite medir impacto comercial antes de mudar a regra.</p>
+      </div>
+      <div class="metric-card">
+        <h3>Atrasos e reclamações por região</h3>
+        <p>Mostra onde o modelo de atendimento está pressionando a operação.</p>
+      </div>
+    </div>
+
+    <h2 id="exemplo">Exemplo prático de análise</h2>
+    <p>
+      Imagine uma empresa que vende para várias regiões do Brasil com frete CIF. Ela percebe que o percentual geral de frete está aumentando. Ao olhar apenas o total, parece um problema de reajuste de transportadora.
+    </p>
+    <p>
+      Mas, quando analisa por região, percebe que algumas áreas têm frete muito acima da média. Depois, ao analisar por faixa de pedido, identifica que muitos pedidos pequenos estão sendo enviados para regiões distantes.
+    </p>
+    <p>
+      Nesse caso, negociar tabela pode ajudar, mas não resolve tudo. O problema principal pode estar na política comercial.
+    </p>
+    <p>A empresa precisa avaliar se faz sentido:</p>
+    <ul>
+      <li>aumentar o pedido mínimo para determinadas regiões;</li>
+      <li>criar política de frete por faixa de valor;</li>
+      <li>trabalhar com frete FOB abaixo de determinado mínimo;</li>
+      <li>consolidar entregas;</li>
+      <li>criar rotas ou hubs regionais;</li>
+      <li>rever transportadoras;</li>
+      <li>ajustar a estratégia comercial naquela região.</li>
+    </ul>
+
+    <h2 id="comercial">O papel da logística na política comercial</h2>
+    <p>
+      A logística não pode entrar na conversa apenas depois que a venda aconteceu. Quando isso ocorre, a área vira somente executora: o comercial vende, a logística entrega e o financeiro paga a conta.
+    </p>
+    <p>
+      Em empresas mais maduras, a logística participa da construção da política comercial. Isso não significa travar vendas. Significa ajudar a empresa a vender melhor.
+    </p>
+    <p>
+      A logística tem dados importantes para apoiar decisões sobre região mais rentável, cliente com maior custo de atendimento, pedido mínimo adequado, modalidade de frete, prazo prometido e transportadora mais eficiente.
+    </p>
+    <p>
+      Quando essa conversa acontece, o comercial vende com mais consciência, a operação trabalha com mais previsibilidade, o financeiro entende melhor o custo e o cliente recebe uma promessa mais coerente.
+    </p>
+
+    <h2 id="revisar">Como revisar sua política de pedido mínimo</h2>
+    <ol>
+      <li><strong>Levante o histórico de pedidos:</strong> analise cliente, região, valor do pedido, peso, volume, frete e margem.</li>
+      <li><strong>Separe por região:</strong> não olhe apenas o total da empresa. Divida por estado, rota, transportadora ou praça.</li>
+      <li><strong>Calcule o frete percentual:</strong> compare o valor do frete com o valor da nota.</li>
+      <li><strong>Identifique pedidos abaixo do ponto ideal:</strong> veja onde há baixo valor e alto custo logístico.</li>
+      <li><strong>Simule cenários:</strong> estime impacto se o mínimo subir, se o frete mudar ou se a regra variar por região.</li>
+      <li><strong>Alinhe com o comercial:</strong> a mudança precisa ser construída junto para reduzir resistência.</li>
+      <li><strong>Crie uma regra clara:</strong> quanto mais simples for a política, mais fácil será aplicar e defender.</li>
+      <li><strong>Acompanhe depois da mudança:</strong> observe ticket médio, frete percentual, margem, pedidos e reclamações.</li>
+    </ol>
+
+    <h2 id="frete-gratis">Pedido mínimo, frete grátis e margem</h2>
+    <p>
+      Muitas empresas usam frete grátis como argumento comercial. Mas frete grátis nunca é grátis para a empresa. Alguém paga essa conta: a margem do produto, o preço final, a empresa ou uma combinação dos três.
+    </p>
+    <p>
+      Quando a empresa oferece frete grátis, o pedido mínimo se torna ainda mais importante. Ele precisa garantir que o custo do frete não comprometa o resultado.
+    </p>
+    <p>
+      Uma política saudável pode combinar frete grátis acima de determinado valor, frete parcial em faixas intermediárias, frete FOB abaixo do mínimo, condição especial por região ou negociação diferenciada para clientes estratégicos.
+    </p>
+
+    <h2 id="tecnologia">Tecnologia ajuda, mas a lógica vem antes</h2>
+    <p>
+      Ferramentas como TMS, WMS, ERP, BI e Inteligência Artificial podem ajudar muito nessa análise. Mas a tecnologia precisa de uma base organizada.
+    </p>
+    <p>
+      Se cadastro, peso, cubagem, frete, região e indicadores estão ruins, a ferramenta apenas mostra dados ruins com aparência mais bonita. Antes da tecnologia, a empresa precisa cuidar da base: cadastro correto, processo definido, indicadores confiáveis, rotina de análise e responsáveis claros. Para conferir o impacto do volume antes de definir a política comercial, utilize a <a href="../pages/calculadora-peso-cubado.html">calculadora de cubagem e peso cubado</a>.
+    </p>
+
+    <h2 id="ganhos">O que sua empresa pode ganhar</h2>
+    <p>
+      Quando o pedido mínimo é bem definido, a empresa pode reduzir percentual de frete sobre venda, melhorar margem por pedido, ganhar previsibilidade operacional, reduzir pedidos deficitários, melhorar ocupação de transporte, diminuir pressão sobre a equipe e dar mais clareza para o comercial.
+    </p>
+    <p>
+      O objetivo não é vender menos. O objetivo é <strong>vender melhor</strong>.
+    </p>
+
+    <h2 id="materiais">Materiais para aprofundar o tema</h2>
+    <p>
+      Pedido mínimo não é uma decisão isolada. Ele está ligado ao frete, ao desenho do centro de distribuição, ao WMS, à produtividade da equipe, à política comercial e ao nível de serviço.
+    </p>
+    <div class="product-strip">
+      <div class="product-mini">
+        <span>Frete e margem</span>
+        <h3>Engenharia do Frete</h3>
+        <p>Entenda composição de frete, faixas, cubagem, taxas, negociação e impacto na margem.</p>
+        <a href="../pages/ebook-engenharia-de-fretes.html">Ver material <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+      <div class="product-mini">
+        <span>Operação de CD</span>
+        <h3>CD na Mão</h3>
+        <p>Organize recebimento, armazenagem, separação, conferência, expedição e indicadores.</p>
+        <a href="../pages/centro-de-distribuicao.html">Ver material <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+      <div class="product-mini">
+        <span>WMS</span>
+        <h3>Guia Mestre WMS</h3>
+        <p>Veja como tecnologia gera resultado quando processo, cadastro e endereçamento estão corretos.</p>
+        <a href="../pages/ebook-wms-vendas.html">Ver material <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+      <div class="product-mini">
+        <span>Produtividade</span>
+        <h3>Remuneração Variável</h3>
+        <p>Crie métricas de produtividade, engajamento e eficiência sem perder controle de qualidade e custo.</p>
+        <a href="../pages/ebook-remuneracao-variavel.html">Ver material <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <h2 id="conclusao">Conclusão</h2>
+    <p>
+      A logística da sua empresa pode estar vendendo muito e lucrando pouco. Antes de aumentar volume, é preciso entender se cada pedido realmente contribui para o resultado.
+    </p>
+    <p>
+      Pedido mínimo inteligente protege a margem, melhora a operação e torna a política comercial mais defensável. A empresa deixa de decidir no achismo e passa a vender com dados, clareza e sustentabilidade.
+    </p>
+
+    <h2 id="faq">Dúvidas frequentes</h2>
+    <div class="faq-grid">
+      <details>
+        <summary>O que é pedido mínimo inteligente? <span class="faq-caret"><i class="fa-solid fa-chevron-down"></i></span></summary>
+        <p class="faq-answer">É uma política de venda definida com base em dados comerciais, logísticos e financeiros. Ela considera valor do pedido, margem, custo de frete, região atendida, capacidade operacional e nível de serviço.</p>
+      </details>
+      <details>
+        <summary>Como calcular pedido mínimo na logística? <span class="faq-caret"><i class="fa-solid fa-chevron-down"></i></span></summary>
+        <p class="faq-answer">O cálculo deve considerar valor médio dos pedidos, custo de frete por região, percentual de frete sobre a nota, margem dos produtos, custo operacional por pedido e estratégia comercial da empresa.</p>
+      </details>
+      <details>
+        <summary>Pedido mínimo deve ser igual para todas as regiões? <span class="faq-caret"><i class="fa-solid fa-chevron-down"></i></span></summary>
+        <p class="faq-answer">Nem sempre. Regiões com custos logísticos diferentes podem exigir pedidos mínimos diferentes. Uma regra única pode prejudicar a margem em regiões distantes ou dificultar vendas em regiões próximas.</p>
+      </details>
+      <details>
+        <summary>Qual a relação entre pedido mínimo e frete CIF? <span class="faq-caret"><i class="fa-solid fa-chevron-down"></i></span></summary>
+        <p class="faq-answer">No frete CIF, a empresa assume o custo da entrega. Por isso, o pedido mínimo precisa ser suficiente para absorver o frete sem comprometer a margem da venda.</p>
+      </details>
+      <details>
+        <summary>Pedido mínimo alto prejudica vendas? <span class="faq-caret"><i class="fa-solid fa-chevron-down"></i></span></summary>
+        <p class="faq-answer">Pode prejudicar se for definido sem análise. Quando bem calculado, ajuda a proteger margem, melhorar a operação e criar uma política comercial mais sustentável.</p>
+      </details>
+      <details>
+        <summary>Como saber se meu pedido mínimo está errado? <span class="faq-caret"><i class="fa-solid fa-chevron-down"></i></span></summary>
+        <p class="faq-answer">Sinais comuns são frete percentual muito alto, muitos pedidos pequenos, margens apertadas, aumento de reclamações, atrasos frequentes, pressão operacional e dificuldade para fechar a conta logística.</p>
+      </details>
+    </div>
+  <section class="editorial-silo-links" aria-label="Próximos passos sobre custos, fretes e distribuição">
+  <span class="editorial-silo-links__label">Continue no silo de custos e fretes</span>
+  <h2>Leve a análise de custo para frete, estoque e operação</h2>
+  <p>Custos logísticos aparecem em transporte, armazenagem, pedidos pequenos, retrabalho e política comercial. Aprofunde pelos caminhos abaixo.</p>
+  <div class="editorial-silo-links__grid">
+    <a href="../pages/calculadora-pedido-minimo.html">Calculadora de pedido mínimo</a>
+    <a href="frete-minimo-pedido-deficitario.html">Quando o pedido se torna deficitário</a>
+    <a href="../pages/reducao-custos-logisticos.html">Redução de custos logísticos</a>
+    <a href="../pages/ebook-engenharia-de-fretes.html">Engenharia do Frete</a>
+    <a href="../pages/auditoria-de-fretes.html">Auditoria de fretes</a>
+  </div>
+  <a class="editorial-silo-links__cta" href="../pages/reducao-custos-logisticos.html" data-track="blog_cta_custos">Mapear custos logísticos</a>
+</section></article>
+
+  <aside class="bl-sidebar" aria-label="Navegação do artigo">
+    <div class="side-box">
+      <h3>Neste artigo</h3>
+      <ul class="toc-list">
+        <li><a href="#erro-valor">Erro de olhar só o valor</a></li>
+        <li><a href="#frete">Frete sobre a venda</a></li>
+        <li><a href="#regiao">Pedido mínimo por região</a></li>
+        <li><a href="#margem">Margem e mix de produtos</a></li>
+        <li><a href="#indicadores">Indicadores essenciais</a></li>
+        <li><a href="#revisar">Como revisar a política</a></li>
+        <li><a href="#materiais">Materiais JGM4</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+    </div>
+    <div class="side-box side-cta">
+      <h3>Aprofunde o tema</h3>
+      <p>Conheça os materiais da JGM4 sobre frete, CD, WMS, produtividade e gestão logística.</p>
+      <a href="../pages/cursos.html" class="btn-side btn-side-red"><i class="fa-solid fa-graduation-cap"></i> Ver eBooks e cursos</a>
+    </div>
+    <div class="side-box">
+      <h3>Entrevista inicial</h3>
+      <p>Quer entender se sua política de pedido mínimo protege ou prejudica sua margem?</p>
+      <a href="../pages/diagnostico-logistico-online.html" class="btn-side btn-side-blue"><i class="fa-solid fa-magnifying-glass-chart"></i> Solicitar entrevista inicial</a>
+    </div>
+  </aside>
+</div>
+
+<div class="bl-cta-wrap">
+  <div class="bl-cta-box">
+    <div class="bl-cta-label"><i class="fa-solid fa-chart-line"></i> Venda com mais margem</div>
+    <h2>Sua empresa pode estar vendendo muito e lucrando pouco.</h2>
+    <p>Conheça os eBooks e cursos da JGM4 e organize melhor fretes, custos, WMS, centro de distribuição e indicadores para tomar decisões mais seguras.</p>
+    <div class="bl-cta-btns">
+      <a class="btn-cta-p" href="../pages/cursos.html"><i class="fa-solid fa-graduation-cap"></i> Ver cursos e eBooks</a>
+      <a class="btn-cta-s" href="../pages/diagnostico-logistico-online.html"><i class="fa-solid fa-magnifying-glass-chart"></i> Fazer entrevista inicial</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>© 2025-2026 JGM4 Consultoria Logística - Bruno Muniz. Todos os direitos reservados.</p>
+  <div class="ft-links">
+    <a href="https://www.linkedin.com/in/brunomuniz72/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+    <a href="../pages/blog.html">Blog</a>
+    <a href="../pages/cursos.html">Cursos</a>
+    <a href="../pages/politica.html">Política de Privacidade</a>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var bar = document.getElementById('progress-bar');
+    if (!bar) return;
+    window.addEventListener('scroll', function(){
+      var h = document.documentElement;
+      var s = h.scrollTop || document.body.scrollTop;
+      var m = h.scrollHeight - h.clientHeight;
+      bar.style.width = (m > 0 ? (s / m * 100) : 0) + '%';
+    });
+  })();
+</script>
+</body>
+</html>
+
+
+
+
+

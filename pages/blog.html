@@ -1,28 +1,60 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-br">
 <head>
+<script id="jgm4-consent-default">
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
+  gtag('consent', 'default', {
+    'analytics_storage': 'denied',
+    'ad_storage': 'denied',
+    'ad_user_data': 'denied',
+    'ad_personalization': 'denied',
+    'functionality_storage': 'granted',
+    'security_storage': 'granted',
+    'wait_for_update': 500
+  });
+</script>
+<!-- Google Tag Manager -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){
+    if (arguments[0] === 'event') {
+      dataLayer.push(Object.assign({ event: arguments[1] }, arguments[2] || {}));
+      return;
+    }
+    dataLayer.push(arguments);
+  }
+  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-NQGP74WJ');
+</script>
+<!-- End Google Tag Manager -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Blog | JGM4 Consultoria Logística</title>
 
-  <meta name="description" content="Conteúdos estratégicos sobre logística, operações, eficiência e redução de custos. Artigos práticos da JGM4 Consultoria." />
+  <meta name="description" content="Blog da JGM4 com artigos práticos sobre logística, carreira, liderança, WMS, gestão de estoques, custos logísticos, KPIs, supply chain e eficiência operacional." />
+  <meta name="author" content="Bruno Muniz — JGM4 Consultoria Logística" />
   <meta name="robots" content="index,follow" />
+  <link rel="canonical" href="https://www.jgm4consultoria.com.br/pages/blog.html" />
 
-  <link rel="icon" href="../assets/favicon.ico" type="image/x-icon" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Blog de Logística | JGM4 Consultoria Logística" />
+  <meta property="og:description" content="Conteúdos sobre logística, estoque, WMS, custos, carreira, liderança e eficiência operacional." />
+  <meta property="og:url" content="https://www.jgm4consultoria.com.br/pages/blog.html" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:site_name" content="JGM4 Consultoria Logística" />
+  <meta name="twitter:title" content="Blog de Logística | JGM4 Consultoria" />
+  <meta name="twitter:description" content="Artigos práticos sobre logística, carreira, estoque, WMS, custos e liderança." />
   <link rel="stylesheet" href="../css/style.css" />
   <script src="../js/scripts.js" defer></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
-  <!-- Google Ads Tag -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-11112817546"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'AW-11112817546');
-  </script>
-
-  <style>
+  <!-- Google Tag: GA4 + Google Ads -->
+  <script src="../js/lgpd-consent.min.js" defer></script>
+<style>
     :root{
       --jgm4-navy:#071A38;
       --jgm4-navy2:#0B2552;
@@ -317,7 +349,7 @@
       max-width: 1000px;
     }
 
-    .featured-article{
+    .solution-card.featured-article{
       display:grid;
       grid-template-columns: 1.05fr .95fr;
       gap: 18px;
@@ -325,16 +357,21 @@
     }
 
     @media (max-width: 900px){
-      .featured-article{
+      .solution-card.featured-article{
         grid-template-columns: 1fr;
       }
     }
 
-    .featured-article img{
+    .solution-card.featured-article img{
+      display:block;
       width:100%;
-      height: auto;
-      aspect-ratio: 16/9;   /* melhor que height fixa */
+      height:auto;
+      aspect-ratio: 2.3 / 1;
+      margin:0 auto;
       object-fit: cover;
+      object-position:center;
+      padding: 0;
+      background: #0b192b;
       border-radius: 16px;
       border: 1px solid rgba(255,255,255,.10);
       box-shadow: 0 16px 38px rgba(0,0,0,.28);
@@ -366,9 +403,10 @@
 
     .solution-card img{
       width:100%;
-      height:auto;
-      aspect-ratio: 16/9;   /* responsivo */
-      object-fit: cover;
+      height: clamp(150px, 16vw, 190px);
+      object-fit: contain;
+      padding: 10px;
+      background: #0b192b;
       border-radius: 0;
     }
 
@@ -410,6 +448,18 @@
     }
 
     @media (max-width: 520px){
+      .solution-card.featured-article img{
+        width:100%;
+        height:auto;
+        aspect-ratio:2.3 / 1;
+        padding:0;
+      }
+
+      .solution-card img{
+        height: 160px;
+        padding: 8px;
+      }
+
       .solution-card a{
         width: 100%;
         justify-content:center;
@@ -478,20 +528,39 @@
       .hero-wrap{ padding: 18px 14px; }
     }
   </style>
-</head>
+  <link rel="stylesheet" href="/css/brand.css?v=20260811-2">
+  <link rel="icon" href="/assets/brand/favicon.ico?v=20260811-2" sizes="any">
+  <link rel="icon" type="image/png" sizes="48x48" href="/assets/brand/favicon-48x48.png?v=20260811-2">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/brand/favicon-96x96.png?v=20260811-2">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/brand/favicon-192x192.png?v=20260811-2">
+  <link rel="icon" type="image/png" sizes="512x512" href="/assets/brand/favicon-512x512.png?v=20260811-2">
+  <link rel="apple-touch-icon" sizes="192x192" href="/assets/brand/favicon-192x192.png?v=20260811-2">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta property="og:image" content="https://www.jgm4consultoria.com.br/assets/brand/og-jgm4-1200x630.jpg">
+  <meta property="og:image:secure_url" content="https://www.jgm4consultoria.com.br/assets/brand/og-jgm4-1200x630.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="JGM4 Consultoria Logística">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://www.jgm4consultoria.com.br/assets/brand/og-jgm4-1200x630.jpg">
+  <meta name="twitter:image:alt" content="JGM4 Consultoria Logística"></head>
 
 <body>
-
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NQGP74WJ"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 <header id="header">
   <nav>
-    <img src="../assets/logojgm4.png" alt="JGM4 Consultoria Logística" class="logo" />
+    <a href="/" aria-label="Página inicial JGM4"><picture class="brand-logo-picture brand-logo-picture-header"><source media="(max-width: 768px)" srcset="/assets/brand/logo-jgm4-compacta-nova.png" type="image/png"><img src="/assets/brand/logo-jgm4-horizontal-nova.png" alt="JGM4 Consultoria Logística" class="logo brand-logo brand-logo" width="1536" height="1024" decoding="async"></picture></a>
     <button class="menu-toggle" onclick="toggleMenu()" aria-label="Menu">☰</button>
 
     <ul class="nav-links" id="navLinks">
-      <li><a href="../index.html#inicio" onclick="closeMenu()">Início</a></li>
-      <li><a href="../index.html#desafios" onclick="closeMenu()">Desafios</a></li>
-      <li><a href="../index.html#solucoes" onclick="closeMenu()">Soluções</a></li>
-      <li><a href="../index.html#contato" onclick="closeMenu()">Contato</a></li>
+      <li><a href="../#inicio" onclick="closeMenu()">Início</a></li>
+      <li><a href="../#desafios" onclick="closeMenu()">Desafios</a></li>
+      <li><a href="../#solucoes" onclick="closeMenu()">Soluções</a></li>
+      <li><a href="../#contato" onclick="closeMenu()">Contato</a></li>
       <li><a href="./cursos.html" onclick="closeMenu()">Cursos</a></li>
       <li><a href="sobre.html" onclick="closeMenu()">Sobre</a></li>
       <li><a href="../pages/analise.html" class="nav-cta" onclick="closeMenu()">Faça seu Diagnóstico Grátis</a></li>
@@ -511,7 +580,7 @@
         </p>
         <div class="hero-actions">
           <a class="btn-jgm4 primary" href="#artigos"><i class="fa-solid fa-book-open"></i> Ver artigos</a>
-          <a class="btn-jgm4 outline" href="../index.html#contato"><i class="fa-solid fa-headset"></i> Falar com especialista</a>
+          <a class="btn-jgm4 outline" href="../#contato"><i class="fa-solid fa-headset"></i> Falar com especialista</a>
         </div>
       </div>
 
@@ -529,8 +598,10 @@
     </div>
     <div class="chips" aria-label="Temas">
       <span class="chip active" data-filter="all"><i class="fa-solid fa-layer-group"></i> Todos</span>
+      <span class="chip" data-filter="consultoria"><i class="fa-solid fa-briefcase"></i> Consultoria</span>
       <span class="chip" data-filter="estoques"><i class="fa-solid fa-boxes-stacked"></i> Estoques</span>
-      <span class="chip" data-filter="cd"><i class="fa-solid fa-warehouse"></i> CD</span>
+      <span class="chip" data-filter="carreira"><i class="fa-solid fa-user-tie"></i> Carreira</span>
+      <span class="chip" data-filter="gestao"><i class="fa-solid fa-people-group"></i> Gestão</span>
       <span class="chip" data-filter="wms"><i class="fa-solid fa-microchip"></i> WMS</span>
       <span class="chip" data-filter="custos"><i class="fa-solid fa-sack-dollar"></i> Custos</span>
     </div>
@@ -540,7 +611,12 @@
 <main class="container-blog">
   <!-- Featured -->
   <section class="section-sobre" aria-label="Post em destaque">
-    <div id="featuredPost"></div>
+    <div id="featuredPost">
+      <article class="solution-card featured-article" data-category="gestao" data-tag="planilha agendamento docas recebimento fornecedores Excel">
+        <img src="../assets/doca-certa-agendamento-entregas-optimized.jpg" alt="Planilha de agendamento de docas para controle de recebimentos" width="1402" height="1121" fetchpriority="high" decoding="async">
+        <div class="featured-content"><span class="section-label">Novo artigo + download gratuito</span><h2><a href="/blog/planilha-agendamento-docas.html">Planilha de Agendamento de Docas: Modelo Gratuito</a></h2><p>Organize fornecedores, horários, cargas, atrasos e no-show e reconheça quando o Excel deixa de ser suficiente.</p><a href="/blog/planilha-agendamento-docas.html" class="btn-primary">Ler e baixar a planilha</a></div>
+      </article>
+    </div>
   </section>
 
   <!-- Lista -->
@@ -550,7 +626,50 @@
       <h2 class="section-title">Mais conteúdos</h2>
       <p class="section-subtitle">Insights práticos para evoluir sua logística.</p>
     </div>
-    <div class="solutions-grid" id="blogList"></div>
+    <div class="solutions-grid" id="blogList">
+      <article class="solution-card" data-category="estoques" data-tag="inventário cíclico inventário rotativo contagem cíclica acuracidade curva ABC">
+        <img src="../assets/inventario-ciclico-acuracidade-estoque.webp" alt="Inventário cíclico e contagem de estoque em centro de distribuição" width="1200" height="630" loading="lazy" decoding="async">
+        <h3><a href="/blog/inventario-ciclico.html">Inventário cíclico: como fazer e aumentar a acuracidade</a></h3>
+        <p>Como definir frequência, aplicar curva ABC, executar contagem cega e investigar divergências sem parar toda a operação.</p>
+      </article>
+      <article class="solution-card" data-category="gestao" data-tag="planilha controle recebimento gestão docas"><h3><a href="/blog/planilha-controle-recebimento-gestao-docas.html">Planilha de Controle de Recebimento e Gestão de Docas</a></h3><p>Como organizar entrada, carga e descarga e identificar quando o processo manual começa a limitar a operação.</p></article>
+      <article class="solution-card" data-category="gestao" data-tag="transportes modais multimodalidade América do Sul"><h3><a href="/blog/matriz-transportes-america-do-sul.html">Matriz de Transportes da América do Sul: Modais e Tendências</a></h3><p>Uma análise estratégica de rodovias, ferrovias, hidrovias, portos e integração até 2035.</p></article>
+      <article class="solution-card" data-category="consultoria" data-tag="consultoria preço diagnóstico gestão sob demanda">
+        <h3><a href="/blog/quanto-custa-consultoria-logistica.html">Quanto Custa uma Consultoria Logística?</a></h3>
+        <p>Entenda os fatores de preço, os modelos de contratação e como comparar propostas para sua operação.</p>
+      </article>
+      <article class="solution-card" data-category="gestao" data-tag="gestao"><h3><a href="/blog/absenteismo-nas-empresas.html">Absenteísmo nas Empresas: Causas e Como Reduzir</a></h3></article>
+      <article class="solution-card" data-category="gestao" data-tag="gestao"><h3><a href="/blog/gestao-docas-fornecedores-reforma-tributaria.html">Gestão de Docas e Fornecedores na Reforma Tributária</a></h3></article>
+      <article class="solution-card" data-category="wms" data-tag="wms"><h3><a href="/blog/case-art-latex-wms-integrado-sankhya.html">Supera WMS Integrado ao Sankhya: Case Art Latex</a></h3></article>
+      <article class="solution-card" data-category="gestao" data-tag="gestao"><h3><a href="/blog/agendamento-entregas-controle-docas.html">Agendamento de Entregas: Como Organizar o Recebimento</a></h3></article>
+      <article class="solution-card" data-category="custos" data-tag="custos"><h3><a href="/blog/logistica-distribuicao-sul-sudeste-norte-nordeste.html">Logística de Distribuição do Sul e Sudeste para o Norte e Nordeste</a></h3></article>
+      <article class="solution-card" data-category="gestao" data-tag="gestao"><h3><a href="/blog/como-sair-do-caos-gestao-processos-metodologia-agil.html">Como Sair do Caos na Logística em 5 Passos</a></h3></article>
+      <article class="solution-card" data-category="gestao" data-tag="gestao"><h3><a href="/blog/gestao-pessoas-processos-logistica.html">Gestão de Pessoas e Processos na Logística</a></h3></article>
+      <article class="solution-card" data-category="gestao" data-tag="gestao"><h3><a href="/blog/padronizacao-processos-logisticos.html">Como Padronizar Processos Logísticos</a></h3></article>
+      <article class="solution-card" data-category="gestao" data-tag="gestao"><h3><a href="/blog/gestao-equipes-logisticas.html">Gestão de Equipes Logísticas</a></h3></article>
+      <article class="solution-card" data-category="estoques" data-tag="estoques"><h3><a href="/blog/o-que-e-estoque-tipos-controle-almoxarifado.html">O que é Estoque? Tipos, Controle e Diferença para Almoxarifado</a></h3></article>
+      <article class="solution-card" data-category="custos" data-tag="custos"><h3><a href="/blog/pedido-minimo-inteligente-logistica-frete-margem.html">Pedido Mínimo: Frete, Margem e Logística</a></h3></article>
+      <article class="solution-card" data-category="carreira" data-tag="carreira"><h3><a href="/blog/curriculo-logistica.html">Currículo para Logística: Guia com LinkedIn</a></h3></article>
+      <article class="solution-card" data-category="carreira" data-tag="carreira"><h3><a href="/blog/lideres-analistas-logistica-carreira.html">Carreira em Logística: Analista, Líder e Gestor</a></h3></article>
+      <article class="solution-card" data-category="carreira" data-tag="carreira"><h3><a href="/blog/o-que-e-logistica-carreira.html">O que é Logística? Carreira, Salário e Cursos</a></h3></article>
+      <article class="solution-card" data-category="estoques" data-tag="estoques"><h3><a href="/blog/estoque-nao-bate.html">Estoque Não Bate? Causas e Como Resolver</a></h3></article>
+      <article class="solution-card" data-category="gestao" data-tag="gestao"><h3><a href="/blog/gestao-de-conflitos.html">Gestão de Conflitos: Como Resolver na Empresa</a></h3></article>
+      <article class="solution-card" data-category="custos" data-tag="custos"><h3><a href="/blog/custos-logisticos.html">Custos Logísticos: Como Reduzir Gargalos</a></h3></article>
+      <article class="solution-card" data-category="custos" data-tag="custos"><h3><a href="/blog/eficiencia-logistica.html">Eficiência Logística: Como Reduzir Custos</a></h3></article>
+      <article class="solution-card" data-category="wms" data-tag="wms"><h3><a href="/blog/wms-importancia.html">WMS: O que é, Como Funciona e Quando Implantar</a></h3></article>
+      <article class="solution-card" data-category="consultoria" data-tag="consultoria"><h3><a href="/blog/consultoria.html">Consultoria Logística para Empresas</a></h3></article>
+      <article class="solution-card" data-category="custos" data-tag="custos"><h3><a href="/blog/sinais_invisiveis.html">5 Sinais de Perda de Dinheiro na Logística</a></h3></article>
+      <article class="solution-card" data-category="estoques" data-tag="estoques"><h3><a href="/blog/gestao_estoques.html">Gestão de Estoque: Indicadores e Fluxo de Caixa</a></h3></article>
+      <article class="solution-card" data-category="estoques" data-tag="estoques"><h3><a href="/blog/como_controlar_estoques.html">Como Controlar Estoque com Planilha Simples</a></h3></article>
+      <article class="solution-card" data-category="consultoria" data-tag="consultoria english"><h3><a href="/blog/logistics-consulting-brazil.html" lang="en">Logistics Consulting in Brazil</a></h3></article>
+      <article class="solution-card" data-category="consultoria" data-tag="consultoria español"><h3><a href="/blog/consultoria-logistica-brasil-es.html" lang="es">Consultoría Logística en Brasil</a></h3></article>
+      <article class="solution-card" data-category="wms" data-tag="wms english"><h3><a href="/blog/wms-implementation-brazil.html" lang="en">WMS Implementation in Brazil</a></h3></article>
+      <article class="solution-card" data-category="wms" data-tag="wms español"><h3><a href="/blog/implementacion-wms-brasil.html" lang="es">Implementación de WMS en Brasil</a></h3></article>
+      <article class="solution-card" data-category="custos" data-tag="custos english"><h3><a href="/blog/logistics-costs-brazil.html" lang="en">Logistics Costs in Brazil</a></h3></article>
+      <article class="solution-card" data-category="custos" data-tag="custos español"><h3><a href="/blog/costos-logisticos-brasil.html" lang="es">Costos Logísticos en Brasil</a></h3></article>
+      <article class="solution-card" data-category="custos" data-tag="distribuição english"><h3><a href="/blog/logistics-distribution-south-southeast-north-northeast-brazil.html" lang="en">Logistics Distribution Across Brazil</a></h3></article>
+      <article class="solution-card" data-category="custos" data-tag="distribución español"><h3><a href="/blog/logistica-distribucion-sur-sudeste-norte-nordeste-brasil.html" lang="es">Distribución Logística en Brasil</a></h3></article>
+    </div>
   </section>
 </main>
 
@@ -565,8 +684,8 @@
 </section>
 
 <!-- Seus scripts -->
-<script src="../js/blog-data.js"></script>
-<script src="../js/blog-list.js"></script>
+<script src="../js/blog-data.js?v=20260831-1"></script>
+<script src="../js/blog-list.js?v=20260802-1"></script>
 
 <!-- Filtro + busca -->
 <script>
@@ -609,12 +728,30 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Blog",
-  "name": "Blog JGM4 Consultoria",
-  "description": "Conteúdos sobre logística e eficiência operacional.",
+  "@type": "CollectionPage",
+  "name": "Blog de Logística | JGM4 Consultoria",
+  "description": "Artigos práticos sobre logística, gestão de estoques, WMS, custos logísticos, carreira, liderança, KPIs e eficiência operacional.",
+  "url": "https://www.jgm4consultoria.com.br/pages/blog.html",
+  "inLanguage": "pt-BR",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "JGM4 Consultoria Logística",
+    "url": "https://www.jgm4consultoria.com.br/"
+  },
   "publisher": {
     "@type": "Organization",
-    "name": "JGM4 Consultoria Logística"
+    "name": "JGM4 Consultoria Logística",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.jgm4consultoria.com.br/assets/brand/logo-jgm4-google-ads-1200x1200.png"
+    }
+  },
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "JGM4 Consultoria", "item": "https://www.jgm4consultoria.com.br/" },
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://www.jgm4consultoria.com.br/pages/blog.html" }
+    ]
   }
 }
 </script>
