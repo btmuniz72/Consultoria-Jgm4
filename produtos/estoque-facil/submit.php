@@ -31,8 +31,9 @@ if ($type === 'application/json') $input = json_decode($raw, true);
 elseif ($type === 'application/x-www-form-urlencoded') { parse_str($raw, $input); }
 else respondLead(415, LEAD_ERROR);
 if (!is_array($input) || array_is_list($input)) respondLead(400, LEAD_ERROR);
+if (isset($input['website']) && is_string($input['website']) && trim($input['website']) !== '') respondLead(201, LEAD_SUCCESS, 'pending');
 try { $data = validateLead($input); }
-catch (InvalidArgumentException $error) { respondLead(400, 'Confira os campos obrigatórios, informe um e-mail válido e um telefone com DDD. Use apenas texto, sem HTML.'); }
+catch (InvalidArgumentException $error) { respondLead(400, 'Revise os campos obrigatórios antes de enviar.'); }
 try { $delivery = saveLead($data); }
 catch (Throwable $error) { respondLead(503, LEAD_ERROR); }
 respondLead(201, LEAD_SUCCESS, $delivery);
