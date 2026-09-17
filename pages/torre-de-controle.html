@@ -125,7 +125,7 @@
     .nav-cta { color:#fff !important; background:linear-gradient(135deg,var(--red),#ff3b4a); padding:11px 16px; border-radius:10px; box-shadow:0 10px 24px rgba(225,6,22,.20); }
     @media(max-width:760px){ .brand span { display:none; } .nav-links a:not(.nav-cta) { display:none; } }
 
-    .hero { position:relative; overflow:hidden; color:#fff; background:linear-gradient(135deg,rgba(7,26,56,.96),rgba(4,16,36,.98)), url("../assets/torre-de-controle-optimized.jpg") center right/contain no-repeat; }
+    .hero { position:relative; overflow:hidden; color:#fff; background:linear-gradient(135deg,#071a38 0%,#041024 100%); }
     .hero::after { content:""; position:absolute; inset:0; pointer-events:none; background:radial-gradient(760px 420px at 14% 16%,rgba(46,167,255,.20),transparent 60%), radial-gradient(760px 420px at 82% 8%,rgba(225,6,22,.12),transparent 58%); }
     .hero-inner { position:relative; z-index:1; max-width:1120px; margin:0 auto; padding:76px 16px 64px; display:grid; grid-template-columns:1.05fr .95fr; gap:42px; align-items:center; }
     @media(max-width:900px){ .hero { background:linear-gradient(135deg,rgba(7,26,56,.97),rgba(4,16,36,.98)); } .hero-inner { grid-template-columns:1fr; padding-top:46px; } }
@@ -189,6 +189,10 @@
     @media(max-width:620px){ .recommend-card { grid-template-columns:1fr; text-align:center; } .recommend-card img { max-width:220px; margin:0 auto; } }
     .footer { padding:30px 16px; border-top:1px solid var(--line); text-align:center; color:#94a3b8; font-size:13px; }
     .footer a { color:#64748b; font-weight:800; margin:0 7px; }
+    /* Mantém o aviso de privacidade visível sem cobrir o título e a oferta do hero. */
+    .jgm4-consent { left:auto !important; right:20px !important; bottom:20px !important; max-width:520px !important; flex-direction:column !important; align-items:stretch !important; gap:12px !important; padding:16px !important; }
+    .jgm4-consent__actions { justify-content:flex-end !important; }
+    @media(max-width:720px){ .jgm4-consent { left:12px !important; right:12px !important; bottom:12px !important; max-width:none !important; } }
     .sticky-buy { display:none; }
     @media(max-width:760px){ .sticky-buy { display:flex; position:fixed; z-index:60; left:0; right:0; bottom:0; background:rgba(4,16,36,.96); padding:10px 12px; gap:10px; align-items:center; border-top:1px solid rgba(255,255,255,.12); } .sticky-buy div { color:#fff; font-size:12px; font-weight:800; min-width:82px; } .sticky-buy strong { display:block; color:#7dd3fc; font-size:18px; } .sticky-buy .btn { flex:1; min-height:44px; padding:11px 12px; font-size:13px; } body { padding-bottom:74px; } }
   </style>
