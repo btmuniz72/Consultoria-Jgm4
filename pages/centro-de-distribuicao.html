@@ -35,8 +35,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; block-all-mixed-content" />
-    <title>Gestão de Centro de Distribuição | eBook Prático | JGM4</title>
-  <meta name="description" content="Guia prático de centro de distribuição: recebimento, armazenagem, picking, expedição, WMS e gestão da operação logística." />
+    <title>Centro de Distribuição: Guia Prático de Gestão, WMS e Logística | JGM4</title>
+  <meta name="description" content="Aprenda como organizar um centro de distribuição: recebimento, armazenagem, endereçamento, picking, expedição, WMS e indicadores logísticos em um guia prático." />
+  <meta name="author" content="Bruno Muniz — JGM4 Consultoria" />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://www.jgm4consultoria.com.br/pages/centro-de-distribuicao.html" />
     <meta name="theme-color" content="#0f172a" />
@@ -67,6 +68,14 @@
             background-size:cover;
             background-position:center;
         }
+
+        .hero-grid{background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:36px 36px;}
+        .eyebrow{letter-spacing:.18em;font-size:.7rem;font-weight:900;text-transform:uppercase;color:#fb923c;}
+        .section-kicker{letter-spacing:.18em;font-size:.7rem;font-weight:900;text-transform:uppercase;color:#ea580c;}
+        .lift-card{transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease;}
+        .lift-card:hover{transform:translateY(-5px);box-shadow:0 20px 40px rgba(15,23,42,.11);border-color:rgba(249,115,22,.35);}
+        .reading-width{max-width:68ch;}
+        [id]{scroll-margin-top:96px;}
 
         .btn-hotmart{
             background:linear-gradient(135deg,#f97316,#ea580c);
@@ -205,22 +214,20 @@
   <link rel="icon" type="image/png" sizes="512x512" href="/assets/brand/favicon-512x512.png?v=20260811-2">
   <link rel="apple-touch-icon" sizes="192x192" href="/assets/brand/favicon-192x192.png?v=20260811-2">
   <link rel="manifest" href="/site.webmanifest">
-  <meta property="og:image" content="https://www.jgm4consultoria.com.br/assets/brand/og-jgm4-1200x630.jpg">
-  <meta property="og:image:secure_url" content="https://www.jgm4consultoria.com.br/assets/brand/og-jgm4-1200x630.jpg">
-  <meta property="og:image:type" content="image/jpeg">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="JGM4 Consultoria Logística">
+  <meta property="og:image" content="https://www.jgm4consultoria.com.br/assets/capa_ebook_cd.png">
+  <meta property="og:image:secure_url" content="https://www.jgm4consultoria.com.br/assets/capa_ebook_cd.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:alt" content="Capa do eBook CD na Mão — guia de gestão de centro de distribuição">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="https://www.jgm4consultoria.com.br/assets/brand/og-jgm4-1200x630.jpg">
-  <meta name="twitter:image:alt" content="JGM4 Consultoria Logística"></head>
+  <meta name="twitter:image" content="https://www.jgm4consultoria.com.br/assets/capa_ebook_cd.png">
+  <meta name="twitter:image:alt" content="Capa do eBook CD na Mão — guia de gestão de centro de distribuição"></head>
 
 <body class="bg-slate-50 text-slate-900">
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NQGP74WJ"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
-<header class="bg-white/95 backdrop-blur-md py-4 shadow-md sticky top-0 z-50 border-b border-slate-200">
+<header class="bg-white/95 backdrop-blur-md py-3 shadow-md sticky top-0 z-50 border-b border-slate-200">
         <div class="container mx-auto px-4 flex justify-between items-center gap-4">
             <div class="flex items-center min-w-0">
                 <a href="/" aria-label="Página inicial JGM4"><picture class="brand-logo-picture brand-logo-picture-header"><source media="(max-width: 768px)" srcset="/assets/brand/logo-jgm4-compacta-nova.png" type="image/png"><img src="/assets/brand/logo-jgm4-horizontal-nova.png" alt="JGM4 Consultoria Logística" class="h-10 md:h-12 mr-4 brand-logo brand-logo" width="1536" height="1024" decoding="async"></picture></a>
@@ -229,6 +236,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 </div>
             </div>
 
+            <nav class="hidden lg:flex items-center gap-6 text-sm font-bold text-slate-600" aria-label="Navegação da página">
+                <a href="#conteudo" class="hover:text-orange-600 transition-colors">Conteúdo</a>
+                <a href="#para-quem" class="hover:text-orange-600 transition-colors">Para quem é</a>
+                <a href="#duvidas" class="hover:text-orange-600 transition-colors">Dúvidas</a>
+            </nav>
             <a href="https://pay.hotmart.com/B86217978A?checkoutMode=10"
                class="btn-hotmart text-white font-black py-3 px-5 md:px-6 rounded-xl shadow-lg text-sm md:text-base uppercase">
                 Quero o eBook
@@ -236,20 +248,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
     </header>
 
-    <section class="hero-bg text-white py-16 md:py-24 overflow-hidden">
+<main>
+    <section class="hero-bg hero-grid text-white py-14 md:py-24 overflow-hidden">
         <div class="container mx-auto px-4">
             <div class="grid md:grid-cols-2 gap-12 items-center">
                 <div class="text-center md:text-left">
                     <span class="inline-block bg-orange-500/15 border border-orange-400/30 text-orange-300 text-[11px] font-black px-4 py-2 rounded-full uppercase tracking-[0.18em]">
-                        Guia prático para Centros de Distribuição
+                        eBook prático • Gestão logística
                     </span>
 
-                    <h1 class="text-4xl md:text-6xl font-black mt-6 leading-tight tracking-tight">
-                        Gestão de <span class="text-orange-500">Centro de Distribuição</span> na prática: do recebimento à expedição com mais controle e eficiência
+                    <h1 class="text-4xl md:text-6xl font-black mt-6 leading-[1.05] tracking-tight">
+                        Como tornar seu <span class="text-orange-500">Centro de Distribuição</span> mais organizado, produtivo e previsível
                     </h1>
 
                     <p class="text-lg md:text-xl text-slate-300 max-w-2xl leading-relaxed mt-6">
-                        Um guia direto para quem quer profissionalizar a operação do seu CD — com os mesmos processos, ferramentas e indicadores usados em grandes operações de varejo, atacarejo e indústria. Escrito por quem viveu isso por 20 anos.
+                        O guia <strong class="text-white">CD na Mão</strong> mostra, em linguagem direta, como estruturar recebimento, armazenagem, picking e expedição com processos, indicadores e tecnologia WMS. Conteúdo criado por quem viveu 20 anos de operação logística.
                     </p>
 
                     <div class="grid sm:grid-cols-2 gap-3 mt-8 text-left">
@@ -279,8 +292,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         </a>
                     </div>
 
-                    <div class="mt-5 text-sm text-slate-400">
-                        Acesso digital • Compra segura • Garantia de 7 dias
+                    <div class="mt-5 text-sm text-slate-400 flex flex-wrap gap-x-4 gap-y-2">
+                        <span>✓ Acesso imediato</span><span>✓ Compra segura</span><span>✓ Garantia de 7 dias</span>
                     </div>
                 </div>
 
@@ -313,10 +326,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
     </section>
 
-    <section class="relative -mt-8 z-10">
+    <section class="relative -mt-8 z-10" aria-label="Benefícios da oferta">
         <div class="container mx-auto px-4">
             <div class="grid md:grid-cols-4 gap-4 bg-white rounded-3xl shadow-2xl p-6 border border-slate-100">
-                <div class="flex items-center gap-3">
+                <div class="flex items-center gap-3 lift-card">
                     <div class="w-11 h-11 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center font-black">✓</div>
                     <div>
                         <p class="font-bold text-slate-900">Conteúdo prático</p>
@@ -324,7 +337,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     </div>
                 </div>
 
-                <div class="flex items-center gap-3">
+                <div class="flex items-center gap-3 lift-card">
                     <div class="w-11 h-11 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center font-black">✓</div>
                     <div>
                         <p class="font-bold text-slate-900">Visão profissional</p>
@@ -332,7 +345,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     </div>
                 </div>
 
-                <div class="flex items-center gap-3">
+                <div class="flex items-center gap-3 lift-card">
                     <div class="w-11 h-11 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center font-black">✓</div>
                     <div>
                         <p class="font-bold text-slate-900">Compra segura</p>
@@ -340,7 +353,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     </div>
                 </div>
 
-                <div class="flex items-center gap-3">
+                <div class="flex items-center gap-3 lift-card">
                     <div class="w-11 h-11 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center font-black">✓</div>
                     <div>
                         <p class="font-bold text-slate-900">Garantia real</p>
@@ -351,11 +364,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
     </section>
 
-    <section class="py-20 bg-slate-50">
+    <section id="conteudo" class="py-20 bg-slate-50">
         <div class="container mx-auto px-4">
             <div class="max-w-4xl mx-auto text-center mb-14">
-                <h2 class="text-3xl md:text-5xl font-black text-blue-950 uppercase tracking-tight">
-                    O que você irá encontrar no guia
+                <p class="section-kicker">Conhecimento aplicável no dia seguinte</p>
+                <h2 class="text-3xl md:text-5xl font-black text-blue-950 uppercase tracking-tight mt-3">
+                    Gestão de centro de distribuição sem improviso
                 </h2>
                 <p class="text-slate-600 text-lg mt-5 leading-relaxed">
                     Um conteúdo pensado para ajudar profissionais e gestores a compreender melhor os principais pilares de um Centro de Distribuição moderno, organizado e eficiente.
@@ -401,8 +415,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <section class="py-20 bg-white">
         <div class="container mx-auto px-4">
             <div class="max-w-4xl mx-auto text-center mb-14">
-                <h2 class="text-3xl md:text-5xl font-black text-slate-900 uppercase tracking-tight">
-                    A estrutura do guia
+                <p class="section-kicker">Do recebimento à expedição</p>
+                <h2 class="text-3xl md:text-5xl font-black text-slate-900 uppercase tracking-tight mt-3">
+                    O passo a passo de um CD eficiente
                 </h2>
                 <p class="text-slate-600 text-lg mt-5">
                     O conteúdo foi organizado para oferecer uma visão progressiva da operação de um CD, do básico ao olhar mais estratégico.
@@ -410,32 +425,32 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             </div>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 text-left">
-                <div class="p-7 bg-slate-50 border-t-4 border-orange-500 rounded-2xl shadow-sm">
+                <div class="p-7 bg-slate-50 border-t-4 border-orange-500 rounded-2xl shadow-sm lift-card">
                     <h4 class="font-black text-blue-950 uppercase">Fundamentos e Estrutura</h4>
                     <p class="text-slate-500 text-sm mt-3">A base para organizar o fluxo físico e lógico da operação.</p>
                 </div>
 
-                <div class="p-7 bg-slate-50 border-t-4 border-orange-500 rounded-2xl shadow-sm">
+                <div class="p-7 bg-slate-50 border-t-4 border-orange-500 rounded-2xl shadow-sm lift-card">
                     <h4 class="font-black text-blue-950 uppercase">Recepção e Qualidade</h4>
                     <p class="text-slate-500 text-sm mt-3">Descarga, conferência e validação de mercadorias com mais controle.</p>
                 </div>
 
-                <div class="p-7 bg-slate-50 border-t-4 border-orange-500 rounded-2xl shadow-sm">
+                <div class="p-7 bg-slate-50 border-t-4 border-orange-500 rounded-2xl shadow-sm lift-card">
                     <h4 class="font-black text-blue-950 uppercase">Armazenamento e Picking</h4>
                     <p class="text-slate-500 text-sm mt-3">Endereçamento, organização e estratégias de separação mais eficientes.</p>
                 </div>
 
-                <div class="p-7 bg-slate-50 border-t-4 border-orange-500 rounded-2xl shadow-sm">
+                <div class="p-7 bg-slate-50 border-t-4 border-orange-500 rounded-2xl shadow-sm lift-card">
                     <h4 class="font-black text-blue-950 uppercase">Montagem de Carga</h4>
                     <p class="text-slate-500 text-sm mt-3">Cubagem, estruturação e melhor aproveitamento de carga e frete.</p>
                 </div>
 
-                <div class="p-7 bg-slate-50 border-t-4 border-orange-500 rounded-2xl shadow-sm">
+                <div class="p-7 bg-slate-50 border-t-4 border-orange-500 rounded-2xl shadow-sm lift-card">
                     <h4 class="font-black text-blue-950 uppercase">Expedição e WMS</h4>
                     <p class="text-slate-500 text-sm mt-3">Saída de mercadorias com mais rastreabilidade e segurança sistêmica.</p>
                 </div>
 
-                <div class="p-7 bg-slate-50 border-t-4 border-orange-500 rounded-2xl shadow-sm">
+                <div class="p-7 bg-slate-50 border-t-4 border-orange-500 rounded-2xl shadow-sm lift-card">
                     <h4 class="font-black text-blue-950 uppercase">Melhores Práticas</h4>
                     <p class="text-slate-500 text-sm mt-3">A visão aplicada de quem vive a logística de forma real.</p>
                 </div>
@@ -492,7 +507,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
     </section>
 
-    <section class="py-20 bg-white">
+    <section id="duvidas" class="py-20 bg-white">
         <div class="container mx-auto px-4 max-w-4xl">
             <h2 class="text-3xl md:text-4xl font-black text-center text-slate-900 mb-12 uppercase tracking-tight">
                 Dúvidas frequentes
@@ -552,7 +567,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
     </section>
 
-    <section class="py-20 bg-white">
+    <section id="para-quem" class="py-20 bg-white">
         <div class="container mx-auto px-4">
             <div class="max-w-4xl mx-auto text-center mb-14">
                 <span class="inline-block bg-orange-100 text-orange-600 text-[11px] font-black px-4 py-2 rounded-full uppercase tracking-[0.18em]">
@@ -703,7 +718,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <div class="text-slate-400 line-through text-2xl">De R$ 39,90</div>
                     <div class="text-6xl md:text-7xl font-black text-blue-950 mt-2">R$ 9,99</div>
                     <p class="text-slate-600 font-bold mt-3 text-lg">
-                        pagamento único no cartão
+                        pagamento único
                     </p>
                 </div>
 
@@ -754,6 +769,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             </div>
         </div>
     </section>
+
+    </main>
 
     <footer class="bg-white py-12 text-center text-xs text-slate-400 border-t border-slate-100">
         <div class="container mx-auto px-4">
