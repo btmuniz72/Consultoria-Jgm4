@@ -2247,6 +2247,110 @@
       .search-box input { font-size: 13px; }
     }
   </style>
+
+  <style id="jgm4-cursos-visual-system">
+    /* Variante catálogo do Visual System JGM4: editorial, comercial e compacta. */
+    :root{
+      --cursos-ink:#f4f8fc;
+      --cursos-muted:rgba(226,237,247,.70);
+      --cursos-line:rgba(164,205,232,.18);
+      --cursos-surface:#0a1f3b;
+      --cursos-surface-2:#102d50;
+      --cursos-cyan:#52c7ff;
+      --cursos-red:#ef3340;
+      --cursos-radius:10px;
+      --cursos-shadow:0 12px 28px rgba(0,0,0,.18);
+    }
+    body{background:#06172f;color:var(--cursos-ink)}
+    body:before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:#06172f}
+    .page-breadcrumb{padding-top:74px;color:var(--cursos-muted)}
+    .page-breadcrumb a{color:#9be2ff}
+    .pg-hero{padding:12px 0 0}
+    .hero-inner{min-height:0;padding:30px 32px 26px;border-radius:12px;border-color:var(--cursos-line);box-shadow:var(--cursos-shadow);background:linear-gradient(90deg,rgba(4,17,38,.96) 0%,rgba(4,17,38,.88) 46%,rgba(4,17,38,.34) 100%),url('../assets/Image_cursos.png') center right/cover no-repeat}
+    .hero-inner::after{background:linear-gradient(90deg,rgba(4,17,38,.72) 0%,rgba(4,17,38,.34) 62%,rgba(4,17,38,.08) 100%)}
+    .hero-top{margin-bottom:14px}
+    .hero-badge{padding:6px 10px;border-radius:6px;background:rgba(82,199,255,.10);border-color:rgba(82,199,255,.25);color:#9be2ff;font-size:10px}
+    .hero-inner h1{max-width:720px;font-size:clamp(28px,3.8vw,48px);line-height:1.04;letter-spacing:-.045em;margin-bottom:10px}
+    .hero-inner h1 em{background:none;color:#8cdbff;-webkit-text-fill-color:initial}
+    .hero-sub{max-width:620px;margin-bottom:0;color:var(--cursos-muted);font-size:15px;line-height:1.55}
+    .filters{margin-top:12px;padding:12px 14px;border-radius:10px;background:#0a1f3b;border-color:var(--cursos-line);box-shadow:none}
+    .filters-left{gap:7px}
+    .search-box{min-width:min(360px,100%);border-radius:8px;background:#071a32;border-color:rgba(82,199,255,.35)}
+    .search-box input{min-height:42px;color:#fff}
+    .chip{min-height:32px;padding:7px 11px;border-radius:7px;background:transparent;border-color:var(--cursos-line);color:rgba(238,247,252,.75);font-size:11px}
+    .chip:hover,.chip.active{background:#123e65;border-color:rgba(82,199,255,.48);color:#fff}
+    .featured-products{margin:14px 0 20px;padding:12px 0 0;border:0;border-top:1px solid var(--cursos-line);border-radius:0;background:transparent}
+    .featured-heading{margin-bottom:8px}
+    .featured-heading h2{font-size:18px}
+    .featured-heading span{font-size:11px}
+    .featured-products .hero-marketplace{gap:10px}
+    .market-tile{min-height:74px;padding:11px 13px;border-radius:8px;background:#0a1f3b;border-color:var(--cursos-line)}
+    .market-tile.is-recommended{background:#12303f;border-color:rgba(244,196,48,.34);box-shadow:none}
+    .market-tile.is-recommended::before{top:-9px;box-shadow:none}
+    .market-tile small{margin-bottom:5px;font-size:9px}
+    .market-tile strong{font-size:20px;margin-bottom:0;color:#f4c430}
+    .market-tile span:not(.deal-cta){display:none}
+    .market-tile .deal-cta{margin-top:7px;font-size:10px;text-transform:none;letter-spacing:0}
+    .section-label{margin:18px 0 8px;padding-top:18px;border-top:1px solid var(--cursos-line)}
+    .section-label h2{font-size:20px;letter-spacing:-.02em}
+    .section-label .sep{background:var(--cursos-line)}
+    .catalog-grid{gap:0}
+    .catalog-section-heading{margin-top:24px;padding:20px 0 6px;border-top:1px solid var(--cursos-line)}
+    .course-category:first-child .catalog-section-heading{padding-top:0}
+    .catalog-section-heading h2{font-size:clamp(19px,2.5vw,27px);letter-spacing:-.025em}
+    .catalog-section-heading p{max-width:760px;color:var(--cursos-muted);font-size:13px}
+    .course-grid{gap:14px}
+    .prod-card{border-radius:var(--cursos-radius);border-color:var(--cursos-line);background:var(--cursos-surface);box-shadow:none;transition:transform .18s ease,border-color .18s ease,background .18s ease}
+    .prod-card::after{display:none}
+    .prod-card:hover{transform:translateY(-2px);background:var(--cursos-surface-2);border-color:rgba(82,199,255,.42);box-shadow:none}
+    .prod-img{aspect-ratio:4/3;background:#071a32;border-bottom:1px solid var(--cursos-line)}
+    .prod-img img{transition:transform .22s ease}
+    .prod-card:hover .prod-img img{transform:scale(1.02)}
+    .prod-body{padding:16px 16px 0;gap:7px}
+    .prod-tag{border-radius:5px;padding:4px 8px;font-size:10px}
+    .prod-card h3{font-size:15px;line-height:1.28}
+    .prod-desc{font-size:13px;line-height:1.55;color:var(--cursos-muted)}
+    .prod-footer{padding:13px 16px 16px;margin-top:12px;border-top-color:var(--cursos-line)}
+    .prod-price .new-p{font-size:19px;color:#f4c430}
+    .prod-price::after{font-size:9px}
+    .btn-saiba,.btn-comprar{border-radius:7px;box-shadow:none}
+    .btn-comprar{background:var(--cursos-red);border-color:rgba(255,255,255,.12)}
+    .learning-clusters,.seo-intent,.faq-seo,.trust-section{border-radius:10px;box-shadow:none}
+    .learning-clusters,.seo-intent,.faq-seo,.trust-section{background:var(--cursos-surface);border-color:var(--cursos-line)}
+    .cluster-block,.search-card,.buy-card,.category-card,.ad-trust-card{border-radius:8px;box-shadow:none}
+    .cluster-block{background:#0a1f3b;border-color:var(--cursos-line)}
+    .float-btn{box-shadow:none}
+    @media(max-width:768px){
+      .page-breadcrumb{padding-top:88px}
+      .hero-inner{padding:24px 20px 22px;background-position:62% center}
+      .hero-inner h1{font-size:clamp(25px,8vw,36px)}
+      .hero-sub{font-size:14px}
+      .filters{padding:10px}
+      .filters-left{flex-wrap:nowrap;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
+      .filters-left::-webkit-scrollbar{display:none}
+      .search-box{min-width:250px;flex:0 0 250px}
+      .chip{flex:0 0 auto}
+      .featured-products{margin-top:12px}
+      .featured-products .hero-marketplace{grid-template-columns:repeat(3,minmax(0,1fr))}
+      .market-tile{min-height:66px;padding:9px}
+      .market-tile small{font-size:8px}
+      .market-tile strong{font-size:17px}
+      .market-tile .deal-cta{font-size:9px}
+      .course-grid{gap:12px}
+      .prod-body{padding:14px 14px 0}
+      .prod-footer{padding:12px 14px 14px}
+    }
+    @media(max-width:540px){
+      .featured-products .hero-marketplace{grid-template-columns:1fr}
+      .market-tile{display:grid;grid-template-columns:1fr auto;align-items:center;gap:8px;min-height:0}
+      .market-tile small{grid-column:1}.market-tile strong{grid-column:1;grid-row:2}.market-tile .deal-cta{grid-column:2;grid-row:1 / span 2;margin-top:0}
+      .catalog-section-heading{padding-top:18px}
+      .prod-img{aspect-ratio:5/4}
+      .hero-sub,.deal-copy p,.catalog-section-heading p,.feat-card-body p,.prod-desc,.seo-intent,.security-card p,.trust-section p{text-align:justify}
+      .feat-card-body p,.prod-desc{width:100%}
+    }
+    @media(prefers-reduced-motion:reduce){.prod-card,.prod-img img,.market-tile,.btn-saiba,.btn-comprar{transition:none!important}.prod-card:hover,.market-tile:hover{transform:none}.prod-card:hover .prod-img img{transform:none}}
+  </style>
   <link rel="stylesheet" href="/css/brand.css?v=20260811-2">
   <link rel="icon" href="/assets/brand/favicon.ico?v=20260811-2" sizes="any">
   <link rel="icon" type="image/png" sizes="48x48" href="/assets/brand/favicon-48x48.png?v=20260811-2">
@@ -2407,7 +2511,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <div class="course-grid">
     <div class="prod-card" id="produto-analista" data-type="curso-parceiro" data-categories="carreira estoque armazem indicadores supply-chain" data-section="carreira" data-title="analista de logística curso online logística profissional carreira operações supply chain armazém estoque transporte indicadores">
               <div class="prod-img">
-                <img src="../assets/consultoria.png" alt="Curso de Analista de Logística online para operação, estoque e transporte" width="1200" height="900" loading="lazy" decoding="async">
+                <img src="../assets/consultoria.png" alt="Curso de Analista de Logística online para operação, estoque e transporte" width="1200" height="900" loading="eager" fetchpriority="high" decoding="async">
               </div>
               <div class="prod-body">
                 <div class="prod-tags">
