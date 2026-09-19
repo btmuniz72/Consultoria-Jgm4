@@ -14,7 +14,7 @@
 
 .brand-logo-picture-header {
   width: 190px;
-  height: 70px;
+  height: 64px;
 }
 
 .brand-logo-picture-footer {
@@ -28,8 +28,11 @@
   top: 50%;
   left: 50%;
   display: block;
-  width: 270px !important;
-  height: auto !important;
+  /* The old rule rendered the 1536x1024 campaign image as a header logo.
+     Use the transparent horizontal lockup instead, preserving its ratio. */
+  content: url("/assets/brand/logo-jgm4-header-principal-1400x420.png") !important;
+  width: 500px !important;
+  height: 150px !important;
   max-width: none !important;
   object-fit: contain !important;
   object-position: center !important;
@@ -41,7 +44,8 @@
 }
 
 .brand-logo-picture-footer .brand-logo {
-  width: 176px !important;
+  width: 420px !important;
+  height: 126px !important;
 }
 
 .brand-logo-picture-square {
@@ -74,7 +78,9 @@
   }
 
   .brand-logo-picture-header .brand-logo {
-    width: 160px !important;
+    content: url("/assets/brand/logo-jgm4-compacta-mobile-800x300.png") !important;
+    width: 360px !important;
+    height: 135px !important;
   }
 
   .brand-logo-picture-footer {
@@ -83,6 +89,87 @@
   }
 
   .brand-logo-picture-footer .brand-logo {
-    width: 164px !important;
+    width: 340px !important;
+    height: 128px !important;
+  }
+}
+
+/* Keep the shared navigation readable when a page has a long contextual CTA. */
+.nav-links {
+  gap: clamp(12px, 2vw, 26px);
+  flex-wrap: nowrap;
+}
+
+.sg-nav {
+  position: relative;
+}
+
+.nav-links a {
+  white-space: nowrap;
+}
+
+@media (max-width: 980px) {
+  .menu-toggle {
+    display: block;
+    flex: 0 0 auto;
+  }
+
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 16px;
+    right: 16px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+    padding: 14px;
+    background: #071a38;
+    border: 1px solid rgba(255, 255, 255, .18);
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 16px 30px rgba(0, 0, 0, .2);
+  }
+
+  .nav-links.active,
+  .nav-links.is-open {
+    display: flex;
+  }
+
+  .nav-links a {
+    font-size: .88rem;
+    padding: 9px 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    flex-wrap: wrap;
+  }
+
+  .nav-links a {
+    white-space: normal;
+  }
+}
+
+@media (max-width: 980px) {
+  .sg-menu-button {
+    display: block;
+  }
+
+  .sg-nav ul {
+    display: none;
+  }
+
+  .sg-nav ul.is-open {
+    display: grid;
+    position: absolute;
+    right: 16px;
+    top: 68px;
+    width: min(320px, calc(100% - 32px));
+    gap: 4px;
+    padding: 14px;
+    background: #061c2d;
+    border: 1px solid rgba(255, 255, 255, .2);
+    border-radius: 0 0 10px 10px;
   }
 }
