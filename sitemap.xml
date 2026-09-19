@@ -14,7 +14,7 @@
   </url>
   <url>
     <loc>https://www.jgm4consultoria.com.br/blog/planilha-controle-recebimento-gestao-docas.html</loc>
-    <lastmod>2026-07-26</lastmod>
+    <lastmod>2026-09-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -56,7 +56,7 @@
   </url>
   <url>
     <loc>https://www.jgm4consultoria.com.br/pages/cursos.html</loc>
-    <lastmod>2026-08-15</lastmod>
+    <lastmod>2026-09-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
   </url>
@@ -74,7 +74,7 @@
   </url>
   <url>
     <loc>https://www.jgm4consultoria.com.br/blog/agendamento-entregas-controle-docas.html</loc>
-    <lastmod>2026-07-06</lastmod>
+    <lastmod>2026-09-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.92</priority>
   </url>
@@ -396,8 +396,14 @@
     <priority>0.92</priority>
   </url>
   <url>
+    <loc>https://www.jgm4consultoria.com.br/produtos/</loc>
+    <lastmod>2026-09-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
     <loc>https://www.jgm4consultoria.com.br/produtos/estoque-facil/</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

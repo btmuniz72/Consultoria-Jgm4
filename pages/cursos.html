@@ -232,7 +232,7 @@
       {
         "@type": "FAQPage",
         "mainEntity": [
-          { "@type": "Question", "name": "Quais cursos de logística a JGM4 oferece?", "acceptedAnswer": { "@type": "Answer", "text": "O hub apresenta o curso parceiro de Analista de Logística e diferencia esse curso dos eBooks, guias, materiais, sistemas e serviços disponíveis." } },
+          { "@type": "Question", "name": "Quais cursos de logística a JGM4 oferece?", "acceptedAnswer": { "@type": "Answer", "text": "O hub apresenta o curso parceiro de Analista de Logística e diferencia esse curso dos eBooks, guias e materiais educacionais disponíveis." } },
           { "@type": "Question", "name": "Existem cursos de logística online?", "acceptedAnswer": { "@type": "Answer", "text": "Sim. O curso parceiro de Analista de Logística é online. As condições de acesso e compra devem ser conferidas na plataforma responsável." } },
           { "@type": "Question", "name": "Há materiais sobre WMS?", "acceptedAnswer": { "@type": "Answer", "text": "Sim. O Guia Mestre WMS é um eBook prático sobre implantação, endereçamento, recebimento, picking, inventário, expedição, código de barras e integração com ERP." } },
           { "@type": "Question", "name": "A JGM4 possui conteúdos sobre gestão de estoque?", "acceptedAnswer": { "@type": "Answer", "text": "Sim. Há eBooks, ferramentas e conteúdos sobre gestão de estoque, inventário, acuracidade, almoxarifado, armazenagem e divergências." } },
@@ -496,6 +496,38 @@
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 10px;
       margin: 28px 0 0;
+    }
+
+    .featured-products {
+      margin: 22px 0 26px;
+      padding: 18px;
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.035);
+    }
+
+    .featured-heading {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .featured-heading h2 {
+      color: #fff;
+      font-size: clamp(18px, 2.2vw, 22px);
+      line-height: 1.2;
+    }
+
+    .featured-heading span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .featured-products .hero-marketplace {
+      max-width: none;
+      margin: 0;
     }
 
     .market-tile {
@@ -1014,7 +1046,8 @@
       border: 1px solid rgba(255,255,255,.11);
     }
 
-    .cluster-block h2 {
+    .cluster-block h2,
+    .cluster-block h3 {
       margin: 0 0 10px;
       color: #fff;
       font-size: clamp(19px, 2.4vw, 24px);
@@ -2247,6 +2280,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <ul class="nav-links" id="navLinks">
         <li><a href="../#inicio" onclick="closeMenu()">Consultoria</a></li>
         <li><a href="../#servicos-consultoria" onclick="closeMenu()">Serviços</a></li>
+        <li><a href="../produtos/" onclick="closeMenu()">Produtos</a></li>
         <li><a href="diagnostico-logistico-online.html" onclick="closeMenu()">Diagnóstico</a></li>
         <li><a href="../blog/case-art-latex-wms-integrado-sankhya.html" onclick="closeMenu()">Cases</a></li>
         <li><a href="sobre.html" onclick="closeMenu()">Sobre</a></li>
@@ -2294,95 +2328,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <h1>Cursos de logística online para <em>carreira, operação e gestão</em></h1>
 
         <p class="hero-sub">
-          Esta área reúne cursos de logística online e materiais para iniciantes, analistas, líderes e profissionais
-          que buscam capacitação logística aplicável à gestão logística e às operações reais. Cursos são formações
-          em aulas; eBooks e guias são materiais digitais de leitura e consulta, sempre identificados no card.
+          Conteúdos práticos para carreira, estoque, WMS, fretes, liderança, indicadores e gestão logística.
         </p>
-
-        <div class="conversion-proof" aria-label="Diferenciais de compra">
-          <span><i class="fa-solid fa-circle-check"></i> Comece a partir de R$ 9,99</span>
-          <span><i class="fa-solid fa-lock"></i> Compra via Kiwify ou Hotmart</span>
-          <span><i class="fa-solid fa-award"></i> Curadoria JGM4</span>
-        </div>
-
-        <div class="hero-marketplace" aria-label="Ofertas de menor preço em destaque">
-          <a class="market-tile" href="ebook-estoques.html">
-            <small>Menor preço</small>
-            <strong>R$ 9,99</strong>
-            <span>Comece pelo material mais acessível para organizar estoque, inventário e acuracidade.</span>
-            <span class="deal-cta">Comprar agora <i class="fa-solid fa-arrow-right"></i></span>
-          </a>
-          <a class="market-tile" href="ebook-wms-vendas.html">
-            <small>Oferta rápida</small>
-            <strong>R$ 9,99</strong>
-            <span>Entenda WMS com linguagem prática antes de investir em projetos ou consultoria.</span>
-            <span class="deal-cta">Ver oferta <i class="fa-solid fa-arrow-right"></i></span>
-          </a>
-          <a class="market-tile is-recommended" href="https://go.hotmart.com/Y82673288H?utm_source=site&utm_medium=hero_preco&utm_campaign=cursos&utm_content=analista_logistica" target="_blank" rel="noopener" onclick="if(typeof gtag==='function') gtag('event','click_hero_oferta',{produto:'analista_logistica',origem:'hero_preco',valor:29.90,moeda:'BRL'});">
-            <small>Melhor para carreira</small>
-            <strong>R$ 29,90</strong>
-            <span>Formação com 98 aulas, bônus e uma trilha mais completa para atuar como analista.</span>
-            <span class="deal-cta">Garantir curso <i class="fa-solid fa-arrow-right"></i></span>
-          </a>
-        </div>
-
-        <div class="hero-stats">
-          <span class="hero-stat">
-            <i class="fa-solid fa-boxes-stacked"></i> 18 produtos disponíveis
-          </span>
-          <span class="hero-stat">
-            <i class="fa-solid fa-layer-group"></i> Cursos, eBooks, diagnósticos e sistemas
-          </span>
-          <span class="hero-stat">
-            <i class="fa-solid fa-tags"></i> Tipo identificado em cada card
-          </span>
-          <span class="hero-stat">
-            <i class="fa-solid fa-circle-info"></i> Condições conferidas no checkout
-          </span>
-        </div>
-
-        <div class="hero-actions">
-          <a href="#catalogo" class="btn btn-primary">
-            <i class="fa-solid fa-bolt"></i> Escolher curso ou material
-          </a>
-          <a href="#catalogo" class="btn btn-ghost">
-            <i class="fa-solid fa-list"></i> Catálogo completo
-          </a>
-          <a href="../#contato" class="btn btn-outline-blue">
-            <i class="fa-solid fa-headset"></i> Falar com especialista
-          </a>
-        </div>
-
-        <div class="ad-trust" aria-label="Informações de segurança para compra">
-          <div class="ad-trust-card">
-            <i class="fa-solid fa-lock" aria-hidden="true"></i>
-            <div>
-              <strong>Compra em ambiente seguro</strong>
-              <span>Os pagamentos são finalizados em plataformas reconhecidas como Kiwify e Hotmart.</span>
-            </div>
-          </div>
-          <div class="ad-trust-card">
-            <i class="fa-solid fa-bolt" aria-hidden="true"></i>
-            <div>
-              <strong>Acesso digital rápido</strong>
-              <span>Após a aprovação do pagamento, o acesso é enviado pela própria plataforma de venda.</span>
-            </div>
-          </div>
-          <div class="ad-trust-card">
-            <i class="fa-solid fa-rotate-left" aria-hidden="true"></i>
-            <div>
-              <strong>Garantia da plataforma</strong>
-              <span>Produtos digitais seguem a política de garantia informada no checkout de cada oferta.</span>
-            </div>
-          </div>
-          <div class="ad-trust-card">
-            <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
-            <div>
-              <strong>Privacidade e LGPD</strong>
-              <span>Dados enviados em formulários e atendimento são usados apenas para contato solicitado.</span>
-            </div>
-          </div>
-        </div>
 
       </div>
 
@@ -2414,137 +2361,32 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="container">
 
 
-      <section class="category-market" aria-label="Áreas de capacitação logística">
-        <h2>Áreas de capacitação em logística</h2>
-        <a class="category-card" href="#carreira" data-track-category="carreira">
-          <i class="fa-solid fa-graduation-cap"></i>
-          <h3>Carreira e formação</h3>
-          <p>Analista de logística, fundamentos e desenvolvimento profissional.</p>
-        </a>
-        <a class="category-card" href="#estoque" data-track-category="estoque">
-          <i class="fa-solid fa-boxes-stacked"></i>
-          <h3>Estoque e inventário</h3>
-          <p>Acuracidade, almoxarifado, armazenagem e controle operacional.</p>
-        </a>
-        <a class="category-card" href="#wms" data-track-category="wms">
-          <i class="fa-solid fa-barcode"></i>
-          <h3>WMS e sistemas</h3>
-          <p>Implantação, endereçamento, picking, código de barras e ERP.</p>
-        </a>
-        <a class="category-card" href="#armazem" data-track-category="armazem_cd">
-          <i class="fa-solid fa-warehouse"></i>
-          <h3>Armazém e CD</h3>
-          <p>Layout, capacidade, docas, recebimento, movimentação e expedição.</p>
-        </a>
-        <a class="category-card" href="#fretes" data-track-category="fretes">
-          <i class="fa-solid fa-truck-fast"></i>
-          <h3>Fretes e custos</h3>
-          <p>Tabelas, cubagem, auditoria, negociação e redução de custos.</p>
-        </a>
-        <a class="category-card" href="#lideranca" data-track-category="lideranca">
-          <i class="fa-solid fa-people-group"></i>
-          <h3>Liderança e conflitos</h3>
-          <p>Gestão de pessoas, equipes operacionais e tomada de decisão.</p>
-        </a>
-        <a class="category-card" href="#indicadores" data-track-category="indicadores">
-          <i class="fa-solid fa-chart-line"></i>
-          <h3>Indicadores e KPIs</h3>
-          <p>Torre de controle, dashboards, OTIF, SLA e produtividade.</p>
-        </a>
-        <a class="category-card" href="#supply-chain" data-track-category="supply_chain">
-          <i class="fa-solid fa-link"></i>
-          <h3>Supply Chain e S&amp;OP</h3>
-          <p>Demanda, planejamento integrado, capacidade e cadeia de suprimentos.</p>
-        </a>
+      <section class="featured-products" aria-label="Destaques">
+        <div class="featured-heading">
+          <h2>Destaques</h2>
+          <span>Escolhas rápidas para começar</span>
+        </div>
+        <div class="hero-marketplace" aria-label="Ofertas de menor preço em destaque">
+          <a class="market-tile" href="ebook-estoques.html">
+            <small>Menor preço</small>
+            <strong>R$ 9,99</strong>
+            <span>Comece pelo material mais acessível para organizar estoque, inventário e acuracidade.</span>
+            <span class="deal-cta">Comprar agora <i class="fa-solid fa-arrow-right"></i></span>
+          </a>
+          <a class="market-tile" href="ebook-wms-vendas.html">
+            <small>Oferta rápida</small>
+            <strong>R$ 9,99</strong>
+            <span>Entenda WMS com linguagem prática antes de investir em projetos ou consultoria.</span>
+            <span class="deal-cta">Ver oferta <i class="fa-solid fa-arrow-right"></i></span>
+          </a>
+          <a class="market-tile is-recommended" href="https://go.hotmart.com/Y82673288H?utm_source=site&utm_medium=hero_preco&utm_campaign=cursos&utm_content=analista_logistica" target="_blank" rel="noopener" onclick="if(typeof gtag==='function') gtag('event','click_hero_oferta',{produto:'analista_logistica',origem:'hero_preco',valor:29.90,moeda:'BRL'});">
+            <small>Melhor para carreira</small>
+            <strong>R$ 29,90</strong>
+            <span>Formação com 98 aulas, bônus e uma trilha mais completa para atuar como analista.</span>
+            <span class="deal-cta">Garantir curso <i class="fa-solid fa-arrow-right"></i></span>
+          </a>
+        </div>
       </section>
-
-      <section class="learning-clusters" aria-label="Trilhas de cursos e materiais de logística">
-        <article class="cluster-block" id="carreira">
-          <h2>Cursos de logística para carreira e formação profissional</h2>
-          <p>Para quem busca um curso de logística para iniciantes ou profissionais, a trilha combina o curso parceiro de Analista de Logística com materiais de fundamentos e carreira. É uma base prática para analistas, líderes e supervisores; não há curso específico de SAP MM no catálogo atual.</p>
-          <div class="cluster-links">
-            <a href="#produto-analista"><span><span class="resource-type">Curso parceiro</span><br>Analista de Logística</span><i class="fa-solid fa-arrow-down"></i></a>
-            <a href="#produto-iniciantes"><span><span class="resource-type">eBook</span><br>Logística para Iniciantes</span><i class="fa-solid fa-arrow-down"></i></a>
-            <a href="../blog/o-que-e-logistica-carreira.html"><span><span class="resource-type">Artigo</span><br>O que é logística e como iniciar</span><i class="fa-solid fa-arrow-right"></i></a>
-            <a href="../blog/lideres-analistas-logistica-carreira.html"><span><span class="resource-type">Artigo</span><br>Carreira de líderes e analistas</span><i class="fa-solid fa-arrow-right"></i></a>
-          </div>
-        </article>
-
-        <article class="cluster-block" id="estoque">
-          <h2>Gestão de estoque, inventário e armazenagem</h2>
-          <p>Materiais e capacitações sobre gestão de estoque, inventário, acuracidade, almoxarifado, endereçamento, divergências e movimentação. O eBook de estoques é um guia complementar para quem procura formação em controle e armazenagem; não é apresentado como curso.</p>
-          <div class="cluster-links">
-            <a href="#produto-estoques"><span><span class="resource-type">eBook</span><br>Gestão Profissional de Estoques</span><i class="fa-solid fa-arrow-down"></i></a>
-            <a href="#produto-diagnostico"><span><span class="resource-type">Serviço</span><br>Diagnóstico Profissional de Estoque</span><i class="fa-solid fa-arrow-down"></i></a>
-            <a href="../blog/estoque-nao-bate.html"><span><span class="resource-type">Artigo</span><br>Por que o estoque não bate</span><i class="fa-solid fa-arrow-right"></i></a>
-            <a href="calculadora-acuracidade-estoque.html"><span><span class="resource-type">Ferramenta</span><br>Calculadora de acuracidade</span><i class="fa-solid fa-arrow-right"></i></a>
-          </div>
-        </article>
-
-        <article class="cluster-block" id="wms">
-          <h2>WMS, sistemas e operação de armazém</h2>
-          <p>Procurando conteúdo ou curso sobre WMS? A JGM4 reúne um eBook/guia prático sobre WMS logística, implantação de WMS, endereçamento, recebimento, picking, inventário, expedição, código de barras e integração com ERP. O Guia Mestre WMS é material de leitura, não curso WMS online.</p>
-          <div class="cluster-links">
-            <a href="#produto-wms"><span><span class="resource-type">eBook / guia prático</span><br>Guia Mestre WMS</span><i class="fa-solid fa-arrow-down"></i></a>
-            <a href="../blog/o-que-organizar-antes-de-implantar-wms.html"><span><span class="resource-type">Artigo</span><br>O que organizar antes do WMS</span><i class="fa-solid fa-arrow-right"></i></a>
-            <a href="../blog/wms-sem-enderecamento-funciona.html"><span><span class="resource-type">Artigo</span><br>WMS sem endereçamento funciona?</span><i class="fa-solid fa-arrow-right"></i></a>
-            <a href="consultoria-wms-tms.html"><span><span class="resource-type">Consultoria</span><br>Implantação de WMS e TMS</span><i class="fa-solid fa-arrow-right"></i></a>
-          </div>
-        </article>
-
-        <article class="cluster-block" id="armazem">
-          <h2>Cursos e materiais sobre armazém e centros de distribuição</h2>
-          <p>Conteúdos para capacitação em centro de distribuição e operações de armazém: layout, capacidade, docas, recebimento, armazenagem, picking, movimentação e expedição. O produto em destaque nesta área é um eBook prático sobre gestão de CD.</p>
-          <div class="cluster-links">
-            <a href="#produto-cd"><span><span class="resource-type">eBook</span><br>Centro de Distribuição na Sua Mão</span><i class="fa-solid fa-arrow-down"></i></a>
-            <a href="../blog/como-dimensionar-centro-de-distribuicao.html"><span><span class="resource-type">Artigo</span><br>Dimensionar um centro de distribuição</span><i class="fa-solid fa-arrow-right"></i></a>
-            <a href="calculadora-capacidade-centro-distribuicao.html"><span><span class="resource-type">Ferramenta</span><br>Capacidade do centro de distribuição</span><i class="fa-solid fa-arrow-right"></i></a>
-            <a href="gestao-agendamento-docas.html"><span><span class="resource-type">Solução</span><br>Gestão de agendamento de docas</span><i class="fa-solid fa-arrow-right"></i></a>
-          </div>
-        </article>
-
-        <article class="cluster-block" id="fretes">
-          <h2>Fretes, transporte e custos logísticos</h2>
-          <p>Materiais práticos para gestão de fretes, cálculo e comparação de tabelas, cubagem, auditoria de cobranças, negociação com transportadoras e redução de custos de transporte. Engenharia do Frete é um eBook, indicado como apoio à capacitação em fretes e custos logísticos.</p>
-          <div class="cluster-links">
-            <a href="#produto-fretes"><span><span class="resource-type">eBook</span><br>Engenharia do Frete</span><i class="fa-solid fa-arrow-down"></i></a>
-            <a href="../blog/como-comparar-tabelas-transportadoras.html"><span><span class="resource-type">Artigo</span><br>Comparar tabelas de transportadoras</span><i class="fa-solid fa-arrow-right"></i></a>
-            <a href="../blog/peso-cubado-como-calcular-reduzir-frete.html"><span><span class="resource-type">Artigo</span><br>Cubagem e peso cubado</span><i class="fa-solid fa-arrow-right"></i></a>
-            <a href="auditoria-de-fretes.html"><span><span class="resource-type">Serviço</span><br>Auditoria de fretes</span><i class="fa-solid fa-arrow-right"></i></a>
-          </div>
-        </article>
-
-        <article class="cluster-block" id="lideranca">
-          <h2>Liderança, gestão de pessoas e conflitos na logística</h2>
-          <p>Guias para líderes de logística, supervisores e gestores que precisam desenvolver gestão de equipes operacionais, comunicação, cobrança, engajamento e resolução de conflitos na logística e em centros de distribuição.</p>
-          <div class="cluster-links">
-            <a href="#produto-lider"><span><span class="resource-type">eBook / guia</span><br>O Guia do Líder de Logística</span><i class="fa-solid fa-arrow-down"></i></a>
-            <a href="#produto-pessoas"><span><span class="resource-type">eBook</span><br>Gestão de Pessoas na Prática</span><i class="fa-solid fa-arrow-down"></i></a>
-            <a href="#produto-conflitos"><span><span class="resource-type">eBook</span><br>Gestão de Conflitos na Logística</span><i class="fa-solid fa-arrow-down"></i></a>
-            <a href="../blog/gestao-equipes-logisticas.html"><span><span class="resource-type">Artigo</span><br>Gestão de equipes logísticas</span><i class="fa-solid fa-arrow-right"></i></a>
-          </div>
-        </article>
-
-        <article class="cluster-block" id="indicadores">
-          <h2>Indicadores, KPIs e gestão da performance logística</h2>
-          <p>Material prático para estruturar torre de controle logística, dashboard, gestão à vista e indicadores de centro de distribuição. A trilha conecta OTIF, SLA, lead time, backlog, produtividade e acuracidade a rituais de análise e plano de ação.</p>
-          <div class="cluster-links">
-            <a href="#produto-torre"><span><span class="resource-type">eBook</span><br>Torre de Controle na Logística</span><i class="fa-solid fa-arrow-down"></i></a>
-            <a href="torre-de-controle.html"><span><span class="resource-type">Página do material</span><br>KPIs, dashboards e rotina</span><i class="fa-solid fa-arrow-right"></i></a>
-            <a href="../blog/eficiencia-logistica.html"><span><span class="resource-type">Artigo</span><br>Eficiência e performance logística</span><i class="fa-solid fa-arrow-right"></i></a>
-          </div>
-        </article>
-
-        <article class="cluster-block" id="supply-chain">
-          <h2>Supply Chain, planejamento e S&amp;OP</h2>
-          <p>Para aprofundar cadeia de suprimentos, planejamento logístico, previsão de demanda e gestão integrada, o catálogo oferece um eBook de S&amp;OP. É um guia de apoio para quem pesquisa capacitação ou curso de supply chain online, sem ser apresentado como curso.</p>
-          <div class="cluster-links">
-            <a href="#produto-sop"><span><span class="resource-type">eBook</span><br>S&amp;OP na Prática</span><i class="fa-solid fa-arrow-down"></i></a>
-            <a href="ebook-sop.html"><span><span class="resource-type">Página do material</span><br>Planejamento integrado de vendas e operações</span><i class="fa-solid fa-arrow-right"></i></a>
-          </div>
-        </article>
-      </section>
-
 
       <!-- CATÁLOGO COMPLETO -->
       <div class="section-label" id="catalogo">
@@ -2552,7 +2394,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="sep"></div>
       </div>
       <p style="font-size:13px; color:var(--muted); margin:0 0 18px;">
-        Compare cursos de logística online, eBooks de logística, sistemas e diagnósticos para estoque, WMS, transporte, fretes, supply chain e liderança. Os materiais JGM4 são conteúdos próprios; cursos e sistemas de parceiros são identificados no card e comercializados pela plataforma responsável.
+        Compare cursos de logística online e eBooks de logística para carreira, estoque, WMS, transporte, fretes, supply chain e liderança. Cursos parceiros são identificados no card e comercializados pela plataforma responsável.
       </p>
 
       <div class="catalog-grid" id="catalogGrid">
@@ -3050,97 +2892,144 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </div>
         </section>
 
-        <section class="course-category" id="catalogo-sistemas-servicos" data-section="solucoes" style="--catalog-order:1000">
-          <div class="catalog-section-heading">
-            <h2>Sistemas e serviços relacionados</h2>
-            <p>Soluções profissionais que não são cursos nem materiais educacionais.</p>
-          </div>
-          <div class="course-grid">
-    <div class="prod-card" data-type="servico" data-categories="solucoes carreira" data-section="solucoes" data-title="consultoria currículo linkedin carreira profissional reposicionamento">
-              <div class="prod-img">
-                <img src="../assets/consultorialinkedin.jpg" alt="Material de consultoria de currículo e LinkedIn" width="1734" height="907" loading="lazy" decoding="async">
-              </div>
-              <div class="prod-body">
-                <div class="prod-tags">
-                  <span class="prod-tag sistema">Serviço</span>
-                </div>
-                <h3>Consultoria Online — Currículo e LinkedIn</h3>
-                <p class="prod-desc">
-                  Seu currículo e perfil no LinkedIn são sua vitrine profissional. Ajustamos posicionamento, palavras-chave e narrativa para você. <strong style="color:rgba(255,255,255,.80);">Fazemos para você.</strong>
-                </p>
-              </div>
-              <div class="prod-footer">
-                <div class="prod-price">
-                  <span class="new-p">R$ 50,00</span>
-                </div>
-                <div class="prod-actions">
-                  <a href="analise-de-cv.html" class="btn-saiba">Saiba mais</a>
-                  <a href="https://go.hotmart.com/F87483317N?dp=1" class="btn-comprar" target="_blank" rel="noopener">
-                    Comprar <i class="fa-solid fa-arrow-right"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-    <div class="prod-card" data-type="sistema" data-categories="solucoes estoque" data-section="solucoes" data-title="sistema de estoque gestão ágil sem assinaturas controle rápido planilha">
-              <div class="prod-img">
-                <img src="../assets/gestao-e-controle-de-estoque.jpg" alt="Sistema parceiro de gestão e controle de estoque" width="800" height="450" loading="lazy" decoding="async">
-              </div>
-              <div class="prod-body">
-                <div class="prod-tags">
-                  <span class="prod-tag sistema">Sistema</span>
-                  <span class="prod-tag sistema" style="background:rgba(245,158,11,.14); border-color:rgba(245,158,11,.25); color:#fcd34d;">Parceiro</span>
-                </div>
-                <h3>Sistema de Estoque — Gestão Ágil</h3>
-                <p class="prod-desc">
-                  Sistema simples e prático para gestão de estoque, sem assinatura mensal. Pronto para uso imediato e ideal para quem quer controle rápido.
-                </p>
-              </div>
-              <div class="prod-footer">
-                <div class="prod-price">
-                  <span class="new-p">R$ 100,00</span>
-                  <span style="font-size:11px; color:var(--muted);">em até 12×</span>
-                </div>
-                <div class="prod-actions">
-                  <a href="https://go.hotmart.com/D104196682G" class="btn-comprar" target="_blank" rel="noopener">
-                    Comprar <i class="fa-solid fa-arrow-right"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-    <div class="prod-card" id="produto-diagnostico" data-type="servico" data-categories="solucoes estoque" data-section="solucoes" data-title="diagnóstico profissional estoque consultoria estoque acuracidade perdas plano de ação logística">
-              <div class="prod-img">
-                <img src="../assets/estoque-planilha.png" alt="Material do Diagnóstico Profissional de Estoque JGM4" width="1174" height="1280" loading="lazy" decoding="async">
-              </div>
-              <div class="prod-body">
-                <div class="prod-tags">
-                  <span class="prod-tag sistema">Serviço</span>
-                </div>
-                <h3>Diagnóstico Profissional de Estoque</h3>
-                <p class="prod-desc">
-                  Descubra onde sua empresa perde dinheiro no estoque. Receba um relatório especializado, plano de ação e reunião estratégica com a equipe JGM4.
-                </p>
-              </div>
-              <div class="prod-footer">
-                <div class="prod-price">
-                  <span class="old-p">R$ 997,00</span>
-                  <span class="new-p">R$ 497,00</span>
-                </div>
-                <div class="prod-actions">
-                  <a href="estoques-venda.html" class="btn-saiba">Saiba mais</a>
-                  <a href="estoques-venda.html" class="btn-comprar">
-                    Contratar <i class="fa-solid fa-arrow-right"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
         <div class="empty-state" id="emptyState" role="status" aria-live="polite" hidden>
           <i class="fa-solid fa-search" aria-hidden="true"></i>
           <p>Nenhum produto encontrado para esta busca.</p>
         </div>
       </div>
+
+      <section class="category-market" aria-label="Áreas de capacitação logística">
+        <h2>Áreas de capacitação em logística</h2>
+        <a class="category-card" href="#carreira" data-track-category="carreira">
+          <i class="fa-solid fa-graduation-cap"></i>
+          <h3>Carreira e formação</h3>
+          <p>Analista de logística, fundamentos e desenvolvimento profissional.</p>
+        </a>
+        <a class="category-card" href="#estoque" data-track-category="estoque">
+          <i class="fa-solid fa-boxes-stacked"></i>
+          <h3>Estoque e inventário</h3>
+          <p>Acuracidade, almoxarifado, armazenagem e controle operacional.</p>
+        </a>
+        <a class="category-card" href="#wms" data-track-category="wms">
+          <i class="fa-solid fa-barcode"></i>
+          <h3>WMS e sistemas</h3>
+          <p>Implantação, endereçamento, picking, código de barras e ERP.</p>
+        </a>
+        <a class="category-card" href="#armazem" data-track-category="armazem_cd">
+          <i class="fa-solid fa-warehouse"></i>
+          <h3>Armazém e CD</h3>
+          <p>Layout, capacidade, docas, recebimento, movimentação e expedição.</p>
+        </a>
+        <a class="category-card" href="#fretes" data-track-category="fretes">
+          <i class="fa-solid fa-truck-fast"></i>
+          <h3>Fretes e custos</h3>
+          <p>Tabelas, cubagem, auditoria, negociação e redução de custos.</p>
+        </a>
+        <a class="category-card" href="#lideranca" data-track-category="lideranca">
+          <i class="fa-solid fa-people-group"></i>
+          <h3>Liderança e conflitos</h3>
+          <p>Gestão de pessoas, equipes operacionais e tomada de decisão.</p>
+        </a>
+        <a class="category-card" href="#indicadores" data-track-category="indicadores">
+          <i class="fa-solid fa-chart-line"></i>
+          <h3>Indicadores e KPIs</h3>
+          <p>Torre de controle, dashboards, OTIF, SLA e produtividade.</p>
+        </a>
+        <a class="category-card" href="#supply-chain" data-track-category="supply_chain">
+          <i class="fa-solid fa-link"></i>
+          <h3>Supply Chain e S&amp;OP</h3>
+          <p>Demanda, planejamento integrado, capacidade e cadeia de suprimentos.</p>
+        </a>
+      </section>
+
+      <section class="learning-clusters" aria-label="Trilhas de cursos e materiais de logística">
+        <article class="cluster-block" id="carreira">
+          <h3>Cursos de logística para carreira e formação profissional</h3>
+          <p>Para quem busca um curso de logística para iniciantes ou profissionais, a trilha combina o curso parceiro de Analista de Logística com materiais de fundamentos e carreira. É uma base prática para analistas, líderes e supervisores; não há curso específico de SAP MM no catálogo atual.</p>
+          <div class="cluster-links">
+            <a href="#produto-analista"><span><span class="resource-type">Curso parceiro</span><br>Analista de Logística</span><i class="fa-solid fa-arrow-down"></i></a>
+            <a href="#produto-iniciantes"><span><span class="resource-type">eBook</span><br>Logística para Iniciantes</span><i class="fa-solid fa-arrow-down"></i></a>
+            <a href="../blog/o-que-e-logistica-carreira.html"><span><span class="resource-type">Artigo</span><br>O que é logística e como iniciar</span><i class="fa-solid fa-arrow-right"></i></a>
+            <a href="../blog/lideres-analistas-logistica-carreira.html"><span><span class="resource-type">Artigo</span><br>Carreira de líderes e analistas</span><i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+        </article>
+
+        <article class="cluster-block" id="estoque">
+          <h3>Gestão de estoque, inventário e armazenagem</h3>
+          <p>Materiais e capacitações sobre gestão de estoque, inventário, acuracidade, almoxarifado, endereçamento, divergências e movimentação. O eBook de estoques é um guia complementar para quem procura formação em controle e armazenagem; não é apresentado como curso.</p>
+          <div class="cluster-links">
+            <a href="#produto-estoques"><span><span class="resource-type">eBook</span><br>Gestão Profissional de Estoques</span><i class="fa-solid fa-arrow-down"></i></a>
+            <a href="#produto-diagnostico"><span><span class="resource-type">Serviço</span><br>Diagnóstico Profissional de Estoque</span><i class="fa-solid fa-arrow-down"></i></a>
+            <a href="../blog/estoque-nao-bate.html"><span><span class="resource-type">Artigo</span><br>Por que o estoque não bate</span><i class="fa-solid fa-arrow-right"></i></a>
+            <a href="calculadora-acuracidade-estoque.html"><span><span class="resource-type">Ferramenta</span><br>Calculadora de acuracidade</span><i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+        </article>
+
+        <article class="cluster-block" id="wms">
+          <h3>WMS, sistemas e operação de armazém</h3>
+          <p>Procurando conteúdo ou curso sobre WMS? A JGM4 reúne um eBook/guia prático sobre WMS logística, implantação de WMS, endereçamento, recebimento, picking, inventário, expedição, código de barras e integração com ERP. O Guia Mestre WMS é material de leitura, não curso WMS online.</p>
+          <div class="cluster-links">
+            <a href="#produto-wms"><span><span class="resource-type">eBook / guia prático</span><br>Guia Mestre WMS</span><i class="fa-solid fa-arrow-down"></i></a>
+            <a href="../blog/o-que-organizar-antes-de-implantar-wms.html"><span><span class="resource-type">Artigo</span><br>O que organizar antes do WMS</span><i class="fa-solid fa-arrow-right"></i></a>
+            <a href="../blog/wms-sem-enderecamento-funciona.html"><span><span class="resource-type">Artigo</span><br>WMS sem endereçamento funciona?</span><i class="fa-solid fa-arrow-right"></i></a>
+            <a href="consultoria-wms-tms.html"><span><span class="resource-type">Consultoria</span><br>Implantação de WMS e TMS</span><i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+        </article>
+
+        <article class="cluster-block" id="armazem">
+          <h3>Cursos e materiais sobre armazém e centros de distribuição</h3>
+          <p>Conteúdos para capacitação em centro de distribuição e operações de armazém: layout, capacidade, docas, recebimento, armazenagem, picking, movimentação e expedição. O produto em destaque nesta área é um eBook prático sobre gestão de CD.</p>
+          <div class="cluster-links">
+            <a href="#produto-cd"><span><span class="resource-type">eBook</span><br>Centro de Distribuição na Sua Mão</span><i class="fa-solid fa-arrow-down"></i></a>
+            <a href="../blog/como-dimensionar-centro-de-distribuicao.html"><span><span class="resource-type">Artigo</span><br>Dimensionar um centro de distribuição</span><i class="fa-solid fa-arrow-right"></i></a>
+            <a href="calculadora-capacidade-centro-distribuicao.html"><span><span class="resource-type">Ferramenta</span><br>Capacidade do centro de distribuição</span><i class="fa-solid fa-arrow-right"></i></a>
+            <a href="gestao-agendamento-docas.html"><span><span class="resource-type">Solução</span><br>Gestão de agendamento de docas</span><i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+        </article>
+
+        <article class="cluster-block" id="fretes">
+          <h3>Fretes, transporte e custos logísticos</h3>
+          <p>Materiais práticos para gestão de fretes, cálculo e comparação de tabelas, cubagem, auditoria de cobranças, negociação com transportadoras e redução de custos de transporte. Engenharia do Frete é um eBook, indicado como apoio à capacitação em fretes e custos logísticos.</p>
+          <div class="cluster-links">
+            <a href="#produto-fretes"><span><span class="resource-type">eBook</span><br>Engenharia do Frete</span><i class="fa-solid fa-arrow-down"></i></a>
+            <a href="../blog/como-comparar-tabelas-transportadoras.html"><span><span class="resource-type">Artigo</span><br>Comparar tabelas de transportadoras</span><i class="fa-solid fa-arrow-right"></i></a>
+            <a href="../blog/peso-cubado-como-calcular-reduzir-frete.html"><span><span class="resource-type">Artigo</span><br>Cubagem e peso cubado</span><i class="fa-solid fa-arrow-right"></i></a>
+            <a href="auditoria-de-fretes.html"><span><span class="resource-type">Serviço</span><br>Auditoria de fretes</span><i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+        </article>
+
+        <article class="cluster-block" id="lideranca">
+          <h3>Liderança, gestão de pessoas e conflitos na logística</h3>
+          <p>Guias para líderes de logística, supervisores e gestores que precisam desenvolver gestão de equipes operacionais, comunicação, cobrança, engajamento e resolução de conflitos na logística e em centros de distribuição.</p>
+          <div class="cluster-links">
+            <a href="#produto-lider"><span><span class="resource-type">eBook / guia</span><br>O Guia do Líder de Logística</span><i class="fa-solid fa-arrow-down"></i></a>
+            <a href="#produto-pessoas"><span><span class="resource-type">eBook</span><br>Gestão de Pessoas na Prática</span><i class="fa-solid fa-arrow-down"></i></a>
+            <a href="#produto-conflitos"><span><span class="resource-type">eBook</span><br>Gestão de Conflitos na Logística</span><i class="fa-solid fa-arrow-down"></i></a>
+            <a href="../blog/gestao-equipes-logisticas.html"><span><span class="resource-type">Artigo</span><br>Gestão de equipes logísticas</span><i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+        </article>
+
+        <article class="cluster-block" id="indicadores">
+          <h3>Indicadores, KPIs e gestão da performance logística</h3>
+          <p>Material prático para estruturar torre de controle logística, dashboard, gestão à vista e indicadores de centro de distribuição. A trilha conecta OTIF, SLA, lead time, backlog, produtividade e acuracidade a rituais de análise e plano de ação.</p>
+          <div class="cluster-links">
+            <a href="#produto-torre"><span><span class="resource-type">eBook</span><br>Torre de Controle na Logística</span><i class="fa-solid fa-arrow-down"></i></a>
+            <a href="torre-de-controle.html"><span><span class="resource-type">Página do material</span><br>KPIs, dashboards e rotina</span><i class="fa-solid fa-arrow-right"></i></a>
+            <a href="../blog/eficiencia-logistica.html"><span><span class="resource-type">Artigo</span><br>Eficiência e performance logística</span><i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+        </article>
+
+        <article class="cluster-block" id="supply-chain">
+          <h3>Supply Chain, planejamento e S&amp;OP</h3>
+          <p>Para aprofundar cadeia de suprimentos, planejamento logístico, previsão de demanda e gestão integrada, o catálogo oferece um eBook de S&amp;OP. É um guia de apoio para quem pesquisa capacitação ou curso de supply chain online, sem ser apresentado como curso.</p>
+          <div class="cluster-links">
+            <a href="#produto-sop"><span><span class="resource-type">eBook</span><br>S&amp;OP na Prática</span><i class="fa-solid fa-arrow-down"></i></a>
+            <a href="ebook-sop.html"><span><span class="resource-type">Página do material</span><br>Planejamento integrado de vendas e operações</span><i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+        </article>
+      </section>
+
+
 
       <!-- TRUST SECTION -->
       <section class="trust-section" aria-label="Garantia e qualidade">
