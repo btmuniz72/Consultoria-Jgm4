@@ -1191,7 +1191,168 @@
   <meta property="og:image:alt" content="JGM4 Consultoria Logística">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://www.jgm4consultoria.com.br/assets/brand/og-jgm4-1200x630.jpg">
-  <meta name="twitter:image:alt" content="JGM4 Consultoria Logística"></head>
+  <meta name="twitter:image:alt" content="JGM4 Consultoria Logística">
+
+  <style id="jgm4-home-visual-system">
+    /* Visual system exclusivo da home: operação em movimento, sem alterar páginas internas. */
+    :root{
+      --home-ink:#f4f8fc;
+      --home-muted:rgba(226,237,247,.72);
+      --home-line:rgba(164,205,232,.18);
+      --home-surface:#0a1f3b;
+      --home-surface-2:#102d50;
+      --home-cyan:#52c7ff;
+      --home-green:#55d989;
+      --home-red:#ef3340;
+      --home-max:1180px;
+      --home-radius:12px;
+      --home-shadow:0 12px 28px rgba(0,0,0,.18);
+      --home-ease:cubic-bezier(.2,.75,.2,1);
+    }
+    body{background:#06172f;color:var(--home-ink)}
+    body:before{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;background:#06172f}
+    .bg-orbs{display:none}
+    .wrap{max-width:var(--home-max)}
+    #header{background:rgba(5,20,40,.78);border-bottom-color:var(--home-line);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+    #header.scrolled{background:rgba(5,20,40,.96)}
+    #header nav{max-width:var(--home-max);min-height:76px}
+    .topbar{background:#d91e2c;letter-spacing:.02em}
+    .nav-links a,.nav-links summary{font-size:12px;letter-spacing:.01em}
+    .nav-cta{background:var(--home-cyan);color:#062039!important}
+
+    .hero{position:relative;isolation:isolate;min-height:min(860px,calc(100vh - 42px));padding:0;display:flex;align-items:center;overflow:hidden;background:#06172f;border-bottom:1px solid var(--home-line)}
+    .home-hero-media{position:absolute;inset:0;z-index:-1;display:block;overflow:hidden}
+    .home-hero-media:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(4,17,38,.9) 0%,rgba(4,17,38,.72) 38%,rgba(4,17,38,.28) 72%,rgba(4,17,38,.5) 100%),linear-gradient(0deg,rgba(4,17,38,.58),transparent 46%,rgba(4,17,38,.35))}
+    .home-hero-media img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;filter:saturate(.88) contrast(1.04);animation:homeHeroDrift 26s ease-in-out infinite alternate}
+    @keyframes homeHeroDrift{from{transform:scale(1.01)}to{transform:scale(1.03)}}
+    .hero-content{position:relative;z-index:1;width:min(var(--home-max),100%);grid-template-columns:minmax(0,1.12fr) minmax(300px,.72fr);gap:clamp(30px,6vw,88px);padding:clamp(78px,11vh,130px) 16px 90px;margin:0 auto;align-items:end}
+    .hero-text{padding:0;max-width:730px;background:none;border:0;box-shadow:none;text-align:left}
+    .hero-text>div:first-child{justify-content:flex-start!important}
+    .hero h1{max-width:760px;font-size:clamp(42px,5.7vw,80px);line-height:.98;letter-spacing:-.065em;text-wrap:balance;margin:20px 0 24px;text-shadow:0 4px 24px rgba(0,0,0,.24)}
+    .hero h1 .highlight{color:#8cdbff}
+    .hero-text>p{max-width:650px;color:rgba(241,248,253,.82);font-size:clamp(16px,1.4vw,19px);line-height:1.65}
+    .hero-text>p a{color:#9be2ff;text-decoration-color:rgba(155,226,255,.45)}
+    .kicker{color:#9be2ff;letter-spacing:.13em;font-size:11px}
+    .trust-row{justify-content:flex-start;gap:8px;margin:26px 0 30px}
+    .trust-pill{border:1px solid rgba(155,226,255,.24);background:rgba(5,24,48,.46);color:rgba(242,249,255,.84);padding:9px 12px;font-size:11px}
+    .hero-buttons{justify-content:flex-start;gap:12px}
+    .btn-primary,.btn-secondary{border-radius:10px;min-height:48px;padding:13px 18px;transition:transform .22s var(--home-ease),background .22s ease,box-shadow .22s ease}
+    .btn-primary{background:var(--home-red);box-shadow:0 14px 30px rgba(239,51,64,.25)}
+    .btn-secondary{background:rgba(7,27,52,.55);border-color:rgba(255,255,255,.28)}
+    .hero-image{padding:0;background:none;border:0;box-shadow:none;align-self:end}
+    .hero-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:480px;margin-left:auto}
+    .stat-card{min-height:150px;padding:19px;background:rgba(5,25,49,.86);border:1px solid rgba(188,224,244,.22);border-radius:10px}
+    .stat-value{font-size:clamp(27px,3vw,42px);font-weight:950;letter-spacing:-.06em;color:#fff}
+    .stat-card p{margin-top:12px;color:var(--home-muted);font-size:12px;line-height:1.48}
+
+    .trust-strip,.results-strip{background:#081d37;border-color:var(--home-line);position:relative;z-index:1}
+    .trust-strip-inner,.results-inner{max-width:var(--home-max);padding-left:16px;padding-right:16px}
+    .trust-client{color:rgba(225,239,249,.64);font-size:11px}
+    .results-strip{background:#0b2746}
+    .result-item{padding:26px 18px;border-left:1px solid rgba(164,205,232,.16)}
+    .result-item:last-child{border-right:1px solid rgba(164,205,232,.16)}
+    .result-num{color:var(--home-cyan);font-size:29px}
+
+    .section-wrap{max-width:var(--home-max);margin:0 auto;padding:108px 16px 30px;position:relative;z-index:1}
+    .section-wrap>.wrap{padding:0}
+    .section-header{max-width:850px;margin-bottom:30px;text-align:left}
+    .section-label{color:#83d8ff;font-size:11px;letter-spacing:.15em}
+    .section-title{font-size:clamp(30px,4vw,54px);line-height:1.03;letter-spacing:-.055em;text-wrap:balance}
+    .section-subtitle{max-width:720px;color:var(--home-muted);font-size:16px;line-height:1.7}
+    #desafios{padding-top:92px}
+    #desafios>.grid-3,#diferenciais-title~.grid-3{grid-template-columns:repeat(12,minmax(0,1fr));gap:0;margin-top:28px!important}
+    #desafios>.grid-3 .card{grid-column:span 4;border-width:1px 0 0 1px;border-radius:0;background:transparent;padding:24px 22px;min-height:180px}
+    #desafios>.grid-3 .card:nth-child(4){grid-column:3 / span 4}
+    #desafios>.grid-3 .card:nth-child(5){grid-column:7 / span 3}
+    #desafios>.grid-3 .card:nth-child(6){grid-column:10 / span 3}
+    .card{background:var(--home-surface);border-color:var(--home-line);border-radius:12px;box-shadow:none;transition:transform .3s var(--home-ease),border-color .3s ease,background .3s ease}
+    .card:hover{transform:translateY(-4px);border-color:rgba(82,199,255,.48);background:var(--home-surface-2)}
+    .card h3{font-size:17px;line-height:1.2}
+    .card p,.card ul{color:var(--home-muted)}
+    .card-icon{width:38px;height:38px;border-radius:10px;background:#123e65;border-color:rgba(82,199,255,.2)}
+    .card-icon.red{background:rgba(239,51,64,.16)}
+    .card-icon.green{background:rgba(85,217,137,.16)}
+    #desafios .card-icon{display:none}
+    #desafios .card h3:before{content:"// ";color:var(--home-red);font-family:ui-monospace,monospace;font-size:12px}
+
+    section[aria-labelledby="diferenciais-title"] .grid-3{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0;margin-top:28px!important;border-top:1px solid var(--home-line)}
+    section[aria-labelledby="diferenciais-title"] .card{border-width:0 1px 1px 0;border-radius:0;background:transparent;padding:24px 18px;min-height:190px}
+    section[aria-labelledby="diferenciais-title"] .card:first-child{border-left:1px solid var(--home-line)}
+    section[aria-labelledby="diferenciais-title"] .card:hover{background:var(--home-surface)}
+
+    #servicos-consultoria{padding-top:120px}
+    #servicos-consultoria>.grid-3{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;margin-top:20px!important;border-top:1px solid var(--home-line)}
+    #servicos-consultoria>.grid-3 .card{display:grid;grid-template-columns:64px 1fr;column-gap:16px;border-width:0 1px 1px 0;border-radius:0;padding:27px 24px;background:transparent}
+    #servicos-consultoria>.grid-3 .card:nth-child(odd){border-left:1px solid var(--home-line)}
+    #servicos-consultoria .card-header{display:contents}
+    #servicos-consultoria .card-icon{grid-row:span 3}
+    #servicos-consultoria .card p{grid-column:2}
+    #servicos-consultoria .card p:last-child{margin-top:8px}
+    #servicos-consultoria .card p:last-child a,#conteudos-ferramentas a{color:#8cdbff;font-weight:850;text-decoration:none}
+    #servicos-consultoria .card p:last-child a:hover,#conteudos-ferramentas a:hover{text-decoration:underline}
+
+    #case-destaque{max-width:none;padding-top:112px;padding-bottom:70px;padding-left:max(16px,calc((100% - var(--home-max))/2));padding-right:max(16px,calc((100% - var(--home-max))/2));background:#0a2744}
+    #case-destaque .wrap{max-width:none}
+    #case-destaque .section-header{max-width:var(--home-max)}
+    #case-destaque .grid-3{max-width:var(--home-max);grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+    .home-photo-band{max-width:var(--home-max);margin:0 auto;padding:94px 16px 30px;display:grid;grid-template-columns:minmax(0,.96fr) minmax(0,1.04fr);gap:clamp(28px,6vw,78px);align-items:center}
+    .home-photo-band figure{margin:0;position:relative;min-height:430px;border-radius:12px;overflow:hidden;border:1px solid var(--home-line);box-shadow:var(--home-shadow)}
+    .home-photo-band figure:after{content:"CD / FLUXO / CONTROLE";position:absolute;left:18px;bottom:16px;color:#fff;background:rgba(4,17,38,.72);padding:8px 10px;font:700 10px ui-monospace,monospace;letter-spacing:.12em}
+    .home-photo-band img{width:100%;height:100%;min-height:430px;display:block;object-fit:cover;object-position:center}
+    .home-photo-band .section-label{margin-bottom:14px}
+    .home-photo-band h2{font-size:clamp(30px,4vw,54px);line-height:1.03;letter-spacing:-.055em}
+    .home-photo-band p{color:var(--home-muted);line-height:1.75;margin-top:18px;max-width:560px}
+    .home-photo-band ul{list-style:none;display:grid;gap:10px;margin-top:24px;color:rgba(238,247,252,.86)}
+    .home-photo-band li:before{content:"↳";color:var(--home-green);font-weight:900;margin-right:10px}
+
+    #produtos{max-width:var(--home-max);padding-top:110px}
+    #produtos .section-header{max-width:none}
+    .home-products-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:28px}
+    .home-product-card{display:grid;grid-template-columns:150px 1fr;gap:22px;align-items:center;padding:24px;border:1px solid var(--home-line);border-radius:12px;background:#0b2948}
+    .home-product-card img{width:150px;height:128px;object-fit:contain;border-radius:14px;background:#fff;padding:14px}
+    .home-product-card h3{font-size:24px;letter-spacing:-.03em}
+    .home-product-card p{margin-top:9px;color:var(--home-muted);font-size:13px;line-height:1.6}
+    .home-product-card a{display:inline-flex;margin-top:14px;color:#9be2ff;font-weight:900;text-decoration:none}
+    .home-product-card--green{background:#0d383e;border-color:rgba(85,217,137,.28)}
+    .home-product-card--green img{padding:10px}
+    #faq{padding-top:90px}
+    .faq-list{max-width:900px;margin-left:0!important;padding:0!important}
+    .faq-item{background:#0a1f3b;border-color:var(--home-line)}
+    .faq-q{color:#edf6fb;padding:19px 20px}
+    .faq-a{color:var(--home-muted);padding:0 20px 20px;line-height:1.7}
+    #conteudos-ferramentas{padding-top:96px}
+    #conteudos-ferramentas .grid-3{grid-template-columns:1.3fr 1fr 1fr;gap:12px}
+    #conteudos-ferramentas .card:first-child{background:#0b2d4b}
+    .cta-section{width:100%;max-width:none;margin:90px 0 0;padding:52px 16px 82px;background:#123f7b}
+    .cta-box{position:relative;width:100%;max-width:1000px!important;margin:0 auto!important;overflow:hidden;text-align:center;padding:clamp(32px,6vw,70px);border:1px solid rgba(130,214,255,.42);border-radius:12px;background:linear-gradient(90deg,rgba(7,35,65,.95),rgba(7,35,65,.72)),url("./assets/gestao-docas-fornecedores-reforma-tributaria-2026.jpg") center/cover;box-shadow:var(--home-shadow)}
+    .cta-box h2{max-width:720px;margin-left:auto;margin-right:auto;font-size:clamp(32px,4.5vw,60px);line-height:1.02;letter-spacing:-.055em}
+    .cta-box p{max-width:650px;color:var(--home-muted);line-height:1.7;margin:18px auto 26px}
+    footer{background:#031022;border-top-color:var(--home-line)}
+    #consultor-card{border-radius:12px!important;background:#0a1f3b!important;backdrop-filter:none!important;box-shadow:none!important}
+    #consultor-card > div:first-child{display:none!important}
+    #consultor-card > div:nth-child(2){justify-content:center}
+    #consultor-card > div:nth-child(3) span{border-radius:6px!important}
+    .home-reveal{opacity:0;transform:translateY(22px);transition:opacity .7s var(--home-ease),transform .7s var(--home-ease)}
+    .home-reveal.is-visible{opacity:1;transform:none}
+    @media(max-width:900px){
+      .hero-content{grid-template-columns:1fr;align-items:start}.hero-image{margin-top:8px}.hero-stats{max-width:none}.hero h1{font-size:clamp(40px,9vw,66px)}
+      #desafios>.grid-3 .card,#desafios>.grid-3 .card:nth-child(4),#desafios>.grid-3 .card:nth-child(5),#desafios>.grid-3 .card:nth-child(6){grid-column:span 6}
+      section[aria-labelledby="diferenciais-title"] .grid-3{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .home-photo-band{grid-template-columns:1fr}.home-photo-band figure{min-height:360px}.home-photo-band img{min-height:360px}
+      .home-products-grid,#conteudos-ferramentas .grid-3{grid-template-columns:1fr}.home-product-card{grid-template-columns:120px 1fr}.home-product-card img{width:120px;height:110px}
+    }
+    @media(max-width:640px){
+      #header nav{min-height:66px}.hero{min-height:auto}.hero-content{padding-top:72px;padding-bottom:64px}.hero h1{font-size:clamp(38px,12vw,58px)}
+      .hero-buttons,.hero-buttons a{width:100%}.hero-buttons{flex-direction:column}.hero-buttons a{justify-content:center}
+      .hero-stats{grid-template-columns:1fr 1fr}.stat-card{min-height:128px;padding:14px}.stat-card p{font-size:11px}.section-wrap{padding-top:78px}
+      #desafios>.grid-3,#servicos-consultoria>.grid-3,section[aria-labelledby="diferenciais-title"] .grid-3{display:block}.section-header{margin-bottom:22px}
+      #desafios>.grid-3 .card,#servicos-consultoria>.grid-3 .card{border-left:1px solid var(--home-line);padding:22px 18px}
+      #case-destaque{padding-left:16px;padding-right:16px}.home-photo-band{padding-top:70px}.home-product-card{grid-template-columns:1fr}.home-product-card img{width:100%;height:126px}
+      .cta-section{margin-top:70px;padding:38px 14px 64px}.cta-box{padding:30px 22px}.cta-box>div{justify-content:center!important}.cta-box .btn-primary,.cta-box .btn-secondary{width:100%;justify-content:center}
+    }
+    @media(prefers-reduced-motion:reduce){.home-hero-media img{animation:none}.home-reveal{opacity:1;transform:none;transition:none}.btn-primary,.btn-secondary,.card{transition:none}}
+  </style>
+</head>
 
 <body>
 <!-- Google Tag Manager (noscript) -->
@@ -1259,6 +1420,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
        HERO
   ═══════════════════════════════════════════ -->
   <section id="inicio" class="hero">
+    <picture class="home-hero-media" aria-hidden="true">
+      <img src="./assets/gestao-docas-fornecedores-reforma-tributaria-2026.jpg" alt="Equipe acompanhando a operação de docas em um centro de distribuição" width="1600" height="900" fetchpriority="high" decoding="async">
+    </picture>
     <div class="hero-content">
 
       <div class="hero-text glass-panel">
@@ -1815,13 +1979,34 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
        FAQ
   ═══════════════════════════════════════════ -->
   <section id="produtos" class="section-wrap" aria-labelledby="produtos-title">
-    <div class="section-header"><h2 id="produtos-title">Produtos JGM4 para organizar sua operação</h2><p class="section-subtitle">Tecnologia com foco na rotina de pequenos e médios negócios.</p></div>
-    <article class="docacerta-home-card" style="background:#073a68;border-color:#315777">
-      <div class="docacerta-home"><div class="docacerta-home-brand"><span style="color:#fff">Soluções digitais JGM4</span></div>
-      <h3 style="font-size:28px;color:#fff;margin:0">Tecnologia para organizar sua operação</h3><p>Conheça nossas soluções digitais para melhorar o controle de estoque, recebimentos e operações logísticas.</p>
-      <div class="docacerta-home-actions"><a class="docacerta-home-primary" href="./produtos/">Conhecer os produtos JGM4</a><a class="docacerta-home-secondary" href="./pages/cursos.html">Ver cursos e eBooks</a></div></div>
-      <div class="docacerta-home"><h3 style="color:#fff">Escolha a solução para sua rotina</h3><p>Uma vitrine simples para encontrar tecnologia aplicada à logística, com links para as páginas oficiais de cada produto.</p><p>Conheça também os conteúdos educacionais e a consultoria da JGM4.</p></div>
-    </article>
+    <div class="section-header"><div class="section-label">Tecnologia aplicada</div><h2 id="produtos-title">Produtos JGM4 para organizar sua operação</h2><p class="section-subtitle">Soluções digitais objetivas para dar mais controle ao estoque, aos recebimentos e às docas.</p></div>
+    <div class="home-products-grid">
+      <article class="home-product-card home-product-card--green">
+        <img src="./produtos/estoque-facil/logo-estoque-facil.png" alt="Logo JGM4 Estoque Fácil" width="240" height="80" loading="lazy" decoding="async">
+        <div><h3>JGM4 Estoque Fácil</h3><p>Controle de estoque para organizar produtos, endereços, movimentações, inventários e indicadores sem depender de planilhas dispersas.</p><a href="./produtos/estoque-facil/" data-track="home_produto_estoque_facil">Conhecer o Estoque Fácil <i class="fa-solid fa-arrow-right"></i></a></div>
+      </article>
+      <article class="home-product-card">
+        <img src="./assets/doca-certa-logo.png" alt="Logo Doca Certa" width="620" height="496" loading="lazy" decoding="async">
+        <div><h3>Doca Certa</h3><p>Gestão e agendamento de docas para organizar recebimentos, horários, fornecedores, transportadoras e capacidade operacional.</p><a href="https://docacerta.com.br/" target="_blank" rel="noopener noreferrer" data-track="home_produto_doca_certa">Conhecer o Doca Certa <i class="fa-solid fa-arrow-up-right-from-square"></i></a></div>
+      </article>
+    </div>
+    <p style="margin-top:18px"><a href="./produtos/" class="btn-secondary" data-track="home_produtos_hub">Ver todos os produtos JGM4 →</a></p>
+  </section>
+
+  <section class="home-photo-band" aria-labelledby="home-photo-title">
+    <figure>
+      <img src="./assets/estoques.jpg" alt="Estrutura de armazenagem com pallets e posições de estoque em um centro de distribuição" width="1280" height="1920" loading="lazy" decoding="async">
+    </figure>
+    <div>
+      <div class="section-label">Operação no detalhe</div>
+      <h2 id="home-photo-title">Processo bom aparece no fluxo, no dado e na rotina.</h2>
+      <p>A consultoria conecta o que acontece no armazém com o que a liderança precisa acompanhar: acuracidade, produtividade, ocupação, nível de serviço, custos e prioridades.</p>
+      <ul>
+        <li>Diagnóstico orientado por evidências e dados disponíveis</li>
+        <li>Plano de ação com responsáveis, prazos e indicadores</li>
+        <li>Acompanhamento compatível com o escopo contratado</li>
+      </ul>
+    </div>
   </section>
 
   <section id="faq" class="section-wrap" aria-labelledby="faq-title">
@@ -2175,6 +2360,25 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 
   <script>
+    // ── Revelações leves da home ────────────────────────
+    (function(){
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var targets = document.querySelectorAll('#desafios .card, #servicos-consultoria .card, #case-destaque .card, #conteudos-ferramentas .card, .home-reveal');
+      targets.forEach(function(el){ el.classList.add('home-reveal'); });
+      if(reduce || !('IntersectionObserver' in window)){
+        targets.forEach(function(el){ el.classList.add('is-visible'); });
+        return;
+      }
+      var observer = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if(!entry.isIntersecting) return;
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        });
+      }, {threshold:.12, rootMargin:'0px 0px -7% 0px'});
+      targets.forEach(function(el){ observer.observe(el); });
+    })();
+
     // ── Tracking delegado (data-track) ──────────────────
     (function(){
       function safeGtag(){ try{ return typeof gtag==="function"; }catch(e){ return false; } }
