@@ -7,7 +7,24 @@ O lead é validado e salvo primeiro no SQLite privado. Depois, o sistema tenta e
 
 ## Configuração de envio de e-mail
 
-Copie `.env.example` para a configuração de ambiente do servidor e preencha:
+O servidor pode fornecer as variáveis por ambiente. Em hospedagem cPanel sem esse recurso, crie o arquivo privado `/home2/qkoisa66/jgm4-private/estoque-facil-mail.php` com os mesmos nomes abaixo. Esse arquivo fica fora de `public_html` e deve retornar um array PHP; nunca publique esse arquivo.
+
+Exemplo:
+
+```php
+<?php
+return [
+    'SMTP_HOST' => 'smtp.titan.email',
+    'SMTP_PORT' => 465,
+    'SMTP_SECURE' => 'ssl',
+    'SMTP_USER' => 'contato@jgm4consultoria.com.br',
+    'SMTP_PASS' => 'SENHA_DA_CONTA_TITAN',
+    'SMTP_FROM' => 'JGM4 Consultoria <contato@jgm4consultoria.com.br>',
+    'LEADS_TO_EMAIL' => 'contato@jgm4consultoria.com.br',
+];
+```
+
+Alternativamente, configure essas mesmas variáveis no ambiente do servidor:
 
 | Variável | Uso |
 | --- | --- |

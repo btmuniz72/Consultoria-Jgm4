@@ -66,11 +66,28 @@ function leadLog(string $message): void {
     error_log('[estoque-facil] ' . $message);
 }
 
+function privateMailConfig(): array {
+    static $config;
+    if (is_array($config)) return $config;
+    $siteRoot = realpath(dirname(__DIR__, 2)) ?: dirname(__DIR__, 2);
+    $configPath = dirname($siteRoot) . '/jgm4-private/estoque-facil-mail.php';
+    $loaded = is_file($configPath) ? require $configPath : [];
+    $config = is_array($loaded) ? $loaded : [];
+    return $config;
+}
+
+function mailSetting(string $name, string $default = ''): string {
+    $environment = getenv($name);
+    if ($environment !== false && $environment !== '') return (string)$environment;
+    $config = privateMailConfig();
+    return isset($config[$name]) ? (string)$config[$name] : $default;
+}
+
 function smtpConfiguration(): array {
-    $host = trim((string)(getenv('SMTP_HOST') ?: ''));
-    $user = trim((string)(getenv('SMTP_USER') ?: ''));
-    $password = (string)(getenv('SMTP_PASS') ?: getenv('SMTP_PASSWORD') ?: '');
-    $from = trim((string)(getenv('SMTP_FROM') ?: ''));
+    $host = trim(mailSetting('SMTP_HOST'));
+    $user = trim(mailSetting('SMTP_USER'));
+    $password = mailSetting('SMTP_PASS', mailSetting('SMTP_PASSWORD'));
+    $from = trim(mailSetting('SMTP_FROM'));
     return [$host, $user, $password, $from];
 }
 
@@ -88,11 +105,11 @@ function sendLeadInterestEmail(array $lead): void {
     $mail = new PHPMailer\PHPMailer\PHPMailer(true);
     $mail->isSMTP();
     $mail->Host = $host;
-    $mail->Port = (int)(getenv('SMTP_PORT') ?: 587);
+    $mail->Port = (int)mailSetting('SMTP_PORT', '587');
     $mail->SMTPAuth = true;
     $mail->Username = $user;
     $mail->Password = $password;
-    $secure = strtolower(trim((string)(getenv('SMTP_SECURE') ?: 'false')));
+    $secure = strtolower(trim(mailSetting('SMTP_SECURE', 'false')));
     $mail->SMTPSecure = ($secure === 'ssl' || $mail->Port === 465)
         ? PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_SMTPS
         : (($secure === 'tls' || $secure === 'starttls' || $secure === 'true' || $secure === '1')
@@ -103,7 +120,7 @@ function sendLeadInterestEmail(array $lead): void {
     $mail->CharSet = 'UTF-8';
     if (preg_match('/^(.+)\s*<([^>]+)>$/', $from, $parts)) $mail->setFrom(trim($parts[2]), trim($parts[1]));
     else $mail->setFrom($from, 'JGM4 Estoque Fácil');
-    $mail->addAddress(getenv('LEADS_TO_EMAIL') ?: 'contato@jgm4consultoria.com.br');
+    $mail->addAddress(mailSetting('LEADS_TO_EMAIL', 'contato@jgm4consultoria.com.br'));
     $mail->addReplyTo($lead['email']);
     $mail->Subject = 'Novo interessado — JGM4 Estoque Fácil';
     $labels = [
