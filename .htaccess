@@ -46,15 +46,13 @@ ErrorDocument 404 /404.html
   AddCharset UTF-8 .html .htm .css .js .xml .txt
   AddType image/avif .avif
   AddType image/webp .webp
+  AddType application/manifest+json .webmanifest
   AddType font/woff2 .woff2
   AddType application/ld+json .jsonld
 </IfModule>
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
-
-  # Compatibilidade com navegadores e robôs que solicitam o favicon na raiz.
-  RewriteRule ^favicon\.ico$ /assets/brand/favicon.ico [L]
 
   # Rotas legadas com substitutos equivalentes. Destinos absolutos evitam
   # cadeias quando a origem chega por HTTP ou pelo domínio sem www.

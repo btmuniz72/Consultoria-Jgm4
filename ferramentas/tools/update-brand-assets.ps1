@@ -20,12 +20,10 @@ foreach ($directory in @('blog', 'pages', 'consultor-logistico', 'consultoria-lo
 
 $headBlock = @'
   <link rel="stylesheet" href="/css/brand.css">
-  <link rel="icon" href="/assets/brand/favicon.ico" sizes="any">
-  <link rel="icon" type="image/png" sizes="48x48" href="/assets/brand/favicon-48x48.png">
-  <link rel="icon" type="image/png" sizes="96x96" href="/assets/brand/favicon-96x96.png">
-  <link rel="icon" type="image/png" sizes="192x192" href="/assets/brand/favicon-192x192.png">
-  <link rel="icon" type="image/png" sizes="512x512" href="/assets/brand/favicon-512x512.png">
-  <link rel="apple-touch-icon" sizes="192x192" href="/assets/brand/favicon-192x192.png">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
   <meta property="og:image" content="https://www.jgm4consultoria.com.br/assets/brand/og-jgm4-1200x630.jpg">
   <meta property="og:image:secure_url" content="https://www.jgm4consultoria.com.br/assets/brand/og-jgm4-1200x630.jpg">

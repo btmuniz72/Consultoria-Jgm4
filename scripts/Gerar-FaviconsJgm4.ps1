@@ -1,7 +1,7 @@
 [CmdletBinding()]
 param(
-    [string]$Source = (Join-Path (Split-Path -Parent $PSScriptRoot) 'assets\favicon.ico'),
-    [string]$Destination = (Join-Path (Split-Path -Parent $PSScriptRoot) 'assets\brand')
+    [string]$Source = (Join-Path (Split-Path -Parent $PSScriptRoot) 'assets\brand\favicon.png'),
+    [string]$Destination = (Split-Path -Parent $PSScriptRoot)
 )
 
 $ErrorActionPreference = 'Stop'
@@ -17,8 +17,8 @@ function New-ScaledBitmap {
     $result.SetResolution(96, 96)
     $graphics = [Drawing.Graphics]::FromImage($result)
     try {
-        $graphics.Clear([Drawing.Color]::Transparent)
-        $graphics.CompositingMode = [Drawing.Drawing2D.CompositingMode]::SourceCopy
+        $graphics.Clear([Drawing.ColorTranslator]::FromHtml('#04143A'))
+        $graphics.CompositingMode = [Drawing.Drawing2D.CompositingMode]::SourceOver
         $graphics.CompositingQuality = [Drawing.Drawing2D.CompositingQuality]::HighQuality
         $graphics.InterpolationMode = [Drawing.Drawing2D.InterpolationMode]::HighQualityBicubic
         $graphics.SmoothingMode = [Drawing.Drawing2D.SmoothingMode]::HighQuality
@@ -89,13 +89,11 @@ try {
     }
 
     try {
-        foreach ($size in 48, 96, 192, 512) {
+        foreach ($size in 48, 96, 180, 192, 512) {
             $scaled = New-ScaledBitmap -SourceBitmap $cropped -Size $size
             try {
-                $scaled.Save((Join-Path $Destination "favicon-${size}x${size}.png"), [Drawing.Imaging.ImageFormat]::Png)
-                if ($size -eq 512) {
-                    $scaled.Save((Join-Path $Destination 'favicon.png'), [Drawing.Imaging.ImageFormat]::Png)
-                }
+                $filename = if ($size -eq 180) { 'apple-touch-icon.png' } else { "favicon-${size}x${size}.png" }
+                $scaled.Save((Join-Path $Destination $filename), [Drawing.Imaging.ImageFormat]::Png)
             } finally {
                 $scaled.Dispose()
             }

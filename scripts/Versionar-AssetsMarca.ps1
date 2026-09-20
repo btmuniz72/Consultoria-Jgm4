@@ -33,11 +33,11 @@ $files.Add((Get-Item -LiteralPath (Join-Path $SiteRoot 'site.webmanifest')))
 
 $assets = @(
     '/css/brand.css',
-    '/assets/brand/favicon.ico',
-    '/assets/brand/favicon-48x48.png',
-    '/assets/brand/favicon-96x96.png',
-    '/assets/brand/favicon-192x192.png',
-    '/assets/brand/favicon-512x512.png'
+    '/favicon.ico',
+    '/favicon-48x48.png',
+    '/favicon-96x96.png',
+    '/favicon-192x192.png',
+    '/favicon-512x512.png'
 )
 
 $changed = [Collections.Generic.List[string]]::new()

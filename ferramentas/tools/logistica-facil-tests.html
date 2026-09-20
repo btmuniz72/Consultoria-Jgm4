@@ -1,6 +1,6 @@
 <!doctype html><html lang="pt-BR"><meta charset="utf-8"><title>Testes — JGM4 Logística Fácil</title>
 <body><h1>Testes do núcleo</h1><p id="summary">Executando…</p><ol id="results"></ol>
-<script src="../js/logistica-facil-core.js"></script><script>
+<script src="/js/logistica-facil-core.js"></script><script>
 (function(){var C=JGM4Calc,pass=0,fail=0,out=document.querySelector("#results");
 function near(a,b){return Math.abs(a-b)<1e-7}
 function t(name,fn){var li=document.createElement("li");try{if(!fn())throw Error("valor inesperado");li.textContent="OK — "+name;pass++}catch(e){li.textContent="FALHA — "+name+" — "+e.message;fail++}out.appendChild(li)}
