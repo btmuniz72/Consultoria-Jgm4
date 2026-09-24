@@ -225,7 +225,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const section = document.createElement('section');
   section.className = 'content';
   section.id = 'docacerta-international';
-  section.innerHTML = `<div class="wrap"><div class="head"><small>${copy.eyebrow}</small><h2>${copy.title}</h2><p>${copy.text}</p></div><div class="grid">${copy.items.map((item,index)=>`<div class="card"><i class="fa-solid ${index===0?'fa-calendar-check':index===1?'fa-truck-ramp-box':'fa-arrow-up-right-from-square'}"></i><h3>${item[0]}</h3><p>${item[1]}</p>${index===2?`<a class="btn" href="https://docacerta.com.br/home" target="_blank" rel="noopener noreferrer">${copy.button}</a>`:''}</div>`).join('')}</div></div>`;
+  section.innerHTML = `<div class="wrap"><div class="head"><small>${copy.eyebrow}</small><h2>${copy.title}</h2><p>${copy.text}</p></div><div class="grid">${copy.items.map((item,index)=>`<div class="card"><i class="fa-solid ${index===0?'fa-calendar-check':index===1?'fa-truck-ramp-box':'fa-arrow-up-right-from-square'}"></i><h3>${item[0]}</h3><p>${item[1]}</p>${index===2?`<a class="btn" href="https://docacerta.com.br/" target="_blank" rel="noopener noreferrer">${copy.button}</a>`:''}</div>`).join('')}</div></div>`;
   target.before(section);
 });
 

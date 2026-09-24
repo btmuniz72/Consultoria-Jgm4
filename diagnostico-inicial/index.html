@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Pré-diagnóstico inicial | JGM4 Consultoria</title>
+  <link rel="stylesheet" href="../css/brand.css?v=20260919-1">
+  <link rel="stylesheet" href="./diagnostico-inicial.css?v=20260921-1">
+  <script src="../js/lgpd-consent.min.js" defer></script>
+  <script src="../js/measurement.js" defer></script>
+</head>
+<body>
+  <a class="di-skip" href="#conteudo">Pular para o conteúdo</a>
+  <header class="di-header">
+    <a href="../" aria-label="Página inicial JGM4"><picture class="brand-logo-picture brand-logo-picture-header"><source media="(max-width: 768px)" srcset="../assets/brand/logo-jgm4-compacta-nova.png" type="image/png"><img src="../assets/brand/logo-jgm4-horizontal-nova.png" alt="JGM4 Consultoria Logística" class="brand-logo" width="1536" height="1024" decoding="async"></picture></a>
+    <span class="di-private-label">Pré-Diagnóstico</span>
+  </header>
+  <main id="conteudo" class="di-shell">
+    <section id="intro" class="di-intro" aria-labelledby="intro-title">
+      <span class="di-kicker">Antes da primeira reunião</span>
+      <h1 id="intro-title">Vamos entender seu desafio</h1>
+      <p>Responda algumas perguntas rápidas para que nossa primeira conversa seja mais objetiva e produtiva.</p>
+      <span class="di-time">Leva cerca de 2 minutos.</span>
+      <button class="di-button" id="start-button" type="button">Começar</button>
+    </section>
+    <section id="wizard" class="di-wizard" hidden aria-labelledby="step-title">
+      <div class="di-progress-head"><span id="step-counter">Etapa 1 de 9</span><span id="progress-percent">11%</span></div>
+      <div class="di-progress" aria-hidden="true"><span id="progress-bar"></span></div>
+      <form id="diagnostico-form" novalidate>
+        <input type="text" name="website" class="di-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <fieldset class="di-step" data-step="1">
+          <legend id="step-title">Quem participará da nossa conversa?</legend><p class="di-help">Usaremos estes dados apenas para preparar e confirmar o contato.</p>
+          <div class="di-fields di-fields-two">
+            <label>Nome<input name="name" autocomplete="name" maxlength="120" required></label>
+            <label>Empresa<input name="company" autocomplete="organization" maxlength="160" required></label>
+            <label>Cargo ou função <span>(opcional)</span><input name="role" autocomplete="organization-title" maxlength="100"></label>
+            <label>E-mail<input type="email" name="email" autocomplete="email" maxlength="254" required></label>
+            <label>WhatsApp<input name="phone" autocomplete="tel" inputmode="tel" maxlength="30" required></label>
+          </div>
+        </fieldset>
+        <fieldset class="di-step" data-step="2" hidden>
+          <legend>O que mais motivou você a conversar com a JGM4?</legend>
+          <div class="di-options">
+            <label><input type="radio" name="main_reason" value="Reduzir custos" required><span>Reduzir custos</span></label>
+            <label><input type="radio" name="main_reason" value="Melhorar estoque ou inventário"><span>Melhorar estoque ou inventário</span></label>
+            <label><input type="radio" name="main_reason" value="Melhorar fretes e transportes"><span>Melhorar fretes e transportes</span></label>
+            <label><input type="radio" name="main_reason" value="Implantar ou melhorar WMS, ERP ou TMS"><span>Implantar ou melhorar WMS, ERP ou TMS</span></label>
+            <label><input type="radio" name="main_reason" value="Melhorar produtividade, layout ou operação do CD"><span>Melhorar produtividade, layout ou operação do CD</span></label>
+            <label><input type="radio" name="main_reason" value="Apoio na gestão logística"><span>Apoio na gestão logística</span></label>
+            <label><input type="radio" name="main_reason" value="Temos vários problemas e precisamos de um diagnóstico geral"><span>Temos vários problemas e precisamos de um diagnóstico geral</span></label>
+            <label><input type="radio" name="main_reason" value="Outro"><span>Outro</span></label>
+          </div>
+          <label class="di-conditional" id="reason-other-wrap" hidden>Conte-nos em poucas palavras<input name="reason_other" maxlength="180"></label>
+        </fieldset>
+        <fieldset class="di-step" data-step="3" hidden>
+          <legend>Qual situação melhor representa o momento atual da empresa?</legend>
+          <div class="di-options">
+            <label><input type="radio" name="company_moment" value="Temos um problema específico que precisamos resolver" required><span>Temos um problema específico que precisamos resolver</span></label>
+            <label><input type="radio" name="company_moment" value="Sabemos que existem oportunidades de melhoria, mas ainda não sabemos exatamente onde"><span>Sabemos que existem oportunidades de melhoria, mas ainda não sabemos exatamente onde</span></label>
+            <label><input type="radio" name="company_moment" value="Estamos crescendo e precisamos organizar melhor a operação"><span>Estamos crescendo e precisamos organizar melhor a operação</span></label>
+            <label><input type="radio" name="company_moment" value="Precisamos reduzir custos"><span>Precisamos reduzir custos</span></label>
+            <label><input type="radio" name="company_moment" value="Estamos implantando ou mudando sistemas"><span>Estamos implantando ou mudando sistemas</span></label>
+            <label><input type="radio" name="company_moment" value="Estamos mudando ou estruturando um centro de distribuição"><span>Estamos mudando ou estruturando um centro de distribuição</span></label>
+            <label><input type="radio" name="company_moment" value="Precisamos melhorar a gestão da operação"><span>Precisamos melhorar a gestão da operação</span></label>
+            <label><input type="radio" name="company_moment" value="Outro"><span>Outro</span></label>
+          </div>
+        </fieldset>
+        <fieldset class="di-step" data-step="4" hidden>
+          <legend>Em poucas palavras, o que está acontecendo hoje?</legend><p class="di-help">Conte apenas o que fizer sentido compartilhar neste momento.</p>
+          <label><span class="di-sr-only">Desafio principal</span><textarea name="challenge" rows="5" maxlength="700" required placeholder="Ex.: custos aumentando, divergências de estoque, atrasos, baixa produtividade, dificuldade com sistemas, problemas com transportadoras..."></textarea></label>
+          <div class="di-count"><span id="challenge-count">0</span>/700</div>
+        </fieldset>
+        <fieldset class="di-step" data-step="5" hidden>
+          <legend>Esse cenário já está causando algum impacto para a empresa?</legend><p class="di-help">Você pode escolher mais de uma opção.</p>
+          <div class="di-options di-options-checks">
+            <label><input type="checkbox" name="impacts[]" value="Aumento de custos"><span>Aumento de custos</span></label><label><input type="checkbox" name="impacts[]" value="Atrasos"><span>Atrasos</span></label><label><input type="checkbox" name="impacts[]" value="Retrabalho"><span>Retrabalho</span></label><label><input type="checkbox" name="impacts[]" value="Perdas ou avarias"><span>Perdas ou avarias</span></label><label><input type="checkbox" name="impacts[]" value="Problemas de estoque"><span>Problemas de estoque</span></label><label><input type="checkbox" name="impacts[]" value="Reclamações de clientes"><span>Reclamações de clientes</span></label><label><input type="checkbox" name="impacts[]" value="Baixa produtividade"><span>Baixa produtividade</span></label><label><input type="checkbox" name="impacts[]" value="Excesso de horas extras"><span>Excesso de horas extras</span></label><label><input type="checkbox" name="impacts[]" value="Dificuldade de gestão"><span>Dificuldade de gestão</span></label><label><input type="checkbox" name="impacts[]" value="Problemas com sistemas"><span>Problemas com sistemas</span></label><label><input type="checkbox" name="impacts[]" value="Ainda não conseguimos medir"><span>Ainda não conseguimos medir</span></label><label><input type="checkbox" name="impacts[]" value="Outro"><span>Outro</span></label>
+          </div>
+        </fieldset>
+        <fieldset class="di-step" data-step="6" hidden>
+          <legend>Para termos uma noção do tamanho da operação</legend><p class="di-help">Valores aproximados já são suficientes.</p>
+          <div class="di-fields di-fields-two"><label>Colaboradores na operação<input name="operation_people" inputmode="numeric" maxlength="20"></label><label>Unidades ou CDs<input name="operation_units" inputmode="numeric" maxlength="20"></label></div>
+          <div class="di-topic-panel" data-topic="Reduzir custos"><h3>Sobre redução de custos</h3><label>Qual custo mais preocupa atualmente?<select name="cost_focus"><option value="">Selecione</option><option>Fretes</option><option>Mão de obra</option><option>Estoque</option><option>Armazenagem</option><option>Perdas/retrabalho</option><option>Custos operacionais em geral</option><option>Ainda não sabemos exatamente onde está o maior custo</option></select></label><label>Estimativa mensal envolvida<select name="cost_range"><option value="">Não sabemos / prefiro informar na reunião</option><option>Até R$ 50 mil</option><option>R$ 50 mil a R$ 200 mil</option><option>R$ 200 mil a R$ 500 mil</option><option>R$ 500 mil a R$ 1 milhão</option><option>Acima de R$ 1 milhão</option></select></label></div>
+          <div class="di-topic-panel" data-topic="Melhorar estoque ou inventário"><h3>Sobre estoque e inventário</h3><label>Quantidade aproximada de SKUs ativos<select name="sku_range"><option value="">Selecione</option><option>Até 500</option><option>500 a 2.000</option><option>2.000 a 10.000</option><option>Acima de 10.000</option><option>Não sabemos</option></select></label><label>Maior dificuldade hoje<select name="stock_focus"><option value="">Selecione</option><option>Divergência de estoque</option><option>Inventário</option><option>Endereçamento</option><option>Cadastro de produtos</option><option>Picking</option><option>Lote/validade</option><option>Estoque parado</option><option>Falta de indicadores</option><option>Outro</option></select></label></div>
+          <div class="di-topic-panel" data-topic="Melhorar fretes e transportes"><h3>Sobre fretes e transportes</h3><label>Como é realizada a maior parte das entregas?<select name="delivery_model"><option value="">Selecione</option><option>Transportadoras terceirizadas</option><option>Frota própria</option><option>Operação mista</option></select></label><label>Principal desafio<select name="transport_focus"><option value="">Selecione</option><option>Custo de frete</option><option>Tabelas e negociações</option><option>Escolha de transportadoras</option><option>Atrasos/SLA</option><option>Auditoria de cobrança</option><option>Rastreamento</option><option>Devoluções/reentregas</option><option>Outro</option></select></label></div>
+          <div class="di-topic-panel" data-topic="Implantar ou melhorar WMS, ERP ou TMS"><h3>Sobre sistemas</h3><label>Qual situação melhor descreve o cenário?<select name="system_situation"><option value="">Selecione</option><option>Queremos implantar um novo sistema</option><option>Já temos o sistema, mas utilizamos pouco</option><option>Estamos trocando de sistema</option><option>Temos problemas de integração</option><option>Temos problemas de cadastro/dados</option><option>Não sabemos exatamente qual solução precisamos</option></select></label><label>Quais sistemas são utilizados atualmente?<input name="current_systems" maxlength="180"></label></div>
+          <div class="di-topic-panel" data-topic="Melhorar produtividade, layout ou operação do CD"><h3>Sobre CD, layout e produtividade</h3><label>Principal desafio<select name="dc_focus"><option value="">Selecione</option><option>Falta de espaço</option><option>Layout</option><option>Baixa produtividade</option><option>Fluxos inadequados</option><option>Crescimento da operação</option><option>Mudança para novo CD</option><option>Dimensionamento de equipe</option><option>Equipamentos</option><option>Outro</option></select></label><label>Área aproximada do CD<input name="dc_area" maxlength="80"></label></div>
+          <div class="di-topic-panel" data-topic="Apoio na gestão logística"><h3>Sobre gestão logística</h3><label>Principal necessidade<select name="management_focus"><option value="">Selecione</option><option>Estruturar indicadores</option><option>Melhorar produtividade da equipe</option><option>Criar rotinas de gestão</option><option>Apoiar ou desenvolver lideranças</option><option>Organizar processos</option><option>Controlar custos</option><option>Apoio temporário na gestão</option><option>Outro</option></select></label></div>
+          <div class="di-topic-panel" data-topic="Temos vários problemas e precisamos de um diagnóstico geral"><h3>Uma visão geral</h3><p class="di-help">Onde você percebe mais dificuldades? Você pode escolher mais de uma opção.</p><div class="di-options di-options-checks"><label><input type="checkbox" name="general_areas[]" value="Pessoas"><span>Pessoas</span></label><label><input type="checkbox" name="general_areas[]" value="Processos"><span>Processos</span></label><label><input type="checkbox" name="general_areas[]" value="Sistemas"><span>Sistemas</span></label><label><input type="checkbox" name="general_areas[]" value="Estoque"><span>Estoque</span></label><label><input type="checkbox" name="general_areas[]" value="Transportes"><span>Transportes</span></label><label><input type="checkbox" name="general_areas[]" value="Custos"><span>Custos</span></label><label><input type="checkbox" name="general_areas[]" value="Infraestrutura"><span>Infraestrutura</span></label><label><input type="checkbox" name="general_areas[]" value="Gestão"><span>Gestão</span></label><label><input type="checkbox" name="general_areas[]" value="Não sabemos identificar"><span>Não sabemos identificar</span></label></div></div>
+        </fieldset>
+        <fieldset class="di-step" data-step="7" hidden>
+          <legend>Existe alguma urgência ou data importante?</legend>
+          <div class="di-options"><label><input type="radio" name="urgency" value="Precisamos iniciar o quanto antes" required><span>Precisamos iniciar o quanto antes</span></label><label><input type="radio" name="urgency" value="Próximos 30 dias"><span>Próximos 30 dias</span></label><label><input type="radio" name="urgency" value="Entre 30 e 90 dias"><span>Entre 30 e 90 dias</span></label><label><input type="radio" name="urgency" value="Acima de 90 dias"><span>Acima de 90 dias</span></label><label><input type="radio" name="urgency" value="Ainda estamos avaliando"><span>Ainda estamos avaliando</span></label></div>
+          <label>Existe alguma data ou evento importante? <span>(opcional)</span><input name="important_date" maxlength="180" placeholder="Ex.: inventário, mudança de CD, implantação de sistema ou pico sazonal"></label>
+        </fieldset>
+        <fieldset class="di-step" data-step="8" hidden><legend>O que você gostaria que estivesse melhor ao final desse trabalho?</legend><label><span class="di-sr-only">Resultado esperado</span><textarea name="expectation" rows="5" maxlength="600" required placeholder="Conte-nos qual resultado você espera alcançar."></textarea></label></fieldset>
+        <fieldset class="di-step" data-step="9" hidden><legend>Confira suas informações</legend><p class="di-help">Você ainda pode voltar e editar qualquer resposta.</p><div id="review" class="di-review"></div><label class="di-consent"><input type="checkbox" name="consent" value="1" required><span>Autorizo a JGM4 Consultoria a utilizar as informações fornecidas exclusivamente para analisar esta solicitação, entrar em contato e preparar a reunião ou eventual proposta comercial, conforme a <a href="../pages/politica.html" target="_blank" rel="noopener">Política de Privacidade</a>.</span></label></fieldset>
+        <div id="form-error" class="di-form-error" role="alert" hidden></div>
+        <div class="di-actions"><button class="di-button di-secondary" id="back-button" type="button">Voltar</button><button class="di-button" id="next-button" type="button">Continuar</button></div>
+      </form>
+    </section>
+    <section id="success" class="di-success" hidden aria-labelledby="success-title"><span class="di-success-mark" aria-hidden="true">✓</span><h2 id="success-title">Obrigado! Já temos uma primeira visão do seu cenário.</h2><p>Essas informações serão utilizadas pela JGM4 para preparar melhor nossa conversa.</p><p>Durante a reunião vamos aprofundar apenas os pontos realmente importantes para entender sua operação e avaliar os próximos passos.</p><p>Você não precisa preparar nenhuma apresentação adicional, salvo se já houver algum material que considere importante compartilhar conosco.</p><a class="di-button" href="../">Voltar para o site da JGM4</a></section>
+  </main>
+  <footer class="di-footer">
+    <strong>JGM4 Consultoria Logística</strong>
+    <span>Atendimento em todo o Brasil</span>
+    <a href="../pages/politica.html">Política de Privacidade</a>
+  </footer>
+  <script src="./diagnostico-inicial.js?v=20260921-1" defer></script>
+</body>
+</html>
