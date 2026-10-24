@@ -1,0 +1,25 @@
+Empresa: longoevitech.com.br
+Nome: Marcos Bigal
+Cargo/Função: Diretor
+E-mail: marcosbigal@longevitech.com.br
+WhatsApp: 11971561916
+Tema principal: Reduzir custos
+Momento da empresa: Precisamos reduzir custos
+Desafio relatado: Custos logísticos estão aumentado de forma acelerada, mesmo atuando em diversas frentes, como frete dedicado, despacho de mercadoria com transportadoras específicas de atuação regional, nosso frete ainda tem subido %.
+Impactos: Aumento de custos, Retrabalho
+Colaboradores na operação: 20
+Unidades/CDs: 1
+Custo que preocupa: Fretes
+Faixa mensal estimada: Até R$ 50 mil
+Faixa de SKUs: Até 500
+Dificuldade de estoque: Outro
+Modelo de entregas: Transportadoras terceirizadas
+Desafio de transportes: Custo de frete
+Situação dos sistemas: Não sabemos exatamente qual solução precisamos
+Sistemas atuais: Erp = Bling, não temos sistema específico para logística.
+Desafio do CD: Outro
+Área aproximada do CD: 1500
+Necessidade de gestão: Outro
+Áreas com dificuldade: Transportes
+Urgência: Ainda estamos avaliando
+Objetivo esperado: Redução de custo logistico
