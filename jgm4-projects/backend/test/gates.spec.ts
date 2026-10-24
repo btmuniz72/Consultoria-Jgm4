@@ -1,0 +1,51 @@
+import 'reflect-metadata';
+import { config } from 'dotenv';
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { randomUUID } from 'node:crypto';
+import { Pool } from 'pg';
+import { INestApplication } from '@nestjs/common';
+import { Test } from '@nestjs/testing';
+import request from 'supertest';
+import { AppModule } from '../src/app.module';
+import { configureApp } from '../src/configure-app';
+import { PrismaService } from '../src/prisma/prisma.service';
+
+config({ path: resolve(__dirname, '../../.env'), quiet: true });
+describe('Etapa 4 — decisão formal dos Gates', () => {
+  const schema = `jgm4_stage4_test_${randomUUID().replaceAll('-', '')}`; const originalUrl = process.env.DATABASE_URL!; const originalActor = process.env.JGM4_LOCAL_ACTOR;
+  const pool = new Pool({ connectionString: originalUrl }); let app: INestApplication; let prisma: PrismaService; let projectId: string; let gateId: string; let phase0: string; let phase1: string; let taskId: string; let nextTaskId: string; let nextGateIdValue: string; let reqId: string; let manualId: string;
+  const gate = (action:string) => `/api/gates/${gateId}/${action}`; let finalGateId: string; let finalPhaseId: string;
+  beforeAll(async()=>{
+    const client=await pool.connect();try{await client.query(`CREATE SCHEMA "${schema}"`);await client.query(`SET search_path TO "${schema}"`);for(const folder of ['20261022000100_initial','20261022000200_requests','20261023000100_task_workflow','20261023000200_gates']){const migration=readFileSync(resolve(__dirname,`../prisma/migrations/${folder}/migration.sql`),'utf8');if(folder==='20261023000200_gates'){const boundary=migration.indexOf('-- The first phase remains');await client.query(migration.slice(0,boundary));await client.query(migration.slice(boundary));}else await client.query(migration);}}finally{client.release();}
+    const url=new URL(originalUrl);url.searchParams.set('schema',schema);process.env.DATABASE_URL=url.toString();process.env.JGM4_LOCAL_ACTOR='JGM4';
+    const moduleRef=await Test.createTestingModule({imports:[AppModule]}).compile();app=moduleRef.createNestApplication();configureApp(app);await app.init();prisma=app.get(PrismaService);
+    const company=await prisma.company.create({data:{name:'Fixture Etapa 4'}});projectId=(await prisma.project.create({data:{companyId:company.id,name:'Gate test',description:'Fixture'}})).id;
+    phase0=(await prisma.phase.create({data:{projectId,order:0,name:'Fase 0',description:'Base',plannedWeeks:3,plannedJgm4Hours:36,status:'AVAILABLE'}})).id;
+    phase1=(await prisma.phase.create({data:{projectId,order:1,name:'Fase 1',description:'Controle',plannedWeeks:3,plannedJgm4Hours:39,status:'LOCKED'}})).id;
+    const g=await prisma.gate.create({data:{projectId,phaseId:phase0,code:'GATE-0',title:'Base organizada',question:'Base suficiente?'}});gateId=g.id;
+    const nextGate=await prisma.gate.create({data:{projectId,phaseId:phase1,code:'GATE-1',title:'Controle funcionando',question:'Controle funciona?'}});nextGateIdValue=nextGate.id;
+    const t=await prisma.task.create({data:{projectId,phaseId:phase0,code:'C00',title:'Concluída',objective:'Teste',instructions:'Teste',acceptanceCriteria:'Teste',status:'COMPLETED'}});taskId=t.id;
+    const n=await prisma.task.create({data:{projectId,phaseId:phase1,code:'C10',title:'Futura',objective:'Teste',instructions:'Teste',acceptanceCriteria:'Teste',status:'BLOCKED',blockedByGateId:g.id}});nextTaskId=n.id;
+    const r=await prisma.projectRequest.create({data:{projectId,phaseId:phase0,code:'SOL-TEST',title:'Solicitação bloqueante',description:'Teste',instructions:'Teste',status:'JGM4_REVIEW',mandatory:true,blocking:true,acceptanceCriteria:'Teste'}});reqId=r.id;
+    manualId=(await prisma.gateCriterion.create({data:{gateId,code:'G0-C01',description:'Responsáveis definidos',sourceType:'MANUAL'}})).id;
+    await prisma.gateCriterion.createMany({data:[{gateId,code:'G0-C08',description:'Atividades concluídas',sourceType:'TASK'},{gateId,code:'G0-C09',description:'Solicitações aceitas',sourceType:'REQUEST'}]});
+    const phase2=(await prisma.phase.create({data:{projectId,order:2,name:'Fase 2',description:'Processos',plannedWeeks:4,plannedJgm4Hours:47,status:'LOCKED'}})).id;
+    const phase3=(await prisma.phase.create({data:{projectId,order:3,name:'Fase 3',description:'Governança',plannedWeeks:3,plannedJgm4Hours:39,status:'LOCKED'}})).id;
+    finalPhaseId=(await prisma.phase.create({data:{projectId,order:4,name:'Fase 4',description:'Estabilização',plannedWeeks:3,plannedJgm4Hours:37,status:'LOCKED'}})).id;
+    const finalGate=await prisma.gate.create({data:{projectId,phaseId:finalPhaseId,code:'GATE-4',title:'Operação estabilizada',question:'Operação sustentável?',status:'TECHNICALLY_APPROVED',technicalRecommendation:'ADVANCE'}});finalGateId=finalGate.id;
+    await prisma.task.create({data:{projectId,phaseId:finalPhaseId,code:'C40',title:'Finalizada',objective:'Teste',instructions:'Teste',acceptanceCriteria:'Teste',status:'COMPLETED'}});
+    void phase2; void phase3;
+  },60000);
+  afterAll(async()=>{if(app)await app.close();process.env.DATABASE_URL=originalUrl;if(originalActor===undefined)delete process.env.JGM4_LOCAL_ACTOR;else process.env.JGM4_LOCAL_ACTOR=originalActor;const client=await pool.connect();try{await client.query(`DROP SCHEMA IF EXISTS "${schema}" CASCADE`)}finally{client.release();await pool.end()}});
+  it('mantém Gate bloqueado enquanto uma solicitação obrigatória estiver pendente',async()=>{const {body}=await request(app.getHttpServer()).get(`/api/projects/${projectId}/gates/${gateId}`).expect(200);expect(body.status).toBe('BLOCKED');});
+  it('Gate futuro também fica bloqueado enquanto suas atividades não terminam',async()=>{const {body}=await request(app.getHttpServer()).get(`/api/projects/${projectId}/gates/${nextGateIdValue}`).expect(200);expect(body.status).toBe('BLOCKED');expect(body.phase.status).toBe('LOCKED');});
+  it('aceitar a última solicitação disponibiliza Gate e atualiza critério automático',async()=>{await request(app.getHttpServer()).post(`/api/projects/${projectId}/requests/${reqId}/accept`).send({}).expect(200);const {body}=await request(app.getHttpServer()).get(`/api/projects/${projectId}/gates/${gateId}`).expect(200);expect(body.status).toBe('AVAILABLE');expect(body.criteria.find((c:any)=>c.code==='G0-C09').satisfied).toBe(true);});
+  it('somente JGM4 inicia a revisão e critério automático não pode ser editado manualmente',async()=>{process.env.JGM4_LOCAL_ACTOR='CLIENT';await request(app.getHttpServer()).post(gate('start-review')).send({}).expect(403);process.env.JGM4_LOCAL_ACTOR='JGM4';await request(app.getHttpServer()).post(gate('start-review')).send({}).expect(201);const auto=await prisma.gateCriterion.findFirstOrThrow({where:{gateId,code:'G0-C08'}});await request(app.getHttpServer()).post(gate('criteria')).send({criterionId:auto.id,satisfied:true}).expect(400);});
+  it('não emite parecer favorável com critério obrigatório manual pendente',async()=>{await request(app.getHttpServer()).post(gate('technical-opinion')).send({technicalRecommendation:'ADVANCE',technicalOpinion:'Favorável'}).expect(409);});
+  it('correção não libera fase futura e JGM4 pode retomar análise',async()=>{await request(app.getHttpServer()).post(gate('request-correction')).send({correctionReason:'Evidência faltante',correctionInstructions:'Completar levantamento'}).expect(201);expect((await prisma.phase.findUniqueOrThrow({where:{id:phase1}})).status).toBe('LOCKED');await request(app.getHttpServer()).post(gate('resume-review')).send({}).expect(201);});
+  it('parecer técnico favorável sozinho não libera fase; aprovação Ollem libera fase e atividade',async()=>{await request(app.getHttpServer()).post(gate('criteria')).send({criterionId:manualId,satisfied:true}).expect(201);await request(app.getHttpServer()).post(gate('technical-opinion')).send({technicalRecommendation:'ADVANCE',technicalOpinion:'Critérios e evidências atendidos.'}).expect(201);expect((await prisma.phase.findUniqueOrThrow({where:{id:phase1}})).status).toBe('LOCKED');process.env.JGM4_LOCAL_ACTOR='JGM4';await request(app.getHttpServer()).post(gate('client-decision')).send({clientDecision:'APPROVE'}).expect(403);process.env.JGM4_LOCAL_ACTOR='CLIENT';await request(app.getHttpServer()).post(gate('client-decision')).send({clientDecision:'APPROVE',comment:'Avançar'}).expect(201);expect((await prisma.phase.findUniqueOrThrow({where:{id:phase0}})).status).toBe('COMPLETED');expect((await prisma.phase.findUniqueOrThrow({where:{id:phase1}})).status).toBe('AVAILABLE');expect((await prisma.task.findUniqueOrThrow({where:{id:nextTaskId}})).status).toBe('RELEASED');});
+  it('bloqueia início de atividade enquanto a fase ainda estiver bloqueada',async()=>{await prisma.phase.update({where:{id:phase1},data:{status:'LOCKED'}});await request(app.getHttpServer()).post(`/api/tasks/${nextTaskId}/start`).send({}).expect(409);});
+  it('audita aprovação formal e liberação de fase',async()=>{expect(await prisma.auditLog.count({where:{projectId,entityType:'Gate',entityId:gateId,action:'CLIENT_DECISION'}})).toBe(1);expect(await prisma.auditLog.count({where:{projectId,entityType:'Phase',action:'PHASE_RELEASED'}})).toBe(1);});
+  it('Gate 4 aprovado conclui a implantação',async()=>{process.env.JGM4_LOCAL_ACTOR='CLIENT';await request(app.getHttpServer()).post(`/api/gates/${finalGateId}/client-decision`).send({clientDecision:'APPROVE'}).expect(201);expect((await prisma.project.findUniqueOrThrow({where:{id:projectId}})).status).toBe('IMPLEMENTATION_COMPLETED');expect((await prisma.phase.findUniqueOrThrow({where:{id:finalPhaseId}})).status).toBe('COMPLETED');});
+});

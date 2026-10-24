@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.angular/
+coverage/
+.local/
+.env
+.env.*
+!.env.example
+*.log
+backend/src/generated/
+playwright-report/
+test-results/

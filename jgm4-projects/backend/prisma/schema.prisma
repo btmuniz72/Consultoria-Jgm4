@@ -1,0 +1,412 @@
+generator client {
+  provider     = "prisma-client"
+  output       = "../src/generated/prisma"
+  moduleFormat = "cjs"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  JGM4_ADMIN
+  JGM4_CONSULTANT
+  CLIENT_SPONSOR
+  CLIENT_MANAGER
+  CLIENT_USER
+}
+
+enum ProjectStatus {
+  PLANNED
+  IN_PROGRESS
+  COMPLETED
+  IMPLEMENTATION_COMPLETED
+}
+
+enum PhaseStatus {
+  BLOCKED
+  LOCKED
+  AVAILABLE
+  IN_PROGRESS
+  COMPLETED
+  WAITING_GATE
+}
+
+enum GateStatus {
+  BLOCKED
+  AVAILABLE
+  UNDER_REVIEW
+  CORRECTION_REQUIRED
+  TECHNICALLY_APPROVED
+  APPROVED
+  REJECTED
+  CLOSED
+}
+
+enum GateRecommendation {
+  ADVANCE
+  DO_NOT_ADVANCE
+}
+enum GateClientDecision {
+  APPROVE
+  HOLD
+  REJECT
+}
+enum GateCriterionSource {
+  TASK
+  REQUEST
+  MANUAL
+  INDICATOR
+  DOCUMENT
+}
+
+enum TaskStatus {
+  NOT_STARTED
+  BLOCKED
+  RELEASED
+  IN_PROGRESS
+  WAITING_EVIDENCE
+  WAITING_JGM4_VALIDATION
+  ADJUSTMENT_REQUESTED
+  VALIDATED
+  COMPLETED
+  CANCELLED
+}
+
+enum ResponsibilityType {
+  CLIENT
+  JGM4
+  JOINT
+}
+
+enum TimeEntryOrganization {
+  JGM4
+  CLIENT
+}
+
+enum RequestStatus {
+  PLANNED
+  BLOCKED
+  AVAILABLE
+  REQUESTED
+  CLIENT_PREPARING
+  SENT_TO_JGM4
+  JGM4_REVIEW
+  ADJUSTMENT_REQUESTED
+  ACCEPTED
+  CANCELLED
+}
+
+model Company {
+  id        String    @id @default(uuid()) @db.Uuid
+  name      String
+  document  String?   @unique
+  active    Boolean   @default(true)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  users     User[]
+  projects  Project[]
+}
+
+model User {
+  id                        String               @id @default(uuid()) @db.Uuid
+  name                      String
+  email                     String               @unique
+  passwordHash              String
+  role                      UserRole
+  companyId                 String?              @db.Uuid
+  active                    Boolean              @default(true)
+  createdAt                 DateTime             @default(now())
+  updatedAt                 DateTime             @updatedAt
+  company                   Company?             @relation(fields: [companyId], references: [id], onDelete: Restrict)
+  sponsoredProjects         Project[]            @relation("ProjectSponsor")
+  assignedTasks             Task[]
+  clientResponsibleTasks    Task[]               @relation("TaskClientResponsible")
+  jgm4ResponsibleTasks      Task[]               @relation("TaskJgm4Responsible")
+  currentOwnerTasks         Task[]               @relation("TaskCurrentOwner")
+  responsibleRequests       ProjectRequest[]     @relation("RequestResponsible")
+  createdRequests           ProjectRequest[]     @relation("RequestCreator")
+  completedRequirements     RequestRequirement[]
+  completedTaskRequirements TaskRequirement[]
+  timeEntries               TimeEntry[]
+  taskEvidence              TaskEvidence[]
+  auditLogs                 AuditLog[]
+
+  @@index([companyId])
+}
+
+model Project {
+  id               String           @id @default(uuid()) @db.Uuid
+  companyId        String           @db.Uuid
+  name             String
+  description      String
+  methodology      String           @default("PLANO_C")
+  status           ProjectStatus    @default(PLANNED)
+  plannedStartDate DateTime?        @db.Date
+  plannedEndDate   DateTime?        @db.Date
+  actualStartDate  DateTime?        @db.Date
+  actualEndDate    DateTime?        @db.Date
+  sponsorUserId    String?          @db.Uuid
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+  company          Company          @relation(fields: [companyId], references: [id], onDelete: Restrict)
+  sponsor          User?            @relation("ProjectSponsor", fields: [sponsorUserId], references: [id], onDelete: Restrict)
+  phases           Phase[]
+  gates            Gate[]
+  tasks            Task[]
+  requests         ProjectRequest[]
+  auditLogs        AuditLog[]
+  timeEntries      TimeEntry[]
+  taskEvidence     TaskEvidence[]
+
+  @@unique([companyId, name])
+  @@index([companyId, status])
+}
+
+model Phase {
+  id               String           @id @default(uuid()) @db.Uuid
+  projectId        String           @db.Uuid
+  order            Int
+  name             String
+  description      String
+  plannedWeeks     Int
+  plannedJgm4Hours Int
+  status           PhaseStatus      @default(LOCKED)
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+  project          Project          @relation(fields: [projectId], references: [id], onDelete: Restrict)
+  gate             Gate?
+  tasks            Task[]
+  requests         ProjectRequest[]
+  timeEntries      TimeEntry[]
+  evidence         TaskEvidence[]
+  actualStartDate DateTime? @db.Date
+  actualEndDate DateTime? @db.Date
+  plannedStartDate DateTime? @db.Date
+  plannedEndDate DateTime? @db.Date
+  plannedClientHours Decimal? @db.Decimal(8, 2)
+
+  @@unique([projectId, order])
+  @@unique([projectId, id])
+}
+
+model Gate {
+  id               String     @id @default(uuid()) @db.Uuid
+  projectId        String     @db.Uuid
+  phaseId          String     @unique @db.Uuid
+  code             String
+  title            String
+  question         String
+  status           GateStatus @default(BLOCKED)
+  technicalOpinion String?
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+  project          Project    @relation(fields: [projectId], references: [id], onDelete: Restrict)
+  phase            Phase      @relation(fields: [projectId, phaseId], references: [projectId, id], onDelete: Restrict)
+  blockedTasks     Task[]
+  technicalRecommendation GateRecommendation?
+  technicalApprovedByUserId String? @db.Uuid
+  technicalApprovedAt DateTime?
+  clientDecision GateClientDecision?
+  clientDecisionComment String?
+  clientDecisionByUserId String? @db.Uuid
+  clientDecisionAt DateTime?
+  correctionReason String?
+  correctionInstructions String?
+  currentOwnerType String @default("SYSTEM")
+  currentOwnerUserId String? @db.Uuid
+  nextAction String?
+  nextActionDueDate DateTime? @db.Date
+  criteria GateCriterion[]
+
+  @@unique([projectId, code])
+  @@unique([projectId, phaseId])
+}
+
+model GateCriterion {
+  id String @id @default(uuid()) @db.Uuid
+  gateId String @db.Uuid
+  code String
+  description String
+  mandatory Boolean @default(true)
+  satisfied Boolean @default(false)
+  satisfiedAt DateTime?
+  satisfiedByUserId String? @db.Uuid
+  sourceType GateCriterionSource?
+  sourceEntityId String? @db.Uuid
+  evidenceRequired Boolean @default(false)
+  evidenceReference String?
+  order Int @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  gate Gate @relation(fields: [gateId], references: [id], onDelete: Restrict)
+  @@unique([gateId, code])
+  @@index([gateId, order])
+}
+
+model Task {
+  id                      String             @id @default(uuid()) @db.Uuid
+  projectId               String             @db.Uuid
+  phaseId                 String             @db.Uuid
+  code                    String
+  title                   String
+  objective               String
+  instructions            String
+  description             String?
+  responsibilityType      ResponsibilityType @default(JOINT)
+  clientResponsibleUserId String?            @db.Uuid
+  jgm4ResponsibleUserId   String?            @db.Uuid
+  plannedStartDate        DateTime?          @db.Date
+  plannedEndDate          DateTime?          @db.Date
+  actualStartDate         DateTime?
+  actualEndDate           DateTime?
+  predecessorTaskId       String?            @db.Uuid
+  blockedByGateId         String?            @db.Uuid
+  acceptanceCriteria      String
+  responsibleUserId       String?            @db.Uuid
+  plannedJgm4Hours        Decimal?           @db.Decimal(8, 2)
+  plannedClientHours      Decimal?           @db.Decimal(8, 2)
+  currentOwnerType        String             @default("SYSTEM")
+  currentOwnerUserId      String?            @db.Uuid
+  nextAction              String?
+  nextActionDueDate       DateTime?          @db.Date
+  version                 Int                @default(0)
+  status                  TaskStatus         @default(NOT_STARTED)
+  createdAt               DateTime           @default(now())
+  updatedAt               DateTime           @updatedAt
+  project                 Project            @relation(fields: [projectId], references: [id], onDelete: Restrict)
+  phase                   Phase              @relation(fields: [projectId, phaseId], references: [projectId, id], onDelete: Restrict)
+  responsible             User?              @relation(fields: [responsibleUserId], references: [id], onDelete: Restrict)
+  clientResponsible       User?              @relation("TaskClientResponsible", fields: [clientResponsibleUserId], references: [id], onDelete: Restrict)
+  jgm4Responsible         User?              @relation("TaskJgm4Responsible", fields: [jgm4ResponsibleUserId], references: [id], onDelete: Restrict)
+  currentOwner            User?              @relation("TaskCurrentOwner", fields: [currentOwnerUserId], references: [id], onDelete: Restrict)
+  predecessor             Task?              @relation("TaskPredecessor", fields: [predecessorTaskId], references: [id], onDelete: Restrict)
+  successors              Task[]             @relation("TaskPredecessor")
+  gate                    Gate?              @relation(fields: [blockedByGateId], references: [id], onDelete: Restrict)
+  requests                ProjectRequest[]
+  requirements            TaskRequirement[]
+  timeEntries             TimeEntry[]
+  evidence                TaskEvidence[]
+
+  @@unique([projectId, code])
+  @@unique([projectId, phaseId, id])
+  @@index([projectId, phaseId])
+}
+
+model ProjectRequest {
+  id                   String               @id @default(uuid()) @db.Uuid
+  projectId            String               @db.Uuid
+  phaseId              String               @db.Uuid
+  taskId               String?              @db.Uuid
+  code                 String
+  title                String
+  description          String
+  instructions         String
+  clientResponsibleId  String?              @db.Uuid
+  dueDate              DateTime?            @db.Date
+  status               RequestStatus        @default(PLANNED)
+  mandatory            Boolean              @default(true)
+  blocking             Boolean              @default(false)
+  estimatedClientHours Decimal?             @db.Decimal(8, 2)
+  acceptanceCriteria   String
+  // Nulo para geração pelo sistema; não criar usuário fictício para o seed.
+  createdByUserId      String?              @db.Uuid
+  version              Int                  @default(0)
+  createdAt            DateTime             @default(now())
+  updatedAt            DateTime             @updatedAt
+  project              Project              @relation(fields: [projectId], references: [id], onDelete: Restrict)
+  phase                Phase                @relation(fields: [projectId, phaseId], references: [projectId, id], onDelete: Restrict)
+  task                 Task?                @relation(fields: [projectId, phaseId, taskId], references: [projectId, phaseId, id], onDelete: Restrict)
+  clientResponsible    User?                @relation("RequestResponsible", fields: [clientResponsibleId], references: [id], onDelete: Restrict)
+  createdBy            User?                @relation("RequestCreator", fields: [createdByUserId], references: [id], onDelete: Restrict)
+  requirements         RequestRequirement[]
+
+  @@unique([projectId, code])
+  @@index([projectId, status])
+  @@index([projectId, phaseId])
+  @@index([taskId])
+}
+
+model RequestRequirement {
+  id                String         @id @default(uuid()) @db.Uuid
+  requestId         String         @db.Uuid
+  label             String
+  description       String?
+  order             Int            @default(0)
+  required          Boolean        @default(true)
+  completed         Boolean        @default(false)
+  completedAt       DateTime?
+  completedByUserId String?        @db.Uuid
+  request           ProjectRequest @relation(fields: [requestId], references: [id], onDelete: Restrict)
+  completedBy       User?          @relation(fields: [completedByUserId], references: [id], onDelete: Restrict)
+
+  @@unique([requestId, label])
+}
+
+model AuditLog {
+  id         String   @id @default(uuid()) @db.Uuid
+  projectId  String   @db.Uuid
+  entityType String
+  entityId   String   @db.Uuid
+  action     String
+  oldValue   Json?
+  newValue   Json?
+  userId     String?  @db.Uuid
+  actorType  String   @default("SYSTEM")
+  createdAt  DateTime @default(now())
+  project    Project  @relation(fields: [projectId], references: [id], onDelete: Restrict)
+  user       User?    @relation(fields: [userId], references: [id], onDelete: Restrict)
+
+  @@index([projectId, entityType, entityId, createdAt])
+}
+
+model TaskRequirement {
+  id                String    @id @default(uuid()) @db.Uuid
+  taskId            String    @db.Uuid
+  label             String
+  required          Boolean   @default(true)
+  completed         Boolean   @default(false)
+  completedAt       DateTime?
+  completedByUserId String?   @db.Uuid
+  task              Task      @relation(fields: [taskId], references: [id], onDelete: Restrict)
+  completedBy       User?     @relation(fields: [completedByUserId], references: [id], onDelete: Restrict)
+
+  @@unique([taskId, label])
+}
+
+model TaskEvidence {
+  id              String   @id @default(uuid()) @db.Uuid
+  projectId       String   @db.Uuid
+  phaseId         String   @db.Uuid
+  taskId          String   @db.Uuid
+  description     String
+  referenceUrl    String?
+  createdAt       DateTime @default(now())
+  createdByUserId String?  @db.Uuid
+  project         Project  @relation(fields: [projectId], references: [id], onDelete: Restrict)
+  phase           Phase    @relation(fields: [projectId, phaseId], references: [projectId, id], onDelete: Restrict)
+  task            Task     @relation(fields: [projectId, phaseId, taskId], references: [projectId, phaseId, id], onDelete: Restrict)
+  createdBy       User?    @relation(fields: [createdByUserId], references: [id], onDelete: Restrict)
+
+  @@index([taskId, createdAt])
+}
+
+model TimeEntry {
+  id               String                @id @default(uuid()) @db.Uuid
+  projectId        String                @db.Uuid
+  phaseId          String                @db.Uuid
+  taskId           String                @db.Uuid
+  userId           String?               @db.Uuid
+  organizationType TimeEntryOrganization
+  date             DateTime              @db.Date
+  hours            Decimal               @db.Decimal(8, 2)
+  description      String
+  createdAt        DateTime              @default(now())
+  project          Project               @relation(fields: [projectId], references: [id], onDelete: Restrict)
+  phase            Phase                 @relation(fields: [projectId, phaseId], references: [projectId, id], onDelete: Restrict)
+  task             Task                  @relation(fields: [projectId, phaseId, taskId], references: [projectId, phaseId, id], onDelete: Restrict)
+  user             User?                 @relation(fields: [userId], references: [id], onDelete: Restrict)
+
+  @@index([projectId, phaseId, date])
+  @@index([taskId, organizationType])
+}

@@ -1,0 +1,31 @@
+{
+  "name": "jgm4-projects",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "JGM4 Projects — solicitações e alinhamento local",
+  "workspaces": ["backend", "frontend"],
+  "engines": { "node": ">=24.0.0 <25" },
+  "scripts": {
+    "db:start": "node scripts/local-postgres.ts start",
+    "db:stop": "node scripts/local-postgres.ts stop",
+    "db:generate": "npm run prisma:generate -w backend",
+    "db:migrate": "npm run prisma:migrate -w backend",
+    "db:seed": "npm run prisma:seed -w backend",
+    "db:status": "npm run prisma:status -w backend",
+    "setup": "npm run db:start && npm run db:generate && npm run db:migrate && npm run db:seed",
+    "dev": "concurrently -k -n API,WEB \"npm run start:dev -w backend\" \"npm run start -w frontend\"",
+    "build": "npm run build -w backend && npm run build -w frontend",
+    "test": "npm run test -w backend",
+    "test:browser": "node scripts/browser-check.ts && npm run test:browser:stage2 && npm run test:browser:stage3 && npm run test:browser:stage4",
+    "test:browser:stage2": "tsx scripts/browser-check-stage2.ts",
+    "test:browser:stage3": "tsx scripts/browser-check-stage3.ts",
+    "test:browser:stage4": "tsx scripts/browser-check-stage4.ts",
+    "docs:alignment": "tsx scripts/export-alignment-document.ts"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.56.0",
+    "concurrently": "^9.2.0",
+    "dotenv": "^17.2.0"
+  }
+}

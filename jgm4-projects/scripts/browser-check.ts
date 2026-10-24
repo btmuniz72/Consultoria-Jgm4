@@ -1,0 +1,45 @@
+import { chromium, expect } from '@playwright/test';
+import { mkdirSync } from 'node:fs';
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+const output = resolve(root, '.local', 'screenshots');
+mkdirSync(output, { recursive: true });
+const browser = await chromium.launch(process.env.BROWSER_CHANNEL ? { channel: process.env.BROWSER_CHANNEL } : {});
+try {
+  const page = await browser.newPage({ viewport: { width: 1440, height: 1100 } });
+  const pageErrors: string[] = [];
+  page.on('pageerror', (error) => pageErrors.push(error.message));
+  await page.goto('http://127.0.0.1:4200/projects');
+  await expect(page.getByRole('heading', { name: 'Estruturação do Almoxarifado', exact: true })).toBeVisible();
+  await expect(page).toHaveURL(/\/projects\/.+\/plan$/);
+  await expect(page.getByTestId('total-weeks')).toHaveText('16');
+  await expect(page.getByTestId('total-hours')).toHaveText('198');
+  await expect(page.getByTestId('phase')).toHaveCount(5);
+  await expect(page.getByTestId('gate')).toHaveCount(5);
+  await page.getByTestId('gate').first().locator('summary').click();
+  await expect(page.getByText('A base física e operacional está suficientemente organizada para iniciar o controle estruturado?')).toBeVisible();
+  await page.screenshot({ path: resolve(output, 'desktop.png'), fullPage: true });
+  await page.reload();
+  await expect(page.getByTestId('phase')).toHaveCount(5);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect(page.getByRole('heading', { name: 'Plano de implantação' })).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  await page.screenshot({ path: resolve(output, 'mobile.png'), fullPage: true });
+  await page.route('**/api/projects', (route) => route.fulfill({ status: 200, contentType: 'application/json', body: '[]' }));
+  await page.goto('http://127.0.0.1:4200/projects');
+  await expect(page.getByRole('heading', { name: 'Nenhum projeto cadastrado' })).toBeVisible();
+  await page.unroute('**/api/projects');
+  await page.goto('http://127.0.0.1:4200/projects/00000000-0000-4000-8000-000000000000/plan');
+  await expect(page.getByRole('alert')).toContainText('Projeto não encontrado');
+  await page.route('**/api/**', (route) => route.abort());
+  await page.goto('http://127.0.0.1:4200/projects');
+  await expect(page.getByRole('alert')).toContainText('Não foi possível carregar');
+  await page.unroute('**/api/**');
+  await page.getByRole('button', { name: 'Tentar novamente' }).click();
+  await expect(page.getByTestId('phase')).toHaveCount(5);
+  expect(pageErrors).toEqual([]);
+  console.log('Navegador OK: API real, totais, 5 fases/5 Gates, detalhe, recarga, mobile, vazio, 404 e recuperação de erro.');
+  console.log('Capturas em .local/screenshots/desktop.png e mobile.png.');
+} finally { await browser.close(); }

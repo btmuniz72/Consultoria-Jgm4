@@ -1,0 +1,25 @@
+<main>
+  <div class="page-heading"><div><p class="eyebrow">SOLICITAÇÕES</p><h1>{{ item()?.code || 'Detalhe da solicitação' }}</h1></div><a class="text-link" [routerLink]="['/projects', projectId, 'requests']">← Voltar à fila</a></div>
+  <app-project-nav [projectId]="projectId" />
+  @if (loading()) { <section class="state-panel" aria-live="polite">Carregando solicitação…</section> }
+  @else if (error()) { <section class="state-panel" role="alert"><h2>Consulta indisponível</h2><p>{{ error() }}</p><button (click)="refresh()">Tentar novamente</button></section> }
+  @else if (item(); as request) {
+    <section class="panel"><div class="project-meta"><span class="eyebrow">Fase {{ request.phase.order }} · {{ request.phase.name }}</span><span class="badge" data-testid="request-status">{{ labels[request.status] }}</span></div><h2>{{ request.title }}</h2><p class="lead">{{ request.description }}</p>
+      <dl class="detail-facts"><div><dt>Responsável do cliente</dt><dd>{{ request.clientResponsible?.name || 'A definir' }}</dd></div><div><dt>Prazo</dt><dd>{{ request.dueDate ? (request.dueDate | date:'dd/MM/yyyy':'UTC') : 'A definir' }}</dd></div><div><dt>Tempo estimado Ollem</dt><dd>{{ request.estimatedClientHours === null ? 'A dimensionar' : request.estimatedClientHours + ' h' }}</dd></div><div><dt>Regras</dt><dd>{{ request.mandatory ? 'Obrigatória' : 'Opcional' }} · {{ request.blocking ? 'Bloqueante' : 'Não bloqueante' }}</dd></div></dl>
+    </section>
+    <section class="next-action" aria-label="Próxima ação"><div><span>Status atual</span><strong>{{ labels[request.status] }}</strong></div><div><span>Próxima ação</span><strong>{{ request.nextAction }}</strong></div><div><span>Responsável pela próxima ação</span><strong>{{ owners[request.currentOwnerType] }}</strong></div></section>
+    @if (request.blockedReason) { <div class="alert-box" role="status"><strong>Solicitação bloqueada</strong><p>{{ request.blockedReason }}</p></div> }
+    @if (actionError()) { <div class="alert-box" role="alert">{{ actionError() }} <button class="secondary" (click)="refresh()">Recarregar solicitação</button></div> }
+    @if (notice()) { <p class="save-notice" role="status">{{ notice() }}</p> }
+    <div class="detail-grid"><section class="panel"><h2>Orientação e aceite</h2><h3>Passo a passo</h3><p class="body-copy">{{ request.instructions }}</p><h3>Critério de aceite</h3><p class="body-copy">{{ request.acceptanceCriteria }}</p><h3>Atividade relacionada</h3><p class="body-copy">{{ request.task ? request.task.code + ' — ' + request.task.title : 'Sem atividade vinculada' }}</p><h3>Dependências</h3><p class="body-copy">{{ request.previousGate ? request.previousGate.code + ' — ' + request.previousGate.title : 'Sem Gate anterior: solicitação da Fase 0.' }}</p>@if (request.task && request.blocking) { <p class="scope-note">Esta solicitação bloqueia a atividade vinculada até o aceite. O aceite remove essa dependência; a atividade mantém seu próprio status.</p> }</section>
+    <section class="panel"><h2>Requisitos da resposta</h2><p class="lead">Complete os itens obrigatórios antes do envio à JGM4.</p><div class="requirements">
+      @for (req of request.requirements; track req.id) { <label class="requirement"><input type="checkbox" [checked]="req.completed" [disabled]="!request.canEditRequirements || busy()" (change)="check(req, $event)"><span>{{ req.label }}<small>{{ req.required ? 'Obrigatório' : 'Opcional' }}{{ req.completedAt ? ' · Registrado' : '' }}</small></span></label> }
+    </div>@if (request.status === 'CLIENT_PREPARING' && !request.canSend) { <p class="scope-note">Faltam {{ request.missingRequirements.length }} requisitos obrigatórios.</p> }</section></div>
+    @if (request.allowedActions.length) {
+      <section class="panel actions-panel"><h2>Registrar próxima ação</h2><p class="lead">{{ owners[request.currentOwnerType] }} · operação local de acompanhamento</p><label for="request-note">Resposta / observações (motivo obrigatório ao solicitar ajuste)</label><textarea id="request-note" rows="4" maxlength="10000" [(ngModel)]="note" [disabled]="busy()" placeholder="Registre informações da resposta ou os pontos que precisam de correção."></textarea><div class="action-buttons">
+        @for (action of request.allowedActions; track action) { <button type="button" [class.secondary]="action === 'request-adjustment'" [disabled]="busy() || (action === 'send' && !request.canSend)" (click)="act(action)">{{ actions[action] }}</button> }
+      </div></section>
+    }
+    <section class="panel"><h2>Histórico da solicitação</h2><ol class="audit-history">@for (event of request.history || []; track event.id) { <li><div><strong>{{ auditLabels[event.action] || event.action }}</strong><span>{{ event.createdAt | date:'dd/MM/yyyy HH:mm':'-0300' }} · {{ event.actorType === 'SYSTEM' ? 'Sistema' : event.actorType === 'CLIENT_LOCAL' ? 'Operação local · cliente' : 'Operação local · JGM4' }}</span></div><p>{{ historyValue(event.newValue) }}</p></li> } @empty { <li>Sem registros anteriores disponíveis.</li> }</ol></section>
+  }
+</main>

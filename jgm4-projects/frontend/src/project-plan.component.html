@@ -1,0 +1,76 @@
+<main>
+  <div class="page-heading">
+    <div><p class="eyebrow">VISÃO DO PROJETO</p><h1>Plano de implantação</h1></div>
+    @if (projects().length) {
+      <div class="project-picker">
+        <label for="project-select">Cliente / projeto</label>
+        <select id="project-select" [value]="project()?.id ?? ''" (change)="selectProject($event)">
+          <option value="" disabled>Selecione um projeto</option>
+          @for (item of projects(); track item.id) {
+            <option [value]="item.id">{{ item.company.name }} · {{ item.name }}</option>
+          }
+        </select>
+      </div>
+    }
+  </div>
+
+  @if (project(); as current) { <app-project-nav [projectId]="current.id" /> }
+
+  @if (loading()) {
+    <section class="state-panel" aria-live="polite"><span class="loader"></span><h2>Carregando o plano do projeto…</h2><p>Consultando fases e Gates.</p></section>
+  } @else if (error()) {
+    <section class="state-panel" role="alert"><h2>Consulta indisponível</h2><p>{{ error() }}</p><button type="button" (click)="retry()">Tentar novamente</button></section>
+  } @else if (project(); as current) {
+    <section class="project-overview" aria-labelledby="project-title">
+      <div class="project-meta"><span class="client-label">{{ current.company.name }}</span><span class="badge">{{ statusLabel(current.status) }}</span></div>
+      <h2 id="project-title">{{ current.name }}</h2>
+      <p>{{ current.description }}</p>
+      <div class="project-facts"><span>Metodologia <strong>{{ current.methodology === 'PLANO_C' ? 'Plano C' : current.methodology }}</strong></span><span>Início previsto <strong>{{ current.plannedStartDate ? (current.plannedStartDate | date:'dd/MM/yyyy':'UTC') : 'A definir' }}</strong></span><span>Término previsto <strong>{{ current.plannedEndDate ? (current.plannedEndDate | date:'dd/MM/yyyy':'UTC') : 'A definir' }}</strong></span></div>
+    </section>
+
+    <section class="metrics" aria-label="Resumo do plano">
+      <article><p>Duração-base</p><div><strong data-testid="total-weeks">{{ current.summary.plannedWeeks }}</strong><span>semanas</span></div><small>Distribuídas entre as fases</small></article>
+      <article><p>Horas previstas JGM4</p><div><strong data-testid="total-hours">{{ current.summary.plannedJgm4Hours }}</strong><span>horas</span></div><small>Esforço de consultoria planejado</small></article>
+      <article><p>Fases de implantação</p><div><strong>{{ current.summary.phaseCount }}</strong><span>fases</span></div><small>Da organização à sustentação</small></article>
+      <article><p>Pontos de validação</p><div><strong>{{ current.summary.gateCount }}</strong><span>Gates</span></div><small>Um Gate ao final de cada fase</small></article>
+    </section>
+
+    @if (currentGate(); as currentGate) {
+      <section class="project-overview" aria-label="Gate atual"><p class="eyebrow">GATE ATUAL</p><h2>Gate {{currentGate.phaseOrder}} — {{currentGate.title}}</h2><p>{{gateCriteriaDone(currentGate)}} / {{currentGate.criteria.length}} critérios atendidos</p><span class="badge" [class.badge-available]="currentGate.status === 'AVAILABLE'">{{statusLabel(currentGate.status)}}</span><p><strong>Próxima ação:</strong> {{currentGate.nextAction || 'Aguardar os pré-requisitos da fase.'}}</p><a [routerLink]="['/projects', current.id, 'gates', currentGate.id]">Abrir Gate →</a></section>
+    }
+
+    <section class="methodology" aria-labelledby="methodology-title">
+      <div><p class="eyebrow">METODOLOGIA</p><h2 id="methodology-title">Evolução com responsabilidade</h2><p>A JGM4 estrutura e valida. O cliente executa e entrega evidências. Cada Gate avalia as condições para avançar à próxima fase.</p></div>
+      <div class="responsibilities"><div><strong>JGM4</strong><span>Estruturar o método e validar as entregas.</span></div><div><strong>{{ current.company.name }}</strong><span>Executar as atividades e entregar evidências.</span></div><div><strong>Responsabilidade conjunta</strong><span>Avaliar resultados e confirmar o avanço.</span></div></div>
+    </section>
+
+    <section class="phases" aria-labelledby="phases-title">
+      <div class="section-heading"><div><p class="eyebrow">PLANO C</p><h2 id="phases-title">Fases e Gates</h2></div><span>Sequência de implantação</span></div>
+      <a class="feature-link" [routerLink]="['/projects', current.id, 'gates']"><strong>Acompanhar Gates <span aria-hidden="true">→</span></strong><span>Critérios, parecer técnico JGM4 e decisão de avanço Ollem.</span></a>
+      <div class="phase-table-heading" aria-hidden="true"><span>Fase / objetivo</span><span>Duração-base</span><span>Horas JGM4</span><span>Situação da fase</span></div>
+      @for (phase of current.phases; track phase.id) {
+        <article class="phase-card" [class.phase-available]="phase.status === 'AVAILABLE'" data-testid="phase">
+          <div class="phase-row">
+            <div class="phase-identity"><span class="phase-number">{{ phase.order.toString().padStart(2, '0') }}</span><div><span class="phase-caption">Fase {{ phase.order }}</span><h3>{{ phase.name }}</h3><p>{{ phase.description }}</p></div></div>
+            <div class="phase-value"><span class="mobile-label">Duração-base</span><strong>{{ phase.plannedWeeks }} semanas</strong></div>
+            <div class="phase-value"><span class="mobile-label">Horas JGM4</span><strong>{{ phase.plannedJgm4Hours }} h</strong></div>
+            <div class="phase-value"><span class="mobile-label">Situação da fase</span><span class="badge" [class.badge-available]="phase.status === 'AVAILABLE'">{{ statusLabel(phase.status) }}</span></div>
+          </div>
+          @if (summaryFor(phase.id); as summary) {
+            <div class="phase-effort"><div class="effort-heading"><strong>Atividades</strong><span>{{ summary.completedTasks }} concluídas · {{ summary.inProgressTasks }} em andamento · {{ summary.blockedTasks }} bloqueadas</span></div><div class="phase-effort-grid"><div><span>JGM4 planejadas</span><strong>{{ summary.plannedJgm4Hours }} h</strong></div><div><span>JGM4 realizadas</span><strong>{{ summary.actualJgm4Hours }} h</strong></div><div><span>Saldo JGM4</span><strong>{{ summary.remainingJgm4Hours }} h</strong></div><div><span>Esforço Ollem</span><strong>{{ summary.plannedClientHours }} h planejadas / {{ summary.actualClientHours }} h realizadas</strong></div></div><div class="progress-track phase-progress" role="progressbar" [attr.aria-valuenow]="summary.plannedJgm4Hours ? (summary.actualJgm4Hours / summary.plannedJgm4Hours * 100) : 0" aria-valuemin="0" aria-valuemax="100"><span [style.width.%]="summary.plannedJgm4Hours ? (summary.actualJgm4Hours / summary.plannedJgm4Hours * 100) : 0"></span></div></div>
+            <div class="phase-activities"><span class="eyebrow">ATIVIDADES DA FASE</span>@for (task of tasksFor(phase.id); track task.id) { <a class="phase-task-link" [routerLink]="['/projects', current.id, 'tasks', task.id]"><span><strong>{{ task.code }} · {{ task.title }}</strong><small>Próxima ação: {{ task.nextAction }}</small></span><span class="badge" [class.badge-available]="task.status === 'RELEASED'">{{ statusLabel(task.status) }}</span></a> }</div>
+          }
+          @if (phase.gate; as gate) {
+            <details class="gate" data-testid="gate">
+              <summary><span><strong>Gate {{ phase.order }}</strong><span class="gate-separator">/</span>{{ gate.title }}</span><span class="gate-state">{{ statusLabel(gate.status) }} <span class="gate-arrow" aria-hidden="true">⌄</span></span></summary>
+              <div class="gate-question"><span>Pergunta de validação</span><p>{{ gate.question }}</p><a [routerLink]="['/projects', current.id, 'gates', gate.id]">Abrir análise do Gate →</a></div>
+            </details>
+          }
+        </article>
+      }
+    </section>
+    <aside class="scope-note"><strong>Liberação controlada.</strong> Uma fase só fica disponível após parecer técnico JGM4 e aprovação formal do patrocinador Ollem.</aside>
+  } @else {
+    <section class="state-panel"><h2>Nenhum projeto cadastrado</h2><p>Execute o seed local da Ollem para consultar o Plano C.</p><button type="button" (click)="retry()">Atualizar consulta</button></section>
+  }
+</main>
