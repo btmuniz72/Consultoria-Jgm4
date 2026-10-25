@@ -31,7 +31,7 @@ describe('Etapa 2 — solicitações, transições e auditoria reais', () => {
     try {
       await client.query(`CREATE SCHEMA "${schema}"`);
       await client.query(`SET search_path TO "${schema}"`);
-      for (const path of ['20261022000100_initial', '20261022000200_requests', '20261023000100_task_workflow', '20261023000200_gates', '20261024000100_approvals']) {
+      for (const path of ['20261022000100_initial', '20261022000200_requests', '20261023000100_task_workflow', '20261023000200_gates', '20261024000100_approvals', '20261025000100_auth', '20261026000100_project_status_values', '20261026000200_project_status_data', '20261027000100_reports', '20261028000100_security','20261101000100_admin_ops','20261102000100_project_templates']) {
         const migration = readFileSync(resolve(__dirname, `../prisma/migrations/${path}/migration.sql`), 'utf8');
         if (path === '20261023000200_gates') { const boundary = migration.indexOf('-- The first phase remains'); await client.query(migration.slice(0, boundary)); await client.query(migration.slice(boundary)); }
         else await client.query(migration);

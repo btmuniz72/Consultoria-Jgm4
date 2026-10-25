@@ -5,14 +5,15 @@ import { PrismaService } from '../prisma/prisma.service';
 export class ProjectsService {
   constructor(private readonly prisma: PrismaService) {}
 
-  companies() {
+  // `scope`: ids de projetos acessíveis ao usuário (null = todos). Usuários sem vínculo não enxergam nada.
+  companies(scope: string[] | null = null) {
     return this.prisma.company.findMany({
-      where: { active: true }, select: { id: true, name: true, active: true }, orderBy: { name: 'asc' },
+      where: { active: true, ...(scope ? { projects: { some: { id: { in: scope } } } } : {}) }, select: { id: true, name: true, active: true }, orderBy: { name: 'asc' },
     });
   }
-  projects(companyId?: string) {
+  projects(companyId?: string, scope: string[] | null = null) {
     return this.prisma.project.findMany({
-      where: { companyId, company: { active: true } }, orderBy: { name: 'asc' },
+      where: { companyId, company: { active: true }, ...(scope ? { id: { in: scope } } : {}) }, orderBy: { name: 'asc' },
       select: { id: true, companyId: true, name: true, description: true, methodology: true, status: true,
         company: { select: { id: true, name: true } } },
     });

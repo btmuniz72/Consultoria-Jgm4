@@ -23,6 +23,7 @@ import { ProjectRequest } from './request.types';
         <section class="panel home-project" data-testid="home-project">
           <p class="eyebrow">{{ entry.plan.company.name }}</p><h2>{{ entry.plan.name }}</h2><p class="lead">Plano C · {{ entry.plan.summary.phaseCount }} fases · {{ entry.plan.summary.gateCount }} Gates · {{ entry.plan.summary.plannedWeeks }} semanas · {{ entry.plan.summary.plannedJgm4Hours }} h JGM4</p>
           <div class="home-actions">
+            <a class="feature-link" [routerLink]="['/projects', entry.plan.id, 'dashboard']"><strong>Dashboard do projeto <span aria-hidden="true">→</span></strong><span>Progresso, horas, atrasos, saúde e quem está com a bola.</span></a>
             <a class="feature-link" [routerLink]="['/projects', entry.plan.id, 'plan']"><strong>Plano de implantação <span aria-hidden="true">→</span></strong><span>Consulte fases, duração, horas e Gates.</span></a>
             <a class="feature-link" [routerLink]="['/projects', entry.plan.id, 'requests']"><strong>Solicitações <span aria-hidden="true">→</span></strong><span>Envie, acompanhe requisitos e valide respostas.</span></a>
             <a class="feature-link" [routerLink]="['/projects', entry.plan.id, 'alignment']"><strong>Reunião de alinhamento <span aria-hidden="true">→</span></strong><span>Preencha o roteiro e baixe o documento da reunião.</span></a>

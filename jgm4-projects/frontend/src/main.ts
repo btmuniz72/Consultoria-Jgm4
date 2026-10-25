@@ -1,11 +1,16 @@
-import { Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject, isDevMode, signal } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { NavigationEnd, Router, provideRouter, RouterLink, RouterOutlet } from '@angular/router';
+import { NavigationEnd, Router, Routes, provideRouter, RouterLink, RouterLinkActive, RouterOutlet, withInMemoryScrolling } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { filter } from 'rxjs';
-import { ACTOR_ROLES, ActorService, actorInterceptor } from './actor.service';
-import { ApprovalsComponent } from './approvals.component';
+import { ActorService } from './actor.service';
+import { AuthService, adminGuard, authGuard, securityInterceptor } from './auth.service';
+import { LoginComponent } from './login.component';
+import { ForgotPasswordComponent, ResetPasswordComponent } from './password-pages.component';
+import { AccountComponent } from './account.component';
+import { LegalComponent } from './legal.component';
 import { ProjectPlanComponent } from './project-plan.component';
 import { TaskDetailComponent } from './task-detail.component';
 import { HomeComponent } from './home.component';
@@ -13,48 +18,130 @@ import { RequestsComponent } from './requests.component';
 import { RequestDetailComponent } from './request-detail.component';
 import { AlignmentComponent } from './alignment.component';
 import { GatesComponent } from './gates.component';
+import { DialogHostComponent } from './ui/dialog.service';
+import { ForbiddenComponent, NotFoundComponent } from './ui/status-pages';
+import { NavItem, navigationFor, roleLabel } from './ui/labels';
+import { initials } from './ui/format';
+
+const AUTH_PAGES = ['/login', '/forgot-password', '/reset-password'];
+/** Contexto da página no topo (e título da aba), por prefixo da rota. */
+const CONTEXTS: [RegExp, string][] = [
+  [/^\/dashboard/, 'Dashboard'], [/^\/projects\/[^/]+\/dashboard/, 'Painel do projeto'], [/^\/projects\/[^/]+\/plan/, 'Plano do projeto'], [/^\/projects\/[^/]+\/tasks/, 'Atividade'], [/^\/projects\/[^/]+\/requests/, 'Solicitações'],
+  [/^\/projects\/[^/]+\/gates/, 'Gates'], [/^\/projects\/[^/]+\/reports/, 'Relatórios'], [/^\/projects\/[^/]+\/audit/, 'Auditoria'], [/^\/projects\/[^/]+\/manage/, 'Gestão do projeto'], [/^\/projects\/[^/]+\/alignment/, 'Reunião de alinhamento'],
+  [/^\/projects/, 'Projetos'], [/^\/approvals/, 'Central de Aprovações'], [/^\/account/, 'Minha conta'], [/^\/admin\/companies/, 'Administração · Empresas'], [/^\/admin\/users/, 'Administração · Usuários'],
+  [/^\/admin\/projects/, 'Administração · Projetos'], [/^\/admin\/templates/, 'Administração · Templates'], [/^\/admin\/security/, 'Administração · Segurança'], [/^\/privacy/, 'Política de Privacidade'], [/^\/terms/, 'Termos de Uso'],
+  [/^\/dev\/design-system/, 'Design System'], [/^\/forbidden/, 'Acesso não permitido'], [/^\/$/, 'Início'],
+];
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLink],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, DialogHostComponent],
   template: `
-    <header class="topbar">
-      <a class="brand" routerLink="/" aria-label="JGM4 Projects, início"><img class="brand-logo" src="assets/brand/logo-jgm4.png" alt="JGM4 Consultoria Logística" width="80" height="80"><span class="brand-divider" aria-hidden="true"></span><span class="brand-product">Projects</span></a>
-      <div class="topbar-tools">
-        <a class="approvals-link" routerLink="/approvals" aria-label="Central de Aprovações" data-testid="approvals-badge"><span aria-hidden="true">🔔</span> Aprovações @if (actor.summary(); as s) { @if (s.total > 0) { <span class="approvals-count" data-testid="approvals-count">{{ s.total }}</span> } }</a>
-        <label class="role-switch"><span class="sr-only">Perfil simulado</span><select aria-label="Perfil simulado" [value]="actor.role()" (change)="actor.setRole($any($event.target).value)">@for (r of roles; track r.id) { <option [value]="r.id" [selected]="r.id === actor.role()">{{ r.label }}</option> }</select></label>
-        <span class="environment"><span class="environment-dot"></span>Ambiente local <span class="stage-label">· Etapa 5</span></span>
+    <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+    <div class="app-shell" [class.nav-open]="navOpen()" [class.no-sidebar]="!auth.user() || authPage()">
+      @if (auth.user() && !authPage()) {
+        <aside class="sidebar" id="menu" aria-label="Menu principal">
+          <a class="brand" routerLink="/" aria-label="JGM4 Projects, início"><img class="brand-logo" src="assets/brand/logo-jgm4.png" alt="JGM4 Consultoria Logística" width="52" height="52"><span class="brand-product">JGM4 Projects<small>Consultoria Logística</small></span></a>
+          <nav aria-label="Navegação">
+            @for (group of groups(); track group.id) {
+              <div class="side-group"><h2>{{ group.label }}</h2>
+                @for (item of group.items; track item.id) {
+                  <a class="side-link" [routerLink]="item.link" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: item.link === '/projects' }" (click)="navOpen.set(false)" [attr.data-testid]="testId(item)">
+                    <span>{{ item.label }}</span>@if (item.id === 'approvals' && (actor.summary()?.total ?? 0) > 0) { <span class="side-count" data-testid="approvals-count">{{ actor.summary()?.total }}</span> }</a>
+                }</div>
+            }
+          </nav>
+          <div class="sidebar-footer"><a class="side-link" routerLink="/account" routerLinkActive="active" (click)="navOpen.set(false)" data-testid="nav-account">Minha conta</a></div>
+        </aside>
+        <div class="shell-backdrop" (click)="navOpen.set(false)" aria-hidden="true"></div>
+      }
+      <div class="shell-main">
+        @if (!authPage()) {
+          <header class="topbar">
+            <div class="topbar-left">
+              @if (auth.user()) { <button type="button" class="nav-toggle" (click)="navOpen.set(!navOpen())" [attr.aria-expanded]="navOpen()" aria-controls="menu" aria-label="Abrir ou fechar o menu" data-testid="nav-toggle">☰</button> }
+              @else { <a class="brand" routerLink="/" aria-label="JGM4 Projects, início"><img class="brand-logo" src="assets/brand/logo-jgm4.png" alt="JGM4 Consultoria Logística" width="40" height="40"><span class="brand-product">JGM4 Projects</span></a> }
+              <span class="page-context" data-testid="page-context">{{ context() }}</span>
+            </div>
+            @if (auth.user(); as user) {
+              <div class="topbar-tools">
+                <div class="user-chip" data-testid="current-user"><span class="avatar" aria-hidden="true">{{ initials(user.name) }}</span><span class="who"><strong>{{ user.name }}</strong><span>{{ roleName(user.role) }}{{ user.company ? ' · ' + user.company.name : '' }}</span></span></div>
+                <button type="button" class="logout-button" data-testid="logout" (click)="auth.logout()">Sair</button>
+              </div>
+            } @else { <a class="btn secondary" routerLink="/login">Entrar</a> }
+          </header>
+        }
+        @if (auth.unreachable()) { <div class="alert alert-warning service-banner" role="alert" data-testid="service-unavailable"><strong>Serviço temporariamente indisponível</strong>Não conseguimos falar com o servidor. Sua sessão foi mantida; verifique sua conexão e <a href="" (click)="reload($event)">tente novamente</a>.</div> }
+        <div id="conteudo" tabindex="-1"><router-outlet /></div>
+        <footer><span>JGM4 Consultoria · Estruturação · Controle · Sustentação</span><span><a routerLink="/privacy" data-testid="footer-privacy">Privacidade</a> · <a routerLink="/terms" data-testid="footer-terms">Termos de uso</a></span></footer>
       </div>
-    </header>
-    <router-outlet />
-    <footer>JGM4 Consultoria <span>Estruturação · Controle · Sustentação</span></footer>
+    </div>
+    <ui-dialog-host />
   `,
 })
 class AppComponent implements OnInit {
-  readonly actor = inject(ActorService); private readonly router = inject(Router); private readonly destroyRef = inject(DestroyRef);
-  readonly roles = ACTOR_ROLES;
+  readonly actor = inject(ActorService); readonly auth = inject(AuthService); private readonly router = inject(Router); private readonly destroyRef = inject(DestroyRef); private readonly title = inject(Title);
+  readonly navOpen = signal(false); readonly url = signal('/'); initials = initials;
+  authPage() { return AUTH_PAGES.some((page) => this.url().startsWith(page)); }
+  roleName(role: string) { return roleLabel(role); }
+  projectId() { return /^\/projects\/([0-9a-f-]{36})/i.exec(this.url())?.[1] ?? null; }
+  context() { const url = this.url(); return CONTEXTS.find(([pattern]) => pattern.test(url))?.[1] ?? 'JGM4 Projects'; }
+  groups(): { id: string; label: string; items: NavItem[] }[] {
+    const user = this.auth.user(); const items = navigationFor(user?.role, { dev: user?.dev, projectId: this.projectId() });
+    return [{ id: 'principal', label: 'Principal' }, { id: 'gestao', label: 'Gestão' }, { id: 'administracao', label: 'Administração' }].map((g) => ({ ...g, items: items.filter((item) => item.group === g.id) })).filter((g) => g.items.length);
+  }
+  testId(item: NavItem) { return item.id === 'dashboard' ? 'nav-dashboard' : item.id === 'approvals' ? 'approvals-badge' : item.id.startsWith('admin-') ? `nav-${item.id}` : `side-${item.id}`; }
+  reload(event: Event) { event.preventDefault(); window.location.reload(); }
   ngOnInit() {
-    this.actor.refresh();
-    this.router.events.pipe(filter((event) => event instanceof NavigationEnd), takeUntilDestroyed(this.destroyRef)).subscribe(() => this.actor.refresh());
-    const timer = setInterval(() => this.actor.refresh(), 30000);
+    this.url.set(this.router.url);
+    void this.auth.ensureLoaded().then(() => { if (this.auth.user()) this.actor.refresh(); });
+    this.router.events.pipe(filter((event) => event instanceof NavigationEnd), takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+      this.url.set(this.router.url); this.navOpen.set(false); this.title.setTitle(`${this.context()} — JGM4 Projects`);
+      if (this.auth.user()) this.actor.refresh();
+    });
+    const timer = setInterval(() => { if (this.auth.user()) this.actor.refresh(); }, 30000);
     this.destroyRef.onDestroy(() => clearInterval(timer));
   }
 }
 
+const routes: Routes = [
+  { path: 'login', component: LoginComponent },
+  { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: 'reset-password', component: ResetPasswordComponent },
+  { path: 'privacy', component: LegalComponent, data: { kind: 'privacy' } },
+  { path: 'terms', component: LegalComponent, data: { kind: 'terms' } },
+  { path: 'forbidden', component: ForbiddenComponent },
+  { path: 'admin/security', loadComponent: () => import('./admin-security.component').then((m) => m.AdminSecurityComponent), canActivate: [adminGuard] },
+  { path: 'admin/companies', loadComponent: () => import('./admin-ops.components').then((m) => m.AdminCompaniesComponent), canActivate: [adminGuard] },
+  { path: 'admin/users', loadComponent: () => import('./admin-ops.components').then((m) => m.AdminUsersComponent), canActivate: [adminGuard] },
+  { path: 'admin/projects', loadComponent: () => import('./admin-ops.components').then((m) => m.AdminProjectsComponent), canActivate: [adminGuard] },
+  { path: 'admin/templates', loadComponent: () => import('./admin-templates.components').then((m) => m.AdminTemplatesComponent), canActivate: [adminGuard] },
+  { path: 'admin/templates/:id', loadComponent: () => import('./admin-templates.components').then((m) => m.AdminTemplateEditorComponent), canActivate: [adminGuard] },
+  { path: 'admin/projects/:id/members', loadComponent: () => import('./admin-ops.components').then((m) => m.AdminProjectMembersComponent), canActivate: [adminGuard] },
+  { path: 'account', component: AccountComponent, canActivate: [authGuard] },
+  { path: 'dashboard', loadComponent: () => import('./dashboard.component').then((m) => m.DashboardComponent), canActivate: [authGuard] },
+  { path: 'projects/:id/dashboard', loadComponent: () => import('./project-dashboard.component').then((m) => m.ProjectDashboardComponent), canActivate: [authGuard] },
+  { path: 'projects/:id/reports', loadComponent: () => import('./reports.component').then((m) => m.ReportsComponent), canActivate: [authGuard] },
+  { path: 'projects/:id/reports/view/:kind', loadComponent: () => import('./report-view.component').then((m) => m.ReportViewComponent), canActivate: [authGuard] },
+  { path: 'projects/:id/audit', loadComponent: () => import('./audit.component').then((m) => m.AuditComponent), canActivate: [authGuard] },
+  { path: 'projects/:id/manage', loadComponent: () => import('./project-manage.component').then((m) => m.ProjectManageComponent), canActivate: [authGuard] },
+  { path: '', pathMatch: 'full', component: HomeComponent, canActivate: [authGuard] },
+  { path: 'admin', pathMatch: 'full', redirectTo: 'admin/companies' },
+  { path: 'approvals', loadComponent: () => import('./approvals.component').then((m) => m.ApprovalsComponent), canActivate: [authGuard] },
+  { path: 'approvals/:id', loadComponent: () => import('./approvals.component').then((m) => m.ApprovalsComponent), canActivate: [authGuard] },
+  { path: 'projects/:id/plan', component: ProjectPlanComponent, canActivate: [authGuard] },
+  { path: 'projects/:id/gates', component: GatesComponent, canActivate: [authGuard] },
+  { path: 'projects/:id/gates/:gateId', component: GatesComponent, canActivate: [authGuard] },
+  { path: 'projects/:id/tasks/:taskId', component: TaskDetailComponent, canActivate: [authGuard] },
+  { path: 'projects/:id/requests/:requestId', component: RequestDetailComponent, canActivate: [authGuard] },
+  { path: 'projects/:id/requests', component: RequestsComponent, canActivate: [authGuard] },
+  { path: 'projects/:id/alignment', component: AlignmentComponent, canActivate: [authGuard] },
+  { path: 'projects', component: ProjectPlanComponent, canActivate: [authGuard] },
+  // Página de referência do Design System: somente fora de produção (isDevMode() é falso no build de produção).
+  ...(isDevMode() ? [{ path: 'dev/design-system', loadComponent: () => import('./ui/design-system.component').then((m) => m.DesignSystemComponent) }] : []),
+  { path: '**', component: NotFoundComponent },
+];
+
 bootstrapApplication(AppComponent, {
-  providers: [provideHttpClient(withInterceptors([actorInterceptor])), provideRouter([
-    { path: '', pathMatch: 'full', component: HomeComponent },
-    { path: 'admin', component: HomeComponent },
-    { path: 'approvals', component: ApprovalsComponent },
-    { path: 'approvals/:id', component: ApprovalsComponent },
-    { path: 'projects/:id/plan', component: ProjectPlanComponent },
-    { path: 'projects/:id/gates', component: GatesComponent },
-    { path: 'projects/:id/gates/:gateId', component: GatesComponent },
-    { path: 'projects/:id/tasks/:taskId', component: TaskDetailComponent },
-    { path: 'projects/:id/requests/:requestId', component: RequestDetailComponent },
-    { path: 'projects/:id/requests', component: RequestsComponent },
-    { path: 'projects/:id/alignment', component: AlignmentComponent },
-    { path: 'projects', component: ProjectPlanComponent },
-    { path: '**', redirectTo: 'projects' },
-  ])],
+  providers: [provideHttpClient(withInterceptors([securityInterceptor])), provideRouter(routes, withInMemoryScrolling({ anchorScrolling: 'enabled', scrollPositionRestoration: 'enabled' }))],
 }).catch(console.error);

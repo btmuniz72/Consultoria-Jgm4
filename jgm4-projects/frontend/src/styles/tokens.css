@@ -1,0 +1,66 @@
+/* JGM4 Projects — Design tokens (Etapa 10.5). Única fonte de cores, tipografia, espaçamento, bordas e sombras. */
+:root {
+  /* Cores — marca */
+  --primary: #173a61;          /* azul-marinho JGM4 */
+  --primary-hover: #28547e;
+  --primary-dark: #0f2a47;     /* sidebar, áreas de destaque */
+  --primary-light: #e8eef5;    /* fundos suaves, item ativo */
+  --primary-border: #c5d3e2;
+  --accent: #b8323a;           /* vermelho JGM4: destaque, ação crítica, erro */
+  --accent-dark: #962a31;
+  --accent-light: #fbeceb;
+
+  /* Cores — semânticas (sempre acompanhadas de ícone/texto, nunca só cor) */
+  --success: #2a6a43;   --success-bg: #e8f4ed;   --success-border: #bfdcca;
+  --warning: #82540f;   --warning-bg: #fdf2dd;   --warning-border: #ecd29b;
+  --danger: #a1262f;    --danger-bg: #fbeceb;    --danger-border: #eac0c3;
+  --info: #1d5a92;      --info-bg: #e8f1fa;      --info-border: #bdd5ec;
+  --neutral: #4a5d73;   --neutral-bg: #eef1f5;   --neutral-border: #d5dce5;
+
+  /* Superfícies e bordas */
+  --bg: #f4f6f9;
+  --surface: #ffffff;
+  --surface-2: #f8fafc;
+  --surface-3: #f0f3f7;
+  --border: #dde3ea;
+  --border-subtle: #ebeff3;
+  --border-strong: #c3ceda;
+
+  /* Texto (contraste AA sobre --surface e --bg) */
+  --text: #172b45;       /* 14,6:1 */
+  --text-2: #3f5268;     /* 8,2:1 */
+  --text-muted: #5b6d82; /* 5,2:1 */
+  --text-inverse: #ffffff;
+
+  /* Tipografia */
+  --font: "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --fs-xs: 12px;   /* helper, legenda, tabela densa */
+  --fs-sm: 13px;   /* label, small */
+  --fs-md: 14px;   /* corpo */
+  --fs-lg: 16px;   /* H3 */
+  --fs-xl: 20px;   /* H2 */
+  --fs-2xl: 26px;  /* H1 */
+  --fs-stat: 28px; /* números de destaque */
+  --lh: 1.55;
+
+  /* Espaçamento (escala de 4 px) */
+  --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-5: 24px; --sp-6: 32px; --sp-7: 40px;
+
+  /* Bordas, sombras, foco */
+  --radius: 8px;
+  --radius-sm: 6px;
+  --radius-pill: 999px;
+  --shadow-sm: 0 1px 2px rgba(15, 42, 71, .06);
+  --shadow-md: 0 8px 24px rgba(15, 42, 71, .14);
+  --focus: 0 0 0 3px rgba(23, 58, 97, .35);
+  --control-h: 40px;
+
+  /* Layout */
+  --sidebar-w: 256px;
+  --topbar-h: 64px;
+  --content-max: 1280px;
+
+  /* Movimento (curto e discreto) */
+  --ease: 120ms ease-out;
+}

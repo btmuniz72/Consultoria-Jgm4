@@ -36,7 +36,7 @@ if (action === 'stop') {
   if (!existsSync(envPath)) {
     if (existsSync(join(data, 'PG_VERSION'))) throw new Error('Cluster existente sem .env: restaure o arquivo local para preservar as credenciais.');
     const password = randomBytes(32).toString('hex');
-    writeFileSync(envPath, `DATABASE_URL="postgresql://jgm4_local:${password}@127.0.0.1:5433/jgm4_projects?schema=public"\nPORT=3000\nFRONTEND_ORIGIN=http://localhost:4200\n`, { mode: 0o600, flag: 'wx' });
+    writeFileSync(envPath, `DATABASE_URL="postgresql://jgm4_local:${password}@127.0.0.1:5433/jgm4_projects?schema=public"\nPORT=3000\nFRONTEND_ORIGIN=http://localhost:4200\nJWT_SECRET=${randomBytes(48).toString('hex')}\n`, { mode: 0o600, flag: 'wx' });
     config({ path: envPath, override: true, quiet: true });
   }
   const url = new URL(process.env.DATABASE_URL ?? '');

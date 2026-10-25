@@ -1,5 +1,5 @@
 import { Component, DestroyRef, OnInit, inject, signal } from '@angular/core';
-import { DatePipe, JsonPipe } from '@angular/common';
+import { DatePipe, DecimalPipe, JsonPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -26,7 +26,7 @@ interface TaskDetail {
   missingRequirements: unknown[]; allowedActions: string[];
 }
 
-@Component({ selector: 'app-task-detail', imports: [DatePipe, JsonPipe, FormsModule, RouterLink, ProjectNavComponent], templateUrl: './task-detail.component.html' })
+@Component({ selector: 'app-task-detail', imports: [DatePipe, DecimalPipe, JsonPipe, FormsModule, RouterLink, ProjectNavComponent], templateUrl: './task-detail.component.html' })
 export class TaskDetailComponent implements OnInit {
   private readonly http = inject(HttpClient);
   private readonly route = inject(ActivatedRoute);
@@ -38,7 +38,9 @@ export class TaskDetailComponent implements OnInit {
   readonly notice = signal('');
   readonly adjustmentOpen = signal(false);
   readonly planOpen = signal(false);
-  readonly changeOpen = signal<'' | 'due' | 'reopen'>('');
+  readonly changeOpen = signal<'' | 'due' | 'reopen' | 'responsible'>('');
+  readonly attachments = signal<{ id: string; name: string; sizeBytes: number; uploadedBy: string | null; uploadedAt: string; available: boolean }[]>([]); readonly memberOptions = signal<{ userId: string; name: string }[]>([]); readonly uploadError = signal('');
+  respForm = { field: 'CLIENT', newUserId: '', justification: '' };
   readonly changeNotice = signal('');
   dueForm = { requestedDate: '', expectedImpact: '', justification: '' };
   reopenReason = '';
@@ -53,7 +55,7 @@ export class TaskDetailComponent implements OnInit {
       this.loading.set(true); this.error.set(''); this.notice.set(''); this.task.set(null);
       return this.http.get<TaskDetail>(`/api/projects/${encodeURIComponent(projectId)}/tasks/${encodeURIComponent(taskId)}`).pipe(
         tap((task) => this.syncPlan(task)), catchError((error: HttpErrorResponse) => { this.showError(error); return EMPTY; }));
-    }), takeUntilDestroyed(this.destroyRef)).subscribe({ next: (task) => { this.task.set(task); this.loading.set(false); }, error: (error: HttpErrorResponse) => this.showError(error) });
+    }), takeUntilDestroyed(this.destroyRef)).subscribe({ next: (task) => { this.task.set(task); this.loading.set(false); this.loadAttachments(); }, error: (error: HttpErrorResponse) => this.showError(error) });
   }
   private syncPlan(task: TaskDetail) {
     this.planForm = { responsibilityType: task.responsibilityType, plannedStartDate: task.plannedStartDate?.slice(0, 10) ?? '', plannedEndDate: task.plannedEndDate?.slice(0, 10) ?? '', nextActionDueDate: task.nextActionDueDate?.slice(0, 10) ?? '', nextAction: task.nextAction ?? '', plannedJgm4Hours: task.plannedJgm4Hours, plannedClientHours: task.plannedClientHours };
@@ -103,6 +105,17 @@ export class TaskDetailComponent implements OnInit {
     });
   }
   requestDueDate() { this.postChange('/due-date-change', this.dueForm, 'Pedido de alteração de prazo enviado para aprovação.'); }
+  openResponsible() {
+    const task = this.task(); if (!task) return; this.changeOpen.set(this.changeOpen() === 'responsible' ? '' : 'responsible');
+    this.http.get<{ userId: string; name: string }[]>('/api/projects/' + task.projectId + '/members').subscribe({ next: (rows) => this.memberOptions.set(rows), error: () => this.memberOptions.set([]) });
+  }
+  requestResponsible() { this.postChange('/responsible-change', this.respForm, 'Pedido de troca de responsável enviado para aprovação.'); }
+  loadAttachments() { const task = this.task(); if (!task) return; this.http.get<never[]>('/api/projects/' + task.projectId + '/attachments?entityType=Task&entityId=' + task.id).subscribe({ next: (rows) => this.attachments.set(rows), error: () => this.attachments.set([]) }); }
+  upload(event: Event) {
+    const task = this.task(); const input = event.target as HTMLInputElement; const file = input.files?.[0]; if (!task || !file) return;
+    const body = new FormData(); body.append('entityType', 'Task'); body.append('entityId', task.id); body.append('file', file); this.uploadError.set('');
+    this.http.post('/api/projects/' + task.projectId + '/attachments', body).subscribe({ next: () => { input.value = ''; this.loadAttachments(); }, error: (e: HttpErrorResponse) => { const m = e.error?.message; this.uploadError.set(Array.isArray(m) ? m.join(' ') : typeof m === 'string' ? m : 'Não foi possível enviar o arquivo.'); } });
+  }
   requestReopen() { this.postChange('/reopen', { reason: this.reopenReason }, 'Pedido de reabertura enviado para aprovação.'); }
   reload() { window.location.reload(); }
 }

@@ -1,10 +1,11 @@
-import { chromium } from '@playwright/test';
+import { launchBrowser, login, base } from './browser-helpers.ts';
 
 const projectId = '9f1ead00-1c44-4000-8000-000000000002';
-const browser = await chromium.launch({ headless: true });
+const browser = await launchBrowser();
 try {
   const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
-  await page.goto(`http://127.0.0.1:4200/projects/${projectId}/gates`);
+  await login(page, 'admin@jgm4.local');
+  await page.goto(`${base}/projects/${projectId}/gates`);
   await page.getByRole('heading', { name: 'Os cinco Gates' }).waitFor();
   for (let i = 0; i <= 4; i++) await page.getByText(`Gate ${i} · Fase ${i}`, { exact: false }).first().waitFor();
   await page.screenshot({ path: '.local/screenshots/etapa-4-gates-desktop.png', fullPage: true });

@@ -35,7 +35,7 @@ describe('Etapa 5 — Central de Aprovações, alçadas e próxima ação', () =
     const client = await pool.connect();
     try {
       await client.query(`CREATE SCHEMA "${schema}"`); await client.query(`SET search_path TO "${schema}"`);
-      for (const folder of ['20261022000100_initial', '20261022000200_requests', '20261023000100_task_workflow', '20261023000200_gates', '20261024000100_approvals']) {
+      for (const folder of ['20261022000100_initial', '20261022000200_requests', '20261023000100_task_workflow', '20261023000200_gates', '20261024000100_approvals', '20261025000100_auth', '20261026000100_project_status_values', '20261026000200_project_status_data', '20261027000100_reports', '20261028000100_security','20261101000100_admin_ops','20261102000100_project_templates']) {
         const migration = readFileSync(resolve(__dirname, `../prisma/migrations/${folder}/migration.sql`), 'utf8');
         if (folder === '20261023000200_gates') { const boundary = migration.indexOf('-- The first phase remains'); await client.query(migration.slice(0, boundary)); await client.query(migration.slice(boundary)); }
         else await client.query(migration);
@@ -254,6 +254,8 @@ describe('Etapa 5 — Central de Aprovações, alçadas e próxima ação', () =
   });
   it('troca de responsável só é aplicada após aprovação e valida a organização do usuário', async () => {
     await post(`/api/tasks/${ids.TR}/responsible-change`, 'CLIENT_MANAGER', { field: 'CLIENT', newUserId: ids.jgm4User, justification: 'Usuário errado' }).expect(400);
+    await post(`/api/tasks/${ids.TR}/responsible-change`, 'CLIENT_MANAGER', { field: 'CLIENT', newUserId: ids.client2, justification: 'Sem vínculo com o projeto' }).expect(400); // novo responsável precisa ter vínculo ativo
+    await prisma.projectMembership.create({ data: { projectId: P, userId: ids.client2 } });
     await post(`/api/tasks/${ids.TR}/responsible-change`, 'CLIENT_MANAGER', { field: 'CLIENT', newUserId: ids.client2, justification: 'Férias do responsável' }).expect(201);
     expect((await prisma.task.findUniqueOrThrow({ where: { id: ids.TR } })).clientResponsibleUserId).toBe(ids.client1);
     const approval = await approvalOf(ids.TR, 'RESPONSIBLE_CHANGE');

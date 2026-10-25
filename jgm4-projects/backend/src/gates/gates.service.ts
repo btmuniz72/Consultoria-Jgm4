@@ -1,8 +1,9 @@
 import { BadRequestException, ConflictException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { Prisma, GateStatus } from '../generated/prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
+import { assertProjectOpen } from '../projects/project-guard';
 import { ensureApproval, markInReview, resolveApprovals } from '../approvals/approval-sync';
-import { can, currentRole, isJgm4Role } from '../approvals/authority';
+import { can, currentRole, currentUserId, isJgm4Role } from '../approvals/authority';
 
 type Db = Prisma.TransactionClient | PrismaService;
 const isJgm4 = () => isJgm4Role(currentRole());
@@ -62,7 +63,7 @@ export class GatesService {
       case 'client-decision':
         if (body.clientDecision === 'APPROVE') await resolveApprovals(tx, { ...client, status: 'APPROVED', comment: body.comment?.trim() || null });
         else if (body.clientDecision === 'REJECT') await resolveApprovals(tx, { ...client, status: 'REJECTED', comment: body.comment?.trim() || null });
-        else await tx.auditLog.create({ data: { projectId: gate.projectId, entityType: 'Gate', entityId: gate.id, action: 'APPROVAL_ON_HOLD', actorType: currentRole(), newValue: { comment: body.comment?.trim() || null } } });
+        else await tx.auditLog.create({ data: { userId: currentUserId(), projectId: gate.projectId, entityType: 'Gate', entityId: gate.id, action: 'APPROVAL_ON_HOLD', actorType: currentRole(), newValue: { comment: body.comment?.trim() || null } } });
         break;
     }
   }
@@ -109,11 +110,12 @@ export class GatesService {
   }
   async transition(projectId: string, gateId: string, action: string, body: Record<string, any> = {}) {
     await this.prisma.$transaction(async tx => {
+      await assertProjectOpen(tx, projectId);
       await this.recalculate(tx, projectId, gateId);
       const gate = await tx.gate.findFirst({ where: { id: gateId, projectId }, include: { phase: true, criteria: true } });
       if (!gate) throw new NotFoundException('Gate não encontrado neste projeto.');
       const role = currentRole();
-      const log = async (to: GateStatus | null, oldExtra = {}, newExtra = {}) => tx.auditLog.create({ data: { projectId, entityType: 'Gate', entityId: gateId, action: action.toUpperCase().replaceAll('-', '_'), actorType: role, oldValue: { status: gate.status, ...oldExtra }, newValue: { status: to ?? gate.status, ...newExtra } } });
+      const log = async (to: GateStatus | null, oldExtra = {}, newExtra = {}) => tx.auditLog.create({ data: { userId: currentUserId(), projectId, entityType: 'Gate', entityId: gateId, action: action.toUpperCase().replaceAll('-', '_'), actorType: role, oldValue: { status: gate.status, ...oldExtra }, newValue: { status: to ?? gate.status, ...newExtra } } });
       let status: GateStatus = gate.status; let owner = gate.currentOwnerType; let next = gate.nextAction;
       switch (action) {
         case 'start-review':
@@ -135,7 +137,7 @@ export class GatesService {
           if (!criterion) throw new NotFoundException('Critério não encontrado neste Gate.');
           if (criterion.sourceType === 'TASK' || criterion.sourceType === 'REQUEST') throw new BadRequestException('Este critério é calculado automaticamente pelo sistema.');
           if (body.satisfied && criterion.evidenceRequired && !body.evidenceReference?.trim()) throw new BadRequestException('Informe a referência da evidência obrigatória.');
-          await tx.gateCriterion.update({ where: { id: criterion.id }, data: { satisfied: !!body.satisfied, satisfiedAt: body.satisfied ? new Date() : null, satisfiedByUserId: null, evidenceReference: body.evidenceReference?.trim() || null } });
+          await tx.gateCriterion.update({ where: { id: criterion.id }, data: { satisfied: !!body.satisfied, satisfiedAt: body.satisfied ? new Date() : null, satisfiedByUserId: currentUserId(), evidenceReference: body.evidenceReference?.trim() || null } });
           await log(null, { criterionId: criterion.id, satisfied: criterion.satisfied }, { criterionId: criterion.id, satisfied: !!body.satisfied, evidenceReference: body.evidenceReference?.trim() || null });
           return { saved: true };
         }
@@ -145,7 +147,7 @@ export class GatesService {
           if (!body.technicalOpinion?.trim() || !['ADVANCE', 'DO_NOT_ADVANCE'].includes(body.technicalRecommendation)) throw new BadRequestException('Informe o parecer e a recomendação técnica.');
           if (body.technicalRecommendation === 'ADVANCE' && gate.criteria.some(c => c.mandatory && !c.satisfied)) throw new ConflictException('Parecer favorável bloqueado: há critérios obrigatórios pendentes.');
           status = body.technicalRecommendation === 'ADVANCE' ? 'TECHNICALLY_APPROVED' : 'CORRECTION_REQUIRED'; owner = body.technicalRecommendation === 'ADVANCE' ? 'CLIENT_SPONSOR' : 'CLIENT'; next = body.technicalRecommendation === 'ADVANCE' ? 'Patrocinador Ollem: confirmar a decisão de avanço.' : 'Tratar as correções solicitadas pela JGM4.';
-          await tx.gate.update({ where: { id: gateId }, data: { status, technicalRecommendation: body.technicalRecommendation, technicalOpinion: body.technicalOpinion.trim(), technicalApprovedAt: status === 'TECHNICALLY_APPROVED' ? new Date() : null, technicalApprovedByUserId: null, currentOwnerType: owner, nextAction: next } });
+          await tx.gate.update({ where: { id: gateId }, data: { status, technicalRecommendation: body.technicalRecommendation, technicalOpinion: body.technicalOpinion.trim(), technicalApprovedAt: status === 'TECHNICALLY_APPROVED' ? new Date() : null, technicalApprovedByUserId: status === 'TECHNICALLY_APPROVED' ? currentUserId() : null, currentOwnerType: owner, nextAction: next } });
           await log(status, {}, { technicalRecommendation: body.technicalRecommendation, technicalOpinion: body.technicalOpinion.trim() });
           await this.syncApprovals(tx, gate, action, body);
           return { saved: true };
@@ -157,14 +159,14 @@ export class GatesService {
             status = 'APPROVED'; owner = 'SYSTEM'; next = 'Gate aprovado; fase seguinte liberada.';
             const nextPhase = await tx.phase.findFirst({ where: { projectId, order: gate.phase.order + 1 } });
             await tx.phase.update({ where: { id: gate.phaseId }, data: { status: 'COMPLETED', actualEndDate: new Date() } });
-            await tx.auditLog.create({ data: { projectId, entityType: 'Phase', entityId: gate.phaseId, action: 'PHASE_COMPLETED', actorType: role, oldValue: { status: gate.phase.status }, newValue: { status: 'COMPLETED' } } });
+            await tx.auditLog.create({ data: { userId: currentUserId(), projectId, entityType: 'Phase', entityId: gate.phaseId, action: 'PHASE_COMPLETED', actorType: role, oldValue: { status: gate.phase.status }, newValue: { status: 'COMPLETED' } } });
             if (nextPhase) {
               await tx.phase.update({ where: { id: nextPhase.id }, data: { status: 'AVAILABLE' } });
-              await tx.auditLog.create({ data: { projectId, entityType: 'Phase', entityId: nextPhase.id, action: 'PHASE_RELEASED', actorType: role, oldValue: { status: nextPhase.status }, newValue: { status: 'AVAILABLE' } } });
+              await tx.auditLog.create({ data: { userId: currentUserId(), projectId, entityType: 'Phase', entityId: nextPhase.id, action: 'PHASE_RELEASED', actorType: role, oldValue: { status: nextPhase.status }, newValue: { status: 'AVAILABLE' } } });
             } else await tx.project.update({ where: { id: projectId }, data: { status: 'IMPLEMENTATION_COMPLETED', actualEndDate: new Date() } });
           } else if (body.clientDecision === 'HOLD') { status = 'TECHNICALLY_APPROVED'; owner = 'CLIENT_SPONSOR'; next = 'Decisão de avanço em espera.'; }
           else { status = 'REJECTED'; owner = 'SYSTEM'; next = 'Gate rejeitado; projeto não avançará para a próxima fase.'; }
-          await tx.gate.update({ where: { id: gateId }, data: { status, clientDecision: body.clientDecision, clientDecisionComment: body.comment?.trim() || null, clientDecisionAt: new Date(), clientDecisionByUserId: null, currentOwnerType: owner, nextAction: next } });
+          await tx.gate.update({ where: { id: gateId }, data: { status, clientDecision: body.clientDecision, clientDecisionComment: body.comment?.trim() || null, clientDecisionAt: new Date(), clientDecisionByUserId: currentUserId(), currentOwnerType: owner, nextAction: next } });
           if (body.clientDecision === 'APPROVE') await this.releasePhaseTasks(tx, projectId, gate.phase.order < 4
             ? (await tx.phase.findFirstOrThrow({ where: { projectId, order: gate.phase.order + 1 } })).id
             : gate.phaseId);

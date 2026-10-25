@@ -1,5 +1,7 @@
 # Validação — Etapa 5: Central de Aprovações, Alçadas e Próxima Ação
 
+> **Atualização (Etapa 5.1):** o perfil simulado por `x-actor-role` e o seletor de perfil descritos abaixo foram substituídos por autenticação real e vínculo usuário-projeto. Veja [validacao-etapa-5-1.md](validacao-etapa-5-1.md). O restante (tipos, matriz de alçadas, fluxos) continua válido.
+
 ## Resultado
 
 | Verificação | Resultado |

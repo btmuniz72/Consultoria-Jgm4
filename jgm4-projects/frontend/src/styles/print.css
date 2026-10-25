@@ -1,0 +1,7 @@
+/* Impressão: sem navegação; conteúdo em largura total. */
+@media print {
+  .sidebar, .topbar, .shell-backdrop, .skip-link, footer, .project-nav, .admin-nav, .no-print { display: none !important; }
+  .shell-main { margin-left: 0 !important; }
+  .shell-main main { max-width: none; padding: 0; }
+  .panel, .card { box-shadow: none; }
+}

@@ -1,6 +1,7 @@
 {
   "rootDir": ".",
   "testEnvironment": "node",
+  "setupFiles": ["<rootDir>/test/setup-env.ts"],
   "testMatch": ["<rootDir>/test/**/*.spec.ts"],
   "transform": { "^.+\\.ts$": ["ts-jest", { "tsconfig": "tsconfig.spec.json" }] },
   "testTimeout": 30000

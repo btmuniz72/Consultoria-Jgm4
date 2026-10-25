@@ -16,11 +16,15 @@ enum UserRole {
   CLIENT_USER
 }
 
+// PLANNED e COMPLETED são valores legados (migrados para PLANNING / IMPLEMENTATION_COMPLETED); o PostgreSQL não remove valores de enum.
 enum ProjectStatus {
   PLANNED
+  PLANNING
   IN_PROGRESS
+  ON_HOLD
   COMPLETED
   IMPLEMENTATION_COMPLETED
+  CANCELLED
 }
 
 enum PhaseStatus {
@@ -47,11 +51,13 @@ enum GateRecommendation {
   ADVANCE
   DO_NOT_ADVANCE
 }
+
 enum GateClientDecision {
   APPROVE
   HOLD
   REJECT
 }
+
 enum GateCriterionSource {
   TASK
   REQUEST
@@ -132,152 +138,191 @@ enum RequestStatus {
 }
 
 model Company {
-  id        String    @id @default(uuid()) @db.Uuid
-  name      String
-  document  String?   @unique
-  active    Boolean   @default(true)
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  users     User[]
-  projects  Project[]
+  id           String    @id @default(uuid()) @db.Uuid
+  name         String
+  document     String?   @unique
+  displayName  String?
+  internalCode String?   @unique
+  notes        String?
+  active       Boolean   @default(true)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  users        User[]
+  projects     Project[]
 }
 
 model User {
-  id                        String               @id @default(uuid()) @db.Uuid
+  id                        String                @id @default(uuid()) @db.Uuid
   name                      String
-  email                     String               @unique
+  email                     String                @unique
   passwordHash              String
   role                      UserRole
-  companyId                 String?              @db.Uuid
-  active                    Boolean              @default(true)
-  createdAt                 DateTime             @default(now())
-  updatedAt                 DateTime             @updatedAt
-  company                   Company?             @relation(fields: [companyId], references: [id], onDelete: Restrict)
-  sponsoredProjects         Project[]            @relation("ProjectSponsor")
+  companyId                 String?               @db.Uuid
+  active                    Boolean               @default(true)
+  createdAt                 DateTime              @default(now())
+  updatedAt                 DateTime              @updatedAt
+  company                   Company?              @relation(fields: [companyId], references: [id], onDelete: Restrict)
+  sponsoredProjects         Project[]             @relation("ProjectSponsor")
   assignedTasks             Task[]
-  clientResponsibleTasks    Task[]               @relation("TaskClientResponsible")
-  jgm4ResponsibleTasks      Task[]               @relation("TaskJgm4Responsible")
-  currentOwnerTasks         Task[]               @relation("TaskCurrentOwner")
-  responsibleRequests       ProjectRequest[]     @relation("RequestResponsible")
-  createdRequests           ProjectRequest[]     @relation("RequestCreator")
+  clientResponsibleTasks    Task[]                @relation("TaskClientResponsible")
+  jgm4ResponsibleTasks      Task[]                @relation("TaskJgm4Responsible")
+  currentOwnerTasks         Task[]                @relation("TaskCurrentOwner")
+  responsibleRequests       ProjectRequest[]      @relation("RequestResponsible")
+  createdRequests           ProjectRequest[]      @relation("RequestCreator")
   completedRequirements     RequestRequirement[]
   completedTaskRequirements TaskRequirement[]
   timeEntries               TimeEntry[]
   taskEvidence              TaskEvidence[]
   auditLogs                 AuditLog[]
-  requestedApprovals        Approval[]           @relation("ApprovalRequester")
-  assignedApprovals         Approval[]           @relation("ApprovalAssignee")
-  decidedApprovals          Approval[]           @relation("ApprovalDecider")
+  requestedApprovals        Approval[]            @relation("ApprovalRequester")
+  assignedApprovals         Approval[]            @relation("ApprovalAssignee")
+  decidedApprovals          Approval[]            @relation("ApprovalDecider")
+  memberships               ProjectMembership[]
+  status                    UserStatus            @default(ACTIVE)
+  statusReason              String?
+  lastLoginAt               DateTime?
+  lastActivityAt            DateTime?
+  passwordChangedAt         DateTime?
+  failedLoginCount          Int                   @default(0)
+  lockedUntil               DateTime?
+  mustChangePassword        Boolean               @default(false)
+  mfaEnabled                Boolean               @default(false)
+  mfaSecretEnc              String?
+  mfaPendingSecretEnc       String?
+  anonymizedAt              DateTime?
+  sessions                  AuthSession[]
+  resetTokens               PasswordResetToken[]
+  securityEvents            SecurityEvent[]
+  attachments               Attachment[]
+  reportLogs                ReportGenerationLog[]
+  statusEvents              ProjectStatusEvent[]
+  sustainmentItems          SustainmentItem[]
+  carriedItems              CarriedOverItem[]
 
   @@index([companyId])
 }
 
 model Project {
-  id               String           @id @default(uuid()) @db.Uuid
-  companyId        String           @db.Uuid
-  name             String
-  description      String
-  methodology      String           @default("PLANO_C")
-  status           ProjectStatus    @default(PLANNED)
-  plannedStartDate DateTime?        @db.Date
-  plannedEndDate   DateTime?        @db.Date
-  actualStartDate  DateTime?        @db.Date
-  actualEndDate    DateTime?        @db.Date
-  sponsorUserId    String?          @db.Uuid
-  createdAt        DateTime         @default(now())
-  updatedAt        DateTime         @updatedAt
-  company          Company          @relation(fields: [companyId], references: [id], onDelete: Restrict)
-  sponsor          User?            @relation("ProjectSponsor", fields: [sponsorUserId], references: [id], onDelete: Restrict)
-  phases           Phase[]
-  gates            Gate[]
-  tasks            Task[]
-  requests         ProjectRequest[]
-  auditLogs        AuditLog[]
-  timeEntries      TimeEntry[]
-  taskEvidence     TaskEvidence[]
-  approvals        Approval[]
+  id                      String                @id @default(uuid()) @db.Uuid
+  companyId               String                @db.Uuid
+  name                    String
+  code                    String?               @unique
+  templateId              String?               @db.Uuid
+  templateVersion         Int?
+  templateNameSnapshot    String?
+  templateVersionSnapshot Int?
+  template                ProjectTemplate?      @relation(fields: [templateId], references: [id], onDelete: Restrict)
+  description             String
+  methodology             String                @default("PLANO_C")
+  status                  ProjectStatus         @default(PLANNING)
+  plannedStartDate        DateTime?             @db.Date
+  plannedEndDate          DateTime?             @db.Date
+  actualStartDate         DateTime?             @db.Date
+  actualEndDate           DateTime?             @db.Date
+  sponsorUserId           String?               @db.Uuid
+  createdAt               DateTime              @default(now())
+  updatedAt               DateTime              @updatedAt
+  company                 Company               @relation(fields: [companyId], references: [id], onDelete: Restrict)
+  sponsor                 User?                 @relation("ProjectSponsor", fields: [sponsorUserId], references: [id], onDelete: Restrict)
+  phases                  Phase[]
+  gates                   Gate[]
+  tasks                   Task[]
+  requests                ProjectRequest[]
+  auditLogs               AuditLog[]
+  timeEntries             TimeEntry[]
+  taskEvidence            TaskEvidence[]
+  approvals               Approval[]
+  memberships             ProjectMembership[]
+  attachments             Attachment[]
+  reportLogs              ReportGenerationLog[]
+  statusEvents            ProjectStatusEvent[]
+  sustainmentItems        SustainmentItem[]
+  carriedItems            CarriedOverItem[]
 
   @@unique([companyId, name])
   @@index([companyId, status])
 }
 
 model Phase {
-  id               String           @id @default(uuid()) @db.Uuid
-  projectId        String           @db.Uuid
-  order            Int
-  name             String
-  description      String
-  plannedWeeks     Int
-  plannedJgm4Hours Int
-  status           PhaseStatus      @default(LOCKED)
-  createdAt        DateTime         @default(now())
-  updatedAt        DateTime         @updatedAt
-  project          Project          @relation(fields: [projectId], references: [id], onDelete: Restrict)
-  gate             Gate?
-  tasks            Task[]
-  requests         ProjectRequest[]
-  timeEntries      TimeEntry[]
-  evidence         TaskEvidence[]
-  actualStartDate DateTime? @db.Date
-  actualEndDate DateTime? @db.Date
-  plannedStartDate DateTime? @db.Date
-  plannedEndDate DateTime? @db.Date
-  plannedClientHours Decimal? @db.Decimal(8, 2)
+  id                 String            @id @default(uuid()) @db.Uuid
+  projectId          String            @db.Uuid
+  order              Int
+  name               String
+  description        String
+  plannedWeeks       Int
+  plannedJgm4Hours   Int
+  status             PhaseStatus       @default(LOCKED)
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+  project            Project           @relation(fields: [projectId], references: [id], onDelete: Restrict)
+  gate               Gate?
+  tasks              Task[]
+  requests           ProjectRequest[]
+  timeEntries        TimeEntry[]
+  evidence           TaskEvidence[]
+  carriedFrom        CarriedOverItem[] @relation("CarriedFrom")
+  carriedTo          CarriedOverItem[] @relation("CarriedTo")
+  actualStartDate    DateTime?         @db.Date
+  actualEndDate      DateTime?         @db.Date
+  plannedStartDate   DateTime?         @db.Date
+  plannedEndDate     DateTime?         @db.Date
+  plannedClientHours Decimal?          @db.Decimal(8, 2)
 
   @@unique([projectId, order])
   @@unique([projectId, id])
 }
 
 model Gate {
-  id               String     @id @default(uuid()) @db.Uuid
-  projectId        String     @db.Uuid
-  phaseId          String     @unique @db.Uuid
-  code             String
-  title            String
-  question         String
-  status           GateStatus @default(BLOCKED)
-  technicalOpinion String?
-  createdAt        DateTime   @default(now())
-  updatedAt        DateTime   @updatedAt
-  project          Project    @relation(fields: [projectId], references: [id], onDelete: Restrict)
-  phase            Phase      @relation(fields: [projectId, phaseId], references: [projectId, id], onDelete: Restrict)
-  blockedTasks     Task[]
-  technicalRecommendation GateRecommendation?
-  technicalApprovedByUserId String? @db.Uuid
-  technicalApprovedAt DateTime?
-  clientDecision GateClientDecision?
-  clientDecisionComment String?
-  clientDecisionByUserId String? @db.Uuid
-  clientDecisionAt DateTime?
-  correctionReason String?
-  correctionInstructions String?
-  currentOwnerType String @default("SYSTEM")
-  currentOwnerUserId String? @db.Uuid
-  nextAction String?
-  nextActionDueDate DateTime? @db.Date
-  criteria GateCriterion[]
+  id                        String              @id @default(uuid()) @db.Uuid
+  projectId                 String              @db.Uuid
+  phaseId                   String              @unique @db.Uuid
+  code                      String
+  title                     String
+  question                  String
+  status                    GateStatus          @default(BLOCKED)
+  technicalOpinion          String?
+  createdAt                 DateTime            @default(now())
+  updatedAt                 DateTime            @updatedAt
+  project                   Project             @relation(fields: [projectId], references: [id], onDelete: Restrict)
+  phase                     Phase               @relation(fields: [projectId, phaseId], references: [projectId, id], onDelete: Restrict)
+  blockedTasks              Task[]
+  technicalRecommendation   GateRecommendation?
+  technicalApprovedByUserId String?             @db.Uuid
+  technicalApprovedAt       DateTime?
+  clientDecision            GateClientDecision?
+  clientDecisionComment     String?
+  clientDecisionByUserId    String?             @db.Uuid
+  clientDecisionAt          DateTime?
+  correctionReason          String?
+  correctionInstructions    String?
+  currentOwnerType          String              @default("SYSTEM")
+  currentOwnerUserId        String?             @db.Uuid
+  nextAction                String?
+  nextActionDueDate         DateTime?           @db.Date
+  criteria                  GateCriterion[]
 
   @@unique([projectId, code])
   @@unique([projectId, phaseId])
 }
 
 model GateCriterion {
-  id String @id @default(uuid()) @db.Uuid
-  gateId String @db.Uuid
-  code String
-  description String
-  mandatory Boolean @default(true)
-  satisfied Boolean @default(false)
-  satisfiedAt DateTime?
-  satisfiedByUserId String? @db.Uuid
-  sourceType GateCriterionSource?
-  sourceEntityId String? @db.Uuid
-  evidenceRequired Boolean @default(false)
+  id                String               @id @default(uuid()) @db.Uuid
+  gateId            String               @db.Uuid
+  code              String
+  description       String
+  mandatory         Boolean              @default(true)
+  satisfied         Boolean              @default(false)
+  satisfiedAt       DateTime?
+  satisfiedByUserId String?              @db.Uuid
+  sourceType        GateCriterionSource?
+  sourceEntityId    String?              @db.Uuid
+  evidenceRequired  Boolean              @default(false)
   evidenceReference String?
-  order Int @default(0)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  gate Gate @relation(fields: [gateId], references: [id], onDelete: Restrict)
+  order             Int                  @default(0)
+  createdAt         DateTime             @default(now())
+  updatedAt         DateTime             @updatedAt
+  gate              Gate                 @relation(fields: [gateId], references: [id], onDelete: Restrict)
+
   @@unique([gateId, code])
   @@index([gateId, order])
 }
@@ -383,7 +428,7 @@ model RequestRequirement {
 
 model AuditLog {
   id         String   @id @default(uuid()) @db.Uuid
-  projectId  String   @db.Uuid
+  projectId  String?  @db.Uuid
   entityType String
   entityId   String   @db.Uuid
   action     String
@@ -392,7 +437,7 @@ model AuditLog {
   userId     String?  @db.Uuid
   actorType  String   @default("SYSTEM")
   createdAt  DateTime @default(now())
-  project    Project  @relation(fields: [projectId], references: [id], onDelete: Restrict)
+  project    Project? @relation(fields: [projectId], references: [id], onDelete: Restrict)
   user       User?    @relation(fields: [userId], references: [id], onDelete: Restrict)
 
   @@index([projectId, entityType, entityId, createdAt])
@@ -484,4 +529,401 @@ model Approval {
   @@index([projectId, status])
   @@index([status, assignedRole])
   @@index([entityType, entityId, type])
+}
+
+// Etapa 5.1 — vínculo usuário↔projeto. Único por (projeto, usuário); `active=false` revoga sem apagar o histórico.
+model ProjectMembership {
+  id            String   @id @default(uuid()) @db.Uuid
+  projectId     String   @db.Uuid
+  userId        String   @db.Uuid
+  roleInProject String?
+  active        Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  project       Project  @relation(fields: [projectId], references: [id], onDelete: Restrict)
+  user          User     @relation(fields: [userId], references: [id], onDelete: Restrict)
+
+  @@unique([projectId, userId])
+  @@index([userId, active])
+}
+
+enum CarriedOverStatus {
+  OPEN
+  RESOLVED
+}
+
+// Etapa 7 — registro de cada exportação (o arquivo é gerado sob demanda; só o registro é permanente).
+model ReportGenerationLog {
+  id                String   @id @default(uuid()) @db.Uuid
+  projectId         String   @db.Uuid
+  reportType        String
+  format            String
+  fileName          String
+  parameters        Json?
+  generatedAt       DateTime @default(now())
+  generatedByUserId String?  @db.Uuid
+  generatedByRole   String?
+  project           Project  @relation(fields: [projectId], references: [id], onDelete: Restrict)
+  generatedBy       User?    @relation(fields: [generatedByUserId], references: [id], onDelete: Restrict)
+
+  @@index([projectId, generatedAt])
+}
+
+// Histórico de suspensão, cancelamento e retomada (somente acréscimo).
+model ProjectStatusEvent {
+  id                 String        @id @default(uuid()) @db.Uuid
+  projectId          String        @db.Uuid
+  fromStatus         ProjectStatus
+  toStatus           ProjectStatus
+  reason             String
+  note               String?
+  effectiveDate      DateTime      @db.Date
+  expectedResumeDate DateTime?     @db.Date
+  createdByUserId    String?       @db.Uuid
+  createdByRole      String?
+  createdAt          DateTime      @default(now())
+  project            Project       @relation(fields: [projectId], references: [id], onDelete: Restrict)
+  createdBy          User?         @relation(fields: [createdByUserId], references: [id], onDelete: Restrict)
+
+  @@index([projectId, createdAt])
+}
+
+// Plano de sustentação (alimenta o Relatório Final).
+model SustainmentItem {
+  id              String    @id @default(uuid()) @db.Uuid
+  projectId       String    @db.Uuid
+  routine         String
+  frequency       String
+  responsible     String
+  indicator       String?
+  criterion       String?
+  nextReviewDate  DateTime? @db.Date
+  active          Boolean   @default(true)
+  createdByUserId String?   @db.Uuid
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  project         Project   @relation(fields: [projectId], references: [id], onDelete: Restrict)
+  createdBy       User?     @relation(fields: [createdByUserId], references: [id], onDelete: Restrict)
+
+  @@index([projectId, active])
+}
+
+// Pendência não bloqueante transferida de uma fase encerrada para outra (nunca apagada).
+model CarriedOverItem {
+  id              String            @id @default(uuid()) @db.Uuid
+  projectId       String            @db.Uuid
+  fromPhaseId     String            @db.Uuid
+  toPhaseId       String            @db.Uuid
+  description     String
+  responsible     String
+  dueDate         DateTime?         @db.Date
+  status          CarriedOverStatus @default(OPEN)
+  resolvedAt      DateTime?
+  createdByUserId String?           @db.Uuid
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  project         Project           @relation(fields: [projectId], references: [id], onDelete: Restrict)
+  fromPhase       Phase             @relation("CarriedFrom", fields: [fromPhaseId], references: [id], onDelete: Restrict)
+  toPhase         Phase             @relation("CarriedTo", fields: [toPhaseId], references: [id], onDelete: Restrict)
+  createdBy       User?             @relation(fields: [createdByUserId], references: [id], onDelete: Restrict)
+
+  @@index([projectId, status])
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  BLOCKED
+}
+
+enum ScanStatus {
+  PENDING
+  CLEAN
+  INFECTED
+  ERROR
+  SKIPPED
+}
+
+enum IncidentStatus {
+  OPEN
+  INVESTIGATING
+  CONTAINED
+  RESOLVED
+  CLOSED
+}
+
+// Etapa 8 — sessões revogáveis: o access token (curto) referencia a sessão; o refresh token (opaco) só existe como hash.
+model AuthSession {
+  id                  String    @id @default(uuid()) @db.Uuid
+  userId              String    @db.Uuid
+  refreshHash         String    @unique
+  previousRefreshHash String?
+  createdAt           DateTime  @default(now())
+  lastUsedAt          DateTime  @default(now())
+  expiresAt           DateTime
+  idleExpiresAt       DateTime
+  revokedAt           DateTime?
+  revokedReason       String?
+  ip                  String?
+  userAgent           String?
+  mfaPending          Boolean   @default(false)
+  user                User      @relation(fields: [userId], references: [id], onDelete: Restrict)
+
+  @@index([userId, revokedAt])
+}
+
+model PasswordResetToken {
+  id          String    @id @default(uuid()) @db.Uuid
+  userId      String    @db.Uuid
+  tokenHash   String    @unique
+  purpose     String    @default("RESET")
+  expiresAt   DateTime
+  usedAt      DateTime?
+  createdAt   DateTime  @default(now())
+  requestedIp String?
+  user        User      @relation(fields: [userId], references: [id], onDelete: Restrict)
+
+  @@index([userId, createdAt])
+}
+
+// Eventos de segurança (não é o AuditLog de negócio). Nunca contém senha, token ou segredo.
+model SecurityEvent {
+  id        String   @id @default(uuid()) @db.Uuid
+  type      String
+  userId    String?  @db.Uuid
+  projectId String?  @db.Uuid
+  ip        String?
+  userAgent String?
+  metadata  Json?
+  createdAt DateTime @default(now())
+  user      User?    @relation(fields: [userId], references: [id], onDelete: Restrict)
+
+  @@index([type, createdAt])
+  @@index([userId, createdAt])
+  @@index([projectId, createdAt])
+}
+
+// Limite de requisições persistente (compartilhado entre instâncias).
+model RateLimitBucket {
+  key         String   @id
+  windowStart DateTime
+  count       Int
+}
+
+// Anexos/evidências privados: arquivo no storage (fora de diretório público), metadados no banco.
+model Attachment {
+  id               String     @id @default(uuid()) @db.Uuid
+  projectId        String     @db.Uuid
+  entityType       String
+  entityId         String     @db.Uuid
+  originalName     String
+  storageKey       String     @unique
+  mimeType         String
+  sizeBytes        Int
+  sha256           String
+  scanStatus       ScanStatus @default(PENDING)
+  scanDetail       String?
+  uploadedByUserId String?    @db.Uuid
+  uploadedAt       DateTime   @default(now())
+  project          Project    @relation(fields: [projectId], references: [id], onDelete: Restrict)
+  uploadedBy       User?      @relation(fields: [uploadedByUserId], references: [id], onDelete: Restrict)
+
+  @@index([projectId, entityType, entityId])
+}
+
+model SecurityIncident {
+  id                 String          @id @default(uuid()) @db.Uuid
+  status             IncidentStatus  @default(OPEN)
+  title              String
+  description        String
+  impact             String?
+  affectedData       String?
+  affectedCompanyIds Json?
+  actionsTaken       String?
+  responsibleUserId  String?         @db.Uuid
+  occurredAt         DateTime?
+  detectedAt         DateTime        @default(now())
+  resolvedAt         DateTime?
+  closedAt           DateTime?
+  createdByUserId    String?         @db.Uuid
+  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @updatedAt
+  events             IncidentEvent[]
+
+  @@index([status, createdAt])
+}
+
+model IncidentEvent {
+  id         String           @id @default(uuid()) @db.Uuid
+  incidentId String           @db.Uuid
+  at         DateTime         @default(now())
+  userId     String?          @db.Uuid
+  note       String
+  fromStatus IncidentStatus?
+  toStatus   IncidentStatus?
+  incident   SecurityIncident @relation(fields: [incidentId], references: [id], onDelete: Restrict)
+
+  @@index([incidentId, at])
+}
+
+// ---------------------------------------------------------------------------------------------------------------
+// Etapa 11 — templates reutilizáveis de projetos. Entidades próprias, sem referências às tabelas de execução;
+// o projeto criado recebe uma CÓPIA independente e guarda apenas a referência histórica (template/versão).
+// ---------------------------------------------------------------------------------------------------------------
+enum TemplateStatus {
+  DRAFT
+  ACTIVE
+  INACTIVE
+  ARCHIVED
+}
+
+enum TemplateDependencyKind {
+  TASK_AFTER_TASK
+  TASK_BLOCKED_BY_GATE
+  REQUEST_FOR_TASK
+}
+
+model ProjectTemplate {
+  id              String               @id @default(uuid()) @db.Uuid
+  code            String
+  name            String
+  description     String
+  methodology     String
+  version         Int                  @default(1)
+  status          TemplateStatus       @default(DRAFT)
+  createdByUserId String?              @db.Uuid
+  createdAt       DateTime             @default(now())
+  updatedAt       DateTime             @updatedAt
+  validatedAt     DateTime?
+  phases          TemplatePhase[]
+  tasks           TemplateTask[]
+  gates           TemplateGate[]
+  requests        TemplateRequest[]
+  dependencies    TemplateDependency[]
+  projects        Project[]
+
+  @@unique([code, version])
+  @@index([status])
+}
+
+model TemplatePhase {
+  id                 String            @id @default(uuid()) @db.Uuid
+  templateId         String            @db.Uuid
+  order              Int
+  name               String
+  description        String
+  plannedWeeks       Int               @default(1)
+  plannedJgm4Hours   Int               @default(0)
+  plannedClientHours Decimal?          @db.Decimal(8, 2)
+  template           ProjectTemplate   @relation(fields: [templateId], references: [id], onDelete: Cascade)
+  tasks              TemplateTask[]
+  requests           TemplateRequest[]
+  gate               TemplateGate?
+
+  @@unique([templateId, order])
+}
+
+model TemplateGate {
+  id          String                  @id @default(uuid()) @db.Uuid
+  templateId  String                  @db.Uuid
+  phaseId     String                  @unique @db.Uuid
+  code        String
+  title       String
+  question    String
+  description String?
+  template    ProjectTemplate         @relation(fields: [templateId], references: [id], onDelete: Cascade)
+  phase       TemplatePhase           @relation(fields: [phaseId], references: [id], onDelete: Cascade)
+  criteria    TemplateGateCriterion[]
+
+  @@unique([templateId, code])
+}
+
+model TemplateGateCriterion {
+  id               String              @id @default(uuid()) @db.Uuid
+  gateId           String              @db.Uuid
+  code             String
+  description      String
+  mandatory        Boolean             @default(true)
+  evidenceRequired Boolean             @default(false)
+  sourceType       GateCriterionSource @default(MANUAL)
+  order            Int                 @default(0)
+  gate             TemplateGate        @relation(fields: [gateId], references: [id], onDelete: Cascade)
+
+  @@unique([gateId, code])
+}
+
+model TemplateTask {
+  id                 String                  @id @default(uuid()) @db.Uuid
+  templateId         String                  @db.Uuid
+  phaseId            String                  @db.Uuid
+  code               String
+  title              String
+  description        String?
+  objective          String
+  instructions       String
+  acceptanceCriteria String
+  responsibilityType ResponsibilityType      @default(JOINT)
+  priority           String                  @default("NORMAL")
+  plannedJgm4Hours   Decimal                 @default(0) @db.Decimal(8, 2)
+  plannedClientHours Decimal                 @default(0) @db.Decimal(8, 2)
+  order              Int                     @default(0)
+  template           ProjectTemplate         @relation(fields: [templateId], references: [id], onDelete: Cascade)
+  phase              TemplatePhase           @relation(fields: [phaseId], references: [id], onDelete: Cascade)
+  checklist          TemplateChecklistItem[]
+
+  @@unique([templateId, code])
+}
+
+model TemplateChecklistItem {
+  id       String       @id @default(uuid()) @db.Uuid
+  taskId   String       @db.Uuid
+  label    String
+  required Boolean      @default(true)
+  order    Int          @default(0)
+  task     TemplateTask @relation(fields: [taskId], references: [id], onDelete: Cascade)
+
+  @@unique([taskId, label])
+}
+
+model TemplateRequest {
+  id                 String                       @id @default(uuid()) @db.Uuid
+  templateId         String                       @db.Uuid
+  phaseId            String                       @db.Uuid
+  code               String
+  title              String
+  description        String
+  instructions       String
+  acceptanceCriteria String
+  blocking           Boolean                      @default(false)
+  mandatory          Boolean                      @default(true)
+  relativeDueDays    Int?
+  order              Int                          @default(0)
+  template           ProjectTemplate              @relation(fields: [templateId], references: [id], onDelete: Cascade)
+  phase              TemplatePhase                @relation(fields: [phaseId], references: [id], onDelete: Cascade)
+  requirements       TemplateRequestRequirement[]
+
+  @@unique([templateId, code])
+}
+
+model TemplateRequestRequirement {
+  id        String          @id @default(uuid()) @db.Uuid
+  requestId String          @db.Uuid
+  label     String
+  required  Boolean         @default(true)
+  order     Int             @default(0)
+  request   TemplateRequest @relation(fields: [requestId], references: [id], onDelete: Cascade)
+
+  @@unique([requestId, label])
+}
+
+// Dependências por CÓDIGO dentro do mesmo template: tarefa após tarefa, tarefa bloqueada por Gate e solicitação vinculada à tarefa.
+model TemplateDependency {
+  id         String                 @id @default(uuid()) @db.Uuid
+  templateId String                 @db.Uuid
+  kind       TemplateDependencyKind
+  fromCode   String
+  toCode     String
+  template   ProjectTemplate        @relation(fields: [templateId], references: [id], onDelete: Cascade)
+
+  @@unique([templateId, kind, fromCode, toCode])
 }

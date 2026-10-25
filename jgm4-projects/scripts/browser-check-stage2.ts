@@ -3,7 +3,7 @@ import { config } from 'dotenv';
 import { spawn, spawnSync } from 'node:child_process';
 import { once } from 'node:events';
 import { randomUUID } from 'node:crypto';
-import { readFileSync, mkdirSync } from 'node:fs';
+import { readdirSync, readFileSync, mkdirSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
@@ -25,7 +25,7 @@ try {
   const sql = await pool.connect();
   try {
     await sql.query(`CREATE SCHEMA "${schema}"`); await sql.query(`SET search_path TO "${schema}"`);
-    for (const path of ['20261022000100_initial', '20261022000200_requests', '20261023000100_task_workflow', '20261023000200_gates']) {
+    for (const path of readdirSync(resolve(root, 'backend/prisma/migrations'), { withFileTypes: true }).filter((entry) => entry.isDirectory()).map((entry) => entry.name).sort()) {
       const migration = readFileSync(resolve(root, `backend/prisma/migrations/${path}/migration.sql`), 'utf8');
       if (path === '20261023000200_gates') { const boundary = migration.indexOf('-- The first phase remains'); await sql.query(migration.slice(0, boundary)); await sql.query(migration.slice(boundary)); }
       else await sql.query(migration);
@@ -33,7 +33,7 @@ try {
   } finally { sql.release(); }
   const seed = spawnSync(process.execPath, [require.resolve('tsx/cli'), 'prisma/seed.ts'], { cwd: resolve(root, 'backend'), env: { ...process.env, DATABASE_URL: url.toString() }, encoding: 'utf8', windowsHide: true, timeout: 60000 });
   if (seed.status !== 0) throw new Error('Falha ao preparar seed do schema isolado do navegador.');
-  api = spawn(process.execPath, ['backend/dist/main.js'], { cwd: root, env: { ...process.env, DATABASE_URL: url.toString(), PORT: '3001' }, windowsHide: true, stdio: 'ignore' });
+  api = spawn(process.execPath, ['backend/dist/main.js'], { cwd: root, env: { ...process.env, DATABASE_URL: url.toString(), PORT: '3001', ALLOW_DEV_ACTOR_HEADER: 'true', JGM4_LOCAL_ACTOR: 'JGM4' }, windowsHide: true, stdio: 'ignore' });
   let ready = false;
   for (let attempt = 0; attempt < 100; attempt++) {
     if (api.exitCode !== null) throw new Error('API de teste encerrou antes de iniciar.');
@@ -53,9 +53,9 @@ try {
   });
   await page.goto('http://127.0.0.1:4200/');
   await expect(page.getByRole('heading', { name: 'Central de projetos' })).toBeVisible();
-  await expect(page.getByTestId('home-project')).toHaveCount(1);
+  await expect(page.getByTestId('home-project').filter({ hasText: 'Estruturação do Almoxarifado' })).toHaveCount(1);
   await page.screenshot({ path: resolve(output, 'etapa-2-inicio.png'), fullPage: true });
-  await page.getByRole('link', { name: /Solicitações.*Envie/ }).click();
+  await page.getByTestId('home-project').filter({ hasText: 'Estruturação do Almoxarifado' }).getByRole('link', { name: /Solicitações.*Envie/ }).click();
   await expect(page.getByTestId('request-row')).toHaveCount(10);
   await page.getByRole('button', { name: 'Disponíveis', exact: true }).click(); await expect(page.getByTestId('request-row')).toHaveCount(6);
   await page.getByRole('button', { name: 'Bloqueadas', exact: true }).click(); await expect(page.getByTestId('request-row')).toHaveCount(4);
@@ -110,7 +110,7 @@ try {
   await page.goto(`http://127.0.0.1:4200/projects/${projectId}/requests`); await expect(page.getByTestId('request-row')).toHaveCount(10);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   await page.screenshot({ path: resolve(output, 'etapa-2-fila-mobile.png'), fullPage: true });
-  await page.goto('http://127.0.0.1:4200/'); await expect(page.getByTestId('home-project')).toHaveCount(1);
+  await page.goto('http://127.0.0.1:4200/'); await expect(page.getByTestId('home-project').filter({ hasText: 'Estruturação do Almoxarifado' })).toHaveCount(1);
   await page.screenshot({ path: resolve(output, 'etapa-2-inicio-mobile.png'), fullPage: true });
   expect(errors).toEqual([]);
   console.log('Etapa 2 navegador OK: início, filtros, bloqueio, ciclo completo com ajuste e aceite, C05, 17 partes do roteiro, rascunho, documento editável independente, impressão/PDF, escape de conteúdo e mobile.');

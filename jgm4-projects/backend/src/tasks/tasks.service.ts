@@ -3,8 +3,9 @@ import { Prisma, TaskStatus } from '../generated/prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { TaskPlanDto, TaskRequirementDto, TaskTransitionDto, TimeEntryDto } from './tasks.dto';
 import { GatesService } from '../gates/gates.service';
+import { assertProjectOpen } from '../projects/project-guard';
 import { ensureApproval, resolveApprovals } from '../approvals/approval-sync';
-import { currentRole, isJgm4Role } from '../approvals/authority';
+import { assertCan, currentRole, currentUserId, isJgm4Role } from '../approvals/authority';
 
 type Actor = 'JGM4' | 'CLIENT';
 type Tx = Prisma.TransactionClient;
@@ -121,9 +122,11 @@ export class TasksService {
   }
   async transition(projectId: string, taskId: string, action: string, dto: TaskTransitionDto = {}) {
     return this.prisma.$transaction(async (tx) => {
+      await assertProjectOpen(tx, projectId);
       const task = await this.load(tx, projectId, taskId);
       if (task.phase.status === 'LOCKED' && ['start', 'send-validation'].includes(action)) throw new ConflictException('Esta atividade pertence a uma fase ainda não liberada. Gate anterior pendente.');
       const role = this.currentActor();
+      if (role === 'CLIENT' && ['start', 'send-validation', 'submit-evidence', 'resume'].includes(action)) assertCan(currentRole(), 'TASK_EXECUTE', 'O perfil não pode executar atividades.');
       const blocking = this.blockers(task);
       if (dto.expectedVersion !== undefined && dto.expectedVersion !== task.version) throw new ConflictException('A atividade foi atualizada. Recarregue antes de continuar.');
       let to: TaskStatus; let owner: string = task.currentOwnerType; let logAction = action.toUpperCase().replaceAll('-', '_');
@@ -167,12 +170,12 @@ export class TasksService {
       data.nextAction = action === 'request-adjustment' ? dto.guidance!.trim() : actionFor(to, owner);
       const changed = await tx.task.updateMany({ where: { id: taskId, projectId, version: task.version }, data });
       if (changed.count !== 1) throw new ConflictException('Atividade alterada simultaneamente. Recarregue.');
-      await tx.auditLog.create({ data: { projectId, entityType: 'Task', entityId: taskId, action: logAction,
-        actorType: `${role}_LOCAL`, oldValue: { status: task.status, version: task.version, currentOwnerType: task.currentOwnerType },
+      await tx.auditLog.create({ data: { userId: currentUserId(), projectId, entityType: 'Task', entityId: taskId, action: logAction,
+        actorType: currentRole(), oldValue: { status: task.status, version: task.version, currentOwnerType: task.currentOwnerType },
         newValue: { status: to, version: task.version + 1, currentOwnerType: owner, comment: dto.comment?.trim() || null, guidance: dto.guidance?.trim() || null } } });
       if (action === 'start' && task.phase.status === 'AVAILABLE') {
         await tx.phase.update({ where: { id: task.phaseId }, data: { status: 'IN_PROGRESS', actualStartDate: now } });
-        await tx.auditLog.create({ data: { projectId, entityType: 'Phase', entityId: task.phaseId, action: 'PHASE_STARTED', actorType: `${role}_LOCAL`, oldValue: { status: 'AVAILABLE' }, newValue: { status: 'IN_PROGRESS', actualStartDate: now.toISOString() } } });
+        await tx.auditLog.create({ data: { userId: currentUserId(), projectId, entityType: 'Phase', entityId: task.phaseId, action: 'PHASE_STARTED', actorType: currentRole(), oldValue: { status: 'AVAILABLE' }, newValue: { status: 'IN_PROGRESS', actualStartDate: now.toISOString() } } });
       }
       await this.syncApproval(tx, task, to, dto);
       if (to === 'COMPLETED') { await this.releaseEligible(tx, projectId); await this.gates.syncProject(tx, projectId); }
@@ -190,7 +193,9 @@ export class TasksService {
   }
   async requirement(projectId: string, taskId: string, requirementId: string, dto: TaskRequirementDto) {
     if (this.currentActor() !== 'CLIENT') throw new ForbiddenException('Somente o perfil Ollem pode atualizar o checklist da atividade.');
+    assertCan(currentRole(), 'TASK_EXECUTE', 'O perfil não pode executar atividades.');
     return this.prisma.$transaction(async (tx) => {
+      await assertProjectOpen(tx, projectId);
       const task = await this.load(tx, projectId, taskId);
       if (task.phase.status === 'LOCKED') throw new ConflictException('Esta atividade pertence a uma fase ainda não liberada. Gate anterior pendente.');
       if (!['IN_PROGRESS', 'ADJUSTMENT_REQUESTED'].includes(task.status)) throw new ConflictException('Checklist só pode ser atualizado durante a execução da atividade.');
@@ -200,33 +205,36 @@ export class TasksService {
       if (requirement.completed === dto.completed) return this.detailFrom(tx, taskId, projectId);
       const result = await tx.task.updateMany({ where: { id: taskId, projectId, version: task.version }, data: { version: { increment: 1 } } });
       if (result.count !== 1) throw new ConflictException('Atividade alterada simultaneamente. Recarregue.');
-      await tx.taskRequirement.update({ where: { id: requirementId }, data: { completed: dto.completed, completedAt: dto.completed ? new Date() : null, completedByUserId: null } });
-      await tx.auditLog.create({ data: { projectId, entityType: 'Task', entityId: taskId, action: 'CHECKLIST_CHANGED', actorType: 'CLIENT_LOCAL',
+      await tx.taskRequirement.update({ where: { id: requirementId }, data: { completed: dto.completed, completedAt: dto.completed ? new Date() : null, completedByUserId: currentUserId() } });
+      await tx.auditLog.create({ data: { userId: currentUserId(), projectId, entityType: 'Task', entityId: taskId, action: 'CHECKLIST_CHANGED', actorType: currentRole(),
         oldValue: { requirementId, completed: requirement.completed }, newValue: { requirementId, label: requirement.label, completed: dto.completed } } });
       return this.detailFrom(tx, taskId, projectId);
     });
   }
   async addEvidence(projectId: string, taskId: string, input: { description: string; referenceUrl?: string }) {
     if (this.currentActor() !== 'CLIENT') throw new ForbiddenException('Somente o perfil Ollem pode registrar evidências.');
+    assertCan(currentRole(), 'TASK_EXECUTE', 'O perfil não pode executar atividades.');
     return this.prisma.$transaction(async (tx) => {
+      await assertProjectOpen(tx, projectId);
       const task = await this.load(tx, projectId, taskId);
       if (task.phase.status === 'LOCKED') throw new ConflictException('Esta atividade pertence a uma fase ainda não liberada. Gate anterior pendente.');
       if (task.status !== 'WAITING_EVIDENCE') throw new ConflictException('Evidências só podem ser registradas na etapa de envio para validação.');
-      const evidence = await tx.taskEvidence.create({ data: { projectId, phaseId: task.phaseId, taskId, description: input.description.trim(), referenceUrl: input.referenceUrl?.trim() || null } });
-      await tx.auditLog.create({ data: { projectId, entityType: 'Task', entityId: taskId, action: 'EVIDENCE_ADDED', actorType: 'CLIENT_LOCAL', newValue: { evidenceId: evidence.id, description: evidence.description, referenceUrl: evidence.referenceUrl } } });
+      const evidence = await tx.taskEvidence.create({ data: { createdByUserId: currentUserId(), projectId, phaseId: task.phaseId, taskId, description: input.description.trim(), referenceUrl: input.referenceUrl?.trim() || null } });
+      await tx.auditLog.create({ data: { userId: currentUserId(), projectId, entityType: 'Task', entityId: taskId, action: 'EVIDENCE_ADDED', actorType: currentRole(), newValue: { evidenceId: evidence.id, description: evidence.description, referenceUrl: evidence.referenceUrl } } });
       return this.detailFrom(tx, taskId, projectId);
     });
   }
   async addTimeEntry(projectId: string, taskId: string, input: TimeEntryDto) {
     const role = this.currentActor();
     return this.prisma.$transaction(async (tx) => {
+      await assertProjectOpen(tx, projectId);
       const task = await this.load(tx, projectId, taskId);
       if (task.phase.status === 'LOCKED') throw new ConflictException('Esta atividade pertence a uma fase ainda não liberada. Gate anterior pendente.');
       if (['COMPLETED', 'CANCELLED'].includes(task.status)) throw new ConflictException('Não é possível apontar horas em atividade encerrada.');
       const phaseDate = new Date(`${input.date.slice(0, 10)}T00:00:00.000Z`);
-      const entry = await tx.timeEntry.create({ data: { projectId, phaseId: task.phaseId, taskId, userId: null,
+      const entry = await tx.timeEntry.create({ data: { projectId, phaseId: task.phaseId, taskId, userId: currentUserId(),
         organizationType: role, date: phaseDate, hours: new Prisma.Decimal(input.hours), description: input.description.trim() } });
-      await tx.auditLog.create({ data: { projectId, entityType: 'TimeEntry', entityId: entry.id, action: 'TIME_ENTRY_CREATED', actorType: `${role}_LOCAL`,
+      await tx.auditLog.create({ data: { userId: currentUserId(), projectId, entityType: 'TimeEntry', entityId: entry.id, action: 'TIME_ENTRY_CREATED', actorType: currentRole(),
         newValue: { taskId, code: task.code, organizationType: role, date: phaseDate.toISOString().slice(0, 10), hours: input.hours, description: input.description.trim() } } });
       return { entry, task: await this.detailFrom(tx, taskId, projectId) };
     });
@@ -234,6 +242,7 @@ export class TasksService {
   async updatePlan(projectId: string, taskId: string, dto: TaskPlanDto) {
     if (this.currentActor() !== 'JGM4') throw new ForbiddenException('Somente o perfil JGM4 pode alterar o planejamento da atividade.');
     return this.prisma.$transaction(async (tx) => {
+      await assertProjectOpen(tx, projectId);
       const task = await this.load(tx, projectId, taskId);
       // Atividade ativa não tem o prazo alterado diretamente: exige aprovação (DUE_DATE_CHANGE).
       if (dto.plannedEndDate !== undefined && !['NOT_STARTED', 'BLOCKED', 'COMPLETED', 'CANCELLED'].includes(task.status)) {
@@ -260,7 +269,7 @@ export class TasksService {
       const updatedCount = await tx.task.updateMany({ where: { id: taskId, projectId, version: task.version }, data: { ...patch, version: { increment: 1 } } });
       if (!updatedCount.count) throw new ConflictException('Atividade alterada simultaneamente. Recarregue.');
       const updated = await tx.task.findUniqueOrThrow({ where: { id: taskId } });
-      await tx.auditLog.create({ data: { projectId, entityType: 'Task', entityId: taskId, action: 'PLAN_UPDATED', actorType: 'JGM4_LOCAL', oldValue: oldValue as Prisma.InputJsonObject, newValue: newValue as Prisma.InputJsonObject } });
+      await tx.auditLog.create({ data: { userId: currentUserId(), projectId, entityType: 'Task', entityId: taskId, action: 'PLAN_UPDATED', actorType: currentRole(), oldValue: oldValue as Prisma.InputJsonObject, newValue: newValue as Prisma.InputJsonObject } });
       return this.detailFrom(tx, updated.id, projectId);
     });
   }

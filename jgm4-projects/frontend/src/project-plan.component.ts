@@ -69,7 +69,7 @@ export class ProjectPlanComponent implements OnInit {
   retry() { window.location.reload(); }
   statusLabel(status: string) {
     const labels: Record<string, string> = {
-      PLANNED: 'Planejado', BLOCKED: 'Bloqueado', AVAILABLE: 'Disponível',
+      PLANNED: 'Planejado', PLANNING: 'Planejamento', ON_HOLD: 'Em espera', CANCELLED: 'Cancelado', BLOCKED: 'Bloqueado', AVAILABLE: 'Disponível',
       IN_PROGRESS: 'Em andamento', COMPLETED: 'Concluído', UNDER_REVIEW: 'Em análise', RELEASED: 'Liberada',
       WAITING_EVIDENCE: 'Aguardando evidências', WAITING_JGM4_VALIDATION: 'Aguardando JGM4', ADJUSTMENT_REQUESTED: 'Ajuste solicitado', VALIDATED: 'Validada', NOT_STARTED: 'Não iniciada',
       CORRECTION_REQUIRED: 'Correção necessária', TECHNICALLY_APPROVED: 'Aprovado tecnicamente',

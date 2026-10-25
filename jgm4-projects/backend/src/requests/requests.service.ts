@@ -4,8 +4,9 @@ import { Prisma, RequestStatus } from '../generated/prisma/client';
 import { RequestFilter, RequirementDto, TransitionDto } from './requests.dto';
 import { TasksService } from '../tasks/tasks.service';
 import { GatesService } from '../gates/gates.service';
+import { assertProjectOpen } from '../projects/project-guard';
 import { ensureApproval, markInReview, resolveApprovals } from '../approvals/approval-sync';
-import { assertCan, currentRole } from '../approvals/authority';
+import { assertCan, currentRole, currentUserId, isJgm4Role } from '../approvals/authority';
 
 const include = {
   phase: { select: { id: true, order: true, name: true } },
@@ -95,6 +96,8 @@ export class RequestsService {
   }
   async transition(projectId: string, id: string, action: RequestAction, dto: TransitionDto = {}) {
     return this.prisma.$transaction(async (tx) => {
+      if (['start', 'send'].includes(action) && !isJgm4Role(currentRole())) assertCan(currentRole(), 'REQUEST_RESPOND', 'O perfil não pode responder solicitações.');
+      await assertProjectOpen(tx, projectId);
       const item = await this.load(tx, projectId, id);
       const view = await this.decorate(tx, item);
       const rule = transitions[action];
@@ -109,10 +112,10 @@ export class RequestsService {
       if (['start-review', 'request-adjustment', 'accept'].includes(action)) assertCan(currentRole(), 'REQUEST_VALIDATE', 'Somente a JGM4 pode analisar e decidir respostas de solicitações.');
       const result = await tx.projectRequest.updateMany({ where: { id, projectId, version: item.version }, data: { status: rule.to, version: { increment: 1 } } });
       if (result.count !== 1) throw new ConflictException('Solicitação alterada simultaneamente. Recarregue.');
-      await tx.auditLog.create({ data: {
+      await tx.auditLog.create({ data: { userId: currentUserId(),
         projectId, entityType: 'ProjectRequest', entityId: id,
         action: action === 'accept' ? 'ACCEPTED' : action === 'request-adjustment' ? 'ADJUSTMENT_REQUESTED' : 'STATUS_CHANGED',
-        actorType: rule.actor, oldValue: { status: item.status, version: item.version },
+        actorType: currentRole(), oldValue: { status: item.status, version: item.version },
         newValue: { status: rule.to, version: item.version + 1, note: dto.note?.trim() || null },
       } });
       await this.syncApproval(tx, item, action, dto.note?.trim() || null);
@@ -132,7 +135,9 @@ export class RequestsService {
     else if (action === 'request-adjustment') await resolveApprovals(tx, { ...key, status: 'ADJUSTMENT_REQUESTED', comment: note });
   }
   async requirement(projectId: string, id: string, requirementId: string, dto: RequirementDto) {
+    if (!isJgm4Role(currentRole())) assertCan(currentRole(), 'REQUEST_RESPOND', 'O perfil não pode responder solicitações.');
     return this.prisma.$transaction(async (tx) => {
+      await assertProjectOpen(tx, projectId);
       const item = await this.load(tx, projectId, id);
       this.assertVersion(item.version, dto.expectedVersion);
       if (!(await this.decorate(tx, item)).canEditRequirements) throw new ConflictException('Requisitos só podem ser alterados durante a preparação da resposta.');
@@ -141,9 +146,9 @@ export class RequestsService {
       if (requirement.completed === dto.completed) return this.decorate(tx, item);
       const updated = await tx.projectRequest.updateMany({ where: { id, projectId, version: item.version }, data: { version: { increment: 1 } } });
       if (updated.count !== 1) throw new ConflictException('Solicitação alterada simultaneamente. Recarregue.');
-      await tx.requestRequirement.update({ where: { id: requirementId }, data: { completed: dto.completed, completedAt: dto.completed ? new Date() : null, completedByUserId: null } });
-      await tx.auditLog.create({ data: {
-        projectId, entityType: 'ProjectRequest', entityId: id, action: 'REQUIREMENT_CHANGED', actorType: 'CLIENT_LOCAL',
+      await tx.requestRequirement.update({ where: { id: requirementId }, data: { completed: dto.completed, completedAt: dto.completed ? new Date() : null, completedByUserId: currentUserId() } });
+      await tx.auditLog.create({ data: { userId: currentUserId(),
+        projectId, entityType: 'ProjectRequest', entityId: id, action: 'REQUIREMENT_CHANGED', actorType: currentRole(),
         oldValue: { requirementId, completed: requirement.completed }, newValue: { requirementId, label: requirement.label, completed: dto.completed },
       } });
       return this.decorate(tx, await this.load(tx, projectId, id));

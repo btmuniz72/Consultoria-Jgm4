@@ -1,12 +1,14 @@
-import { BadRequestException, ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, ConflictException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { Prisma, ApprovalType } from '../generated/prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { GatesService } from '../gates/gates.service';
+import { AccessService, hasGlobalAccess } from '../auth/access.service';
+import { assertProjectOpen } from '../projects/project-guard';
 import { RequestsService } from '../requests/requests.service';
 import { TasksService } from '../tasks/tasks.service';
 import { ensureApproval, OPEN_STATUSES, resolveApprovals } from './approval-sync';
 import { ApprovalsQuery, DecisionDto, DueDateChangeDto, ReasonDto, ResponsibleChangeDto } from './approvals.dto';
-import { AUTHORITY_RULES, DECISION_PERMISSION, ROLES, Role, assertCan, can, currentRole, isJgm4Role, withDecision } from './authority';
+import { AUTHORITY_RULES, DECISION_PERMISSION, ROLES, Role, assertCan, can, currentRole, currentUser, currentUserId, isJgm4Role, withDecision } from './authority';
 import { CATEGORY_LABELS, CATEGORY_TYPES, Category, TYPE_LABELS, actionLabels, categoryOf, defaultNextAction, fmtDate, ownerOf, roleLabel } from './approval-labels';
 
 type Tx = Prisma.TransactionClient;
@@ -22,7 +24,7 @@ type Entities = { tasks: Map<string, any>; requests: Map<string, any>; gates: Ma
 
 @Injectable()
 export class ApprovalsService {
-  constructor(private readonly prisma: PrismaService, private readonly tasks: TasksService, private readonly requests: RequestsService, private readonly gates: GatesService) {}
+  constructor(private readonly prisma: PrismaService, private readonly tasks: TasksService, private readonly requests: RequestsService, private readonly gates: GatesService, private readonly access: AccessService) {}
 
   // ---------------------------------------------------------------- leitura
   authority() {
@@ -82,12 +84,15 @@ export class ApprovalsService {
   private async query(options: ApprovalsQuery, forRole: Role) {
     const statusFilter = options.status === 'all' ? {} : { status: { in: OPEN_STATUSES } };
     const types = options.category && options.category !== 'ALL' ? CATEGORY_TYPES[options.category] : undefined;
+    const user = currentUser()!; const scope = await this.access.accessibleProjectIds(user);
+    if (options.projectId && scope && !scope.includes(options.projectId)) throw new ForbiddenException('Você não tem acesso a este projeto.');
     const approvals = await this.prisma.approval.findMany({
-      where: { ...statusFilter, projectId: options.projectId, type: types ? { in: types } : undefined, priority: options.priority === 'high' ? { in: ['HIGH', 'CRITICAL'] } : undefined, project: { company: { active: true } } },
+      where: { ...statusFilter, projectId: options.projectId ?? (scope ? { in: scope } : undefined), type: types ? { in: types } : undefined, priority: options.priority === 'high' ? { in: ['HIGH', 'CRITICAL'] } : undefined, project: { company: { active: true } } },
       include: approvalInclude, orderBy: [{ requestedAt: 'asc' }, { id: 'asc' }],
     });
     // Aguardando minha ação: somente o que a alçada do perfil permite decidir (e que ainda está aberto).
-    const scoped = options.scope === 'all' || options.status === 'all' ? approvals : approvals.filter((item) => this.canDecide(forRole, item.type));
+    const addressed = approvals.filter((item) => !item.assignedToUserId || item.assignedToUserId === user.id || hasGlobalAccess(user));
+    const scoped = options.scope === 'all' || options.status === 'all' ? addressed : addressed.filter((item) => this.canDecide(forRole, item.type));
     const entities = await this.loadEntities(scoped);
     let items = scoped.map((item) => this.view(item, entities, forRole));
     if (options.due === 'today') items = items.filter((item) => item.dueAt && iso(item.dueAt) === iso(today()));
@@ -160,6 +165,7 @@ export class ApprovalsService {
     const role = currentRole();
     const approval = await this.load(id);
     if (!OPEN_STATUSES.includes(approval.status)) throw new ConflictException('Esta aprovação já foi decidida e o histórico não pode ser alterado.');
+    await assertProjectOpen(this.prisma, approval.projectId);
     const permission = DECISION_PERMISSION[approval.type];
     assertCan(role, permission, `O perfil ${role} não tem alçada para decidir ${TYPE_LABELS[approval.type].toLowerCase()} (exige ${AUTHORITY_RULES.find((rule) => rule.permission === permission)!.roles.join(' ou ')}).`);
     const comment = dto.comment?.trim(); const instructions = dto.instructions?.trim();
@@ -204,7 +210,7 @@ export class ApprovalsService {
         else {
           // "Solicitar ajuste" do patrocinador = manter em espera; a aprovação continua aberta e a pausa fica auditada.
           await this.gates.transition(approval.projectId, approval.entityId, 'client-decision', { clientDecision: 'HOLD', comment: detailText });
-          await this.prisma.auditLog.create({ data: { projectId: approval.projectId, entityType: 'Approval', entityId: approval.id, action: 'APPROVAL_ON_HOLD', actorType: role, newValue: { comment: detailText, ...payload } } });
+          await this.prisma.auditLog.create({ data: { userId: currentUserId(), projectId: approval.projectId, entityType: 'Approval', entityId: approval.id, action: 'APPROVAL_ON_HOLD', actorType: role, newValue: { comment: detailText, ...payload } } });
         }
         break;
       }
@@ -239,10 +245,10 @@ export class ApprovalsService {
         if (iso(task.plannedEndDate) !== payload.currentDate) throw new ConflictException('O prazo atual da atividade mudou desde o pedido. Solicite novamente.');
         const changed = await tx.task.updateMany({ where: { id: task.id, version: task.version }, data: { plannedEndDate: toDate(payload.newDate), version: { increment: 1 } } });
         if (changed.count !== 1) throw new ConflictException('Atividade alterada simultaneamente. Recarregue.');
-        await tx.auditLog.create({ data: { projectId: approval.projectId, entityType: 'Task', entityId: task.id, action: 'DUE_DATE_CHANGED', actorType: currentRole(),
+        await tx.auditLog.create({ data: { userId: currentUserId(), projectId: approval.projectId, entityType: 'Task', entityId: task.id, action: 'DUE_DATE_CHANGED', actorType: currentRole(),
           oldValue: { plannedEndDate: payload.currentDate }, newValue: { plannedEndDate: payload.newDate, ...base } } });
       } else {
-        await tx.auditLog.create({ data: { projectId: approval.projectId, entityType: 'Task', entityId: task.id, action: outcome === 'reject' ? 'DUE_DATE_CHANGE_REJECTED' : 'DUE_DATE_CHANGE_ADJUSTMENT_REQUESTED', actorType: currentRole(),
+        await tx.auditLog.create({ data: { userId: currentUserId(), projectId: approval.projectId, entityType: 'Task', entityId: task.id, action: outcome === 'reject' ? 'DUE_DATE_CHANGE_REJECTED' : 'DUE_DATE_CHANGE_ADJUSTMENT_REQUESTED', actorType: currentRole(),
           oldValue: { plannedEndDate: payload.currentDate }, newValue: { plannedEndDate: payload.currentDate, requestedDate: payload.newDate, ...base } } });
       }
       await this.closeOnly(tx, approval, outcome, comment);
@@ -263,10 +269,10 @@ export class ApprovalsService {
         if (!user) throw new ConflictException('O novo responsável não está mais ativo.');
         const changed = await tx.task.updateMany({ where: { id: task.id, version: task.version }, data: { [column]: user.id, version: { increment: 1 } } });
         if (changed.count !== 1) throw new ConflictException('Atividade alterada simultaneamente. Recarregue.');
-        await tx.auditLog.create({ data: { projectId: approval.projectId, entityType: 'Task', entityId: task.id, action: 'RESPONSIBLE_CHANGED', actorType: currentRole(),
+        await tx.auditLog.create({ data: { userId: currentUserId(), projectId: approval.projectId, entityType: 'Task', entityId: task.id, action: 'RESPONSIBLE_CHANGED', actorType: currentRole(),
           oldValue: { [column]: payload.currentUserId ?? null, name: payload.currentName ?? null }, newValue: { [column]: user.id, name: user.name, ...base } } });
       } else {
-        await tx.auditLog.create({ data: { projectId: approval.projectId, entityType: 'Task', entityId: task.id, action: outcome === 'reject' ? 'RESPONSIBLE_CHANGE_REJECTED' : 'RESPONSIBLE_CHANGE_ADJUSTMENT_REQUESTED', actorType: currentRole(),
+        await tx.auditLog.create({ data: { userId: currentUserId(), projectId: approval.projectId, entityType: 'Task', entityId: task.id, action: outcome === 'reject' ? 'RESPONSIBLE_CHANGE_REJECTED' : 'RESPONSIBLE_CHANGE_ADJUSTMENT_REQUESTED', actorType: currentRole(),
           oldValue: { [column]: payload.currentUserId ?? null }, newValue: { [column]: payload.currentUserId ?? null, requestedUserId: payload.newUserId, ...base } } });
       }
       await this.closeOnly(tx, approval, outcome, comment);
@@ -288,19 +294,19 @@ export class ApprovalsService {
           status: 'IN_PROGRESS', actualEndDate: null, currentOwnerType: task.responsibilityType === 'JGM4' ? 'JGM4' : 'CLIENT',
           nextAction: `Atividade reaberta: ${payload.reason}`, version: { increment: 1 } } });
         if (changed.count !== 1) throw new ConflictException('Atividade alterada simultaneamente. Recarregue.');
-        await tx.auditLog.create({ data: { projectId: approval.projectId, entityType: 'Task', entityId: task.id, action: 'REOPENED', actorType: currentRole(),
+        await tx.auditLog.create({ data: { userId: currentUserId(), projectId: approval.projectId, entityType: 'Task', entityId: task.id, action: 'REOPENED', actorType: currentRole(),
           oldValue: { status: 'COMPLETED', actualEndDate: iso(task.actualEndDate) }, newValue: { status: 'IN_PROGRESS', ...base } } });
         if (task.phase.status === 'WAITING_GATE') {
           await tx.phase.update({ where: { id: task.phaseId }, data: { status: 'IN_PROGRESS' } });
-          await tx.auditLog.create({ data: { projectId: approval.projectId, entityType: 'Phase', entityId: task.phaseId, action: 'PHASE_REOPENED', actorType: currentRole(), oldValue: { status: 'WAITING_GATE' }, newValue: { status: 'IN_PROGRESS', taskId: task.id } } });
+          await tx.auditLog.create({ data: { userId: currentUserId(), projectId: approval.projectId, entityType: 'Phase', entityId: task.phaseId, action: 'PHASE_REOPENED', actorType: currentRole(), oldValue: { status: 'WAITING_GATE' }, newValue: { status: 'IN_PROGRESS', taskId: task.id } } });
         }
         if (gate && ['AVAILABLE', 'UNDER_REVIEW', 'TECHNICALLY_APPROVED', 'CORRECTION_REQUIRED'].includes(gate.status)) {
           await tx.gate.update({ where: { id: gate.id }, data: { status: 'BLOCKED', currentOwnerType: 'SYSTEM', nextAction: `Aguardar a atividade ${task.code}, reaberta.` } });
-          await tx.auditLog.create({ data: { projectId: approval.projectId, entityType: 'Gate', entityId: gate.id, action: 'GATE_RETURNED_TO_BLOCKED', actorType: currentRole(), oldValue: { status: gate.status }, newValue: { status: 'BLOCKED', reason: `Reabertura de ${task.code}` } } });
+          await tx.auditLog.create({ data: { userId: currentUserId(), projectId: approval.projectId, entityType: 'Gate', entityId: gate.id, action: 'GATE_RETURNED_TO_BLOCKED', actorType: currentRole(), oldValue: { status: gate.status }, newValue: { status: 'BLOCKED', reason: `Reabertura de ${task.code}` } } });
           for (const type of ['GATE_TECHNICAL_OPINION', 'GATE_CLIENT_DECISION'] as const) await resolveApprovals(tx, { entityType: 'Gate', entityId: gate.id, type, status: 'CANCELLED', comment: `Cancelada: ${task.code} foi reaberta.` });
         }
       } else {
-        await tx.auditLog.create({ data: { projectId: approval.projectId, entityType: 'Task', entityId: task.id, action: outcome === 'reject' ? 'REOPEN_REJECTED' : 'REOPEN_ADJUSTMENT_REQUESTED', actorType: currentRole(), newValue: { status: task.status, ...base } } });
+        await tx.auditLog.create({ data: { userId: currentUserId(), projectId: approval.projectId, entityType: 'Task', entityId: task.id, action: outcome === 'reject' ? 'REOPEN_REJECTED' : 'REOPEN_ADJUSTMENT_REQUESTED', actorType: currentRole(), newValue: { status: task.status, ...base } } });
       }
       await this.closeOnly(tx, approval, outcome, comment);
     });
@@ -317,11 +323,11 @@ export class ApprovalsService {
         if (request.mandatory && request.blocking) throw new ConflictException('Solicitação obrigatória e bloqueante não pode ser cancelada.');
         const changed = await tx.projectRequest.updateMany({ where: { id: request.id, version: request.version }, data: { status: 'CANCELLED', version: { increment: 1 } } });
         if (changed.count !== 1) throw new ConflictException('Solicitação alterada simultaneamente. Recarregue.');
-        await tx.auditLog.create({ data: { projectId: approval.projectId, entityType: 'ProjectRequest', entityId: request.id, action: 'CANCELLED', actorType: currentRole(),
+        await tx.auditLog.create({ data: { userId: currentUserId(), projectId: approval.projectId, entityType: 'ProjectRequest', entityId: request.id, action: 'CANCELLED', actorType: currentRole(),
           oldValue: { status: request.status, version: request.version }, newValue: { status: 'CANCELLED', version: request.version + 1, ...base } } });
         await resolveApprovals(tx, { entityType: 'ProjectRequest', entityId: request.id, type: 'REQUEST_REVIEW', status: 'CANCELLED', comment: 'Cancelada: solicitação cancelada.' });
       } else {
-        await tx.auditLog.create({ data: { projectId: approval.projectId, entityType: 'ProjectRequest', entityId: request.id, action: outcome === 'reject' ? 'CANCEL_REJECTED' : 'CANCEL_ADJUSTMENT_REQUESTED', actorType: currentRole(), newValue: { status: request.status, ...base } } });
+        await tx.auditLog.create({ data: { userId: currentUserId(), projectId: approval.projectId, entityType: 'ProjectRequest', entityId: request.id, action: outcome === 'reject' ? 'CANCEL_REJECTED' : 'CANCEL_ADJUSTMENT_REQUESTED', actorType: currentRole(), newValue: { status: request.status, ...base } } });
       }
       await this.closeOnly(tx, approval, outcome, comment);
     });
@@ -331,6 +337,7 @@ export class ApprovalsService {
   private async taskForChange(tx: Tx, taskId: string) {
     const task = await tx.task.findFirst({ where: { id: taskId, project: { company: { active: true } } }, include: { clientResponsible: { select: { name: true } }, jgm4Responsible: { select: { name: true } }, project: { select: { companyId: true } } } });
     if (!task) throw new NotFoundException('Atividade não encontrada.');
+    await assertProjectOpen(tx, task.projectId);
     return task;
   }
   private async assertNoOpen(tx: Tx, entityType: string, entityId: string, type: ApprovalType) {
@@ -339,7 +346,7 @@ export class ApprovalsService {
   private async openChange(tx: Tx, input: { projectId: string; type: ApprovalType; entityType: string; entityId: string; code: string; title: string; description: string; assignedRole: Role; priority?: 'NORMAL' | 'HIGH'; dueAt?: Date | null; payload: Prisma.InputJsonObject; auditAction: string }) {
     const role = currentRole();
     const { approval } = await ensureApproval(tx, { ...input, entityCode: input.code, requestedByRole: role, actorType: role });
-    await tx.auditLog.create({ data: { projectId: input.projectId, entityType: input.entityType, entityId: input.entityId, action: input.auditAction, actorType: role, newValue: { approvalId: approval.id, ...input.payload } } });
+    await tx.auditLog.create({ data: { userId: currentUserId(), projectId: input.projectId, entityType: input.entityType, entityId: input.entityId, action: input.auditAction, actorType: role, newValue: { approvalId: approval.id, ...input.payload } } });
     return approval.id;
   }
 
@@ -370,6 +377,8 @@ export class ApprovalsService {
       if (jgm4Side ? !isJgm4Role(user.role) : (isJgm4Role(user.role) || user.companyId !== task.project.companyId)) throw new BadRequestException(jgm4Side ? 'O responsável JGM4 deve ser um usuário JGM4.' : 'O responsável do cliente deve pertencer à empresa do projeto.');
       const currentUserId = jgm4Side ? task.jgm4ResponsibleUserId : task.clientResponsibleUserId;
       if (currentUserId === user.id) throw new BadRequestException('O novo responsável já é o responsável atual.');
+      const member = await tx.projectMembership.findFirst({ where: { projectId: task.projectId, userId: user.id, active: true }, select: { id: true } });
+      if (!member) throw new BadRequestException('O novo responsável precisa ter vínculo ativo com o projeto.');
       await this.assertNoOpen(tx, 'Task', task.id, 'RESPONSIBLE_CHANGE');
       return this.openChange(tx, { projectId: task.projectId, type: 'RESPONSIBLE_CHANGE', entityType: 'Task', entityId: task.id, code: task.code,
         title: `${task.code} — Troca de responsável ${jgm4Side ? 'JGM4' : 'do cliente'}`, description: dto.justification.trim(), assignedRole: 'JGM4_ADMIN',

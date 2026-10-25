@@ -56,16 +56,21 @@ export const DECISION_PERMISSION: Record<ApprovalType, Permission> = {
   TASK_REOPEN: 'TASK_REOPEN_APPROVE', REQUEST_CANCEL: 'REQUEST_CANCEL_APPROVE', OTHER: 'CONFLICT_RESOLVE',
 };
 
-// Perfil do ator local. Sem login nesta fase: o cabeçalho `x-actor-role` escolhe o perfil simulado;
-// sem ele vale JGM4_LOCAL_ACTOR (JGM4 → JGM4_ADMIN, CLIENT → CLIENT_SPONSOR), preservando as Etapas 1–4.
-const storage = new AsyncLocalStorage<{ role?: Role }>();
-export function actorMiddleware(req: { headers: Record<string, unknown> }, _res: unknown, next: () => void) {
-  const header = req.headers['x-actor-role'];
-  storage.run({ role: isRole(header) ? header : undefined }, next);
+// Ator da requisição. Preenchido SOMENTE pelo AuthGuard a partir do token JWT validado (ou, apenas em
+// desenvolvimento e com ALLOW_DEV_ACTOR_HEADER=true, pelo ator de desenvolvimento). Nunca vem do corpo da
+// requisição. Fora de uma requisição autenticada vale o menor privilégio (CLIENT_USER).
+export interface ActorUser { id: string | null; name: string; email: string | null; role: Role; companyId: string | null; dev?: boolean; sessionId?: string; via?: 'cookie' | 'bearer'; restricted?: 'MFA_SETUP_REQUIRED' | 'PASSWORD_CHANGE_REQUIRED' | null }
+interface RequestStore { user?: ActorUser; ip?: string; userAgent?: string }
+const storage = new AsyncLocalStorage<RequestStore>();
+export function actorMiddleware(req: { ip?: string; headers: Record<string, unknown> }, _res: unknown, next: () => void) {
+  const ua = req.headers['user-agent'];
+  storage.run({ ip: req.ip, userAgent: typeof ua === 'string' ? ua.slice(0, 200) : undefined }, next);
 }
-export function currentRole(): Role {
-  return storage.getStore()?.role ?? (process.env.JGM4_LOCAL_ACTOR === 'CLIENT' ? 'CLIENT_SPONSOR' : 'JGM4_ADMIN');
-}
+export const currentRequestInfo = () => ({ ip: storage.getStore()?.ip, userAgent: storage.getStore()?.userAgent });
+export function setCurrentUser(user: ActorUser) { const store = storage.getStore(); if (store) store.user = user; }
+export const currentUser = () => storage.getStore()?.user;
+export const currentUserId = () => storage.getStore()?.user?.id ?? null;
+export const currentRole = (): Role => storage.getStore()?.user?.role ?? 'CLIENT_USER';
 
 // Quando a decisão chega pela Central, o desfecho escolhido (ex.: "rejeitar") precisa prevalecer sobre o
 // desfecho padrão que o workflow original registraria — dentro da mesma transação.

@@ -3,7 +3,7 @@ import { config } from 'dotenv';
 import { spawn, spawnSync } from 'node:child_process';
 import { once } from 'node:events';
 import { randomUUID } from 'node:crypto';
-import { readFileSync, mkdirSync } from 'node:fs';
+import { readdirSync, readFileSync, mkdirSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
@@ -43,7 +43,7 @@ try {
   const sql = await pool.connect();
   try {
     await sql.query(`CREATE SCHEMA "${schema}"`); await sql.query(`SET search_path TO "${schema}"`);
-    for (const folder of ['20261022000100_initial', '20261022000200_requests', '20261023000100_task_workflow', '20261023000200_gates']) {
+    for (const folder of readdirSync(resolve(root, 'backend/prisma/migrations'), { withFileTypes: true }).filter((entry) => entry.isDirectory()).map((entry) => entry.name).sort()) {
       const migration = readFileSync(resolve(root, `backend/prisma/migrations/${folder}/migration.sql`), 'utf8');
       if (folder === '20261023000200_gates') { const boundary = migration.indexOf('-- The first phase remains'); await sql.query(migration.slice(0, boundary)); await sql.query(migration.slice(boundary)); }
       else await sql.query(migration);
@@ -52,7 +52,7 @@ try {
   const seed = spawnSync(process.execPath, [require.resolve('tsx/cli'), 'prisma/seed.ts'], { cwd: resolve(root, 'backend'), env: { ...process.env, DATABASE_URL: testUrl.toString() }, encoding: 'utf8', windowsHide: true, timeout: 60000 });
   if (seed.status !== 0) throw new Error('Não foi possível preparar o seed isolado do navegador.');
   for (const [port, role] of [[3001, 'JGM4'], [3002, 'CLIENT']] as const) {
-    const api = spawn(process.execPath, ['backend/dist/main.js'], { cwd: root, env: { ...process.env, DATABASE_URL: testUrl.toString(), PORT: String(port), JGM4_LOCAL_ACTOR: role }, windowsHide: true, stdio: 'ignore' });
+    const api = spawn(process.execPath, ['backend/dist/main.js'], { cwd: root, env: { ...process.env, DATABASE_URL: testUrl.toString(), PORT: String(port), JGM4_LOCAL_ACTOR: role, ALLOW_DEV_ACTOR_HEADER: 'true' }, windowsHide: true, stdio: 'ignore' });
     apis.push(api); await waitForApi(port, api);
   }
   const tasks = await call(3001, 'GET', `/projects/${projectId}/tasks`) as { id: string; code: string; plannedJgm4Hours: number }[];
