@@ -59,7 +59,7 @@ export class ProjectPlanComponent implements OnInit {
   private showError(error: HttpErrorResponse) {
     this.error.set(error.status === 404 || error.status === 400
       ? 'Projeto não encontrado. Selecione um projeto disponível.'
-      : 'Não foi possível carregar o projeto. Verifique se a API e o banco local estão em execução.');
+      : 'Não foi possível carregar o projeto. Verifique sua conexão e tente novamente.');
     this.loading.set(false);
   }
   selectProject(event: Event) {

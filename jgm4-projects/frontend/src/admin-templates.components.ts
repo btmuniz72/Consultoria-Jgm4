@@ -2,6 +2,7 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { DialogService } from './ui/dialog.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AdminNavComponent } from './admin-ops.components';
 import { apiMessages } from './password-pages.component';
@@ -91,7 +92,7 @@ const RESP = [{ value: 'JOINT', label: 'Conjunta' }, { value: 'JGM4', label: 'JG
   </main>`,
 })
 export class AdminTemplateEditorComponent implements OnInit {
-  private readonly http = inject(HttpClient); private readonly route = inject(ActivatedRoute); private readonly router = inject(Router);
+  private readonly http = inject(HttpClient); private readonly dialogs = inject(DialogService); private readonly route = inject(ActivatedRoute); private readonly router = inject(Router);
   readonly d = signal<Detail | null>(null); readonly validation = signal<Validation | null>(null); readonly preview = signal<Preview | null>(null); readonly notice = signal(''); readonly error = signal('');
   id = ''; inactivatePrevious = false; forms: Record<string, Record<string, unknown>> = {}; editing: Record<string, string | null> = {};
   label(status: string) { return templateStatusLabels[status] ?? status; }
@@ -128,7 +129,7 @@ export class AdminTemplateEditorComponent implements OnInit {
   activate() { this.http.post(`/api/admin/templates/${this.id}/activate`, { inactivatePrevious: this.inactivatePrevious }).subscribe({ next: () => { this.validation.set(null); this.ok('Template ativado.'); this.load(); }, error: (e: HttpErrorResponse) => { this.fail(e); this.validate(); } }); }
   newVersion() { this.http.post<{ id: string }>(`/api/admin/templates/${this.id}/new-version`, {}).subscribe({ next: (t) => { void this.router.navigate(['/admin/templates', t.id]).then(() => { this.id = t.id; this.validation.set(null); this.preview.set(null); this.ok('Nova versão criada como rascunho.'); this.load(); }); }, error: (e: HttpErrorResponse) => this.fail(e) }); }
   post(action: string, message: string) { this.http.post(`/api/admin/templates/${this.id}/${action}`, {}).subscribe({ next: () => { this.ok(message); this.load(); }, error: (e: HttpErrorResponse) => this.fail(e) }); }
-  archive() { if (!window.confirm('Arquivar este template? Ele deixa de aparecer para novos projetos; projetos existentes continuam funcionando.')) return; this.post('archive', 'Template arquivado.'); }
+  async archive() { if (!(await this.dialogs.confirm({ title: 'Arquivar este template?', message: 'Ele deixa de aparecer para novos projetos; projetos existentes continuam funcionando.', confirmLabel: 'Arquivar', danger: true }))) return; this.post('archive', 'Template arquivado.'); }
   edit(s: Section, row: Row) { this.editing[s.kind] = row.id; const form: Record<string, unknown> = {}; for (const f of s.fields) form[f.name] = row[f.name] ?? ''; if (s.parent) form[s.parent] = row[s.parent]; this.forms[s.kind] = form; }
   reset(s: Section) { this.editing[s.kind] = null; this.forms[s.kind] = {}; }
   save(s: Section) {
@@ -141,5 +142,5 @@ export class AdminTemplateEditorComponent implements OnInit {
     const request = editingId ? this.http.patch(`${url}/${editingId}`, body) : this.http.post(url, body);
     request.subscribe({ next: () => { this.reset(s); this.validation.set(null); this.ok('Item salvo. Valide o template antes de ativar.'); this.load(); }, error: (e: HttpErrorResponse) => this.fail(e) });
   }
-  remove(s: Section, row: Row) { if (!window.confirm('Remover este item do rascunho?')) return; this.http.delete(`/api/admin/templates/${this.id}/items/${s.kind}/${row.id}`).subscribe({ next: () => { this.validation.set(null); this.ok('Item removido.'); this.load(); }, error: (e: HttpErrorResponse) => this.fail(e) }); }
+  async remove(s: Section, row: Row) { if (!(await this.dialogs.confirm({ title: 'Remover este item do rascunho?', confirmLabel: 'Remover', danger: true }))) return; this.http.delete(`/api/admin/templates/${this.id}/items/${s.kind}/${row.id}`).subscribe({ next: () => { this.validation.set(null); this.ok('Item removido.'); this.load(); }, error: (e: HttpErrorResponse) => this.fail(e) }); }
 }

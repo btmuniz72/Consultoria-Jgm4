@@ -6,6 +6,8 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BehaviorSubject, EMPTY, catchError, forkJoin, switchMap } from 'rxjs';
 import { ActorService, ApprovalSummary } from './actor.service';
+import { UI } from './ui/ui.components';
+import { auditActionLabel, priorityLabels as centralPriorities, approvalStatusLabels, roleLabel } from './ui/labels';
 
 interface ApprovalItem {
   id: string; projectId: string; projectName: string; companyName: string; type: string; typeLabel: string; category: string; code: string | null; title: string; description: string;
@@ -21,14 +23,14 @@ interface ApprovalDetail extends ApprovalItem {
   previousApprovals: { id: string; type: string; status: string; decisionComment: string | null; decidedAt: string | null; decidedByRole: string | null }[];
 }
 type Outcome = 'approve' | 'adjust' | 'reject';
-const priorityLabels: Record<string, string> = { LOW: 'Baixa', NORMAL: 'Normal', HIGH: 'Alta', CRITICAL: 'Crítica' };
-const statusLabels: Record<string, string> = { PENDING: 'Pendente', IN_REVIEW: 'Em análise', APPROVED: 'Aprovada', ADJUSTMENT_REQUESTED: 'Ajuste solicitado', REJECTED: 'Rejeitada', CANCELLED: 'Cancelada' };
+const priorityLabels = centralPriorities;
+const statusLabels = approvalStatusLabels;
 const outcomePath: Record<Outcome, string> = { approve: 'approve', adjust: 'request-adjustment', reject: 'reject' };
 
 @Component({
-  selector: 'app-approvals', imports: [DatePipe, FormsModule, RouterLink],
+  selector: 'app-approvals', imports: [DatePipe, FormsModule, RouterLink, ...UI],
   template: `<main>
-    <div class="page-heading"><div><p class="eyebrow">CENTRAL DE APROVAÇÕES</p><h1>O que está aguardando minha ação?</h1><p class="lead">Perfil atual: <strong>{{ summary()?.role || '…' }}</strong>. Tudo o que depende da sua decisão, em um só lugar.</p></div><button class="secondary" (click)="refresh()">Atualizar</button></div>
+    <div class="page-heading"><div><p class="eyebrow">CENTRAL DE APROVAÇÕES</p><h1>O que está aguardando minha ação?</h1><p class="lead">Perfil atual: <strong>{{ summary()?.role | roleLabel }}</strong>. Tudo o que depende da sua decisão, em um só lugar.</p></div><button class="secondary" (click)="refresh()">Atualizar</button></div>
 
     @if (summary(); as s) {
       <section class="metrics approval-cards" aria-label="Aguardando minha ação">
@@ -64,12 +66,12 @@ const outcomePath: Record<Outcome, string> = { approve: 'approve', adjust: 'requ
             <td data-label="Projeto">{{ item.projectName }}<small>{{ item.companyName }}</small></td>
             <td data-label="Descrição"><a [routerLink]="['/approvals', item.id]">{{ item.title }}</a><small>{{ item.impact }}</small></td>
             <td data-label="Responsável"><strong class="owner-label">{{ item.owner.label }}</strong><small>{{ item.nextAction }}</small></td>
-            <td data-label="Recebido em">{{ item.requestedAt | date:'dd/MM' }}<small>{{ item.requestedByLabel }}</small></td>
-            <td data-label="Prazo" [class.overdue]="item.overdue">{{ item.dueAt ? (item.dueAt | date:'dd/MM':'UTC') : '—' }}@if (item.overdue) { <small>Atrasado</small> }</td>
+            <td data-label="Recebido em">{{ item.requestedAt | fmtDate }}<small>{{ item.requestedByLabel }} · há {{ waiting(item.requestedAt) }}</small></td>
+            <td data-label="Prazo" [class.overdue]="item.overdue">{{ item.dueAt | fmtDate }}@if (item.overdue) { <small>Atrasado</small> }</td>
             <td data-label="Prioridade"><span class="priority" [class.priority-high]="item.priority === 'HIGH' || item.priority === 'CRITICAL'">{{ prio(item.priority) }}</span>@if (item.status !== 'PENDING') { <small>{{ stat(item.status) }}</small> }</td>
             <td data-label="Ação"><a class="row-action" [routerLink]="['/approvals', item.id]">{{ item.status === 'PENDING' || item.status === 'IN_REVIEW' ? (item.canDecide ? 'Decidir' : 'Ver') : 'Ver' }}</a></td>
           </tr>
-        } @empty { <tr><td colspan="9" class="empty-row">Nada aguardando sua ação neste filtro.</td></tr> }
+        } @empty { <tr><td colspan="9" class="empty-row"><span aria-hidden="true">✓</span> Nada aguardando sua ação neste filtro. Quando houver algo para decidir, aparecerá aqui.</td></tr> }
         </tbody></table></div>
     }
 
@@ -82,8 +84,8 @@ const outcomePath: Record<Outcome, string> = { approve: 'approve', adjust: 'requ
           <div><dt>Projeto</dt><dd>{{ d.companyName }} · {{ d.projectName }}</dd></div>
           <div><dt>Tipo</dt><dd>{{ d.typeLabel }}</dd></div>
           <div><dt>Enviado por</dt><dd>{{ d.requestedByLabel }}</dd></div>
-          <div><dt>Enviado em</dt><dd>{{ d.requestedAt | date:'dd/MM/yyyy HH:mm' }}</dd></div>
-          <div><dt>Prazo</dt><dd [class.overdue]="d.overdue">{{ d.dueAt ? (d.dueAt | date:'dd/MM/yyyy':'UTC') : '—' }}{{ d.overdue ? ' · atrasado' : '' }}</dd></div>
+          <div><dt>Enviado em</dt><dd>{{ d.requestedAt | fmtDateTime }}</dd></div>
+          <div><dt>Prazo</dt><dd [class.overdue]="d.overdue">{{ d.dueAt | fmtDate }}{{ d.overdue ? ' · atrasado' : '' }}</dd></div>
           <div><dt>Situação</dt><dd>{{ stat(d.status) }} · prioridade {{ prio(d.priority).toLowerCase() }}</dd></div>
         </dl>
         <div class="next-action approval-ball"><div><span>Responsável atual</span><strong>{{ d.owner.label }}</strong></div><div><span>Próxima ação</span><strong>{{ d.nextAction }}</strong></div><div><span>Impacto</span><strong>{{ d.impact }}</strong></div></div>
@@ -98,14 +100,14 @@ const outcomePath: Record<Outcome, string> = { approve: 'approve', adjust: 'requ
           @if (c.requirements?.length) { <h3>Requisitos</h3><ul class="check-list">@for (r of c.requirements; track r.label) { <li [class.done]="r.completed">{{ r.completed ? '✔' : '○' }} {{ r.label }}</li> }</ul> }
           @if (c.evidence?.length) { <h3>Evidências</h3>@for (e of c.evidence; track e.description) { <p>{{ e.description }} @if (e.referenceUrl) { <a [href]="e.referenceUrl" target="_blank" rel="noopener noreferrer">abrir referência</a> }</p> } }
           @if (c.criteria?.length) { <h3>Critérios do Gate</h3><ul class="check-list">@for (r of c.criteria; track r.code) { <li [class.done]="r.satisfied">{{ r.satisfied ? '✔' : '○' }} {{ r.code }} · {{ r.description }}@if (r.evidenceReference) { <small> — {{ r.evidenceReference }}</small> }</li> }</ul> }
-          @if (c.activities?.length) { <h3>Atividades da fase</h3><p>@for (a of c.activities; track a.code) { <span class="chip">{{ a.code }} · {{ a.status }}</span> }</p> }
+          @if (c.activities?.length) { <h3>Atividades da fase</h3><p>@for (a of c.activities; track a.code) { <span class="chip">{{ a.code }} · {{ a.status | statusLabel:'task' }}</span> }</p> }
           @if (c.technicalOpinion) { <h3>Parecer técnico JGM4</h3><p>{{ c.technicalOpinion }}</p> }
         }
-        @if (d.history.length) { <h3>Histórico relevante</h3><ol class="history-list">@for (h of d.history; track h.id) { <li><div><strong>{{ h.action.replaceAll('_', ' ') }}</strong><span>{{ h.createdAt | date:'dd/MM HH:mm' }} · {{ h.actorType }}</span></div></li> }</ol> }
-        @if (d.previousApprovals.length) { <h3>Decisões anteriores sobre este item</h3>@for (p of d.previousApprovals; track p.id) { <p class="muted-copy">{{ stat(p.status) }} · {{ p.decidedByRole }} · {{ p.decidedAt | date:'dd/MM HH:mm' }} — {{ p.decisionComment }}</p> } }
+        @if (d.history.length) { <h3>Histórico relevante</h3><ol class="history-list">@for (h of d.history; track h.id) { <li><div><strong>{{ actionLabel(h.action) }}</strong><span>{{ h.createdAt | fmtDateTime }} · {{ actorLabel(h.actorType) }}</span></div></li> }</ol> }
+        @if (d.previousApprovals.length) { <h3>Decisões anteriores sobre este item</h3>@for (p of d.previousApprovals; track p.id) { <p class="muted-copy">{{ stat(p.status) }} · {{ p.decidedByRole | roleLabel }} · {{ p.decidedAt | fmtDateTime }} — {{ p.decisionComment }}</p> } }
 
         @if (d.status === 'APPROVED' || d.status === 'ADJUSTMENT_REQUESTED' || d.status === 'REJECTED') {
-          <p class="success-note">Decisão registrada: <strong>{{ stat(d.status) }}</strong> por {{ d.decidedByRole }} em {{ d.decidedAt | date:'dd/MM/yyyy HH:mm' }}. {{ d.decisionComment }}</p>
+          <p class="success-note">Decisão registrada: <strong>{{ stat(d.status) }}</strong> por {{ d.decidedByRole | roleLabel }} em {{ d.decidedAt | fmtDateTime }}. {{ d.decisionComment }}</p>
         } @else if (d.canDecide) {
           <div class="action-buttons" aria-label="Decisão">
             <button type="button" data-testid="btn-approve" (click)="open('approve')">{{ d.actions.labels.approve }}</button>
@@ -137,6 +139,9 @@ export class ApprovalsComponent implements OnInit {
   readonly selectedId = signal(''); readonly loading = signal(true); readonly error = signal(''); readonly notice = signal(''); readonly decisionError = signal(''); readonly saving = signal(false); readonly action = signal<Outcome | null>(null);
   form = { comment: '', instructions: '', suggestedDueDate: '', technicalOpinion: '' };
   readonly tabs = [{ id: 'ALL', label: 'Todos' }, { id: 'REQUESTS', label: 'Solicitações' }, { id: 'TASKS', label: 'Atividades' }, { id: 'GATES', label: 'Gates' }, { id: 'CHANGES', label: 'Alterações' }];
+  waiting(at: string) { const hours = Math.max(0, Math.floor((Date.now() - new Date(at).getTime()) / 3600000)); return hours < 1 ? 'menos de 1 hora' : hours < 24 ? `${hours} h` : `${Math.floor(hours / 24)} ${Math.floor(hours / 24) === 1 ? 'dia' : 'dias'}`; }
+  actionLabel(action: string) { return auditActionLabel(action); }
+  actorLabel(type: string) { return type === 'SYSTEM' ? 'Sistema' : type === 'USER' ? 'Usuário' : roleLabel(type); }
   prio(value: string) { return priorityLabels[value] ?? value; } stat(value: string) { return statusLabels[value] ?? value; }
   cards(s: ApprovalSummary) { return [{ id: 'REQUESTS', label: 'Solicitações', value: s.requests }, { id: 'TASKS', label: 'Atividades', value: s.tasks }, { id: 'GATES', label: 'Gates', value: s.gates }, { id: 'CHANGES', label: 'Alterações', value: s.changes }]; }
 

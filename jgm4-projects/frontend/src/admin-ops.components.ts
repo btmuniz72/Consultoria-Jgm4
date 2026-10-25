@@ -2,8 +2,10 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { DialogService } from './ui/dialog.service';
 import { ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router';
 import { roleLabels } from './auth.service';
+import { projectRoleLabel } from './ui/labels';
 import { projectStatusLabels } from './dashboard.types';
 import { apiMessages } from './password-pages.component';
 
@@ -29,10 +31,12 @@ const confirmBox = `<section class="panel" data-testid="confirm-panel"><h2>Confi
   <div class="form-grid"><label>Sua senha<input type="password" autocomplete="current-password" [(ngModel)]="reauth.password" data-testid="admin-password"></label><label>Código MFA<input maxlength="8" [(ngModel)]="reauth.code"></label></div></section>`;
 
 abstract class AdminPage {
-  protected readonly http = inject(HttpClient);
+  protected readonly http = inject(HttpClient); protected readonly dialogs = inject(DialogService);
   readonly notice = signal(''); readonly error = signal('');
   reauth = { password: '', code: '' };
   role(role: string) { return roleLabels[role] ?? role; }
+  projectRole(value: string | null) { return projectRoleLabel(value); }
+  activeMemberships(u: { memberships: { id: string; project: string; roleInProject: string | null; active: boolean }[] }) { return u.memberships.filter((m) => m.active); }
   protected critical() { return { confirmPassword: this.reauth.password, ...(this.reauth.code ? { mfaCode: this.reauth.code } : {}) }; }
   protected fail(e: HttpErrorResponse) { this.notice.set(''); this.error.set(apiMessages(e, 'A operação não foi concluída.')); }
   protected ok(message: string) { this.error.set(''); this.notice.set(message); }
@@ -70,9 +74,9 @@ export class AdminCompaniesComponent extends AdminPage implements OnInit {
     const request = id ? this.http.patch(`/api/admin/companies/${id}`, body) : this.http.post('/api/admin/companies', body);
     request.subscribe({ next: () => { this.editing.set(null); this.ok(id ? 'Empresa atualizada.' : 'Empresa criada.'); this.load(); }, error: (e: HttpErrorResponse) => this.fail(e) });
   }
-  toggle(c: Company) {
+  async toggle(c: Company) {
     const status = c.status === 'ACTIVE' ? 'INACTIVE' : 'ACTIVE';
-    const reason = window.prompt(`Motivo para ${status === 'INACTIVE' ? 'inativar' : 'reativar'} ${c.name}:`); if (!reason) return;
+    const reason = await this.dialogs.prompt({ title: status === 'INACTIVE' ? `Inativar ${c.name}?` : `Reativar ${c.name}?`, message: status === 'INACTIVE' ? 'Os usuários do cliente deixam de acessar o sistema. Projetos e histórico são preservados.' : 'Os usuários do cliente voltam a poder entrar.', label: 'Motivo', multiline: true, confirmLabel: status === 'INACTIVE' ? 'Inativar empresa' : 'Reativar empresa', danger: status === 'INACTIVE' }); if (!reason) return;
     this.http.patch(`/api/admin/companies/${c.id}/status`, { status, reason, ...this.critical() }).subscribe({ next: () => { this.ok(status === 'INACTIVE' ? 'Empresa inativada: os usuários do cliente não autenticam mais; projetos e histórico foram preservados.' : 'Empresa reativada.'); this.load(); }, error: (e: HttpErrorResponse) => this.fail(e) });
   }
 }
@@ -99,7 +103,7 @@ export class AdminCompaniesComponent extends AdminPage implements OnInit {
       @for (u of users(); track u.id) { <tr data-testid="user-row"><td data-label="Usuário">{{ u.name }}<small>{{ u.email }}{{ u.company ? ' · ' + u.company : '' }}</small></td>
         <td data-label="Perfil">{{ role(u.role) }}</td><td data-label="Situação">{{ statusLabel(u.status) }}{{ u.locked ? ' (travada)' : '' }}<small>{{ u.statusReason || '' }}</small></td>
         <td data-label="Último login">{{ u.lastLoginAt ? (u.lastLoginAt | date:'dd/MM/yyyy HH:mm') : 'Nunca' }}</td>
-        <td data-label="Vínculos">@for (m of u.memberships; track m.id) { @if (m.active) { <small>{{ m.project }} ({{ m.roleInProject || '—' }})</small> } } @empty { — }</td>
+        <td data-label="Vínculos">@if (activeMemberships(u).length) { <details><summary>{{ activeMemberships(u).length }} {{ activeMemberships(u).length === 1 ? 'projeto' : 'projetos' }}</summary>@for (m of activeMemberships(u); track m.id) { <small>{{ m.project }} ({{ projectRole(m.roleInProject) }})</small> }</details> } @else { — }</td>
         <td class="row-actions"><button type="button" class="quiet-button" (click)="rename(u)">Renomear</button>
           @if (u.status === 'ACTIVE') { <button type="button" class="quiet-button" (click)="setStatus(u, 'INACTIVE')" [attr.data-testid]="'user-disable-' + u.email">Inativar</button><button type="button" class="quiet-button" (click)="setStatus(u, 'BLOCKED')">Bloquear</button> }
           @else { <button type="button" class="quiet-button" (click)="setStatus(u, 'ACTIVE')">{{ u.status === 'BLOCKED' ? 'Desbloquear' : 'Reativar' }}</button> }
@@ -118,15 +122,17 @@ export class AdminUsersComponent extends AdminPage implements OnInit {
     const body = { name: this.form.name, email: this.form.email, role: this.form.role, ...(isClientRole(this.form.role) ? { companyId: this.form.companyId } : {}) };
     this.http.post<{ devLink?: string }>('/api/admin/users', body).subscribe({ next: (r) => { this.creating.set(false); this.form = { name: '', email: '', role: 'CLIENT_USER', companyId: '' }; this.done('Usuário criado; o convite foi enviado por e-mail.', r.devLink); }, error: (e: HttpErrorResponse) => this.fail(e) });
   }
-  rename(u: AdminUser) { const name = window.prompt('Novo nome:', u.name); if (!name || name === u.name) return; this.http.patch(`/api/admin/users/${u.id}`, { name }).subscribe({ next: () => this.done('Nome atualizado.'), error: (e: HttpErrorResponse) => this.fail(e) }); }
-  setStatus(u: AdminUser, status: string) {
-    const reason = window.prompt(`Motivo para alterar ${u.name} para ${this.statusLabel(status)}:`); if (!reason) return;
+  async rename(u: AdminUser) { const name = await this.dialogs.prompt({ title: 'Renomear usuário', label: 'Nome', value: u.name, confirmLabel: 'Salvar' }); if (!name || name === u.name) return; this.http.patch(`/api/admin/users/${u.id}`, { name }).subscribe({ next: () => this.done('Nome atualizado.'), error: (e: HttpErrorResponse) => this.fail(e) }); }
+  async setStatus(u: AdminUser, status: string) {
+    const reason = await this.dialogs.prompt({ title: `${status === 'ACTIVE' ? (u.status === 'BLOCKED' ? 'Desbloquear' : 'Reativar') : status === 'BLOCKED' ? 'Bloquear' : 'Inativar'} ${u.name}?`, message: status === 'ACTIVE' ? 'O usuário volta a poder entrar.' : 'O usuário perde o acesso imediatamente e as sessões são encerradas.', label: 'Motivo', multiline: true, confirmLabel: 'Confirmar', danger: status !== 'ACTIVE' }); if (!reason) return;
     this.http.patch(`/api/admin/users/${u.id}/status`, { status, reason, ...this.critical() }).subscribe({ next: () => this.done('Situação atualizada; as sessões do usuário foram encerradas quando aplicável.'), error: (e: HttpErrorResponse) => this.fail(e) });
   }
-  changeRole(u: AdminUser) {
-    const role = window.prompt(`Novo perfil para ${u.name} (${this.roles.join(', ')}):`, u.role); if (!role || role === u.role) return;
-    const reason = window.prompt('Motivo da alteração de perfil:'); if (!reason) return;
-    this.http.patch(`/api/admin/users/${u.id}/role`, { role, reason, ...this.critical() }).subscribe({ next: () => this.done('Perfil alterado e registrado na auditoria.'), error: (e: HttpErrorResponse) => this.fail(e) });
+  async changeRole(u: AdminUser) {
+    const result = await this.dialogs.ask({ title: `Alterar perfil de ${u.name}`, message: 'A alteração é registrada na auditoria e encerra as sessões do usuário.', confirmLabel: 'Alterar perfil', danger: true, fields: [
+      { name: 'role', label: 'Novo perfil', type: 'select', options: this.roles.filter((r) => r === u.role || isClientRole(r) === isClientRole(u.role)).map((r) => ({ value: r, label: this.role(r) })), value: u.role },
+      { name: 'reason', label: 'Motivo', type: 'textarea', required: true }] });
+    if (!result || result['role'] === u.role) return;
+    this.http.patch(`/api/admin/users/${u.id}/role`, { role: result['role'], reason: result['reason'], ...this.critical() }).subscribe({ next: () => this.done('Perfil alterado e registrado na auditoria.'), error: (e: HttpErrorResponse) => this.fail(e) });
   }
   resetAccess(u: AdminUser) { this.http.post<{ devLink?: string }>(`/api/admin/users/${u.id}/reset-access`, {}).subscribe({ next: (r) => this.done('Link de acesso enviado por e-mail.', r.devLink), error: (e: HttpErrorResponse) => this.fail(e) }); }
   unlock(u: AdminUser) { this.http.post(`/api/admin/users/${u.id}/unlock`, {}).subscribe({ next: () => this.done('Conta destravada.'), error: (e: HttpErrorResponse) => this.fail(e) }); }
@@ -182,12 +188,12 @@ export class AdminProjectsComponent extends AdminPage implements OnInit {
     const body = Object.fromEntries(Object.entries(this.form).filter(([, v]) => v !== ''));
     this.http.post('/api/admin/projects', body).subscribe({ next: () => { this.creating.set(false); this.form = { companyId: '', name: '', code: '', description: '', plannedStartDate: '', plannedEndDate: '', status: 'PLANNING', consultantUserId: '', sponsorUserId: '', managerUserId: '', templateId: '' }; this.ok('Projeto criado.'); this.load(); }, error: (e: HttpErrorResponse) => this.fail(e) });
   }
-  applyTemplate(p: AdminProject) {
-    if (!this.pick[p.id] || !window.confirm(`Aplicar o template escolhido ao projeto "${p.name}"? Será criada uma cópia da estrutura (fases, Gates, atividades e solicitações).`)) return;
+  async applyTemplate(p: AdminProject) {
+    if (!this.pick[p.id] || !(await this.dialogs.confirm({ title: `Aplicar o template a "${p.name}"?`, message: 'Será criada uma cópia independente da estrutura (fases, Gates, atividades e solicitações). Esta ação só é possível em projeto sem estrutura.', confirmLabel: 'Aplicar template' }))) return;
     this.http.post(`/api/admin/projects/${p.id}/apply-template`, { templateId: this.pick[p.id] }).subscribe({ next: () => { this.ok('Estrutura do template aplicada.'); this.load(); }, error: (e: HttpErrorResponse) => this.fail(e) });
   }
-  activate(p: AdminProject) {
-    const reason = window.prompt(`Motivo/registro para ativar "${p.name}":`, 'Início acordado com o cliente'); if (!reason) return;
+  async activate(p: AdminProject) {
+    const reason = await this.dialogs.prompt({ title: `Ativar "${p.name}"?`, message: 'O projeto passa de Planejamento para Em andamento.', label: 'Registro da ativação', value: 'Início acordado com o cliente', confirmLabel: 'Ativar projeto' }); if (!reason) return;
     this.http.post(`/api/admin/projects/${p.id}/activate`, { reason }).subscribe({ next: () => { this.ok('Projeto ativado.'); this.load(); }, error: (e: HttpErrorResponse) => this.fail(e) });
   }
 }

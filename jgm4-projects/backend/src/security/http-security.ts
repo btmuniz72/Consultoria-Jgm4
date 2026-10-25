@@ -4,7 +4,7 @@ import type { NextFunction, Request, Response } from 'express';
 import helmet from 'helmet';
 import { existsSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { allowedOrigins, isProduction, publicUrl } from './config';
+import { allowedOrigins, apiBasePath, isProduction, publicBasePath, publicUrl } from './config';
 
 const SAFE = new Set(['GET', 'HEAD', 'OPTIONS']);
 const API_CSP = "default-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'";
@@ -19,7 +19,8 @@ export const originAllowed = (origin: string | undefined) => !origin || allowedO
 export function securityHeaders() {
   const base = helmet({ contentSecurityPolicy: false, crossOriginEmbedderPolicy: false, hsts: isProduction() ? { maxAge: 31536000, includeSubDomains: true, preload: false } : false, referrerPolicy: { policy: 'no-referrer' }, frameguard: { action: 'deny' } });
   return (req: Request, res: Response, next: NextFunction) => {
-    res.setHeader('Content-Security-Policy', req.path.startsWith('/api') ? API_CSP : APP_CSP);
+    const apiPath = apiBasePath();
+    res.setHeader('Content-Security-Policy', req.path === apiPath || req.path.startsWith(`${apiPath}/`) ? API_CSP : APP_CSP);
     res.setHeader('Permissions-Policy', PERMISSIONS);
     res.setHeader('Cross-Origin-Resource-Policy', 'same-origin');
     base(req, res, next);
@@ -29,7 +30,8 @@ export function securityHeaders() {
 /** Produção só em HTTPS: redireciona HTTP (atrás de proxy, via X-Forwarded-Proto) — exceto sondas de saúde. */
 export function httpsOnly() {
   return (req: Request, res: Response, next: NextFunction) => {
-    if (!isProduction() || req.secure || req.path.startsWith('/api/health')) return next();
+    const healthPath = `${apiBasePath()}/health`;
+    if (!isProduction() || req.secure || req.path === healthPath || req.path.startsWith(`${healthPath}/`)) return next();
     res.redirect(308, new URL(req.originalUrl, publicUrl()).toString());
   };
 }
@@ -54,9 +56,15 @@ export function serveFrontend(app: INestApplication, dir = process.env.FRONTEND_
   if (!dir) return false;
   const root = resolve(dir); if (!existsSync(resolve(root, 'index.html'))) return false;
   const express = app as NestExpressApplication;
-  express.useStaticAssets(root, { index: false, maxAge: '1h', setHeaders: (response) => response.setHeader('X-Content-Type-Options', 'nosniff') });
+  const basePath = publicBasePath() === '/' ? '/' : `${publicBasePath()}/`;
+  const staticOptions = { index: false, maxAge: '1h', setHeaders: (response: Response) => { response.setHeader('X-Content-Type-Options', 'nosniff'); response.setHeader('X-Robots-Tag', 'noindex, nofollow, noarchive'); } };
+  express.useStaticAssets(root, { ...staticOptions, ...(basePath === '/' ? {} : { prefix: basePath }) });
   express.use((req: Request, res: Response, next: NextFunction) => {
-    if (req.method !== 'GET' || req.path.startsWith('/api')) return next();
+    const apiPath = apiBasePath();
+    if (req.method !== 'GET' || req.path === apiPath || req.path.startsWith(`${apiPath}/`)) return next();
+    if (basePath !== '/' && req.path === basePath.slice(0, -1)) return res.redirect(308, basePath);
+    if (basePath !== '/' && req.path !== basePath.slice(0, -1) && !req.path.startsWith(basePath)) return next();
+    res.setHeader('X-Robots-Tag', 'noindex, nofollow, noarchive');
     res.setHeader('Cache-Control', 'no-cache'); res.sendFile(resolve(root, 'index.html'));
   });
   return true;

@@ -11,7 +11,7 @@ export type Party = 'JGM4' | 'CLIENT';
 export interface RawPhase { id: string; order: number; name: string; status: string; plannedWeeks: number; plannedJgm4Hours: number }
 export interface RawGate { id: string; phaseId: string; code: string; title: string; status: string; currentOwnerType: string; nextAction: string | null; nextActionDueDate: Date | null;
   criteria: { sourceType: string | null; satisfied: boolean; mandatory: boolean }[] }
-export interface RawTask { id: string; phaseId: string; code: string; title: string; status: string; currentOwnerType: string; nextAction: string | null; nextActionDueDate: Date | null;
+export interface RawTask { requiredForGate?: boolean; id: string; phaseId: string; code: string; title: string; status: string; currentOwnerType: string; nextAction: string | null; nextActionDueDate: Date | null;
   plannedStartDate: Date | null; plannedEndDate: Date | null; actualStartDate: Date | null; plannedJgm4Hours: number; plannedClientHours: number; responsibilityType: string;
   clientResponsibleUserId: string | null; jgm4ResponsibleUserId: string | null }
 export interface RawRequest { id: string; phaseId: string; code: string; title: string; status: string; dueDate: Date | null; mandatory: boolean; blocking: boolean; clientResponsibleId: string | null }
@@ -19,7 +19,7 @@ export interface RawApproval { id: string; type: string; entityType: string; ent
 export interface RawHours { phaseId: string; org: 'JGM4' | 'CLIENT'; hours: number }
 export interface RawMember { userId: string; name: string; role: string }
 export interface RawProject {
-  project: { id: string; name: string; description: string; status: string; plannedStartDate: Date | null; plannedEndDate: Date | null; company: { id: string; name: string }; sponsorName: string | null };
+  project: { commercialControlEnabled?: boolean; id: string; name: string; description: string; status: string; plannedStartDate: Date | null; plannedEndDate: Date | null; company: { id: string; name: string }; sponsorName: string | null };
   phases: RawPhase[]; gates: RawGate[]; tasks: RawTask[]; requests: RawRequest[]; approvals: RawApproval[]; hours: RawHours[]; members: RawMember[];
 }
 export interface Viewer { id: string | null; role: string }
@@ -69,6 +69,7 @@ function currentPhaseOf(phases: RawPhase[]) {
 }
 export function effectiveStatus(raw: RawProject) {
   const stored = raw.project.status;
+  if (raw.project.commercialControlEnabled) return stored === 'PLANNED' ? 'PLANNING' : stored;
   if (stored === 'COMPLETED') return 'IMPLEMENTATION_COMPLETED';
   if (['ON_HOLD', 'CANCELLED', 'IMPLEMENTATION_COMPLETED'].includes(stored)) return stored;
   const started = raw.tasks.some((task) => STARTED_TASK.includes(task.status)) || raw.hours.some((entry) => entry.hours > 0);
@@ -148,7 +149,7 @@ export function buildProject(raw: RawProject, today: Date, viewer: Viewer) {
   // ---- Gate atual (critérios automáticos recalculados na leitura para não depender de dado desatualizado)
   let gate = null as null | { id: string; code: string; title: string; status: string; phaseOrder: number; satisfied: number; total: number; percent: number; owner: string; nextAction: string };
   if (currentGateRaw && currentPhase) {
-    const phaseTasks = valid.filter((task) => task.phaseId === currentPhase.id);
+    const phaseTasks = valid.filter((task) => task.phaseId === currentPhase.id && task.requiredForGate !== false);
     const tasksDone = phaseTasks.length > 0 && phaseTasks.every((task) => task.status === 'COMPLETED');
     const requestsDone = raw.requests.filter((request) => request.phaseId === currentPhase.id && request.mandatory && request.blocking).every((request) => request.status === 'ACCEPTED');
     const satisfied = currentGateRaw.criteria.filter((criterion) => criterion.sourceType === 'TASK' ? tasksDone : criterion.sourceType === 'REQUEST' ? requestsDone : criterion.satisfied).length;

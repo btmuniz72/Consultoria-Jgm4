@@ -1,6 +1,6 @@
 import { mkdirSync } from 'node:fs';
 import { expect } from '@playwright/test';
-import { base, launchBrowser, login, logout } from './browser-helpers.ts';
+import { apiBase, base, launchBrowser, login, logout } from './browser-helpers.ts';
 
 // Dashboard executivo (Etapa 6): carteira JGM4, painel do projeto, drill-down, perfis e mobile. Somente leitura.
 // Requer API (3000), frontend (4200) e `npm run db:seed` (cenário "Simulação — Painel executivo").
@@ -73,8 +73,8 @@ try {
   if (await page.getByTestId('nav-dashboard').count()) fail('Cliente não deveria ver o link da carteira JGM4.');
   await page.goto(`${base}/dashboard`);
   await page.getByText('Este painel é exclusivo da equipe JGM4').waitFor();
-  const projects = await (await context.request.get(`${base}/api/projects`)).json() as { id: string; name: string }[];
-  const foreign = await context.request.get(`${base}/api/projects/${'9f1ead00-1c44-4000-8000-0000000000d4'}/dashboard`);
+  const projects = await (await context.request.get(`${apiBase}/projects`)).json() as { id: string; name: string }[];
+  const foreign = await context.request.get(`${apiBase}/projects/${'9f1ead00-1c44-4000-8000-0000000000d4'}/dashboard`);
   if (foreign.status() !== 403) fail(`Dashboard de outra empresa deveria ser 403 (veio ${foreign.status()}).`);
   if (projects.length !== 1) fail('Cliente deveria listar somente o próprio projeto.');
 
@@ -88,7 +88,7 @@ try {
   await logout(page);
   await login(page, 'admin@jgm4.local');
   await page.setViewportSize({ width: 390, height: 844 });
-  const demo = (await (await context.request.get(`${base}/api/projects`)).json() as { id: string; name: string }[]).find((p) => p.name === 'Simulação — Painel executivo') ?? fail('Projeto de simulação ausente.');
+  const demo = (await (await context.request.get(`${apiBase}/projects`)).json() as { id: string; name: string }[]).find((p) => p.name === 'Simulação — Painel executivo') ?? fail('Projeto de simulação ausente.');
   for (const path of ['/dashboard', `/projects/${demo.id}/dashboard`]) {
     await page.goto(`${base}${path}`); await page.waitForLoadState('networkidle');
     await page.locator('main.dashboard').waitFor();

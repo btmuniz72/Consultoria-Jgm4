@@ -23,12 +23,13 @@ export class ProjectsService {
       where: { id, company: { active: true } },
       include: {
         company: { select: { id: true, name: true } },
-        phases: { orderBy: { order: 'asc' }, include: { gate: true } },
+        phases: { where: { archived: false }, orderBy: { order: 'asc' }, include: { gate: true, commercial: true } },
       },
     });
     if (!project) throw new NotFoundException('Projeto não encontrado.');
     return {
       ...project,
+      ...(project.ollemRevision ? { contractedJgm4Hours: project.phases.every(p => p.order === 0 || p.commercial?.homeOfficeHours != null && p.commercial?.inCompanyHours != null) ? project.phases.filter(p => p.order > 0).reduce((sum, p) => sum + Number(p.commercial!.homeOfficeHours) + Number(p.commercial!.inCompanyHours), 0) : null } : {}),
       summary: {
         plannedWeeks: project.phases.reduce((sum, phase) => sum + phase.plannedWeeks, 0),
         plannedJgm4Hours: project.phases.reduce((sum, phase) => sum + phase.plannedJgm4Hours, 0),
@@ -45,7 +46,7 @@ export class ProjectsService {
   async tasks(projectId: string) {
     await this.project(projectId);
     const tasks = await this.prisma.task.findMany({
-      where: { projectId }, orderBy: { code: 'asc' },
+      where: { projectId, phase: { archived: false } }, orderBy: { code: 'asc' },
       select: { id: true, projectId: true, phaseId: true, code: true, title: true, objective: true,
         instructions: true, acceptanceCriteria: true, plannedJgm4Hours: true, plannedClientHours: true,
         status: true, responsibleUserId: true,

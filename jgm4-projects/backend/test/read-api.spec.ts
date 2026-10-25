@@ -2,6 +2,8 @@ import 'reflect-metadata';
 import { config } from 'dotenv';
 import { resolve } from 'node:path';
 import { randomUUID } from 'node:crypto';
+import { Pool } from 'pg';
+import { readdirSync, readFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import { Test } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
@@ -15,11 +17,25 @@ const projectId = '9f1ead00-1c44-4000-8000-000000000002';
 const companyId = '9f1ead00-1c44-4000-8000-000000000001';
 
 describe('Etapa 1 — API e PostgreSQL reais', () => {
+  const originalUrl = process.env.DATABASE_URL!;
+  const schema = `jgm4_legacy_read_${randomUUID().replaceAll('-', '')}`;
+  const pool = new Pool({ connectionString: originalUrl });
   let app: INestApplication;
   let prisma: PrismaService;
   const fixtureCompanyId = randomUUID();
   const fixtureProjectId = randomUUID();
   beforeAll(async () => {
+    const client = await pool.connect();
+    try { await client.query('CREATE SCHEMA "' + schema + '"'); await client.query('SET search_path TO "' + schema + '"');
+      for (const folder of readdirSync(resolve(__dirname, '../prisma/migrations'), { withFileTypes: true }).filter(e => e.isDirectory()).map(e => e.name).sort()) {
+        const sql = readFileSync(resolve(__dirname, '../prisma/migrations', folder, 'migration.sql'), 'utf8');
+        if (folder === '20261023000200_gates') { const i = sql.indexOf('-- The first phase remains'); await client.query(sql.slice(0, i)); await client.query(sql.slice(i)); } else await client.query(sql);
+      }
+    } finally { client.release(); }
+    const url = new URL(originalUrl); url.searchParams.set('schema', schema); process.env.DATABASE_URL = url.toString();
+    const seed = spawnSync(process.execPath, [require.resolve('tsx/cli'), 'prisma/seed.ts'], { cwd: resolve(__dirname, '..'), encoding: 'utf8', windowsHide: true, timeout: 60000, env: { ...process.env, OLLEM_LEGACY_FIXTURE: 'true' } });
+    if (seed.status !== 0) throw new Error('Falha ao preparar fixture legada: ' + seed.stderr);
+
     const moduleRef = await Test.createTestingModule({ imports: [AppModule] }).compile();
     app = moduleRef.createNestApplication();
     configureApp(app);
@@ -28,13 +44,15 @@ describe('Etapa 1 — API e PostgreSQL reais', () => {
     await prisma.company.create({ data: { id: fixtureCompanyId, name: 'Fixture temporária de teste', projects: { create: {
       id: fixtureProjectId, name: 'Fixture temporária de projeto', description: 'Removida ao finalizar os testes.',
     } } } });
-  });
+  }, 180000);
   afterAll(async () => {
     if (prisma) {
       await prisma.project.deleteMany({ where: { id: fixtureProjectId } });
       await prisma.company.deleteMany({ where: { id: fixtureCompanyId } });
     }
     if (app) await app.close();
+    process.env.DATABASE_URL = originalUrl;
+    await pool.query('DROP SCHEMA IF EXISTS "' + schema + '" CASCADE'); await pool.end();
   });
 
   it('verifica a conexão real do PostgreSQL no health check', async () => {
@@ -116,7 +134,7 @@ describe('Etapa 1 — API e PostgreSQL reais', () => {
   it('reexecuta o seed sem duplicar nem sobrescrever os registros existentes', async () => {
     const before = await prisma.project.findUniqueOrThrow({ where: { id: projectId }, include: { phases: { include: { gate: true } }, tasks: true } });
     const seed = spawnSync(process.execPath, [require.resolve('tsx/cli'), 'prisma/seed.ts'], {
-      cwd: resolve(__dirname, '..'), encoding: 'utf8', windowsHide: true, timeout: 25000,
+      cwd: resolve(__dirname, '..'), encoding: 'utf8', windowsHide: true, timeout: 60000, env: { ...process.env, OLLEM_LEGACY_FIXTURE: 'true' },
     });
     expect(seed.status).toBe(0);
     const after = await prisma.project.findUniqueOrThrow({ where: { id: projectId }, include: { phases: { include: { gate: true } }, tasks: true } });

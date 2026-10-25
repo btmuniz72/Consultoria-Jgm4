@@ -22,6 +22,7 @@ export interface Phase {
   gate: Gate | null;
 }
 export interface Project extends ProjectListItem {
+  ollemRevision?: number; contractedJgm4Hours?: number | null;
   description: string;
   methodology: string;
   status: string;

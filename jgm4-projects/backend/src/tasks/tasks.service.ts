@@ -1,3 +1,4 @@
+import { assertTaskExecution } from '../commercial/commercial-guard';
 import { BadRequestException, ConflictException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { Prisma, TaskStatus } from '../generated/prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
@@ -36,7 +37,7 @@ export class TasksService {
   private async load(db: Tx | PrismaService, projectId: string, taskId: string) {
     await this.assertProject(db, projectId);
     const task = await db.task.findFirst({ where: { id: taskId, projectId }, include: {
-      phase: { select: { id: true, order: true, name: true, plannedWeeks: true, plannedJgm4Hours: true, status: true } },
+      phase: { select: { id: true, order: true, name: true, plannedWeeks: true, plannedJgm4Hours: true, status: true, archived: true } },
       predecessor: { select: { id: true, code: true, title: true, status: true } },
       gate: { select: { id: true, code: true, title: true, status: true } },
       requirements: { orderBy: { label: 'asc' } },
@@ -79,7 +80,7 @@ export class TasksService {
     const history = await db.auditLog.findMany({ where: { projectId, entityType: 'Task', entityId: task.id }, orderBy: [{ createdAt: 'asc' }, { id: 'asc' }] });
     const localActor = this.currentActor();
     return {
-      ...task, ...time, blockedByRequests: blocking.requests.length > 0, blockingRequests: blocking.requests,
+      ...task, ...time, canApproveMovement: ['CLIENT_SPONSOR', 'CLIENT_MANAGER'].includes(currentRole()), blockedByRequests: blocking.requests.length > 0, blockingRequests: blocking.requests,
       statusLabel: statuses[task.status], currentOwnerType: task.currentOwnerType,
       nextAction: task.nextAction ?? actionFor(task.status, task.currentOwnerType),
       dependencies: { ...blocking, previousGate: blocking.gate }, missingRequirements,
@@ -117,7 +118,7 @@ export class TasksService {
   async updatePlanById(taskId: string, dto: TaskPlanDto) { return this.updatePlan(await this.projectOfTask(taskId), taskId, dto); }
   async list(projectId: string) {
     await this.assertProject(this.prisma, projectId);
-    const tasks = await this.prisma.task.findMany({ where: { projectId }, select: { id: true, code: true }, orderBy: [{ phase: { order: 'asc' } }, { code: 'asc' }] });
+    const tasks = await this.prisma.task.findMany({ where: { projectId, phase: { archived: false } }, select: { id: true, code: true }, orderBy: [{ phase: { order: 'asc' } }, { code: 'asc' }] });
     return Promise.all(tasks.map((task) => this.detailFrom(this.prisma, task.id, projectId)));
   }
   async transition(projectId: string, taskId: string, action: string, dto: TaskTransitionDto = {}) {
@@ -125,6 +126,7 @@ export class TasksService {
       await assertProjectOpen(tx, projectId);
       const task = await this.load(tx, projectId, taskId);
       if (task.phase.status === 'LOCKED' && ['start', 'send-validation'].includes(action)) throw new ConflictException('Esta atividade pertence a uma fase ainda não liberada. Gate anterior pendente.');
+      if (task.phase.archived) throw new ConflictException('Fase histórica: somente consulta.');
       const role = this.currentActor();
       if (role === 'CLIENT' && ['start', 'send-validation', 'submit-evidence', 'resume'].includes(action)) assertCan(currentRole(), 'TASK_EXECUTE', 'O perfil não pode executar atividades.');
       const blocking = this.blockers(task);
@@ -134,6 +136,7 @@ export class TasksService {
       const allowed = (state: TaskStatus, localRole: Actor, organization?: string) => task.status === state && (organization === undefined || task.responsibilityType === 'JOINT' || task.responsibilityType === organization) && localRole === (organization === 'CLIENT' ? 'CLIENT' : localRole);
       switch (action) {
         case 'start':
+          await assertTaskExecution(tx, projectId, taskId, task.phaseId, task.phase.order);
           if (!allowed('RELEASED', role) || blocking.labels.length) throw new ConflictException(blocking.labels[0] ?? `Somente uma atividade liberada pode iniciar (status ${task.status}).`);
           if (task.responsibilityType !== 'JOINT' && task.responsibilityType !== role) throw new ForbiddenException('O perfil local não corresponde à responsabilidade desta atividade.');
           to = 'IN_PROGRESS'; owner = role; break;
@@ -299,7 +302,7 @@ export class TasksService {
   async reconcile(projectId: string) { return this.prisma.$transaction(async (tx) => { await this.assertProject(tx, projectId); await this.releaseEligible(tx, projectId); return this.list(projectId); }); }
   async phaseSummary(projectId: string) {
     await this.assertProject(this.prisma, projectId);
-    const phases = await this.prisma.phase.findMany({ where: { projectId }, orderBy: { order: 'asc' }, include: { tasks: { select: { id: true, status: true, plannedClientHours: true, plannedJgm4Hours: true, timeEntries: { select: { organizationType: true, hours: true } } } } } });
+    const phases = await this.prisma.phase.findMany({ where: { projectId, archived: false }, orderBy: { order: 'asc' }, include: { tasks: { select: { id: true, status: true, plannedClientHours: true, plannedJgm4Hours: true, timeEntries: { select: { organizationType: true, hours: true } } } } } });
     return phases.map((phase) => {
       const actual = phase.tasks.flatMap((task) => task.timeEntries);
       const plannedJgm4Hours = phase.tasks.reduce((sum, task) => sum + amount(task.plannedJgm4Hours), 0);

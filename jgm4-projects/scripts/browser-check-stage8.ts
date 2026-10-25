@@ -1,6 +1,6 @@
 import { mkdirSync } from 'node:fs';
 import type { Page } from '@playwright/test';
-import { base, launchBrowser, login, logout } from './browser-helpers.ts';
+import { apiBase, base, launchBrowser, login, logout } from './browser-helpers.ts';
 import { totpAt } from '../backend/src/security/totp.ts';
 
 // Segurança e privacidade (Etapa 8): login com MFA, esqueci a senha, conta/sessões, páginas legais, administração e isolamento.
@@ -18,8 +18,7 @@ try {
   const errors: string[] = []; page.on('pageerror', (error) => errors.push(error.message));
 
   // Páginas públicas: privacidade e termos (sem login), "esqueci a senha" e link de redefinição inválido.
-  await page.goto(`${base}/privacy`); await page.getByTestId('legal-title').waitFor();
-  if (!(await page.getByTestId('legal-title').innerText()).includes('Privacidade')) fail('Página de privacidade não abriu.');
+  await page.goto(`${base}/privacy`); await page.waitForURL(/\/pages\/politica\.html$/);
   await page.goto(`${base}/terms`); await page.getByTestId('legal-title').waitFor();
   if (!(await page.getByTestId('legal-title').innerText()).includes('Termos')) fail('Termos de uso não abriram.');
   await page.goto(`${base}/login`); await page.getByTestId('footer-privacy').waitFor(); await page.getByTestId('forgot-link').click();
@@ -54,7 +53,7 @@ try {
   await page.getByTestId('mfa-panel').getByRole('button', { name: 'Desativar' }).click(); await page.getByTestId('account-notice').waitFor();
   // Consultor não vê a administração de segurança e a API nega.
   if (await page.getByTestId('nav-admin-security').count()) fail('Consultor não deveria ver o link de administração.');
-  const denied = await context.request.get(`${base}/api/admin/users`); if (denied.status() !== 403) fail(`Consultor deveria receber 403 em /api/admin (veio ${denied.status()}).`);
+  const denied = await context.request.get(`${apiBase}/admin/users`); if (denied.status() !== 403) fail(`Consultor deveria receber 403 em /api/admin (veio ${denied.status()}).`);
   await logout(page);
 
   // Administração (JGM4_ADMIN).
@@ -62,13 +61,13 @@ try {
   await page.goto(`${base}/admin/security`); await page.getByTestId('users-panel').waitFor(); await page.getByTestId('events-panel').waitFor(); await page.getByTestId('incidents-panel').waitFor();
   await page.getByTestId('members-project').selectOption({ index: 1 }); await page.getByTestId('members-panel').waitFor();
   await page.screenshot({ path: '.local/screenshots/etapa-8-admin-desktop.png', fullPage: true });
-  const all = await (await context.request.get(`${base}/api/projects`)).json() as { id: string; name: string }[];
+  const all = await (await context.request.get(`${apiBase}/projects`)).json() as { id: string; name: string }[];
   await logout(page);
 
   // Isolamento: gestor da Ollem não alcança projeto de outra empresa.
-  await login(page, 'gestor@ollem.local'); const mine = await (await context.request.get(`${base}/api/projects`)).json() as { id: string }[];
+  await login(page, 'gestor@ollem.local'); const mine = await (await context.request.get(`${apiBase}/projects`)).json() as { id: string }[];
   const foreign = all.find((p) => !mine.some((m) => m.id === p.id));
-  if (foreign) { const r = await context.request.get(`${base}/api/projects/${foreign.id}/members`); if (![403, 404].includes(r.status())) fail(`Projeto de outra empresa deveria ser negado (veio ${r.status()}).`); }
+  if (foreign) { const r = await context.request.get(`${apiBase}/projects/${foreign.id}/members`); if (![403, 404].includes(r.status())) fail(`Projeto de outra empresa deveria ser negado (veio ${r.status()}).`); }
   await logout(page);
 
   // Responsivo: telas públicas e conta sem rolagem horizontal em tablet e celular.

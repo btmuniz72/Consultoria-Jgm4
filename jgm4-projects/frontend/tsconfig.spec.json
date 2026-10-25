@@ -1,0 +1,4 @@
+{
+  "compilerOptions": { "target": "es2022", "module": "commonjs", "moduleResolution": "node", "strict": true, "esModuleInterop": true, "skipLibCheck": true, "types": ["jest", "node"] },
+  "include": ["test/**/*.ts", "src/ui/labels.ts", "src/ui/format.ts"]
+}

@@ -4,8 +4,13 @@
   "private": true,
   "type": "module",
   "description": "JGM4 Projects — solicitações e alinhamento local",
-  "workspaces": ["backend", "frontend"],
-  "engines": { "node": ">=24.0.0 <25" },
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "engines": {
+    "node": ">=24.0.0 <25"
+  },
   "scripts": {
     "db:start": "node scripts/local-postgres.ts start",
     "db:stop": "node scripts/local-postgres.ts stop",
@@ -15,9 +20,10 @@
     "db:status": "npm run prisma:status -w backend",
     "setup": "npm run db:start && npm run db:generate && npm run db:migrate && npm run db:seed",
     "dev": "concurrently -k -n API,WEB \"npm run start:dev -w backend\" \"npm run start -w frontend\"",
-    "build": "npm run build -w backend && npm run build -w frontend",
-    "test": "npm run test -w backend",
-    "test:browser": "node scripts/browser-check.ts && npm run test:browser:stage2 && npm run test:browser:stage3 && npm run test:browser:stage4 && npm run test:browser:stage5 && npm run test:browser:stage6 && npm run test:browser:stage7 && npm run test:browser:stage8 && npm run test:browser:stage10a && npm run test:browser:stage11",
+    "build": "npm run build -w backend && npm run build:frontend",
+    "build:frontend": "node scripts/build-frontend.mjs",
+    "test": "npm run test -w backend && npm run test -w frontend",
+    "test:browser": "node scripts/browser-check.ts && npm run test:browser:stage2 && npm run test:browser:stage3 && npm run test:browser:stage4 && npm run test:browser:stage5 && npm run test:browser:stage6 && npm run test:browser:stage7 && npm run test:browser:stage8 && npm run test:browser:stage10a && npm run test:browser:stage11 && npm run test:browser:stage10-5 && npm run test:browser:ollem",
     "test:browser:stage2": "tsx scripts/browser-check-stage2.ts",
     "test:browser:stage3": "tsx scripts/browser-check-stage3.ts",
     "test:browser:stage4": "tsx scripts/browser-check-stage4.ts",
@@ -28,12 +34,17 @@
     "smoke:external": "tsx scripts/smoke-external.ts",
     "test:browser:stage10a": "tsx scripts/browser-check-stage10a.ts",
     "test:browser:stage11": "tsx scripts/browser-check-stage11.ts",
+    "test:browser:stage10-5": "tsx scripts/browser-check-stage10-5.ts",
     "test:browser:stage8": "tsx scripts/browser-check-stage8.ts",
     "db:backup": "tsx scripts/db-backup.ts",
     "db:restore": "tsx scripts/db-restore.ts",
     "admin:bootstrap": "npm run admin:bootstrap -w backend",
     "retention:run": "npm run retention:run -w backend",
-    "docs:alignment": "tsx scripts/export-alignment-document.ts"
+    "docs:alignment": "tsx scripts/export-alignment-document.ts",
+    "ollem:revise": "tsx backend/scripts/revise-ollem.ts",
+    "test:browser:ollem": "tsx scripts/browser-check-ollem.ts",
+    "test:browser:base-path": "tsx scripts/browser-check-ollem.ts",
+    "test:browser:area-cliente": "tsx scripts/browser-check-ollem.ts"
   },
   "devDependencies": {
     "@playwright/test": "^1.56.0",

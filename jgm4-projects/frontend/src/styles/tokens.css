@@ -61,6 +61,10 @@
   --topbar-h: 64px;
   --content-max: 1280px;
 
+  /* Aliases de compatibilidade com estilos antigos */
+  --blue: var(--primary);
+  --muted: var(--text-muted);
+
   /* Movimento (curto e discreto) */
   --ease: 120ms ease-out;
 }

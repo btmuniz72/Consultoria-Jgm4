@@ -16,9 +16,9 @@ export class GatesService {
     return this.transition(gate.projectId, gateId, action, body);
   }
   private async recalculate(db: Db, projectId: string, gateId: string) {
-    const gate = await db.gate.findFirst({ where: { id: gateId, projectId }, include: { phase: true, criteria: { orderBy: { order: 'asc' } } } });
+    const gate = await db.gate.findFirst({ where: { id: gateId, projectId }, include: { phase: true, criteria: { where: { archived: false }, orderBy: { order: 'asc' } } } });
     if (!gate) throw new NotFoundException('Gate não encontrado neste projeto.');
-    const tasks = await db.task.findMany({ where: { projectId, phaseId: gate.phaseId }, select: { status: true } });
+    const tasks = await db.task.findMany({ where: { projectId, phaseId: gate.phaseId, requiredForGate: true }, select: { status: true } });
     const requests = await db.projectRequest.findMany({ where: { projectId, phaseId: gate.phaseId, mandatory: true, blocking: true }, select: { status: true } });
     const tasksDone = tasks.length > 0 && tasks.every((task) => task.status === 'COMPLETED');
     const requestsDone = requests.every((request) => request.status === 'ACCEPTED');
@@ -68,11 +68,11 @@ export class GatesService {
     }
   }
   async list(projectId: string) {
-    const gates = await this.prisma.gate.findMany({ where: { projectId }, include: { phase: { select: { order: true, name: true, status: true } }, criteria: { orderBy: { order: 'asc' } } }, orderBy: { phase: { order: 'asc' } } });
+    const gates = await this.prisma.gate.findMany({ where: { projectId, phase: { archived: false } }, include: { phase: { select: { order: true, name: true, status: true } }, criteria: { where: { archived: false }, orderBy: { order: 'asc' } } }, orderBy: { phase: { order: 'asc' } } });
     if (!gates.length) throw new NotFoundException('Projeto ou Gates não encontrados.');
     return Promise.all(gates.map(async gate => {
       await this.recalculate(this.prisma, projectId, gate.id);
-      const refreshed = await this.prisma.gate.findUniqueOrThrow({ where: { id: gate.id }, include: { phase: { select: { order: true, name: true, status: true } }, criteria: { orderBy: { order: 'asc' } } } });
+      const refreshed = await this.prisma.gate.findUniqueOrThrow({ where: { id: gate.id }, include: { phase: { select: { order: true, name: true, status: true } }, criteria: { where: { archived: false }, orderBy: { order: 'asc' } } } });
       return { ...await this.decorate(this.prisma, refreshed), phaseOrder: refreshed.phase.order, phaseName: refreshed.phase.name };
     }));
   }
@@ -80,7 +80,7 @@ export class GatesService {
     await this.recalculate(this.prisma, projectId, gateId);
     const gate = await this.prisma.gate.findFirst({ where: { id: gateId, projectId }, include: {
       phase: { include: { tasks: { select: { id: true, code: true, title: true, status: true } } } },
-      criteria: { orderBy: { order: 'asc' } },
+      criteria: { where: { archived: false }, orderBy: { order: 'asc' } },
     } });
     if (!gate) throw new NotFoundException('Gate não encontrado neste projeto.');
     const history = await this.prisma.auditLog.findMany({ where: { projectId, entityType: { in: ['Gate', 'Phase'] }, entityId: { in: [gate.id, gate.phaseId] } }, orderBy: { createdAt: 'asc' } });
@@ -112,8 +112,9 @@ export class GatesService {
     await this.prisma.$transaction(async tx => {
       await assertProjectOpen(tx, projectId);
       await this.recalculate(tx, projectId, gateId);
-      const gate = await tx.gate.findFirst({ where: { id: gateId, projectId }, include: { phase: true, criteria: true } });
+      const gate = await tx.gate.findFirst({ where: { id: gateId, projectId }, include: { phase: true, criteria: { where: { archived: false } } } });
       if (!gate) throw new NotFoundException('Gate não encontrado neste projeto.');
+      if (gate.phase.archived) throw new ConflictException('Gate histórico: somente consulta.');
       const role = currentRole();
       const log = async (to: GateStatus | null, oldExtra = {}, newExtra = {}) => tx.auditLog.create({ data: { userId: currentUserId(), projectId, entityType: 'Gate', entityId: gateId, action: action.toUpperCase().replaceAll('-', '_'), actorType: role, oldValue: { status: gate.status, ...oldExtra }, newValue: { status: to ?? gate.status, ...newExtra } } });
       let status: GateStatus = gate.status; let owner = gate.currentOwnerType; let next = gate.nextAction;
@@ -157,19 +158,21 @@ export class GatesService {
           if (!['APPROVE', 'HOLD', 'REJECT'].includes(body.clientDecision)) throw new BadRequestException('Decisão inválida.');
           if (body.clientDecision === 'APPROVE') {
             status = 'APPROVED'; owner = 'SYSTEM'; next = 'Gate aprovado; fase seguinte liberada.';
-            const nextPhase = await tx.phase.findFirst({ where: { projectId, order: gate.phase.order + 1 } });
+            const nextPhase = await tx.phase.findFirst({ where: { projectId, order: { gt: gate.phase.order }, archived: false }, orderBy: { order: 'asc' }, include: { commercial: true } });
             await tx.phase.update({ where: { id: gate.phaseId }, data: { status: 'COMPLETED', actualEndDate: new Date() } });
             await tx.auditLog.create({ data: { userId: currentUserId(), projectId, entityType: 'Phase', entityId: gate.phaseId, action: 'PHASE_COMPLETED', actorType: role, oldValue: { status: gate.phase.status }, newValue: { status: 'COMPLETED' } } });
-            if (nextPhase) {
+            if (nextPhase?.commercial?.blocking && !nextPhase.commercial.conditionMet) next = 'Gate técnico aprovado. Próxima fase aguarda condição comercial bloqueante.';
+            if (nextPhase && !(nextPhase.commercial?.blocking && !nextPhase.commercial.conditionMet)) {
               await tx.phase.update({ where: { id: nextPhase.id }, data: { status: 'AVAILABLE' } });
               await tx.auditLog.create({ data: { userId: currentUserId(), projectId, entityType: 'Phase', entityId: nextPhase.id, action: 'PHASE_RELEASED', actorType: role, oldValue: { status: nextPhase.status }, newValue: { status: 'AVAILABLE' } } });
-            } else await tx.project.update({ where: { id: projectId }, data: { status: 'IMPLEMENTATION_COMPLETED', actualEndDate: new Date() } });
+            } else if (!nextPhase) await tx.project.update({ where: { id: projectId }, data: { status: 'IMPLEMENTATION_COMPLETED', actualEndDate: new Date() } });
           } else if (body.clientDecision === 'HOLD') { status = 'TECHNICALLY_APPROVED'; owner = 'CLIENT_SPONSOR'; next = 'Decisão de avanço em espera.'; }
           else { status = 'REJECTED'; owner = 'SYSTEM'; next = 'Gate rejeitado; projeto não avançará para a próxima fase.'; }
           await tx.gate.update({ where: { id: gateId }, data: { status, clientDecision: body.clientDecision, clientDecisionComment: body.comment?.trim() || null, clientDecisionAt: new Date(), clientDecisionByUserId: currentUserId(), currentOwnerType: owner, nextAction: next } });
-          if (body.clientDecision === 'APPROVE') await this.releasePhaseTasks(tx, projectId, gate.phase.order < 4
-            ? (await tx.phase.findFirstOrThrow({ where: { projectId, order: gate.phase.order + 1 } })).id
-            : gate.phaseId);
+          if (body.clientDecision === 'APPROVE') {
+            const nextPhase = await tx.phase.findFirst({ where: { projectId, order: { gt: gate.phase.order }, archived: false }, orderBy: { order: 'asc' } });
+            if (nextPhase?.status === 'AVAILABLE') await this.releasePhaseTasks(tx, projectId, nextPhase.id);
+          }
           await log(status, {}, { clientDecision: body.clientDecision, comment: body.comment?.trim() || null });
           await this.syncApprovals(tx, gate, action, body);
           return { saved: true };

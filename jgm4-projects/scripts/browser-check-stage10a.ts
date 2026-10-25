@@ -1,6 +1,6 @@
 import { mkdirSync } from 'node:fs';
 import type { Page } from '@playwright/test';
-import { DEV_PASSWORD, base, launchBrowser, login, logout } from './browser-helpers.ts';
+import { DEV_PASSWORD, answerDialog, base, launchBrowser, login, logout } from './browser-helpers.ts';
 
 // Administração operacional (Etapa 10A), sem seed: empresa → usuário → projeto com estrutura Plano C → vínculo → abrir projeto → inativar usuário.
 // Cria dados de teste com sufixo único e, ao final, inativa a empresa de teste (nada é apagado). Requer API (3000), frontend (4200) e o admin de desenvolvimento.
@@ -16,11 +16,10 @@ try {
   const context = await browser.newContext({ viewport: { width: 1440, height: 1000 } });
   const page = await context.newPage();
   const errors: string[] = []; page.on('pageerror', (error) => errors.push(error.message));
-  page.on('dialog', (dialog) => { void dialog.accept(dialog.type() === 'prompt' ? 'Teste automatizado da Etapa 10A' : undefined); });
 
   // 1. admin entra; consultor e cliente não veem a área
   await login(page, 'admin@jgm4.local');
-  await page.getByTestId('nav-admin').click(); await page.waitForURL(/\/admin\/companies/); await page.getByTestId('admin-nav').waitFor();
+  await page.getByTestId('nav-admin-companies').click(); await page.waitForURL(/\/admin\/companies/); await page.getByTestId('admin-nav').waitFor();
 
   // 2. empresa
   await page.getByTestId('company-new').click(); await page.getByTestId('company-name').fill(company); await page.getByTestId('company-display').fill('Teste 10A'); await page.getByTestId('company-code').fill(`T10A-${suffix}`.toUpperCase());
@@ -48,7 +47,7 @@ try {
   await page.getByTestId('project-new').click(); await page.getByTestId('project-company').selectOption({ label: company });
   await page.getByTestId('project-name').fill(basicName); await page.getByTestId('project-description').fill('Projeto básico, estrutura criada depois.'); await page.getByTestId('project-save').click();
   await page.getByTestId('project-search').fill(suffix); await page.getByTestId('project-row').filter({ hasText: basicName }).waitFor();
-  await page.getByTestId(`project-template-pick-${basicName}`).selectOption(await page.getByTestId(`project-template-pick-${basicName}`).locator('option', { hasText: 'Plano C' }).first().getAttribute('value') ?? ''); await page.getByTestId(`project-apply-${basicName}`).click(); await page.getByTestId(`project-open-${basicName}`).waitFor();
+  await page.getByTestId(`project-template-pick-${basicName}`).selectOption(await page.getByTestId(`project-template-pick-${basicName}`).locator('option', { hasText: 'Plano C' }).first().getAttribute('value') ?? ''); await page.getByTestId(`project-apply-${basicName}`).click(); await answerDialog(page); await page.getByTestId(`project-open-${basicName}`).waitFor();
   const row = page.getByTestId('project-row').filter({ hasText: projectName });
   if (!(await row.innerText()).includes(`Patrocinador ${suffix}`)) fail('Patrocinador não aparece na lista de projetos.');
   await page.screenshot({ path: '.local/screenshots/etapa-10a-projetos-desktop.png', fullPage: true });
@@ -69,7 +68,7 @@ try {
   // 9 e 10. inativar usuário e confirmar bloqueio
   const ok = await otherPage.evaluate(() => true); void ok;
   await page.goto(`${base}/admin/users`); await confirmPassword(page); await page.getByTestId('user-search').fill(suffix);
-  await page.getByTestId(`user-disable-${sponsorEmail}`).click(); await page.getByTestId('admin-notice').waitFor();
+  await page.getByTestId(`user-disable-${sponsorEmail}`).click(); await answerDialog(page); await page.getByTestId('admin-notice').waitFor();
   await otherPage.goto(`${base}/login`); await otherPage.getByTestId('login-email').fill(sponsorEmail); await otherPage.getByTestId('login-password').fill('Senha-Forte-10A-Teste!'); await otherPage.getByTestId('login-submit').click(); await otherPage.getByTestId('login-error').waitFor();
   if (!otherPage.url().includes('/login')) fail('Usuário inativo não deveria entrar.');
   await other.close();
@@ -82,7 +81,7 @@ try {
 
   // Limpeza lógica: inativa a empresa de teste (histórico preservado).
   await login(page, 'admin@jgm4.local'); await page.goto(`${base}/admin/companies`); await confirmPassword(page); await page.getByTestId('company-search').fill(suffix);
-  await page.getByTestId(`company-toggle-${company}`).click(); await page.getByTestId('admin-notice').waitFor();
+  await page.getByTestId(`company-toggle-${company}`).click(); await answerDialog(page); await page.getByTestId('admin-notice').waitFor();
 
   // Responsivo: telas administrativas sem rolagem horizontal em tablet e celular.
   for (const [name, width, height] of [['tablet', 820, 1100], ['mobile', 390, 844]] as const) {

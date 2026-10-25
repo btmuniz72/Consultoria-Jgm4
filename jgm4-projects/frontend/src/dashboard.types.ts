@@ -7,6 +7,7 @@ export interface Health { level: HealthLevel; reasons: string[] }
 export interface GateSummary { id: string; code: string; title: string; status: string; phaseOrder: number; satisfied: number; total: number; percent: number; owner: string; nextAction: string }
 
 export interface ProjectDashboard {
+  externalDependencies?: { id: string; description: string; responsible: string; dueDate: string | null; status: string; blocksProject: boolean; blocksTask: boolean; taskId: string | null }[];
   project: { id: string; name: string; description: string; status: string; company: { id: string; name: string }; consultants: string[]; clientManagers: string[]; sponsors: string[] };
   currentPhase: { id: string; order: number; name: string; status: string } | null;
   progress: { percent: number; completed: number; total: number; cancelled: number };

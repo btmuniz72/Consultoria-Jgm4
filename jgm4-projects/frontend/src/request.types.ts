@@ -15,11 +15,7 @@ export interface ProjectRequest {
   allowedActions: string[]; canEditRequirements: boolean; canSend: boolean;
   history?: { id: string; action: string; actorType: string; createdAt: string; oldValue: Record<string, unknown> | null; newValue: Record<string, unknown> | null }[];
 }
-export const requestStatusLabels: Record<string, string> = {
-  PLANNED: 'Planejada', BLOCKED: 'Bloqueada', AVAILABLE: 'Disponível', REQUESTED: 'Solicitada à Ollem',
-  CLIENT_PREPARING: 'Ollem preparando', SENT_TO_JGM4: 'Enviada à JGM4', JGM4_REVIEW: 'Em análise JGM4',
-  ADJUSTMENT_REQUESTED: 'Ajuste solicitado', ACCEPTED: 'Aceita', CANCELLED: 'Cancelada',
-};
+export { requestStatusLabels } from './ui/labels';
 export const ownerLabels: Record<string, string> = { JGM4: 'JGM4', CLIENT: 'Ollem', SYSTEM: 'Sistema', NONE: 'Sem ação pendente' };
 export function apiError(error: { error?: { message?: string | string[] }; status?: number }) {
   const message = error.error?.message;

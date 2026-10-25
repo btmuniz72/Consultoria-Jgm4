@@ -1,6 +1,6 @@
 import { mkdirSync } from 'node:fs';
 import { expect } from '@playwright/test';
-import { base, launchBrowser, login, logout } from './browser-helpers.ts';
+import { apiBase, base, launchBrowser, login, logout } from './browser-helpers.ts';
 
 // Relatórios, exportações, auditoria e gestão do projeto (Etapa 7). Os downloads de PDF/XLSX são conferidos de verdade
 // (cabeçalho do arquivo e nome). Requer API (3000), frontend (4200) e `npm run db:seed` (simulações).
@@ -11,7 +11,7 @@ try {
   const context = await browser.newContext({ viewport: { width: 1440, height: 1000 }, acceptDownloads: true });
   const page = await context.newPage();
   const errors: string[] = []; page.on('pageerror', (error) => errors.push(error.message));
-  const projects = async () => await (await context.request.get(`${base}/api/projects`)).json() as { id: string; name: string }[];
+  const projects = async () => await (await context.request.get(`${apiBase}/projects`)).json() as { id: string; name: string }[];
 
   await login(page, 'admin@jgm4.local');
   const list = await projects();
@@ -76,7 +76,7 @@ try {
 
   // Perfis: consultor sem gestão de status; cliente de outra empresa não vê o projeto; CLIENT sem aba de gestão.
   await logout(page); await login(page, 'gestor@ollem.local');
-  const other = await context.request.get(`${base}/api/projects/${painel.id}/reports/executive`);
+  const other = await context.request.get(`${apiBase}/projects/${painel.id}/reports/executive`);
   if (other.status() !== 403) fail(`Cliente de outra empresa deveria receber 403 (veio ${other.status()}).`);
   const mine = (await projects())[0];
   await page.goto(`${base}/projects/${mine.id}/reports`);
@@ -85,7 +85,7 @@ try {
   if (await page.getByTestId('nav-audit').count()) fail('Gestor do cliente não deveria ver a auditoria.');
   await logout(page); await login(page, 'operacao@ollem.local');
   await page.goto(`${base}/projects/${mine.id}/reports`);
-  const denied = await context.request.get(`${base}/api/projects/${mine.id}/reports/executive`);
+  const denied = await context.request.get(`${apiBase}/projects/${mine.id}/reports/executive`);
   if (denied.status() !== 403) fail(`CLIENT_USER deveria receber 403 nos relatórios (veio ${denied.status()}).`);
   if (await page.getByTestId('nav-reports').count()) fail('CLIENT_USER não deveria ver o link de relatórios.');
 

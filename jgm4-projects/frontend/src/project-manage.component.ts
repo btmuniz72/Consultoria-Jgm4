@@ -2,6 +2,7 @@ import { Component, DestroyRef, OnInit, inject, signal } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { DialogService } from './ui/dialog.service';
 import { ActivatedRoute } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { forkJoin } from 'rxjs';
@@ -72,7 +73,7 @@ const today = () => new Date(Date.now() - new Date().getTimezoneOffset() * 60000
   </main>`,
 })
 export class ProjectManageComponent implements OnInit {
-  private readonly http = inject(HttpClient); private readonly route = inject(ActivatedRoute); private readonly destroyRef = inject(DestroyRef); private readonly auth = inject(AuthService);
+  private readonly http = inject(HttpClient); private readonly route = inject(ActivatedRoute); private readonly destroyRef = inject(DestroyRef); private readonly auth = inject(AuthService); private readonly dialogs = inject(DialogService);
   projectId = '';
   readonly d = signal<ProjectDashboard | null>(null); readonly history = signal<StatusHistory>({ status: '', events: [] }); readonly status = signal(''); readonly sustainment = signal<Sustainment[]>([]); readonly carried = signal<Carried[]>([]);
   readonly mode = signal<'hold' | 'cancel' | 'resume' | null>(null); readonly saving = signal(false); readonly notice = signal(''); readonly error = signal('');
@@ -89,9 +90,9 @@ export class ProjectManageComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef)).subscribe({ next: (x) => { this.d.set(x.d); this.history.set(x.history); this.status.set(x.history.status); this.sustainment.set(x.sustainment); this.carried.set(x.carried);
         if (!this.cForm.fromPhaseId && x.d.phases.length) { this.cForm.fromPhaseId = x.d.phases[0].id; this.cForm.toPhaseId = x.d.phases[1]?.id ?? x.d.phases[0].id; } }, error: (e: HttpErrorResponse) => this.fail(e) });
   }
-  submitStatus() {
+  async submitStatus() {
     const mode = this.mode(); if (!mode) return;
-    if (mode === 'cancel' && !window.confirm('Cancelar o projeto? Ele passará a ser somente consulta e esta ação não pode ser desfeita.')) return;
+    if (mode === 'cancel' && !(await this.dialogs.confirm({ title: 'Cancelar o projeto?', message: 'Ele passará a ser somente consulta e esta ação não pode ser desfeita.', confirmLabel: 'Cancelar projeto', danger: true }))) return;
     const body: Record<string, string> = { reason: this.form.reason };
     if (mode !== 'resume') { body['effectiveDate'] = this.form.effectiveDate; body['note'] = this.form.note; if (mode === 'hold' && this.form.expectedResumeDate) body['expectedResumeDate'] = this.form.expectedResumeDate; if (mode === 'cancel') body['confirmPassword'] = this.form.confirmPassword; }
     this.saving.set(true); this.error.set('');

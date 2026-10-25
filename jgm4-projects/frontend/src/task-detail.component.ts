@@ -2,12 +2,16 @@ import { Component, DestroyRef, OnInit, inject, signal } from '@angular/core';
 import { DatePipe, DecimalPipe, JsonPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { apiUrl } from './api-path';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { EMPTY, catchError, switchMap, tap } from 'rxjs';
 import { ProjectNavComponent } from './project-nav.component';
+import { UI } from './ui/ui.components';
+import { auditActionLabel, roleLabel } from './ui/labels';
 
 interface TaskDetail {
+  movementApprovalRequired: boolean; movementApprovedAt: string | null; movementApprovalNote: string | null; canApproveMovement: boolean;
   id: string; projectId: string; phaseId: string; code: string; title: string; description: string | null;
   objective: string; instructions: string; acceptanceCriteria: string; status: string; statusLabel: string;
   responsibilityType: string; plannedStartDate: string | null; plannedEndDate: string | null;
@@ -26,8 +30,9 @@ interface TaskDetail {
   missingRequirements: unknown[]; allowedActions: string[];
 }
 
-@Component({ selector: 'app-task-detail', imports: [DatePipe, DecimalPipe, JsonPipe, FormsModule, RouterLink, ProjectNavComponent], templateUrl: './task-detail.component.html' })
+@Component({ selector: 'app-task-detail', imports: [DatePipe, DecimalPipe, JsonPipe, FormsModule, RouterLink, ProjectNavComponent, ...UI], templateUrl: './task-detail.component.html' })
 export class TaskDetailComponent implements OnInit {
+  readonly apiUrl = apiUrl;
   private readonly http = inject(HttpClient);
   private readonly route = inject(ActivatedRoute);
   private readonly destroyRef = inject(DestroyRef);
@@ -64,10 +69,12 @@ export class TaskDetailComponent implements OnInit {
   private url(suffix = '') { const task = this.task(); return task ? `/api/tasks/${encodeURIComponent(task.id)}${suffix}` : ''; }
   private showError(error: HttpErrorResponse) {
     const value = error.error?.message;
-    this.error.set(Array.isArray(value) ? value.join(' ') : typeof value === 'string' ? value : 'Não foi possível concluir esta ação. Verifique a API local e tente novamente.');
+    this.error.set(Array.isArray(value) ? value.join(' ') : typeof value === 'string' ? value : 'Não foi possível concluir esta ação. Verifique sua conexão e tente novamente.');
     this.loading.set(false); this.saving.set(false);
   }
   private replaceTask(task: TaskDetail) { this.task.set(task); this.syncPlan(task); this.error.set(''); this.notice.set('Alteração registrada no histórico da atividade.'); }
+  movementNote = '';
+  approveMovement() { const task = this.task(); if (!task) return; this.saving.set(true); this.http.post('/api/projects/' + task.projectId + '/tasks/' + task.id + '/movement-acceptance', { text: this.movementNote }).pipe(takeUntilDestroyed(this.destroyRef), switchMap(() => this.http.get<TaskDetail>(this.url())), catchError((e: HttpErrorResponse) => { this.showError(e); return EMPTY; })).subscribe(t => { this.replaceTask(t); this.saving.set(false); }); }
   runAction(action: string) {
     const task = this.task(); if (!task) return;
     if (action === 'request-adjustment') { this.adjustmentOpen.set(true); return; }
@@ -118,4 +125,6 @@ export class TaskDetailComponent implements OnInit {
   }
   requestReopen() { this.postChange('/reopen', { reason: this.reopenReason }, 'Pedido de reabertura enviado para aprovação.'); }
   reload() { window.location.reload(); }
+  actionLabel(action: string) { return auditActionLabel(action); }
+  actorLabel(type: string) { return type === 'SYSTEM' ? 'Sistema' : type === 'USER' ? 'Usuário' : roleLabel(type); }
 }

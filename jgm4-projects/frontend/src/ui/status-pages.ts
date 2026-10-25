@@ -8,7 +8,7 @@ import { inject } from '@angular/core';
   selector: 'ui-auth-layout', imports: [RouterLink],
   template: `<div class="auth-layout">
     <aside class="auth-brand"><div><img class="brand-logo" src="assets/brand/logo-jgm4.png" alt="JGM4 Consultoria Logística" width="72" height="72"><h1>JGM4 Projects</h1><p>Acompanhe fases, Gates, solicitações e decisões do seu projeto de implantação em um só lugar.</p></div><small>JGM4 Consultoria · Estruturação · Controle · Sustentação</small></aside>
-    <main class="auth-main" id="conteudo"><div class="auth-card"><ng-content /><p class="auth-footer"><a routerLink="/privacy">Privacidade</a> · <a routerLink="/terms">Termos de uso</a></p></div></main></div>`,
+    <main class="auth-main"><div class="auth-card"><ng-content /><p class="auth-footer"><a href="/pages/politica.html">Política de Privacidade</a> · <a routerLink="/terms">Termos de Uso</a> · <a href="/">Voltar para o site JGM4</a></p></div></main></div>`,
 })
 export class AuthLayoutComponent {}
 

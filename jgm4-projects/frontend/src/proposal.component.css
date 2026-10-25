@@ -1,0 +1,21 @@
+.proposal-page { max-width: 1080px; margin: 0 auto; }
+.proposal-cover { padding: clamp(24px, 5vw, 56px); border-radius: 16px; background: var(--color-primary, #16253d); color: #fff; margin: 24px 0; }
+.proposal-cover .eyebrow, .proposal-cover .lead { color: #dfe7f3; }
+.proposal-cover h1 { color: #fff; font-size: clamp(1.8rem, 4vw, 3rem); }
+.proposal-cover select { color: #17273e; width: 100%; }
+.proposal-page .panel { margin: 22px 0; padding: clamp(20px, 4vw, 40px); }
+.proposal-page p, .proposal-page li { line-height: 1.75; }
+.proposal-page label { display: block; margin: 12px 0; }
+.proposal-page input:not([type=checkbox]), .proposal-page textarea, .proposal-page select { width: 100%; min-width: 0; }
+.proposal-page details { border-top: 1px solid #d8dfe8; margin-top: 20px; padding-top: 16px; }
+.proposal-page summary { cursor: pointer; font-weight: 600; }
+.proposal-phases article, .payment-row, .dependency-list li { padding: 20px 0; border-bottom: 1px solid #d8dfe8; }
+.proposal-timeline { padding-left: 24px; }
+.proposal-timeline li { padding: 10px; }.proposal-timeline span, .proposal-timeline small { display: block; }
+.parallel-stages { display: flex; flex-wrap: wrap; gap: 10px 28px; padding-left: 20px; }
+.responsibility-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+.proposal-values { list-style: none; padding: 0; }.proposal-values li, .proposal-total { display: flex; justify-content: space-between; gap: 16px; padding: 12px 0; border-bottom: 1px solid #d8dfe8; }
+.proposal-total { font-size: 1.35rem; }.accept-checks { margin: 24px 0; }.accept-checks label { display: flex; align-items: start; gap: 12px; }
+.proposal-page form { margin: 24px 0; }.proposal-page button { margin: 8px 8px 8px 0; }.dependency-list { padding-left: 20px; }
+@media(max-width: 600px) { .responsibility-grid { grid-template-columns: 1fr; }.proposal-values li { flex-wrap: wrap; }.proposal-page { overflow-wrap: anywhere; } }
+@media print { .admin-commercial, form, button, app-project-nav { display: none; }.proposal-cover { color: #17273e; background: white; }.proposal-cover h1, .proposal-cover .lead, .proposal-cover .eyebrow { color: #17273e; }.panel { break-inside: avoid; } }

@@ -8,16 +8,7 @@ import { filter } from 'rxjs';
 import { ActorService } from './actor.service';
 import { AuthService, adminGuard, authGuard, securityInterceptor } from './auth.service';
 import { LoginComponent } from './login.component';
-import { ForgotPasswordComponent, ResetPasswordComponent } from './password-pages.component';
-import { AccountComponent } from './account.component';
-import { LegalComponent } from './legal.component';
-import { ProjectPlanComponent } from './project-plan.component';
-import { TaskDetailComponent } from './task-detail.component';
-import { HomeComponent } from './home.component';
-import { RequestsComponent } from './requests.component';
-import { RequestDetailComponent } from './request-detail.component';
-import { AlignmentComponent } from './alignment.component';
-import { GatesComponent } from './gates.component';
+import { PrivacyRedirectComponent } from './legal.component';
 import { DialogHostComponent } from './ui/dialog.service';
 import { ForbiddenComponent, NotFoundComponent } from './ui/status-pages';
 import { NavItem, navigationFor, roleLabel } from './ui/labels';
@@ -28,7 +19,7 @@ const AUTH_PAGES = ['/login', '/forgot-password', '/reset-password'];
 const CONTEXTS: [RegExp, string][] = [
   [/^\/dashboard/, 'Dashboard'], [/^\/projects\/[^/]+\/dashboard/, 'Painel do projeto'], [/^\/projects\/[^/]+\/plan/, 'Plano do projeto'], [/^\/projects\/[^/]+\/tasks/, 'Atividade'], [/^\/projects\/[^/]+\/requests/, 'Solicitações'],
   [/^\/projects\/[^/]+\/gates/, 'Gates'], [/^\/projects\/[^/]+\/reports/, 'Relatórios'], [/^\/projects\/[^/]+\/audit/, 'Auditoria'], [/^\/projects\/[^/]+\/manage/, 'Gestão do projeto'], [/^\/projects\/[^/]+\/alignment/, 'Reunião de alinhamento'],
-  [/^\/projects/, 'Projetos'], [/^\/approvals/, 'Central de Aprovações'], [/^\/account/, 'Minha conta'], [/^\/admin\/companies/, 'Administração · Empresas'], [/^\/admin\/users/, 'Administração · Usuários'],
+  [/^\/projects\/[^/]+\/proposal/, 'Proposta técnica e comercial'], [/^\/projects/, 'Projetos'], [/^\/approvals/, 'Central de Aprovações'], [/^\/account/, 'Minha conta'], [/^\/admin\/companies/, 'Administração · Empresas'], [/^\/admin\/users/, 'Administração · Usuários'],
   [/^\/admin\/projects/, 'Administração · Projetos'], [/^\/admin\/templates/, 'Administração · Templates'], [/^\/admin\/security/, 'Administração · Segurança'], [/^\/privacy/, 'Política de Privacidade'], [/^\/terms/, 'Termos de Uso'],
   [/^\/dev\/design-system/, 'Design System'], [/^\/forbidden/, 'Acesso não permitido'], [/^\/$/, 'Início'],
 ];
@@ -42,6 +33,7 @@ const CONTEXTS: [RegExp, string][] = [
       @if (auth.user() && !authPage()) {
         <aside class="sidebar" id="menu" aria-label="Menu principal">
           <a class="brand" routerLink="/" aria-label="JGM4 Projects, início"><img class="brand-logo" src="assets/brand/logo-jgm4.png" alt="JGM4 Consultoria Logística" width="52" height="52"><span class="brand-product">JGM4 Projects<small>Consultoria Logística</small></span></a>
+          <button type="button" class="nav-close" (click)="navOpen.set(false)" aria-label="Fechar o menu" data-testid="nav-close">✕</button>
           <nav aria-label="Navegação">
             @for (group of groups(); track group.id) {
               <div class="side-group"><h2>{{ group.label }}</h2>
@@ -71,9 +63,9 @@ const CONTEXTS: [RegExp, string][] = [
             } @else { <a class="btn secondary" routerLink="/login">Entrar</a> }
           </header>
         }
-        @if (auth.unreachable()) { <div class="alert alert-warning service-banner" role="alert" data-testid="service-unavailable"><strong>Serviço temporariamente indisponível</strong>Não conseguimos falar com o servidor. Sua sessão foi mantida; verifique sua conexão e <a href="" (click)="reload($event)">tente novamente</a>.</div> }
+        @if (auth.unreachable()) { <div class="alert alert-warning service-banner" role="status" data-testid="service-unavailable"><strong>Serviço temporariamente indisponível</strong>Não conseguimos falar com o servidor. Sua sessão foi mantida; verifique sua conexão e <a href="" (click)="reload($event)">tente novamente</a>.</div> }
         <div id="conteudo" tabindex="-1"><router-outlet /></div>
-        <footer><span>JGM4 Consultoria · Estruturação · Controle · Sustentação</span><span><a routerLink="/privacy" data-testid="footer-privacy">Privacidade</a> · <a routerLink="/terms" data-testid="footer-terms">Termos de uso</a></span></footer>
+        <footer><span>JGM4 Consultoria · Estruturação · Controle · Sustentação</span><span><a href="/pages/politica.html" data-testid="footer-privacy">Política de Privacidade</a> · <a routerLink="/terms" data-testid="footer-terms">Termos de uso</a></span></footer>
       </div>
     </div>
     <ui-dialog-host />
@@ -106,10 +98,10 @@ class AppComponent implements OnInit {
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: 'forgot-password', component: ForgotPasswordComponent },
-  { path: 'reset-password', component: ResetPasswordComponent },
-  { path: 'privacy', component: LegalComponent, data: { kind: 'privacy' } },
-  { path: 'terms', component: LegalComponent, data: { kind: 'terms' } },
+  { path: 'forgot-password', loadComponent: () => import('./password-pages.component').then((m) => m.ForgotPasswordComponent) },
+  { path: 'reset-password', loadComponent: () => import('./password-pages.component').then((m) => m.ResetPasswordComponent) },
+  { path: 'privacy', component: PrivacyRedirectComponent },
+  { path: 'terms', loadComponent: () => import('./legal.component').then((m) => m.LegalComponent), data: { kind: 'terms' } },
   { path: 'forbidden', component: ForbiddenComponent },
   { path: 'admin/security', loadComponent: () => import('./admin-security.component').then((m) => m.AdminSecurityComponent), canActivate: [adminGuard] },
   { path: 'admin/companies', loadComponent: () => import('./admin-ops.components').then((m) => m.AdminCompaniesComponent), canActivate: [adminGuard] },
@@ -118,25 +110,27 @@ const routes: Routes = [
   { path: 'admin/templates', loadComponent: () => import('./admin-templates.components').then((m) => m.AdminTemplatesComponent), canActivate: [adminGuard] },
   { path: 'admin/templates/:id', loadComponent: () => import('./admin-templates.components').then((m) => m.AdminTemplateEditorComponent), canActivate: [adminGuard] },
   { path: 'admin/projects/:id/members', loadComponent: () => import('./admin-ops.components').then((m) => m.AdminProjectMembersComponent), canActivate: [adminGuard] },
-  { path: 'account', component: AccountComponent, canActivate: [authGuard] },
+  { path: 'account', loadComponent: () => import('./account.component').then((m) => m.AccountComponent), canActivate: [authGuard] },
   { path: 'dashboard', loadComponent: () => import('./dashboard.component').then((m) => m.DashboardComponent), canActivate: [authGuard] },
   { path: 'projects/:id/dashboard', loadComponent: () => import('./project-dashboard.component').then((m) => m.ProjectDashboardComponent), canActivate: [authGuard] },
   { path: 'projects/:id/reports', loadComponent: () => import('./reports.component').then((m) => m.ReportsComponent), canActivate: [authGuard] },
+  { path: 'projects/:id/documents', loadComponent: () => import('./project-documents.component').then((m) => m.ProjectDocumentsComponent), canActivate: [authGuard] },
   { path: 'projects/:id/reports/view/:kind', loadComponent: () => import('./report-view.component').then((m) => m.ReportViewComponent), canActivate: [authGuard] },
   { path: 'projects/:id/audit', loadComponent: () => import('./audit.component').then((m) => m.AuditComponent), canActivate: [authGuard] },
   { path: 'projects/:id/manage', loadComponent: () => import('./project-manage.component').then((m) => m.ProjectManageComponent), canActivate: [authGuard] },
-  { path: '', pathMatch: 'full', component: HomeComponent, canActivate: [authGuard] },
+  { path: '', pathMatch: 'full', loadComponent: () => import('./home.component').then((m) => m.HomeComponent), canActivate: [authGuard] },
   { path: 'admin', pathMatch: 'full', redirectTo: 'admin/companies' },
   { path: 'approvals', loadComponent: () => import('./approvals.component').then((m) => m.ApprovalsComponent), canActivate: [authGuard] },
   { path: 'approvals/:id', loadComponent: () => import('./approvals.component').then((m) => m.ApprovalsComponent), canActivate: [authGuard] },
-  { path: 'projects/:id/plan', component: ProjectPlanComponent, canActivate: [authGuard] },
-  { path: 'projects/:id/gates', component: GatesComponent, canActivate: [authGuard] },
-  { path: 'projects/:id/gates/:gateId', component: GatesComponent, canActivate: [authGuard] },
-  { path: 'projects/:id/tasks/:taskId', component: TaskDetailComponent, canActivate: [authGuard] },
-  { path: 'projects/:id/requests/:requestId', component: RequestDetailComponent, canActivate: [authGuard] },
-  { path: 'projects/:id/requests', component: RequestsComponent, canActivate: [authGuard] },
-  { path: 'projects/:id/alignment', component: AlignmentComponent, canActivate: [authGuard] },
-  { path: 'projects', component: ProjectPlanComponent, canActivate: [authGuard] },
+  { path: 'projects/:id/proposal', loadComponent: () => import('./proposal.component').then((m) => m.ProposalComponent), canActivate: [authGuard] },
+  { path: 'projects/:id/plan', loadComponent: () => import('./project-plan.component').then((m) => m.ProjectPlanComponent), canActivate: [authGuard] },
+  { path: 'projects/:id/gates', loadComponent: () => import('./gates.component').then((m) => m.GatesComponent), canActivate: [authGuard] },
+  { path: 'projects/:id/gates/:gateId', loadComponent: () => import('./gates.component').then((m) => m.GatesComponent), canActivate: [authGuard] },
+  { path: 'projects/:id/tasks/:taskId', loadComponent: () => import('./task-detail.component').then((m) => m.TaskDetailComponent), canActivate: [authGuard] },
+  { path: 'projects/:id/requests/:requestId', loadComponent: () => import('./request-detail.component').then((m) => m.RequestDetailComponent), canActivate: [authGuard] },
+  { path: 'projects/:id/requests', loadComponent: () => import('./requests.component').then((m) => m.RequestsComponent), canActivate: [authGuard] },
+  { path: 'projects/:id/alignment', loadComponent: () => import('./alignment.component').then((m) => m.AlignmentComponent), canActivate: [authGuard] },
+  { path: 'projects', loadComponent: () => import('./project-plan.component').then((m) => m.ProjectPlanComponent), canActivate: [authGuard] },
   // Página de referência do Design System: somente fora de produção (isDevMode() é falso no build de produção).
   ...(isDevMode() ? [{ path: 'dev/design-system', loadComponent: () => import('./ui/design-system.component').then((m) => m.DesignSystemComponent) }] : []),
   { path: '**', component: NotFoundComponent },

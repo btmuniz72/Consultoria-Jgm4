@@ -1,3 +1,4 @@
+import { assertCommercialStart } from '../commercial/commercial-guard';
 import { BadRequestException, ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { IsBoolean, IsDateString, IsOptional, IsString, IsUUID, MaxLength, MinLength } from 'class-validator';
 import { PrismaService } from '../prisma/prisma.service';
@@ -67,6 +68,7 @@ export class LifecycleService {
       const project = await tx.project.findUnique({ where: { id: projectId }, select: { status: true } });
       if (!project) throw new NotFoundException('Projeto não encontrado.');
       if (!allowedFrom.includes(project.status)) throw new ConflictException(`Transição não permitida a partir do estado ${project.status}.`);
+      if (to === 'IN_PROGRESS') await assertCommercialStart(tx, projectId);
       await tx.project.update({ where: { id: projectId }, data: { status: to } });
       await tx.projectStatusEvent.create({ data: { projectId, fromStatus: project.status, toStatus: to, reason: input.reason.trim(), note: input.note?.trim() || null,
         effectiveDate: input.effectiveDate, expectedResumeDate: input.expectedResumeDate ?? null, createdByUserId: currentUserId(), createdByRole: currentRole() } });

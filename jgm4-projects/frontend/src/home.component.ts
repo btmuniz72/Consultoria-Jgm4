@@ -46,7 +46,7 @@ export class HomeComponent implements OnInit {
     this.http.get<ProjectListItem[]>('/api/projects').pipe(
       switchMap((projects) => projects.length ? forkJoin(projects.map((item) => forkJoin({ plan: this.http.get<Project>(`/api/projects/${item.id}`), requests: this.http.get<ProjectRequest[]>(`/api/projects/${item.id}/requests`) }))) : of([])),
       takeUntilDestroyed(this.destroyRef),
-    ).subscribe({ next: (projects) => { this.projects.set(projects); this.loading.set(false); }, error: () => { this.error.set('Não foi possível carregar os projetos. Verifique a API e o banco local.'); this.loading.set(false); } });
+    ).subscribe({ next: (projects) => { this.projects.set(projects); this.loading.set(false); }, error: () => { this.error.set('Não foi possível carregar os projetos. Verifique sua conexão e tente novamente.'); this.loading.set(false); } });
   }
   retry() { window.location.reload(); }
 }

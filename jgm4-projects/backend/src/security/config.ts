@@ -30,7 +30,21 @@ export function allowedOrigins(): string[] {
   if (isProduction()) return configured;
   return [...new Set([...configured, process.env.FRONTEND_ORIGIN ?? 'http://localhost:4200', 'http://localhost:4200', 'http://127.0.0.1:4200'])];
 }
-export const publicUrl = () => process.env.PUBLIC_URL ?? process.env.FRONTEND_ORIGIN ?? 'http://localhost:4200';
+const normalizePath = (value: string, name: string) => {
+  const path = value.trim();
+  if (!path.startsWith('/') || path.startsWith('//') || path.includes('..') || path.includes('?') || path.includes('#') || path.includes('\\')) throw new Error(`${name} deve ser um caminho absoluto, como /projetos ou /api.`);
+  return path === '/' ? '/' : `/${path.split('/').filter(Boolean).join('/')}`;
+};
+export const publicBasePath = () => normalizePath(process.env.PUBLIC_BASE_PATH ?? process.env.FRONTEND_BASE_PATH ?? '/projetos', 'PUBLIC_BASE_PATH');
+export const apiBasePath = () => normalizePath(process.env.API_BASE_PATH ?? '/api', 'API_BASE_PATH');
+export const publicAppUrl = () => {
+  const configured = process.env.PUBLIC_APP_URL ?? process.env.PUBLIC_URL;
+  if (configured) return configured.replace(/\/+$/, '');
+  const origin = (process.env.FRONTEND_ORIGIN ?? 'http://localhost:4200').replace(/\/+$/, '');
+  return `${origin}${publicBasePath()}`;
+};
+/** Alias legado enquanto instalações antigas migram de PUBLIC_URL para PUBLIC_APP_URL. */
+export const publicUrl = publicAppUrl;
 export const privacyContactEmail = () => (process.env.PRIVACY_CONTACT_EMAIL?.trim() || undefined);
 
 const PLACEHOLDER = /troque|change|example|exemplo|senha|password|secret(?:o)?$/i;
@@ -41,8 +55,14 @@ export function validateProductionConfig(env: NodeJS.ProcessEnv = process.env): 
   if (secret.length < 32 || PLACEHOLDER.test(secret)) errors.push('JWT_SECRET ausente, curto (< 32) ou com valor de exemplo.');
   const key = env.DATA_ENCRYPTION_KEY ?? '';
   if (!/^[0-9a-fA-F]{64}$/.test(key) && Buffer.from(key, 'base64').length !== 32) errors.push('DATA_ENCRYPTION_KEY deve ter 32 bytes (64 caracteres hexadecimais ou base64).');
-  const url = env.PUBLIC_URL ?? '';
-  if (!/^https:\/\//i.test(url)) errors.push('PUBLIC_URL deve ser uma URL https (produção funciona somente com HTTPS).');
+  const appUrl = env.PUBLIC_APP_URL ?? env.PUBLIC_URL ?? '';
+  if (!/^https:\/\//i.test(appUrl)) errors.push('PUBLIC_APP_URL deve ser uma URL https (produção funciona somente com HTTPS).');
+  try {
+    const basePath = normalizePath(env.PUBLIC_BASE_PATH ?? env.FRONTEND_BASE_PATH ?? '/projetos', 'PUBLIC_BASE_PATH');
+    const appPath = new URL(appUrl).pathname.replace(/\/+$/, '') || '/';
+    if (appPath !== basePath) errors.push('PUBLIC_APP_URL deve terminar no caminho definido em PUBLIC_BASE_PATH.');
+  } catch { errors.push('PUBLIC_BASE_PATH inválido.'); }
+  try { normalizePath(env.API_BASE_PATH ?? '/api', 'API_BASE_PATH'); } catch { errors.push('API_BASE_PATH inválido.'); }
   const origins = split(env.ALLOWED_ORIGINS);
   if (!origins.length) errors.push('ALLOWED_ORIGINS deve listar os domínios autorizados.');
   if (origins.some((origin) => origin === '*' || !/^https:\/\//i.test(origin))) errors.push('ALLOWED_ORIGINS não pode conter "*" nem origens sem https.');

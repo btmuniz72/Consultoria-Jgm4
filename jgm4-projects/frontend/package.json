@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "ng serve --host 127.0.0.1 --port 4200 --proxy-config proxy.conf.json",
-    "build": "ng build"
+    "build": "ng build",
+    "test": "jest -c jest.config.json"
   },
   "dependencies": {
     "@angular/common": "^21.2.0",

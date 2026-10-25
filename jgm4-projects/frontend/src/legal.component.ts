@@ -46,3 +46,8 @@ export class LegalComponent implements OnInit {
     this.http.get<{ privacyContactEmail: string | null }>('/api/public-config').subscribe({ next: (config) => this.contact.set(config.privacyContactEmail), error: () => this.contact.set(null) });
   }
 }
+
+@Component({ selector: 'app-privacy-redirect', template: `<main class="state-panel"><h1>Política de Privacidade</h1><p>Redirecionando para a política institucional da JGM4…</p><p><a href="/pages/politica.html">Abrir Política de Privacidade</a></p></main>` })
+export class PrivacyRedirectComponent implements OnInit {
+  ngOnInit() { window.location.replace('/pages/politica.html'); }
+}

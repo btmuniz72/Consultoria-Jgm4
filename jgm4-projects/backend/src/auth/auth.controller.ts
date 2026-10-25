@@ -9,6 +9,7 @@ import { PrismaService } from '../prisma/prisma.service';
 import { RateLimit } from '../security/rate-limiter';
 import { SecurityEventsService } from '../security/security-events.service';
 import { privacyContactEmail, sessionConfig } from '../security/config';
+import { apiBasePath } from '../security/config';
 
 class LoginDto { @IsEmail() @MaxLength(254) email!: string; @IsString() @MinLength(1) @MaxLength(200) password!: string }
 class MfaVerifyDto { @IsString() @MaxLength(2000) mfaToken!: string; @IsString() @MinLength(6) @MaxLength(8) code!: string }
@@ -21,12 +22,12 @@ class MfaDisableDto { @IsString() @MaxLength(200) password!: string; @IsOptional
 const base = () => ({ sameSite: 'strict' as const, secure: isProduction() });
 function setSessionCookies(res: Response, result: SessionResult) {
   const cfg = sessionConfig();
-  res.cookie(COOKIE_NAME, result.accessToken, { ...base(), httpOnly: true, path: '/api', maxAge: cfg.accessMinutes * 60 * 1000 });
-  res.cookie(REFRESH_COOKIE, result.refreshToken, { ...base(), httpOnly: true, path: '/api/auth', maxAge: Math.max(1000, result.idleExpiresAt.getTime() - Date.now()) });
+  res.cookie(COOKIE_NAME, result.accessToken, { ...base(), httpOnly: true, path: apiBasePath(), maxAge: cfg.accessMinutes * 60 * 1000 });
+  res.cookie(REFRESH_COOKIE, result.refreshToken, { ...base(), httpOnly: true, path: `${apiBasePath()}/auth`, maxAge: Math.max(1000, result.idleExpiresAt.getTime() - Date.now()) });
   res.cookie(CSRF_COOKIE, result.csrf, { ...base(), httpOnly: false, path: '/', maxAge: Math.max(1000, result.absoluteExpiresAt.getTime() - Date.now()) });
 }
 function clearSessionCookies(res: Response) {
-  res.clearCookie(COOKIE_NAME, { ...base(), httpOnly: true, path: '/api' }); res.clearCookie(REFRESH_COOKIE, { ...base(), httpOnly: true, path: '/api/auth' }); res.clearCookie(CSRF_COOKIE, { ...base(), httpOnly: false, path: '/' });
+  res.clearCookie(COOKIE_NAME, { ...base(), httpOnly: true, path: apiBasePath() }); res.clearCookie(REFRESH_COOKIE, { ...base(), httpOnly: true, path: `${apiBasePath()}/auth` }); res.clearCookie(CSRF_COOKIE, { ...base(), httpOnly: false, path: '/' });
 }
 const refreshCookie = (req: Request) => { const header = req.headers.cookie; if (!header) return null; for (const part of header.split(';')) { const [name, ...value] = part.trim().split('='); if (name === REFRESH_COOKIE) return decodeURIComponent(value.join('=')); } return null; };
 

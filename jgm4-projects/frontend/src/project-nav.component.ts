@@ -6,8 +6,11 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   selector: 'app-project-nav', imports: [RouterLink, RouterLinkActive],
   template: `<nav class="project-nav" aria-label="Navegação do projeto">
     <a routerLink="/">Início</a>
-    <a [routerLink]="['/projects', projectId(), 'dashboard']" routerLinkActive="active">Dashboard</a>
-    <a [routerLink]="['/projects', projectId(), 'plan']" routerLinkActive="active">Plano C</a>
+    <a [routerLink]="['/projects', projectId(), 'dashboard']" routerLinkActive="active">Visão Geral</a>
+    <a [routerLink]="['/projects', projectId(), 'plan']" routerLinkActive="active">Projeto</a>
+    <a [routerLink]="['/projects', projectId(), 'plan']" fragment="atividades" routerLinkActive="active">Atividades</a>
+    <a [routerLink]="['/projects', projectId(), 'documents']" routerLinkActive="active">Documentos</a>
+    <a [routerLink]="['/projects', projectId(), 'proposal']" routerLinkActive="active" data-testid="nav-proposal">Proposta</a>
     <a [routerLink]="['/projects', projectId(), 'gates']" routerLinkActive="active">Gates</a>
     <a [routerLink]="['/projects', projectId(), 'requests']" routerLinkActive="active">Solicitações</a>
     <a [routerLink]="['/projects', projectId(), 'alignment']" routerLinkActive="active">Reunião de alinhamento</a>

@@ -61,7 +61,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.http.get<DashboardOverview>('/api/dashboard').pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
       next: (data) => { this.data.set(data); this.loading.set(false); },
-      error: (e: HttpErrorResponse) => { this.error.set(e.status === 403 ? 'Este painel é exclusivo da equipe JGM4. Use o painel do seu projeto.' : 'Não foi possível carregar a carteira. Verifique a API.'); this.loading.set(false); },
+      error: (e: HttpErrorResponse) => { this.error.set(e.status === 403 ? 'Este painel é exclusivo da equipe JGM4. Use o painel do seu projeto.' : 'Não foi possível carregar a carteira. Verifique sua conexão e tente novamente.'); this.loading.set(false); },
     });
   }
   setFilter(filter: Filter) { this.filter.set(this.filter() === filter && filter !== 'ALL' ? 'ALL' : filter); }

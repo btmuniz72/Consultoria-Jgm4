@@ -1,11 +1,13 @@
 # Registro de Homologação — Etapa 9
 
-> **Status: NÃO INICIADA em ambiente externo.** Nenhum domínio, servidor, banco, SMTP ou armazenamento externo foi fornecido/contratado até esta data; por isso nenhum teste externo foi executado e nenhum resultado abaixo foi presumido. Preencha este registro durante a homologação. **Não registre segredos.**
+> **Status: NÃO INICIADA em ambiente externo.** Nenhum domínio, servidor, banco, SMTP ou armazenamento externo foi fornecido/contratado até esta data; por isso nenhum teste externo foi executado e nenhum resultado abaixo foi presumido. A URL preferida de produção é `https://www.jgm4consultoria.com.br/projetos/`; staging pode usar host técnico isolado. Preencha este registro durante a homologação. **Não registre segredos.**
 
 ## 1. Identificação
 | Campo | Staging | Produção |
 |---|---|---|
-| URL | _a definir (sugestão: `https://staging-app.jgm4consultoria.com.br`)_ | _a definir (sugestão: `https://app.jgm4consultoria.com.br`)_ |
+| URL | _a definir (sugestão: `https://staging-projetos.jgm4consultoria.com.br/projetos/`)_ | _a definir (preferida: `https://www.jgm4consultoria.com.br/projetos/`)_ |
+| API same-origin | `/api` no mesmo host, encaminhada sem remover prefixo | `/api` no mesmo host, encaminhada sem remover prefixo |
+| Site institucional/proxy identificado pelo responsável | | |
 | Versão publicada (commit/etiqueta) | | |
 | Data / horário | | |
 | Responsável técnico | | |
@@ -21,6 +23,8 @@
 | `smoke:external` (sem login) | | |
 | `smoke:external` (com usuário de smoke) | | |
 | `test:browser:external` (suítes 5–8) | | |
+| `test:browser:base-path` com build `/projetos/` | | |
+| Refresh e deep links `/projetos/login`, `/projetos/dashboard`, `/projetos/projects/...` | | |
 
 ## 3. Cenários de homologação (item 38 da especificação)
 Executar manualmente ou por script, no navegador real, com usuários de **homologação** (não importar usuários demo para produção):

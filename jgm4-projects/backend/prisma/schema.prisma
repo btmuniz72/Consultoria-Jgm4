@@ -203,6 +203,15 @@ model User {
 }
 
 model Project {
+  ollemRevision           Int                   @default(0)
+  commercialControlEnabled Boolean              @default(false)
+  contractStatus          ContractStatus        @default(NOT_CREATED)
+  contractReference       String?
+  startExceptionReason    String?
+  startExceptionByUserId  String?               @db.Uuid
+  startExceptionAt        DateTime?
+  proposals               Proposal[]
+  externalDependencies    ExternalDependency[]
   id                      String                @id @default(uuid()) @db.Uuid
   companyId               String                @db.Uuid
   name                    String
@@ -244,6 +253,8 @@ model Project {
 }
 
 model Phase {
+  archived           Boolean           @default(false)
+  commercial         PhaseCommercial?
   id                 String            @id @default(uuid()) @db.Uuid
   projectId          String            @db.Uuid
   order              Int
@@ -306,6 +317,7 @@ model Gate {
 }
 
 model GateCriterion {
+  archived          Boolean              @default(false)
   id                String               @id @default(uuid()) @db.Uuid
   gateId            String               @db.Uuid
   code              String
@@ -328,6 +340,12 @@ model GateCriterion {
 }
 
 model Task {
+  requiredForGate Boolean @default(true)
+  movementApprovalRequired Boolean            @default(false)
+  movementApprovedByUserId String?            @db.Uuid
+  movementApprovedAt DateTime?
+  movementApprovalNote String?
+  externalDependencies ExternalDependency[]
   id                      String             @id @default(uuid()) @db.Uuid
   projectId               String             @db.Uuid
   phaseId                 String             @db.Uuid
@@ -926,4 +944,89 @@ model TemplateDependency {
   template   ProjectTemplate        @relation(fields: [templateId], references: [id], onDelete: Cascade)
 
   @@unique([templateId, kind, fromCode, toCode])
+}
+
+enum ProposalStatus {
+  DRAFT
+  SENT
+  UNDER_REVIEW
+  APPROVED
+  REJECTED
+  SUPERSEDED
+}
+enum ContractStatus {
+  NOT_CREATED
+  DRAFT
+  SENT_FOR_SIGNATURE
+  SIGNED
+  CANCELLED
+}
+enum ExternalDependencyStatus {
+  PLANNED
+  IN_PROGRESS
+  WAITING_EXTERNAL
+  COMPLETED
+  CANCELLED
+}
+model PhaseCommercial {
+  phaseId String @id @db.Uuid
+  phase Phase @relation(fields: [phaseId], references: [id], onDelete: Restrict)
+  homeOfficeHours Decimal? @db.Decimal(8, 2)
+  inCompanyHours Decimal? @db.Decimal(8, 2)
+  entryPercent Decimal @default(100) @db.Decimal(5, 2)
+  dueDate DateTime? @db.Date
+  paymentCondition String @default("Entrada na abertura da fase")
+  blocking Boolean @default(false)
+  conditionMet Boolean @default(false)
+  conditionNote String?
+  updatedAt DateTime @updatedAt
+}
+model Proposal {
+  id String @id @default(uuid()) @db.Uuid
+  projectId String @db.Uuid
+  project Project @relation(fields: [projectId], references: [id], onDelete: Restrict)
+  version Int
+  status ProposalStatus @default(DRAFT)
+  issuedAt DateTime?
+  validUntil DateTime?
+  approvedAt DateTime?
+  approvedByUserId String? @db.Uuid
+  notes String?
+  snapshot Json
+  contentHash String
+  acceptedText Json?
+  acceptedIp String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  comments ProposalComment[]
+  @@unique([projectId, version])
+  @@index([projectId, status])
+}
+model ProposalComment {
+  id String @id @default(uuid()) @db.Uuid
+  proposalId String @db.Uuid
+  proposal Proposal @relation(fields: [proposalId], references: [id], onDelete: Restrict)
+  userId String @db.Uuid
+  text String
+  createdAt DateTime @default(now())
+}
+model ExternalDependency {
+  id String @id @default(uuid()) @db.Uuid
+  projectId String @db.Uuid
+  project Project @relation(fields: [projectId], references: [id], onDelete: Restrict)
+  taskId String? @db.Uuid
+  task Task? @relation(fields: [taskId], references: [id], onDelete: Restrict)
+  description String
+  responsible String
+  supplier String?
+  dueDate DateTime? @db.Date
+  impact String
+  status ExternalDependencyStatus @default(PLANNED)
+  blocksProject Boolean @default(false)
+  blocksTask Boolean @default(false)
+  stage String @default("Definição técnica")
+  note String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@index([projectId, status])
 }

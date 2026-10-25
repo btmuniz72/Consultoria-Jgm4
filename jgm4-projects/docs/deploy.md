@@ -1,52 +1,34 @@
-# Deploy — JGM4 Projects (staging e produção)
+# Deploy — JGM4 Projects
 
-Arquitetura recomendada (simples, sem acoplamento a provedor): **um processo Node** (API NestJS que também serve o frontend Angular compilado) **atrás de um proxy HTTPS** (Caddy/nginx/balanceador do provedor), com **PostgreSQL gerenciado** e **volume privado** para anexos. Mesma origem: `https://app.<dominio>/` (frontend) e `https://app.<dominio>/api` (API). Sem CORS entre origens e cookies `SameSite=Lax`/`Strict` funcionam.
+## Arquitetura pública
 
-Arquivos de apoio (modelos, nada de segredos): `Dockerfile`, `deploy/Caddyfile.example`, `deploy/jgm4-projects.service.example`, `deploy/crontab.example`, `deploy/production.env.example`.
+A experiência de produção deve ser apresentada como Área do Cliente do site institucional: `https://www.jgm4consultoria.com.br/projetos/`, conforme o canonical atual. O mesmo host atende a API em `/api`. O JGM4 Projects pode continuar em processo e infraestrutura separados; o proxy reverso encaminha os dois caminhos ao upstream da aplicação e preserva o prefixo `/projetos`. O menu da homepage contém o link “Área do Cliente”.
 
-> **Estado:** estes artefatos foram escritos e revisados, mas **a imagem Docker, o Caddy e o systemd não foram executados** neste ambiente (sem Docker/servidor). Valide-os em staging antes de confiar neles.
+O site é HTML estático com `.htaccess`, que atualmente serve 404 real para rotas ausentes. A regra de encaminhamento deve ser configurada no virtual host antes dessa resposta 404. Não altere `.htaccess` com uma regra presumida nem substitua o virtual host existente com base nos exemplos deste repositório. Encaminhe apenas `/projetos` e `/api`, preservando as rotas e conteúdo públicos. A integração conceitual e os limites estão em [arquitetura-area-cliente.md](arquitetura-area-cliente.md).
 
-## 1. Pré-requisitos (decisão e contratação da JGM4)
-Domínio e DNS (`staging-app.…` e `app.…`), servidor/PaaS, PostgreSQL gerenciado com TLS e backup, volume privado, SMTP com SPF/DKIM/DMARC, cofre de segredos, (recomendado) ClamAV. Nada disso é criado pelo código.
+O pacote JGM4 Projects pode atender a SPA e à API pela mesma origem. No contêiner, o Angular é compilado com base `/projetos/`; o Nest serve os arquivos e o fallback da SPA nesse prefixo, enquanto as rotas Nest continuam em `/api`. Cookies de sessão usam `/api` e `/api/auth`; o cookie CSRF permanece em `/`, para que o navegador o envie e o Angular o leia quando opera em `/projetos`.
 
-## 2. Primeira publicação (staging)
-1. Criar banco e **usuário exclusivo da aplicação** (privilégios apenas no schema da aplicação; sem superusuário). Usuário de migração separado, se possível. Liberar acesso somente da rede privada / IP do servidor.
-2. Gerar segredos (ver `deploy/production.env.example`) e gravá-los **no cofre**; `APP_ENV=staging`.
-3. Build: `npm ci && npm run db:generate && npm run build` (ou `docker build`).
-4. **Migrations versionadas:** `npm run prisma:migrate -w backend` (`prisma migrate deploy`). **Nunca** `prisma db push` fora do desenvolvimento.
-5. Subir o processo (`npm run start -w backend` / container / systemd). Se faltar variável crítica ou houver configuração insegura, a API **não inicia** e lista os motivos.
-6. Proxy HTTPS com certificado válido e redirecionamento HTTP→HTTPS (Caddy obtém e renova sozinho).
-7. Primeiro administrador: `ADMIN_EMAIL=… ADMIN_NAME="…" ADMIN_PASSWORD=… npm run admin:bootstrap -w backend` (senha só no ambiente do comando; troca obrigatória no 1º acesso; MFA obrigatório). Fica registrado em `SecurityEvent` (`USER_CREATED`).
-8. Seed: **não rodar** usuários/demonstrações. O seed base (estrutura do Plano C) só com `ALLOW_PRODUCTION_SEED=true`, conscientemente.
-9. `BASE_URL=https://staging-app… npm run smoke:external` (e, com `SMOKE_EMAIL/SMOKE_PASSWORD` de um usuário **sem MFA** de homologação, valida cookies/CSRF/logout).
-10. Agendar backup, retenção e monitoramento (`deploy/crontab.example`).
+## Pré-requisitos para uma publicação futura
 
-## 3. Atualizações (cada release)
-1. `npm test` + `npm run test:browser` locais verdes; `npm audit --omit=dev` revisado.
-2. **Backup** (`npm run db:backup`) e confirmação de que o arquivo foi para o armazenamento externo.
-3. Build da nova versão (imagem/etiqueta com versão ou *commit*).
-4. Staging: migrations → publicar → `smoke:external` → `npm run test:browser:external` com `BASE_URL`.
-5. Produção: repetir os mesmos passos, nesta ordem: **backup → migrations → backend+frontend (mesmo artefato) → health (`/api/health/ready`) → smoke → validação manual curta**.
-6. Decisão de rollback conforme `docs/plano-rollback.md` se algum passo falhar.
+Definir com a JGM4 o proxy compatível com o servidor atual do site, domínio e DNS de staging, serviço de aplicação, PostgreSQL gerenciado com TLS e backup, storage privado, SMTP com SPF/DKIM/DMARC e cofre de segredos. Nenhum desses recursos foi criado por esta revisão.
 
-Migrations devem ser **compatíveis com a versão anterior** (expandir → migrar dados → contrair em release posterior) para permitir rollback do código sem perda. Mudança destrutiva exige plano e backup validado.
+## Staging
 
-## 4. Testes contra um ambiente externo
-- `BASE_URL=https://staging-app… npm run test:browser:external` roda as suítes 5 a 8 (login real, perfis, isolamento, Central, relatórios, segurança). As suítes 1–4 usam APIs isoladas locais (ator de desenvolvimento) e **não se aplicam** a ambientes externos — continuam rodando em `localhost` com `npm run test:browser`.
-- Essas suítes esperam os usuários/projetos de **homologação** (mesmos e-mails do seed de desenvolvimento). Em staging, crie-os de forma controlada (ambiente com `APP_ENV=staging`, nunca em produção) — ver `docs/homologacao-etapa-9.md`.
+1. Usar um host técnico isolado, por exemplo `https://staging-projetos.jgm4consultoria.com.br`; staging não altera o site institucional.
+2. Criar banco exclusivo, usuário da aplicação restrito ao schema, usuário separado para migrations quando possível, rede privada e backup.
+3. Guardar segredos somente no cofre e definir `APP_ENV=staging`, `PUBLIC_APP_URL=https://staging-projetos.jgm4consultoria.com.br/projetos`, `PUBLIC_BASE_PATH=/projetos`, `API_BASE_PATH=/api`, `ALLOWED_ORIGINS=https://staging-projetos.jgm4consultoria.com.br` e `FRONTEND_DIST_DIR` para o diretório compilado.
+4. Construir o contêiner, que compila o Angular para `/projetos/`; aplicar migrations com `npm run prisma:migrate -w backend` e publicar apenas no host de staging.
+5. Executar `BASE_URL=https://staging-projetos.jgm4consultoria.com.br/projetos npm run smoke:external` (PowerShell: `$env:BASE_URL='https://staging-projetos.jgm4consultoria.com.br/projetos'; npm run smoke:external`). Com `SMOKE_EMAIL` e `SMOKE_PASSWORD` configurados no ambiente, o smoke verifica cookies, CSRF e logout.
+6. Executar os testes externos de navegador com a mesma `BASE_URL` e usuários de homologação, conforme `docs/homologacao-etapa-9.md`.
 
-## 5. Monitoramento mínimo
-| O quê | Como |
-|---|---|
-| API/frontend no ar | `/api/health/live`, `/` (monitor externo a cada 1–5 min) |
-| Banco | `/api/health/ready` (503 quando indisponível) |
-| Erros e exceções | logs estruturados (JSON) do processo + `SECURITY` logs; alerta em picos de 5xx |
-| Falhas de login / acesso negado | `SecurityEvent` (`LOGIN_FAILED`, `ACCOUNT_LOCKED`, `ACCESS_DENIED`) — revisar em `/admin/security`; alerta em pico |
-| CPU/memória/disco | métricas do provedor; alerta > 80% sustentado |
-| Backup | verificar existência/horário/tamanho do arquivo diário; alerta se faltar |
-| Certificado | `smoke:external` (alerta com < 14 dias) |
+## Release posterior
 
-Logs: sanitizados (sem tokens/cookies/senhas). Retenção sugerida: aplicação 30 dias online (rotação por tamanho/tempo no proxy e no coletor), `SecurityEvent` 365 dias no banco (já automatizado). Evitar crescimento ilimitado de arquivo de log: configurar rotação (ex.: `roll_keep` no Caddy, `logrotate`).
+1. `npm test`, `npm run build`, `npm run db:status` e `npm run test:browser` locais; revisar `npm audit --omit=dev`.
+2. Fazer backup e confirmar cópia externa.
+3. Em staging: migrations compatíveis, publicação, smoke HTTPS e cenários de navegador/responsividade.
+4. Confirmar com o responsável pelo site que o proxy mantém `/projetos` e `/api` no mesmo host, não remove o prefixo da SPA e não muda qualquer outro caminho público.
+5. Produção só após decisão explícita de go-live, checklist completo, aprovação responsável e plano de rollback. Esta revisão não publica staging nem produção.
 
-## 6. Rate limit em ambiente distribuído
-O limitador é **persistente no PostgreSQL** (`RateLimitBucket`), portanto vale entre várias instâncias e reinícios. Valide em staging com duas instâncias, se houver.
+## Infraestrutura que continua necessária
+
+PostgreSQL gerenciado com TLS; storage privado persistente (ou provedor compatível); SMTP real; backups e teste de restore; segredos no cofre; logs sanitizados e rotacionados; monitoramento de `/api/health/live` e `/api/health/ready`. Veja `deploy/`, `docs/plano-rollback.md` e `docs/backup-e-restore.md`.

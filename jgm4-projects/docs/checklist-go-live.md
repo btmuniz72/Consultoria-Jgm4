@@ -1,7 +1,7 @@
 # Checklist de Go-Live — JGM4 Projects
 
 Preencha na data do go-live (staging primeiro; produção só depois). Estados: OK · PENDENTE · N/A · BLOQUEANTE. Registre responsável e data; **não registre segredos**.
-Estado inicial (2026-10-25): nenhum ambiente externo existe ainda — tudo que exige infraestrutura está **PENDENTE**.
+Estado da preparação local (2026-10-25): nenhum ambiente externo foi homologado — tudo que exige infraestrutura está **PENDENTE**. Arquitetura preferida: Área do Cliente em `https://www.jgm4consultoria.com.br/projetos/`, com `/api` no mesmo host. Link adicionado ao menu da homepage; ainda falta regra de proxy no virtual host Apache antes do 404 do `.htaccess`.
 
 | # | Item | Staging | Produção | Evidência / responsável |
 |---|---|---|---|---|
@@ -16,7 +16,7 @@ Estado inicial (2026-10-25): nenhum ambiente externo existe ainda — tudo que e
 | 9 | Restore testado em ambiente separado, com evidência | PENDENTE | PENDENTE | |
 | 10 | Monitoramento e alertas (API, frontend, banco, erros, login, backup) | PENDENTE | PENDENTE | |
 | 11 | Logs JSON sem segredos e com rotação/retenção | PENDENTE | PENDENTE | |
-| 12 | `/privacy` e `/terms` **sem** `[PREENCHER]`; revisão jurídica registrada | BLOQUEANTE | **BLOQUEANTE** | pendência de decisão JGM4 |
+| 12 | Política institucional única vinculada; Termos de Uso aprovado e sem `[PREENCHER]`; revisão jurídica registrada | BLOQUEANTE | **BLOQUEANTE** | Política `/pages/politica.html`; Termos ainda provisórios |
 | 13 | `PRIVACY_CONTACT_EMAIL` definido | PENDENTE | BLOQUEANTE | |
 | 14 | Admin criado por `admin:bootstrap`; MFA ativado; senha trocada | PENDENTE | PENDENTE | |
 | 15 | Nenhum usuário demo (`@jgm4.local`, `@ollem.local`) nem projeto "Simulação" em produção | N/A | PENDENTE | consulta ao banco |
@@ -30,6 +30,9 @@ Estado inicial (2026-10-25): nenhum ambiente externo existe ainda — tudo que e
 | 23 | `npm audit --omit=dev` revisado no release | OK (2026-10-25) | PENDENTE | exceções em `validacao-etapa-8.md` |
 | 24 | Smoke pós-publicação (login, dashboard, projeto, solicitação, atividade, logout) | PENDENTE | PENDENTE | |
 | 25 | Observação pós-go-live (erros, login, banco, CPU/mem, storage, backup) por 24–48 h | PENDENTE | PENDENTE | |
+| 26 | Proxy do site identificado e encaminhando apenas `/projetos` e `/api`, preservando todos os caminhos públicos atuais | PENDENTE | PENDENTE | responsável pelo site + `docs/arquitetura-area-cliente.md` |
+| 27 | Angular publicado com base `/projetos/`; refresh, assets e lazy routes validados | PENDENTE | PENDENTE | `npm run test:browser:base-path` |
+| 28 | `X-Robots-Tag`/meta robots na aplicação e recomendação robots aplicada sem bloquear páginas institucionais | PENDENTE | PENDENTE | smoke externo + robots institucional |
 
 ## Decisão
 - **Go-live de staging:** liberado quando os itens 1–11, 14, 17–22, 24 estiverem OK.

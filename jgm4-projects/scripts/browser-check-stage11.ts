@@ -1,6 +1,6 @@
 import { mkdirSync } from 'node:fs';
 import type { Page } from '@playwright/test';
-import { base, launchBrowser, login, logout } from './browser-helpers.ts';
+import { answerDialog, base, launchBrowser, login, logout } from './browser-helpers.ts';
 
 // Templates (Etapa 11): abrir o Plano C, visualizar a estrutura, criar nova versão (rascunho), validar, ativar (inativando a anterior)
 // e criar um projeto a partir do template. Cada execução cria uma nova versão do Plano C (sem alterar conteúdo) e uma empresa de teste
@@ -15,7 +15,6 @@ try {
   const context = await browser.newContext({ viewport: { width: 1440, height: 1000 } });
   const page = await context.newPage();
   const errors: string[] = []; page.on('pageerror', (error) => errors.push(error.message));
-  page.on('dialog', (dialog) => { void dialog.accept(dialog.type() === 'prompt' ? 'Teste automatizado da Etapa 11' : undefined); });
 
   await login(page, 'admin@jgm4.local');
   await page.goto(`${base}/admin/templates`); await page.getByTestId('admin-nav').waitFor();
@@ -64,7 +63,7 @@ try {
 
   // limpeza lógica da empresa de teste e responsividade
   await login(page, 'admin@jgm4.local'); await page.goto(`${base}/admin/companies`); await page.getByTestId('admin-password').fill('Jgm4-Dev-2026!'); await page.getByTestId('company-search').fill(suffix);
-  await page.getByTestId(`company-toggle-${company}`).click(); await page.getByTestId('admin-notice').waitFor();
+  await page.getByTestId(`company-toggle-${company}`).click(); await answerDialog(page); await page.getByTestId('admin-notice').waitFor();
   for (const [name, width, height] of [['tablet', 820, 1100], ['mobile', 390, 844]] as const) {
     await page.setViewportSize({ width, height });
     await page.goto(`${base}/admin/templates`); await page.getByTestId('admin-nav').waitFor(); await page.waitForLoadState('networkidle'); await noOverflow(page, `/admin/templates (${name})`);

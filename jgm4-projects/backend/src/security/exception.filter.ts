@@ -1,6 +1,7 @@
 import { ArgumentsHost, Catch, ExceptionFilter, ForbiddenException, HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import type { Request, Response } from 'express';
 import { currentUser } from '../approvals/authority';
+import { apiBasePath } from './config';
 import { redact, redactString } from './redact';
 import { SecurityEventsService } from './security-events.service';
 
@@ -18,7 +19,7 @@ export class SecureExceptionFilter implements ExceptionFilter {
     const http = host.switchToHttp(); const response = http.getResponse<Response>(); const request = http.getRequest<Request>();
     if (exception instanceof HttpException) {
       const status = exception.getStatus();
-      if (exception instanceof ForbiddenException && !(request.route?.path ?? '').startsWith('/api/auth/csrf')) {
+      if (exception instanceof ForbiddenException && !(request.route?.path ?? '').startsWith(`${apiBasePath()}/auth/csrf`)) {
         const actor = currentUser();
         await this.events.record('ACCESS_DENIED', { userId: actor?.id ?? null, metadata: { method: request.method, route: request.route?.path ?? request.path, reason: redactString(String(exception.message)).slice(0, 200) } });
       }
@@ -38,7 +39,7 @@ export function requestLogger() {
   return (request: Request, response: Response, next: () => void) => {
     if (process.env.REQUEST_LOG !== 'true' && process.env.NODE_ENV !== 'production') return next();
     const started = Date.now();
-    response.on('finish', () => { if (!request.path.startsWith('/api/health')) logger.log(`${request.method} ${request.route?.path ?? request.path} ${response.statusCode} ${Date.now() - started}ms user=${currentUser()?.id ?? '-'}`); });
+    response.on('finish', () => { const healthPath = `${apiBasePath()}/health`; if (!(request.path === healthPath || request.path.startsWith(`${healthPath}/`))) logger.log(`${request.method} ${request.route?.path ?? request.path} ${response.statusCode} ${Date.now() - started}ms user=${currentUser()?.id ?? '-'}`); });
     next();
   };
 }

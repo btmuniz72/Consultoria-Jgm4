@@ -28,9 +28,10 @@
       <div class="project-facts"><span>Metodologia <strong>{{ current.methodology === 'PLANO_C' ? 'Plano C' : current.methodology }}</strong></span><span>Início previsto <strong>{{ current.plannedStartDate ? (current.plannedStartDate | date:'dd/MM/yyyy':'UTC') : 'A definir' }}</strong></span><span>Término previsto <strong>{{ current.plannedEndDate ? (current.plannedEndDate | date:'dd/MM/yyyy':'UTC') : 'A definir' }}</strong></span></div>
     </section>
 
+    @if (current.ollemRevision) { <p class="scope-note">Preparação sem cobrança. Horas comerciais Home Office e In Company são definidas pela JGM4 na <a [routerLink]="['/projects', current.id, 'proposal']">proposta</a>. Estimativas operacionais e apontamentos históricos não representam horas contratadas.</p> }
     <section class="metrics" aria-label="Resumo do plano">
       <article><p>Duração-base</p><div><strong data-testid="total-weeks">{{ current.summary.plannedWeeks }}</strong><span>semanas</span></div><small>Distribuídas entre as fases</small></article>
-      <article><p>Horas previstas JGM4</p><div><strong data-testid="total-hours">{{ current.summary.plannedJgm4Hours }}</strong><span>horas</span></div><small>Esforço de consultoria planejado</small></article>
+      <article><p>Horas previstas JGM4</p><div><strong data-testid="total-hours">{{ current.ollemRevision ? (current.contractedJgm4Hours ?? 'A configurar') : current.summary.plannedJgm4Hours }}</strong><span>horas</span></div><small>Esforço de consultoria planejado</small></article>
       <article><p>Fases de implantação</p><div><strong>{{ current.summary.phaseCount }}</strong><span>fases</span></div><small>Da organização à sustentação</small></article>
       <article><p>Pontos de validação</p><div><strong>{{ current.summary.gateCount }}</strong><span>Gates</span></div><small>Um Gate ao final de cada fase</small></article>
     </section>
@@ -52,7 +53,7 @@
       <div class="responsibilities"><div><strong>JGM4</strong><span>Estruturar o método e validar as entregas.</span></div><div><strong>{{ current.company.name }}</strong><span>Executar as atividades e entregar evidências.</span></div><div><strong>Responsabilidade conjunta</strong><span>Avaliar resultados e confirmar o avanço.</span></div></div>
     </section>
 
-    <section class="phases" aria-labelledby="phases-title">
+    <section class="phases" id="atividades" aria-labelledby="phases-title">
       <div class="section-heading"><div><p class="eyebrow">PLANO C</p><h2 id="phases-title">Fases e Gates</h2></div><span>Sequência de implantação</span></div>
       <a class="feature-link" [routerLink]="['/projects', current.id, 'gates']"><strong>Acompanhar Gates <span aria-hidden="true">→</span></strong><span>Critérios, parecer técnico JGM4 e decisão de avanço Ollem.</span></a>
       <div class="phase-table-heading" aria-hidden="true"><span>Fase / objetivo</span><span>Duração-base</span><span>Horas JGM4</span><span>Situação da fase</span></div>

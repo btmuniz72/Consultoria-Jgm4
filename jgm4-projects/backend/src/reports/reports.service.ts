@@ -53,9 +53,9 @@ export class ReportsService {
 
   /** Gates com critérios, recalculando os automáticos (atividades/solicitações) a partir do dado atual. */
   private async gates(projectId: string, raw: RawProject) {
-    const gates = await this.prisma.gate.findMany({ where: { projectId }, orderBy: { phase: { order: 'asc' } }, include: { phase: { select: { id: true, order: true, name: true, status: true } }, criteria: { orderBy: { order: 'asc' } } } });
+    const gates = await this.prisma.gate.findMany({ where: { projectId, phase: { archived: false } }, orderBy: { phase: { order: 'asc' } }, include: { phase: { select: { id: true, order: true, name: true, status: true } }, criteria: { where: { archived: false }, orderBy: { order: 'asc' } } } });
     return gates.map((gate) => {
-      const tasks = raw.tasks.filter((task) => task.phaseId === gate.phaseId && task.status !== 'CANCELLED');
+      const tasks = raw.tasks.filter((task) => task.phaseId === gate.phaseId && task.status !== 'CANCELLED' && task.requiredForGate !== false);
       const tasksDone = tasks.length > 0 && tasks.every((task) => task.status === 'COMPLETED');
       const requestsDone = raw.requests.filter((request) => request.phaseId === gate.phaseId && request.mandatory && request.blocking).every((request) => request.status === 'ACCEPTED');
       const criteria = gate.criteria.map((criterion) => ({ ...criterion, satisfied: criterion.sourceType === 'TASK' ? tasksDone : criterion.sourceType === 'REQUEST' ? requestsDone : criterion.satisfied }));
@@ -284,8 +284,8 @@ export class ReportsService {
     const completed = ctx.project.status === 'IMPLEMENTATION_COMPLETED' || ctx.project.status === 'COMPLETED';
     if (!completed || !lastGate || lastGate.status !== 'APPROVED') throw new ConflictException('Relatório Final indisponível: exige o Gate final aprovado e o projeto em "Implantação concluída".');
     const [phases, tasks, sustainment, carried, approvals, events, names] = await Promise.all([
-      this.prisma.phase.findMany({ where: { projectId }, orderBy: { order: 'asc' } }),
-      this.prisma.task.findMany({ where: { projectId, status: { not: 'CANCELLED' } }, orderBy: [{ phase: { order: 'asc' } }, { code: 'asc' }], select: { code: true, title: true, status: true, phaseId: true, actualEndDate: true, phase: { select: { order: true } } } }),
+      this.prisma.phase.findMany({ where: { projectId, archived: false }, orderBy: { order: 'asc' } }),
+      this.prisma.task.findMany({ where: { projectId, phase: { archived: false }, status: { not: 'CANCELLED' } }, orderBy: [{ phase: { order: 'asc' } }, { code: 'asc' }], select: { code: true, title: true, status: true, phaseId: true, actualEndDate: true, phase: { select: { order: true } } } }),
       this.prisma.sustainmentItem.findMany({ where: { projectId, active: true }, orderBy: { createdAt: 'asc' } }),
       this.prisma.carriedOverItem.findMany({ where: { projectId }, orderBy: { createdAt: 'asc' }, include: { fromPhase: { select: { order: true } }, toPhase: { select: { order: true } } } }),
       this.prisma.approval.findMany({ where: { projectId, status: { in: ['APPROVED', 'ADJUSTMENT_REQUESTED', 'REJECTED'] } }, orderBy: { decidedAt: 'asc' } }),

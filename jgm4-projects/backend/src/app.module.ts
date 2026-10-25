@@ -1,3 +1,5 @@
+import { CommercialController } from './commercial/commercial.controller';
+import { CommercialService } from './commercial/commercial.service';
 import { Controller, Get, Module, ServiceUnavailableException } from '@nestjs/common';
 import { APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { AdminController, MembersController } from './admin/admin.controller';
@@ -56,8 +58,8 @@ class HealthController {
 }
 
 @Module({
-  controllers: [TemplatesController, AdminOpsController, ProjectsController, HealthController, RequestsController, TasksController, GatesController, ApprovalsController, AuthController, DashboardController, LifecycleController, ReportsController, AdminController, MembersController, AttachmentsController],
-  providers: [TemplatesService, AdminOpsService, PrismaService, ProjectsService, RequestsService, TasksService, GatesService, ApprovalsService, AuthService, AccessService, DashboardService, LifecycleService, ReportsService, ReportsData, AdminService, MembersService, AttachmentsService,
+  controllers: [CommercialController, TemplatesController, AdminOpsController, ProjectsController, HealthController, RequestsController, TasksController, GatesController, ApprovalsController, AuthController, DashboardController, LifecycleController, ReportsController, AdminController, MembersController, AttachmentsController],
+  providers: [CommercialService, TemplatesService, AdminOpsService, PrismaService, ProjectsService, RequestsService, TasksService, GatesService, ApprovalsService, AuthService, AccessService, DashboardService, LifecycleService, ReportsService, ReportsData, AdminService, MembersService, AttachmentsService,
     SecurityEventsService, RateLimiter, MailService, { provide: STORAGE, useFactory: createStorage }, { provide: MALWARE_SCANNER, useFactory: createScanner },
     { provide: APP_GUARD, useClass: AuthGuard }, { provide: APP_GUARD, useClass: RateLimitGuard }, { provide: APP_GUARD, useClass: ProjectAccessGuard }, { provide: APP_FILTER, useClass: SecureExceptionFilter }],
 })

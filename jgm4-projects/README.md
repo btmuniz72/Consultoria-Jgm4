@@ -1,6 +1,6 @@
-# JGM4 Projects — Etapa 11
+# JGM4 Projects — revisão Ollem
 
-Aplicação local do projeto **Estruturação do Almoxarifado**, da **Ollem do Brasil**. O sistema inclui plano, solicitações, workflow controlado das atividades, apontamento de horas, Gates com parecer técnico e decisão formal de avanço, e documento de alinhamento. O banco fica no PostgreSQL local da porta 5433; não há publicação, valores financeiros, cobrança ou e-mail.
+Aplicação local do projeto **Estruturação do Almoxarifado**, da **Ollem do Brasil**. O sistema inclui plano, solicitações, workflow controlado das atividades, apontamento de horas, Gates com parecer técnico e decisão formal de avanço, e documento de alinhamento. O banco fica no PostgreSQL local da porta 5433. A revisão Ollem acrescenta proposta técnica/comercial, horas contratadas, aceite versionado, contrato separado, condições comerciais por fase e dependências externas.
 
 ## Estrutura
 
@@ -202,3 +202,14 @@ A Central (`/approvals`) reúne o que depende de decisão da JGM4 ou do patrocin
 
 - O Plano C agora é o template `PLAN_C` v1, administrado em **Administração → Templates** (somente JGM4_ADMIN): visualizar estrutura, validar, criar nova versão (rascunho editável), ativar, inativar e arquivar. Projetos novos escolhem **um template ativo** (ou começam sem template) e recebem uma cópia independente; mudar o template nunca altera projetos existentes.
 - Detalhes, regras de versionamento, validação e limitações: [validação da Etapa 11](docs/validacao-etapa-11.md).
+
+## Etapa 10.5 — UX/UI e Design System
+
+- Identidade JGM4 consistente (azul-marinho, vermelho só para destaque), **tokens de design** centralizados, barra lateral por permissão, login/MFA profissional, páginas 403/404, diálogos próprios no lugar de confirm/prompt, status em badges semânticos e **nenhum enum técnico** exibido ao usuário. Painel do projeto com resumo executivo e linha do tempo com Gates; Gates e atividade reorganizados.
+- Catálogo e regras: [design-system.md](docs/design-system.md) (página de referência `/dev/design-system`, somente fora de produção). Validação, telas, acessibilidade e screenshots: [validação da Etapa 10.5](docs/validacao-etapa-10-5.md). Nenhuma regra de negócio foi alterada.
+
+## Revisão do projeto Ollem
+
+A estrutura atual usa preparação gratuita, estruturação do CD em novembro/dezembro de 2026, inventário/treinamentos em janeiro de 2027 e estabilização após validação. A proposta fica em `/projects/:projectId/proposal`. Horas comerciais são configuradas pela JGM4_ADMIN; nenhum quantitativo final foi presumido. Registros históricos e o template genérico Plano C foram preservados. As seções das etapas anteriores acima documentam suas entregas originais; para a estrutura atual da Ollem, consulte [revisao-projeto-ollem.md](docs/revisao-projeto-ollem.md).
+
+Aplicar a revisão idempotente: `npm run db:generate`, `npm run db:migrate`, `npm run ollem:revise`. Validação específica no navegador: `npm run test:browser:ollem` (schema descartável).

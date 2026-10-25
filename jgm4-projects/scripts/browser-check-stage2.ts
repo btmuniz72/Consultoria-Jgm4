@@ -31,7 +31,7 @@ try {
       else await sql.query(migration);
     }
   } finally { sql.release(); }
-  const seed = spawnSync(process.execPath, [require.resolve('tsx/cli'), 'prisma/seed.ts'], { cwd: resolve(root, 'backend'), env: { ...process.env, DATABASE_URL: url.toString() }, encoding: 'utf8', windowsHide: true, timeout: 60000 });
+  const seed = spawnSync(process.execPath, [require.resolve('tsx/cli'), 'prisma/seed.ts'], { cwd: resolve(root, 'backend'), env: { ...process.env, OLLEM_LEGACY_FIXTURE: 'true', DATABASE_URL: url.toString() }, encoding: 'utf8', windowsHide: true, timeout: 60000 });
   if (seed.status !== 0) throw new Error('Falha ao preparar seed do schema isolado do navegador.');
   api = spawn(process.execPath, ['backend/dist/main.js'], { cwd: root, env: { ...process.env, DATABASE_URL: url.toString(), PORT: '3001', ALLOW_DEV_ACTOR_HEADER: 'true', JGM4_LOCAL_ACTOR: 'JGM4' }, windowsHide: true, stdio: 'ignore' });
   let ready = false;

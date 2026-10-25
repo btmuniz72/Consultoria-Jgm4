@@ -2,32 +2,32 @@ import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { AuthLayoutComponent } from './ui/status-pages';
+import { AlertComponent, FormFieldComponent } from './ui/ui.components';
 import { AuthService, SessionUser, landingPath } from './auth.service';
 
 @Component({
-  selector: 'app-login', imports: [FormsModule, RouterLink],
-  template: `<main class="login-page">
-    <section class="panel login-panel" aria-labelledby="login-title">
-      <p class="eyebrow">JGM4 PROJECTS</p><h1 id="login-title">{{ mfaToken() ? 'Verificação em duas etapas' : 'Entrar' }}</h1>
-      <p class="lead">{{ mfaToken() ? 'Informe o código de 6 dígitos do seu aplicativo autenticador.' : 'Acesse com o e-mail e a senha da sua conta.' }}</p>
-      @if (!mfaToken()) {
-        <form class="task-form" (ngSubmit)="submit()" autocomplete="on">
-          <label>E-mail<input type="email" name="email" autocomplete="username" required maxlength="254" [(ngModel)]="email" data-testid="login-email"></label>
-          <label>Senha<input type="password" name="password" autocomplete="current-password" required maxlength="200" [(ngModel)]="password" data-testid="login-password"></label>
-          @if (error()) { <p class="error-note" role="alert" data-testid="login-error">{{ error() }}</p> }
-          <button type="submit" [disabled]="busy()" data-testid="login-submit">{{ busy() ? 'Entrando…' : 'Entrar' }}</button>
-          <a class="small-link" routerLink="/forgot-password" data-testid="forgot-link">Esqueci minha senha</a>
-        </form>
-      } @else {
-        <form class="task-form" (ngSubmit)="verify()">
-          <label>Código<input name="code" inputmode="numeric" autocomplete="one-time-code" required minlength="6" maxlength="8" [(ngModel)]="code" data-testid="mfa-code"></label>
-          @if (error()) { <p class="error-note" role="alert" data-testid="login-error">{{ error() }}</p> }
-          <button type="submit" [disabled]="busy()" data-testid="mfa-submit">Confirmar</button>
-          <button type="button" class="secondary" (click)="cancelMfa()">Voltar</button>
-        </form>
-      }
-    </section>
-  </main>`,
+  selector: 'app-login', imports: [FormsModule, RouterLink, AuthLayoutComponent, FormFieldComponent, AlertComponent],
+  template: `<ui-auth-layout>
+    <h1 id="login-title">{{ mfaToken() ? 'Verificação em duas etapas' : 'Entrar' }}</h1>
+    <p class="lead">{{ mfaToken() ? 'Digite o código do seu aplicativo autenticador.' : 'Acesse com o e-mail e a senha da sua conta.' }}</p>
+    @if (!mfaToken()) {
+      <form class="task-form" (ngSubmit)="submit()" autocomplete="on" aria-labelledby="login-title">
+        <ui-field label="E-mail" for="login-email"><input id="login-email" type="email" name="email" autocomplete="username" required maxlength="254" [(ngModel)]="email" data-testid="login-email"></ui-field>
+        <ui-field label="Senha" for="login-password"><input id="login-password" type="password" name="password" autocomplete="current-password" required maxlength="200" [(ngModel)]="password" data-testid="login-password"></ui-field>
+        @if (error()) { <ui-alert tone="danger"><span data-testid="login-error">{{ error() }}</span></ui-alert> }
+        <button type="submit" [disabled]="busy()" [class.is-loading]="busy()" data-testid="login-submit">Entrar</button>
+      </form>
+      <div class="auth-links"><a routerLink="/forgot-password" data-testid="forgot-link">Esqueci minha senha</a></div>
+    } @else {
+      <form class="task-form" (ngSubmit)="verify()">
+        <ui-field label="Código de 6 dígitos" for="mfa-code" help="Abra o aplicativo autenticador no seu celular e informe o código exibido."><input id="mfa-code" class="otp-input" name="code" inputmode="numeric" autocomplete="one-time-code" required minlength="6" maxlength="8" [(ngModel)]="code" data-testid="mfa-code"></ui-field>
+        @if (error()) { <ui-alert tone="danger"><span data-testid="login-error">{{ error() }}</span></ui-alert> }
+        <button type="submit" [disabled]="busy()" [class.is-loading]="busy()" data-testid="mfa-submit">Confirmar</button>
+        <button type="button" class="secondary" (click)="cancelMfa()">Voltar</button>
+      </form>
+    }
+  </ui-auth-layout>`,
 })
 export class LoginComponent {
   private readonly auth = inject(AuthService); private readonly router = inject(Router); private readonly route = inject(ActivatedRoute);
@@ -40,7 +40,7 @@ export class LoginComponent {
   }
   private fail(e: HttpErrorResponse) {
     this.busy.set(false); this.password = ''; this.code = '';
-    this.error.set(e.status === 429 ? 'Muitas tentativas. Aguarde alguns minutos e tente novamente.' : e.status === 401 ? (this.mfaToken() ? 'Código inválido ou expirado.' : 'E-mail ou senha inválidos.') : 'Não foi possível entrar. Verifique a conexão com a API.');
+    this.error.set(e.status === 429 ? 'Muitas tentativas. Aguarde alguns minutos e tente novamente.' : e.status === 401 ? (this.mfaToken() ? 'Código inválido ou expirado.' : 'E-mail ou senha inválidos.') : 'Não foi possível entrar agora. Verifique sua conexão e tente novamente.');
   }
   submit() {
     this.busy.set(true); this.error.set('');

@@ -1,6 +1,7 @@
 import { Component, DestroyRef, OnInit, inject, signal } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { apiUrl } from './api-path';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { EMPTY, catchError, switchMap, tap, combineLatest } from 'rxjs';
@@ -48,7 +49,7 @@ export class ReportViewComponent implements OnInit {
       this.projectId = params.get('id') ?? ''; const route = ROUTES[params.get('kind') ?? ''];
       if (!route) { this.error.set('Tipo de relatório desconhecido.'); this.loading.set(false); return EMPTY; }
       const [json, download] = route(query.get('ref') ?? ''); const extra = new URLSearchParams(); for (const key of ['detail', 'from', 'to', 'phaseId', 'organization']) { const value = query.get(key); if (value) extra.set(key, value); }
-      const suffix = extra.toString() ? `?${extra}` : ''; this.downloadUrl.set(`/api/projects/${this.projectId}/${download}${suffix}`);
+      const suffix = extra.toString() ? `?${extra}` : ''; this.downloadUrl.set(apiUrl(`/projects/${this.projectId}/${download}${suffix}`));
       return this.http.get<ReportDoc>(`/api/projects/${this.projectId}/${json}${suffix}`).pipe(catchError((e: HttpErrorResponse) => {
         const message = e.error?.message; this.error.set(e.status === 403 ? 'Você não tem acesso a este relatório.' : typeof message === 'string' ? message : 'Não foi possível montar o relatório.'); this.loading.set(false); return EMPTY; }));
     }), takeUntilDestroyed(this.destroyRef)).subscribe((doc) => { this.doc.set(doc); this.loading.set(false); });

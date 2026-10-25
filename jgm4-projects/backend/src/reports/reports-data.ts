@@ -42,7 +42,7 @@ export class ReportsData {
   // ---------------------------------------------------------------- plano de ação (atividades)
   async actionPlan(projectId: string) {
     const [tasks, hours] = await Promise.all([
-      this.prisma.task.findMany({ where: { projectId }, orderBy: [{ phase: { order: 'asc' } }, { code: 'asc' }], include: {
+      this.prisma.task.findMany({ where: { projectId, phase: { archived: false } }, orderBy: [{ phase: { order: 'asc' } }, { code: 'asc' }], include: {
         phase: { select: { order: true, name: true, status: true } }, predecessor: { select: { code: true } }, gate: { select: { code: true, status: true } },
         clientResponsible: { select: { name: true } }, jgm4Responsible: { select: { name: true } },
         requests: { where: { mandatory: true, blocking: true, status: { not: 'ACCEPTED' } }, select: { code: true } } } }),

@@ -1,3 +1,4 @@
+import { reviseOllem } from '../src/commercial/revise-ollem';
 import { config } from 'dotenv';
 import { resolve } from 'node:path';
 import { PrismaPg } from '@prisma/adapter-pg';
@@ -21,7 +22,8 @@ const phases = planCPhases;
 const production = process.env.NODE_ENV === 'production';
 async function seed() {
   if (production && process.env.ALLOW_PRODUCTION_SEED !== 'true') { console.log('Seed bloqueado em produção (defina ALLOW_PRODUCTION_SEED=true para o seed base; usuários e demonstrações nunca são criados).'); return; }
-  await prisma.$transaction(async (tx) => {
+  const revised = await prisma.project.findUnique({ where: { id: projectId }, select: { ollemRevision: true } });
+  if (!revised?.ollemRevision) await prisma.$transaction(async (tx) => {
     await tx.company.upsert({ where: { id: companyId }, update: {}, create: { id: companyId, name: 'Ollem do Brasil' } });
     await tx.project.upsert({ where: { id: projectId }, update: {}, create: {
       id: projectId, companyId, name: 'Estruturação do Almoxarifado', methodology: 'PLANO_C',
@@ -108,6 +110,7 @@ async function seed() {
       }
     }
   }, { timeout: 30000 });
+  if (process.env.OLLEM_LEGACY_FIXTURE !== 'true') await reviseOllem(prisma, projectId);
   if (production) { console.log('Produção: seed base concluído; demonstrações e usuários de desenvolvimento NÃO foram criados.'); return; }
   const demo = await prisma.$transaction((tx) => seedApprovalsDemo(tx), { timeout: 30000 });
   if (demo) console.log('Cenário de demonstração da Etapa 5 criado: projetos "Simulação — ..." com 1 solicitação, 1 atividade, 1 Gate e 1 alteração de prazo pendentes.');
@@ -118,6 +121,6 @@ async function seed() {
   const users = await seedUsers(prisma);
   await linkReportsDemoUsers(prisma);
   console.log(users.skipped ? 'Usuários não criados: em produção defina SEED_USER_PASSWORD.' : `Usuários de desenvolvimento: ${users.created} criado(s); vínculos de projeto garantidos.`);
-  console.log('Seed Ollem pronto: empresa/projeto, 5 fases, 5 Gates, atividades C00 a C44 e G0 a G4, 10 solicitações e checklists. Fase 0 soma 36 h JGM4. Registros existentes preservados.');
+  console.log('Seed Ollem pronto. Registros existentes preservados; revisão aplicada quando habilitada.');
 }
 seed().catch(() => { console.error('Falha no seed. Verifique a conexão e as migrations.'); process.exitCode = 1; }).finally(() => prisma.$disconnect());

@@ -370,7 +370,7 @@ describe('Etapa 8 — segurança, sessões, proteção de dados e isolamento', (
     try {
       await http().get('/api/projects').set('X-Forwarded-Proto', 'https').set('x-actor-role', 'JGM4_ADMIN').expect(401); await http().get('/api/auth/me').set('X-Forwarded-Proto', 'https').set('x-actor-role', 'JGM4_ADMIN').expect(401);
     } finally { process.env.NODE_ENV = saved.nodeEnv ?? 'test'; process.env.ALLOW_DEV_ACTOR_HEADER = 'false'; }
-    const secure = { JWT_SECRET: 'a'.repeat(16) + 'Zq9!x'.repeat(8), DATA_ENCRYPTION_KEY: 'ab'.repeat(32), PUBLIC_URL: 'https://app.jgm4consultoria.com.br', ALLOWED_ORIGINS: 'https://app.jgm4consultoria.com.br',
+    const secure = { JWT_SECRET: 'a'.repeat(16) + 'Zq9!x'.repeat(8), DATA_ENCRYPTION_KEY: 'ab'.repeat(32), PUBLIC_APP_URL: 'https://www.jgm4consultoria.com.br/projetos', PUBLIC_BASE_PATH: '/projetos', API_BASE_PATH: '/api', ALLOWED_ORIGINS: 'https://www.jgm4consultoria.com.br',
       DATABASE_URL: 'postgresql://app:x@db.interno:5432/jgm4?sslmode=verify-full', MAIL_PROVIDER: 'smtp', SMTP_HOST: 'smtp.exemplo.com', SMTP_USER: 'apikey', SMTP_PASSWORD: 'x9Kq-segredo', MAIL_FROM: 'JGM4 Projects <nao-responder@jgm4consultoria.com.br>', APP_ENV: 'production', REQUIRE_MFA_FOR_ADMIN: 'true', BACKUP_ENCRYPTION_KEY: 'cd'.repeat(32), STORAGE_LOCAL_DIR: '/var/lib/jgm4/storage' };
     expect(validateProductionConfig(secure)).toEqual([]);
     const errors = validateProductionConfig({ JWT_SECRET: 'troque-por-um-segredo-longo-e-aleatorio-com-64-caracteres-ou-mais', PUBLIC_URL: 'http://app.exemplo.com', ALLOWED_ORIGINS: '*', DATABASE_URL: 'postgresql://x@h/db', ALLOW_DEV_ACTOR_HEADER: 'true', MAIL_PROVIDER: 'memory' }).join(' | ');

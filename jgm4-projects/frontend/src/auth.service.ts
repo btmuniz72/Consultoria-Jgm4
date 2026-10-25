@@ -3,6 +3,7 @@ import { HttpClient, HttpErrorResponse, HttpHandlerFn, HttpInterceptorFn, HttpRe
 import { CanActivateFn, Router, UrlTree } from '@angular/router';
 import { Observable, catchError, finalize, firstValueFrom, map, of, shareReplay, switchMap, tap, throwError } from 'rxjs';
 import { ActorService } from './actor.service';
+import { apiUrl } from './api-path';
 
 export interface SessionUser {
   id: string | null; name: string; email: string | null; role: string; company: { id: string; name: string } | null; dev?: boolean; projects?: string[];
@@ -80,7 +81,8 @@ export const authGuard: CanActivateFn = async (route, state) => {
 export const securityInterceptor: HttpInterceptorFn = (request: HttpRequest<unknown>, next: HttpHandlerFn) => {
   const auth = inject(AuthService);
   const unsafe = !['GET', 'HEAD', 'OPTIONS'].includes(request.method); const csrf = unsafe ? readCookie('jgm4_csrf') : '';
-  const prepared = request.url.startsWith('/api') ? request.clone({ setHeaders: { 'X-Requested-With': 'jgm4', ...(csrf ? { 'X-CSRF-Token': decodeURIComponent(csrf) } : {}) } }) : request;
+  const usesApi = request.url === '/api' || request.url.startsWith('/api/');
+  const prepared = usesApi ? request.clone({ url: apiUrl(request.url), setHeaders: { 'X-Requested-With': 'jgm4', ...(csrf ? { 'X-CSRF-Token': decodeURIComponent(csrf) } : {}) } }) : request;
   return next(prepared).pipe(catchError((error: HttpErrorResponse) => {
     if (error.status !== 401 || AUTH_URLS.some((url) => request.url.startsWith(url))) return throwError(() => error);
     return auth.refresh().pipe(switchMap((renewed) => {

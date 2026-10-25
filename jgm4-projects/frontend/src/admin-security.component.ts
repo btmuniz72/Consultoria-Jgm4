@@ -2,7 +2,10 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { apiUrl } from './api-path';
+import { DialogService } from './ui/dialog.service';
 import { roleLabels } from './auth.service';
+import { incidentStatusLabels, securityEventLabel, userStatusLabels } from './ui/labels';
 import { apiMessages } from './password-pages.component';
 import { AdminNavComponent } from './admin-ops.components';
 
@@ -27,9 +30,9 @@ const INCIDENT_STATUS = ['OPEN', 'INVESTIGATING', 'CONTAINED', 'RESOLVED', 'CLOS
     <section class="panel" data-testid="confirm-panel"><h2>Confirmação para ações críticas</h2>
       <div class="form-grid"><label>Sua senha<input type="password" autocomplete="current-password" [(ngModel)]="reauth.password" data-testid="admin-password"></label><label>Código MFA (se ativo)<input maxlength="8" [(ngModel)]="reauth.code"></label></div></section>
 
-    <section class="panel" data-testid="users-panel"><div class="section-heading"><div><h2>Usuários e revisão de acessos</h2></div><a class="btn secondary" href="/api/admin/access-review/xlsx" data-testid="access-xlsx">Exportar XLSX</a></div>
+    <section class="panel" data-testid="users-panel"><div class="section-heading"><div><h2>Usuários e revisão de acessos</h2></div><a class="btn secondary" [href]="accessReviewUrl" data-testid="access-xlsx">Exportar XLSX</a></div>
       <div class="request-table-wrap"><table class="request-table stack-table"><thead><tr><th>Usuário</th><th>Perfil</th><th>Situação</th><th>MFA</th><th>Último login</th><th>Alertas</th><th>Ações</th></tr></thead><tbody>
-        @for (u of users(); track u.id) { <tr><td data-label="Usuário">{{ u.name }}<small>{{ u.email }}{{ u.company ? ' · ' + u.company : '' }}</small></td><td data-label="Perfil">{{ role(u.role) }}</td><td data-label="Situação">{{ u.status }}{{ u.locked ? ' (travada)' : '' }}</td><td data-label="MFA">{{ u.mfaEnabled ? 'Sim' : 'Não' }}</td>
+        @for (u of users(); track u.id) { <tr><td data-label="Usuário">{{ u.name }}<small>{{ u.email }}{{ u.company ? ' · ' + u.company : '' }}</small></td><td data-label="Perfil">{{ role(u.role) }}</td><td data-label="Situação">{{ userStatus(u.status) }}{{ u.locked ? ' (travada)' : '' }}</td><td data-label="MFA">{{ u.mfaEnabled ? 'Sim' : 'Não' }}</td>
           <td data-label="Último login">{{ u.lastLoginAt ? (u.lastLoginAt | date:'dd/MM/yyyy HH:mm') : 'Nunca' }}</td><td data-label="Alertas">@for (f of u.flags ?? []; track f) { <small class="flag">{{ f }}</small> } @empty { — }</td>
           <td class="row-actions">
             @if (u.status === 'ACTIVE') { <button type="button" class="quiet-button" (click)="setStatus(u, 'INACTIVE')">Inativar</button><button type="button" class="quiet-button" (click)="setStatus(u, 'BLOCKED')">Bloquear</button> } @else { <button type="button" class="quiet-button" (click)="setStatus(u, 'ACTIVE')">Reativar</button> }
@@ -44,22 +47,26 @@ const INCIDENT_STATUS = ['OPEN', 'INVESTIGATING', 'CONTAINED', 'RESOLVED', 'CLOS
 
     <section class="panel" data-testid="events-panel"><h2>Eventos de segurança recentes</h2>
       <div class="request-table-wrap"><table class="request-table stack-table"><thead><tr><th>Quando</th><th>Evento</th><th>Usuário</th><th>IP</th></tr></thead><tbody>
-        @for (e of events(); track e.id) { <tr><td data-label="Quando">{{ e.at | date:'dd/MM/yyyy HH:mm:ss' }}</td><td data-label="Evento">{{ e.type }}</td><td data-label="Usuário">{{ e.user || '—' }}</td><td data-label="IP">{{ e.ip || '—' }}</td></tr> } @empty { <tr><td colspan="4" class="empty-row">Nenhum evento.</td></tr> }</tbody></table></div></section>
+        @for (e of events(); track e.id) { <tr><td data-label="Quando">{{ e.at | date:'dd/MM/yyyy HH:mm:ss' }}</td><td data-label="Evento">{{ eventLabel(e.type) }}</td><td data-label="Usuário">{{ e.user || '—' }}</td><td data-label="IP">{{ e.ip || '—' }}</td></tr> } @empty { <tr><td colspan="4" class="empty-row">Nenhum evento.</td></tr> }</tbody></table></div></section>
 
     <section class="panel" data-testid="incidents-panel"><h2>Incidentes de segurança</h2>
-      <ul class="history-list">@for (i of incidents(); track i.id) { <li><div><strong>{{ i.title }}</strong><span>{{ i.status }} · {{ i.createdAt | date:'dd/MM/yyyy HH:mm' }}</span></div>
-        <select [ngModel]="i.status" (ngModelChange)="updateIncident(i, $event)" aria-label="Situação do incidente">@for (s of statuses; track s) { <option [value]="s">{{ s }}</option> }</select></li> } @empty { <li class="muted-copy">Nenhum incidente registrado.</li> }</ul>
+      <ul class="history-list">@for (i of incidents(); track i.id) { <li><div><strong>{{ i.title }}</strong><span>{{ incidentStatus(i.status) }} · {{ i.createdAt | date:'dd/MM/yyyy HH:mm' }}</span></div>
+        <select [ngModel]="i.status" (ngModelChange)="updateIncident(i, $event)" aria-label="Situação do incidente">@for (s of statuses; track s) { <option [value]="s">{{ incidentStatus(s) }}</option> }</select></li> } @empty { <li class="muted-copy">Nenhum incidente registrado.</li> }</ul>
       <form class="task-form inline-form" (ngSubmit)="createIncident()"><h3>Registrar incidente</h3>
         <div class="form-grid"><label>Título<input name="title" required minlength="5" [(ngModel)]="incident.title" data-testid="incident-title"></label><label>Descrição<input name="description" required minlength="5" [(ngModel)]="incident.description" data-testid="incident-description"></label></div>
         <button type="submit" data-testid="incident-add">Registrar</button></form></section>
   </main>`,
 })
 export class AdminSecurityComponent implements OnInit {
-  private readonly http = inject(HttpClient);
+  readonly accessReviewUrl = apiUrl('/admin/access-review/xlsx');
+  private readonly http = inject(HttpClient); private readonly dialogs = inject(DialogService);
   readonly users = signal<AdminUser[]>([]); readonly events = signal<SecEvent[]>([]); readonly incidents = signal<Incident[]>([]); readonly projects = signal<ProjectRow[]>([]);
   readonly members = signal<{ membershipId: string; userId: string; name: string; role: string; company: string | null; active: boolean }[]>([]);
   readonly notice = signal(''); readonly error = signal(''); readonly statuses = INCIDENT_STATUS;
   reauth = { password: '', code: '' }; memberProject = ''; newMember = ''; incident = { title: '', description: '' };
+  userStatus(value: string) { return userStatusLabels[value] ?? value; }
+  eventLabel(value: string) { return securityEventLabel(value); }
+  incidentStatus(value: string) { return incidentStatusLabels[value] ?? value; }
   role(role: string) { return roleLabels[role] ?? role; }
   eligible() { const taken = new Set(this.members().filter((m) => m.active).map((m) => m.userId)); return this.users().filter((u) => u.status === 'ACTIVE' && u.role !== 'JGM4_ADMIN' && !taken.has(u.id)); }
   ngOnInit() { this.reload(); this.http.get<ProjectRow[]>('/api/projects').subscribe({ next: (rows) => this.projects.set(rows), error: () => this.projects.set([]) }); }
@@ -73,8 +80,8 @@ export class AdminSecurityComponent implements OnInit {
     if (this.memberProject) this.loadMembers();
   }
   loadMembers() { if (!this.memberProject) { this.members.set([]); return; } this.http.get<never[]>(`/api/projects/${this.memberProject}/members`).subscribe({ next: (rows) => this.members.set(rows), error: (e: HttpErrorResponse) => this.fail(e) }); }
-  setStatus(user: AdminUser, status: string) {
-    const reason = window.prompt(`Motivo para alterar ${user.name} para ${status}:`); if (!reason) return;
+  async setStatus(user: AdminUser, status: string) {
+    const reason = await this.dialogs.prompt({ title: `Alterar situação de ${user.name}`, message: 'O usuário perde o acesso quando é inativado ou bloqueado.', label: 'Motivo', multiline: true, confirmLabel: 'Confirmar', danger: status !== 'ACTIVE' }); if (!reason) return;
     this.http.patch(`/api/admin/users/${user.id}/status`, { status, reason, ...this.critical() }).subscribe({ next: () => this.ok('Situação do usuário atualizada.'), error: (e: HttpErrorResponse) => this.fail(e) });
   }
   revokeSessions(user: AdminUser) { this.http.post(`/api/admin/users/${user.id}/revoke-sessions`, {}).subscribe({ next: () => this.ok('Sessões encerradas.'), error: (e: HttpErrorResponse) => this.fail(e) }); }
@@ -82,5 +89,5 @@ export class AdminSecurityComponent implements OnInit {
   addMember() { this.http.post(`/api/projects/${this.memberProject}/members`, { userId: this.newMember }).subscribe({ next: () => { this.newMember = ''; this.ok('Vínculo criado.'); }, error: (e: HttpErrorResponse) => this.fail(e) }); }
   removeMember(member: { membershipId: string }) { this.http.patch(`/api/projects/${this.memberProject}/members/${member.membershipId}`, { active: false, ...this.critical() }).subscribe({ next: () => this.ok('Vínculo removido (histórico preservado).'), error: (e: HttpErrorResponse) => this.fail(e) }); }
   createIncident() { this.http.post('/api/admin/incidents', this.incident).subscribe({ next: () => { this.incident = { title: '', description: '' }; this.ok('Incidente registrado.'); }, error: (e: HttpErrorResponse) => this.fail(e) }); }
-  updateIncident(incident: Incident, status: string) { const note = window.prompt('Registro da mudança de situação:'); if (!note) { this.reload(); return; } this.http.patch(`/api/admin/incidents/${incident.id}`, { status, note }).subscribe({ next: () => this.ok('Incidente atualizado.'), error: (e: HttpErrorResponse) => { this.fail(e); this.reload(); } }); }
+  async updateIncident(incident: Incident, status: string) { const note = await this.dialogs.prompt({ title: 'Atualizar incidente', label: 'Registro da mudança de situação', multiline: true, confirmLabel: 'Atualizar' }); if (!note) { this.reload(); return; } this.http.patch(`/api/admin/incidents/${incident.id}`, { status, note }).subscribe({ next: () => this.ok('Incidente atualizado.'), error: (e: HttpErrorResponse) => { this.fail(e); this.reload(); } }); }
 }

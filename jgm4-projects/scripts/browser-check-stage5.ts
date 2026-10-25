@@ -1,5 +1,5 @@
 import { mkdirSync } from 'node:fs';
-import { base, launchBrowser, login, logout } from './browser-helpers.ts';
+import { apiBase, base, launchBrowser, login, logout } from './browser-helpers.ts';
 
 // Verificação de navegador da Central de Aprovações e do login (Etapas 5 e 5.1). Não grava decisões.
 // Requer API (3000) e frontend (4200) em execução e `npm run db:seed` (usuários e cenário de demonstração).
@@ -25,7 +25,7 @@ try {
   await page.getByRole('heading', { name: 'O que está aguardando minha ação?' }).waitFor();
   await page.getByTestId('approval-row').first().waitFor();
   const user = await page.getByTestId('current-user').innerText();
-  if (!user.includes('Administrador JGM4') || !user.includes('JGM4 Administrador')) fail(`Cabeçalho sem nome/perfil: ${user}`);
+  if (!user.includes('Administrador JGM4')) fail(`Cabeçalho sem nome/perfil: ${user}`); // Etapa 10.5: perfil exibido como "Administrador JGM4"
   const total = Number(await page.getByTestId('total-pending').innerText());
   if (total < 4) fail(`Esperava ao menos 4 pendências do cenário de demonstração, recebi ${total}.`);
   for (const label of ['Solicitações', 'Atividades', 'Gates', 'Alterações']) await page.locator('.approval-card', { hasText: label }).waitFor();
@@ -46,7 +46,7 @@ try {
   await page.screenshot({ path: '.local/screenshots/etapa-5-detalhe-desktop.png', fullPage: true });
 
   // Descobre os projetos de simulação pela API autenticada (cookie da sessão).
-  const projects = await (await context.request.get(`${base}/api/projects`)).json() as { id: string; name: string }[];
+  const projects = await (await context.request.get(`${apiBase}/projects`)).json() as { id: string; name: string }[];
   const demo = projects.find((p) => p.name.startsWith('Simulação — Solicitações')) ?? fail('Projeto de simulação ausente. Execute npm run db:seed.');
   const ollem = projects.find((p) => p.name === 'Estruturação do Almoxarifado') ?? fail('Projeto Ollem ausente.');
   await page.goto(`${base}/projects/${demo.id}/plan`);
@@ -64,13 +64,13 @@ try {
   await login(page, 'gestor@ollem.local');
   await page.goto(`${base}/approvals`);
   await page.getByText('Nada aguardando sua ação neste filtro.').waitFor();
-  const own = await context.request.get(`${base}/api/projects/${ollem.id}`);
-  const other = await context.request.get(`${base}/api/projects/${demo.id}`);
+  const own = await context.request.get(`${apiBase}/projects/${ollem.id}`);
+  const other = await context.request.get(`${apiBase}/projects/${demo.id}`);
   if (own.status() !== 200) fail(`Gestor deveria acessar o projeto Ollem (HTTP ${own.status()}).`);
   if (other.status() !== 403) fail(`Gestor não deveria acessar projeto de outra empresa (HTTP ${other.status()}).`);
   await page.goto(`${base}/projects/${demo.id}/plan`);
   await page.getByText('Consulta indisponível').waitFor(); // a tela mostra o erro em vez de dados de outro cliente
-  const sidebar = await (await context.request.get(`${base}/api/projects`)).json() as { id: string }[];
+  const sidebar = await (await context.request.get(`${apiBase}/projects`)).json() as { id: string }[];
   if (sidebar.length !== 1 || sidebar[0].id !== ollem.id) fail('Lista de projetos do gestor deveria conter somente o projeto Ollem.');
 
   // Patrocinador da demonstração: fila vazia (não há decisão de Gate pendente) e nunca o parecer técnico.
