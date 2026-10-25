@@ -4,6 +4,8 @@ import { Prisma, RequestStatus } from '../generated/prisma/client';
 import { RequestFilter, RequirementDto, TransitionDto } from './requests.dto';
 import { TasksService } from '../tasks/tasks.service';
 import { GatesService } from '../gates/gates.service';
+import { ensureApproval, markInReview, resolveApprovals } from '../approvals/approval-sync';
+import { assertCan, currentRole } from '../approvals/authority';
 
 const include = {
   phase: { select: { id: true, order: true, name: true } },
@@ -104,6 +106,7 @@ export class RequestsService {
         throw new BadRequestException({ message: 'Complete todos os requisitos obrigatórios antes de enviar.', missingRequirements: view.missingRequirements.map((req) => req.label) });
       }
       if (action === 'request-adjustment' && !dto.note?.trim()) throw new BadRequestException('Informe o motivo do ajuste.');
+      if (['start-review', 'request-adjustment', 'accept'].includes(action)) assertCan(currentRole(), 'REQUEST_VALIDATE', 'Somente a JGM4 pode analisar e decidir respostas de solicitações.');
       const result = await tx.projectRequest.updateMany({ where: { id, projectId, version: item.version }, data: { status: rule.to, version: { increment: 1 } } });
       if (result.count !== 1) throw new ConflictException('Solicitação alterada simultaneamente. Recarregue.');
       await tx.auditLog.create({ data: {
@@ -112,9 +115,21 @@ export class RequestsService {
         actorType: rule.actor, oldValue: { status: item.status, version: item.version },
         newValue: { status: rule.to, version: item.version + 1, note: dto.note?.trim() || null },
       } });
+      await this.syncApproval(tx, item, action, dto.note?.trim() || null);
       if (action === 'accept') { await this.tasks.releaseAfterRequestChange(tx, projectId); await this.gates.syncProject(tx, projectId); }
       return this.decorate(tx, await this.load(tx, projectId, id));
     });
+  }
+  // Central de Aprovações: o envio ao JGM4 abre a aprovação; a análise e a decisão a acompanham.
+  private async syncApproval(tx: Db, item: LoadedRequest, action: RequestAction, note: string | null) {
+    const key = { entityType: 'ProjectRequest', entityId: item.id, type: 'REQUEST_REVIEW' as const };
+    if (action === 'send') {
+      await ensureApproval(tx, { ...key, projectId: item.projectId, entityCode: item.code, title: `${item.code} — ${item.title}`,
+        description: item.description, assignedRole: 'JGM4_CONSULTANT', dueAt: item.dueDate, requestedByRole: currentRole(),
+        priority: item.mandatory && item.blocking ? 'HIGH' : 'NORMAL', actorType: currentRole() });
+    } else if (action === 'start-review') await markInReview(tx, key.entityType, key.entityId, key.type);
+    else if (action === 'accept') await resolveApprovals(tx, { ...key, status: 'APPROVED', comment: note });
+    else if (action === 'request-adjustment') await resolveApprovals(tx, { ...key, status: 'ADJUSTMENT_REQUESTED', comment: note });
   }
   async requirement(projectId: string, id: string, requirementId: string, dto: RequirementDto) {
     return this.prisma.$transaction(async (tx) => {

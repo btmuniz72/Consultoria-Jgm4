@@ -8,6 +8,8 @@ import { TasksController } from './tasks/tasks.controller';
 import { TasksService } from './tasks/tasks.service';
 import { GatesController } from './gates/gates.controller';
 import { GatesService } from './gates/gates.service';
+import { ApprovalsController } from './approvals/approvals.controller';
+import { ApprovalsService } from './approvals/approvals.service';
 
 @Controller('health')
 class HealthController {
@@ -15,12 +17,12 @@ class HealthController {
   @Get() async health() {
     try { await this.prisma.$queryRaw`SELECT 1`; }
     catch { throw new ServiceUnavailableException('Banco indisponível.'); }
-    return { status: 'ok', database: 'connected', stage: 4 };
+    return { status: 'ok', database: 'connected', stage: 5 };
   }
 }
 
 @Module({
-  controllers: [ProjectsController, HealthController, RequestsController, TasksController, GatesController],
-  providers: [PrismaService, ProjectsService, RequestsService, TasksService, GatesService],
+  controllers: [ProjectsController, HealthController, RequestsController, TasksController, GatesController, ApprovalsController],
+  providers: [PrismaService, ProjectsService, RequestsService, TasksService, GatesService, ApprovalsService],
 })
 export class AppModule {}

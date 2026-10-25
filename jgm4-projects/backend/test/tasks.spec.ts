@@ -28,7 +28,7 @@ describe('Etapa 3 — workflow de atividades e esforço real', () => {
     try {
       await client.query(`CREATE SCHEMA "${schema}"`);
       await client.query(`SET search_path TO "${schema}"`);
-      for (const folder of ['20261022000100_initial', '20261022000200_requests', '20261023000100_task_workflow', '20261023000200_gates']) {
+      for (const folder of ['20261022000100_initial', '20261022000200_requests', '20261023000100_task_workflow', '20261023000200_gates', '20261024000100_approvals']) {
         const migration = readFileSync(resolve(__dirname, `../prisma/migrations/${folder}/migration.sql`), 'utf8');
         if (folder === '20261023000200_gates') { const boundary = migration.indexOf('-- The first phase remains'); await client.query(migration.slice(0, boundary)); await client.query(migration.slice(boundary)); }
         else await client.query(migration);

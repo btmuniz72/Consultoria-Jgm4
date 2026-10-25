@@ -73,6 +73,40 @@ enum TaskStatus {
   CANCELLED
 }
 
+enum ApprovalType {
+  REQUEST_REVIEW
+  TASK_VALIDATION
+  GATE_TECHNICAL_OPINION
+  GATE_CLIENT_DECISION
+  DUE_DATE_CHANGE
+  RESPONSIBLE_CHANGE
+  TASK_REOPEN
+  REQUEST_CANCEL
+  OTHER
+}
+
+enum ApprovalStatus {
+  PENDING
+  IN_REVIEW
+  APPROVED
+  ADJUSTMENT_REQUESTED
+  REJECTED
+  CANCELLED
+}
+
+enum ApprovalDecision {
+  APPROVED
+  ADJUSTMENT_REQUESTED
+  REJECTED
+}
+
+enum ApprovalPriority {
+  LOW
+  NORMAL
+  HIGH
+  CRITICAL
+}
+
 enum ResponsibilityType {
   CLIENT
   JGM4
@@ -131,6 +165,9 @@ model User {
   timeEntries               TimeEntry[]
   taskEvidence              TaskEvidence[]
   auditLogs                 AuditLog[]
+  requestedApprovals        Approval[]           @relation("ApprovalRequester")
+  assignedApprovals         Approval[]           @relation("ApprovalAssignee")
+  decidedApprovals          Approval[]           @relation("ApprovalDecider")
 
   @@index([companyId])
 }
@@ -158,6 +195,7 @@ model Project {
   auditLogs        AuditLog[]
   timeEntries      TimeEntry[]
   taskEvidence     TaskEvidence[]
+  approvals        Approval[]
 
   @@unique([companyId, name])
   @@index([companyId, status])
@@ -409,4 +447,41 @@ model TimeEntry {
 
   @@index([projectId, phaseId, date])
   @@index([taskId, organizationType])
+}
+
+// Central de Aprovações: criada automaticamente pelos workflows (idempotente por entidade + tipo
+// enquanto aberta; índice parcial na migration). Decisões são preservadas — a tabela não admite DELETE.
+model Approval {
+  id                String            @id @default(uuid()) @db.Uuid
+  projectId         String            @db.Uuid
+  type              ApprovalType
+  entityType        String
+  entityId          String            @db.Uuid
+  entityCode        String?
+  requestedByUserId String?           @db.Uuid
+  requestedByRole   UserRole?
+  assignedToUserId  String?           @db.Uuid
+  assignedRole      UserRole?
+  title             String
+  description       String
+  payload           Json?
+  status            ApprovalStatus    @default(PENDING)
+  requestedAt       DateTime          @default(now())
+  dueAt             DateTime?         @db.Date
+  decidedAt         DateTime?
+  decidedByUserId   String?           @db.Uuid
+  decidedByRole     UserRole?
+  decision          ApprovalDecision?
+  decisionComment   String?
+  priority          ApprovalPriority  @default(NORMAL)
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  project           Project           @relation(fields: [projectId], references: [id], onDelete: Restrict)
+  requestedBy       User?             @relation("ApprovalRequester", fields: [requestedByUserId], references: [id], onDelete: Restrict)
+  assignedTo        User?             @relation("ApprovalAssignee", fields: [assignedToUserId], references: [id], onDelete: Restrict)
+  decidedBy         User?             @relation("ApprovalDecider", fields: [decidedByUserId], references: [id], onDelete: Restrict)
+
+  @@index([projectId, status])
+  @@index([status, assignedRole])
+  @@index([entityType, entityId, type])
 }

@@ -3,7 +3,7 @@ import { DatePipe } from '@angular/common';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { EMPTY, catchError, forkJoin, switchMap, tap } from 'rxjs';
+import { EMPTY, catchError, forkJoin, of, switchMap, tap } from 'rxjs';
 import { ActivityTaskListItem, PhaseActivitySummary, Project, ProjectListItem } from './project.types';
 import { ProjectNavComponent } from './project-nav.component';
 
@@ -24,6 +24,7 @@ export class ProjectPlanComponent implements OnInit {
   readonly activitySummary = signal<PhaseActivitySummary[]>([]);
   readonly activityTasks = signal<ActivityTaskListItem[]>([]);
   readonly gateSummary = signal<any[]>([]);
+  readonly pending = signal<{ total: number; items: { id: string; code: string | null; typeLabel: string; title: string; owner: { label: string }; overdue: boolean }[] } | null>(null);
 
   ngOnInit() {
     this.http.get<ProjectListItem[]>('/api/projects').pipe(
@@ -44,13 +45,14 @@ export class ProjectPlanComponent implements OnInit {
           summaries: this.http.get<PhaseActivitySummary[]>(`/api/projects/${encodeURIComponent(id)}/activity-summary/phases`),
           tasks: this.http.get<ActivityTaskListItem[]>(`/api/projects/${encodeURIComponent(id)}/tasks`),
           gates: this.http.get<any[]>(`/api/projects/${encodeURIComponent(id)}/gates`),
+          pending: this.http.get<any>(`/api/projects/${encodeURIComponent(id)}/approvals/pending`).pipe(catchError(() => of(null))),
         }).pipe(
           catchError((error: HttpErrorResponse) => { this.showError(error); return EMPTY; }),
         );
       }),
       takeUntilDestroyed(this.destroyRef),
     ).subscribe({
-      next: (result) => { this.project.set(result.project); this.activitySummary.set(result.summaries); this.activityTasks.set(result.tasks); this.gateSummary.set(result.gates); this.loading.set(false); },
+      next: (result) => { this.project.set(result.project); this.activitySummary.set(result.summaries); this.activityTasks.set(result.tasks); this.gateSummary.set(result.gates); this.pending.set(result.pending); this.loading.set(false); },
       error: (error: HttpErrorResponse) => this.showError(error),
     });
   }

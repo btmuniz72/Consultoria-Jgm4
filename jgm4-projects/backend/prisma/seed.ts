@@ -3,6 +3,7 @@ import { resolve } from 'node:path';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { PrismaClient } from '../src/generated/prisma/client';
 import { ensurePlanCRequests } from '../src/requests/plan-c-requests';
+import { seedApprovalsDemo } from './seed-approvals-demo';
 
 config({ path: resolve(__dirname, '../../.env'), quiet: true });
 const connectionString = process.env.DATABASE_URL!;
@@ -157,6 +158,8 @@ async function seed() {
       }
     }
   }, { timeout: 30000 });
+  const demo = await prisma.$transaction((tx) => seedApprovalsDemo(tx), { timeout: 30000 });
+  if (demo) console.log('Cenário de demonstração da Etapa 5 criado: projetos "Simulação — ..." com 1 solicitação, 1 atividade, 1 Gate e 1 alteração de prazo pendentes.');
   console.log('Seed Ollem pronto: empresa/projeto, 5 fases, 5 Gates, atividades C00 a C44 e G0 a G4, 10 solicitações e checklists. Fase 0 soma 36 h JGM4. Registros existentes preservados.');
 }
 seed().catch(() => { console.error('Falha no seed. Verifique a conexão e as migrations.'); process.exitCode = 1; }).finally(() => prisma.$disconnect());

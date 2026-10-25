@@ -8,6 +8,20 @@
     <section class="task-next" aria-label="Próxima ação"><div><p class="eyebrow">PRÓXIMA AÇÃO</p><strong>{{ item.nextAction }}</strong></div><div><span>Responsável atual</span><strong>{{ item.currentOwnerType === 'CLIENT' ? 'Ollem' : item.currentOwnerType === 'JGM4' ? 'JGM4' : item.currentOwnerType }}</strong></div><div><span>Prazo</span><strong>{{ item.nextActionDueDate ? (item.nextActionDueDate | date:'dd/MM/yyyy':'UTC') : 'A definir' }}</strong></div></section>
     @if (item.dependencies.labels.length) { <section class="state-panel task-blockers"><h2>Dependências pendentes</h2>@for (label of item.dependencies.labels; track label) { <p>{{ label }}</p> }</section> }
     @if (error()) { <p class="error-note" role="alert">{{ error() }}</p> }
+    @if (!['CANCELLED'].includes(item.status)) {
+      <section class="task-panel change-requests" aria-label="Solicitar alteração">
+        <p class="eyebrow">ALTERAÇÕES QUE EXIGEM APROVAÇÃO</p>
+        <div class="action-buttons">
+          @if (item.status !== 'COMPLETED') { <button type="button" class="secondary" data-testid="open-due-date" (click)="changeOpen.set(changeOpen() === 'due' ? '' : 'due')">Solicitar alteração de prazo</button> }
+          @if (item.status === 'COMPLETED') { <button type="button" class="secondary" data-testid="open-reopen" (click)="changeOpen.set(changeOpen() === 'reopen' ? '' : 'reopen')">Solicitar reabertura</button> }
+        </div>
+        @if (changeOpen() === 'due') { <form class="task-form inline-form" (ngSubmit)="requestDueDate()"><h3>Novo prazo (atual: {{ item.plannedEndDate ? (item.plannedEndDate | date:'dd/MM/yyyy':'UTC') : 'não definido' }})</h3>
+          <div class="form-grid"><label>Novo prazo<input type="date" name="requestedDate" required [(ngModel)]="dueForm.requestedDate"></label><label>Impacto esperado<input name="expectedImpact" [(ngModel)]="dueForm.expectedImpact"></label></div>
+          <label>Justificativa<textarea name="justification" rows="2" required minlength="5" [(ngModel)]="dueForm.justification"></textarea></label><button type="submit" [disabled]="saving()">Enviar para aprovação</button></form> }
+        @if (changeOpen() === 'reopen') { <form class="task-form inline-form" (ngSubmit)="requestReopen()"><h3>Reabertura de atividade concluída</h3><label>Motivo (obrigatório)<textarea name="reopenReason" rows="2" required minlength="5" [(ngModel)]="reopenReason"></textarea></label><button type="submit" [disabled]="saving()">Enviar para aprovação do administrador JGM4</button></form> }
+        @if (changeNotice()) { <p class="success-note" role="status">{{ changeNotice() }} <a routerLink="/approvals">Abrir a Central de Aprovações</a></p> }
+      </section>
+    }
     <section class="task-grid">
       <article class="task-panel"><div class="section-heading"><div><p class="eyebrow">RESPONSABILIDADE</p><h2>Quem faz</h2></div><button type="button" class="quiet-button" [disabled]="saving() || !item.allowedActions.includes('update-plan')" (click)="runAction('update-plan')">Editar plano</button></div>
         <dl class="task-facts"><div><dt>Ollem</dt><dd>{{ item.clientResponsible?.name || 'Equipe interna · a definir' }}</dd></div><div><dt>JGM4</dt><dd>{{ item.jgm4Responsible?.name || 'Consultoria · a definir' }}</dd></div><div><dt>Tipo</dt><dd>{{ item.responsibilityType === 'CLIENT' ? 'Ollem' : item.responsibilityType === 'JGM4' ? 'JGM4' : 'Conjunta' }}</dd></div><div><dt>Planejada</dt><dd>{{ item.plannedStartDate ? (item.plannedStartDate | date:'dd/MM/yyyy':'UTC') : 'A definir' }} a {{ item.plannedEndDate ? (item.plannedEndDate | date:'dd/MM/yyyy':'UTC') : 'A definir' }}</dd></div><div><dt>Início real</dt><dd>{{ item.actualStartDate ? (item.actualStartDate | date:'dd/MM/yyyy HH:mm') : 'Não iniciado' }}</dd></div><div><dt>Fim real</dt><dd>{{ item.actualEndDate ? (item.actualEndDate | date:'dd/MM/yyyy HH:mm') : 'Em aberto' }}</dd></div><div><dt>Duração da fase</dt><dd>{{ item.phase.plannedWeeks }} semanas</dd></div></dl>
@@ -34,6 +48,6 @@
       <article class="task-panel"><p class="eyebrow">HORAS LANÇADAS</p><h2>Apontamentos</h2>@if (item.timeEntries.length) { @for (entry of item.timeEntries; track entry.id) { <div class="time-entry-row"><strong>{{ entry.organizationType === 'JGM4' ? 'JGM4' : 'Ollem' }} · {{ entry.hours }} h</strong><span>{{ entry.date | date:'dd/MM/yyyy':'UTC' }}</span><p>{{ entry.description }}</p></div> } } @else { <p>Ainda não há horas apontadas.</p> }</article>
     </section>
     <section class="task-panel history-panel"><p class="eyebrow">AUDITORIA</p><h2>Histórico da atividade</h2>@if (item.history.length) { <ol class="history-list">@for (event of item.history; track event.id) { <li><div><strong>{{ event.action.replaceAll('_',' ') }}</strong><span>{{ event.actorType }}</span></div><small>{{ event.createdAt | date:'dd/MM/yyyy HH:mm' }}</small><pre>{{ event.newValue | json }}</pre></li> }</ol> } @else { <p>Sem eventos registrados.</p> }</section>
-    <aside class="scope-note">Perfil local do backend: <strong>{{ item.localActor === 'JGM4' ? 'JGM4' : 'Ollem' }}</strong>. Para trocar o perfil, altere <code>JGM4_LOCAL_ACTOR</code> no arquivo .env e reinicie a API. A autenticação de usuários será definida em etapa posterior.</aside>
+    <aside class="scope-note">Perfil local do backend: <strong>{{ item.localActor === 'JGM4' ? 'JGM4' : 'Ollem' }}</strong>. Para simular outro perfil, use o seletor no cabeçalho (ou <code>JGM4_LOCAL_ACTOR</code> no .env para o padrão). A autenticação de usuários será definida em etapa posterior.</aside>
   }
 </main>

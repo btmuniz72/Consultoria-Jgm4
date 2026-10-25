@@ -328,3 +328,66 @@ textarea { resize: vertical; }
 }
 
 .gate-list-card{display:block;color:inherit;text-decoration:none;margin:1rem 0}.gate-list-card:hover{border-color:var(--blue)}.criterion-row{display:flex;justify-content:space-between;align-items:center;gap:1rem}.criterion-row>div:last-child{display:flex;align-items:center;gap:.75rem}.criterion-row p{color:var(--muted);margin:.4rem 0}.phase-card .gate-state{margin:.75rem 0}.phase-card .gate-state span{color:var(--muted)}
+
+/* Etapa 5 — Central de Aprovações */
+.topbar-tools { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; justify-content: flex-end; }
+.approvals-link { display: inline-flex; align-items: center; gap: 7px; color: white; text-decoration: none; font-size: 13px; font-weight: 600; padding: 8px 12px; border: 1px solid #3b5879; border-radius: 5px; }
+.approvals-link:hover { background: #1b3e66; }
+.approvals-count { min-width: 22px; padding: 2px 7px; background: #c2414a; color: white; border-radius: 11px; font-size: 11px; text-align: center; }
+.role-switch { margin: 0; }
+.role-switch select { width: auto; max-width: 190px; padding: 8px 28px 8px 10px; font-size: 11px; background: #17375a; color: white; border: 1px solid #3b5879; }
+.approval-cards { grid-template-columns: repeat(5, 1fr); }
+.approval-card { margin: 0; text-align: left; background: white; color: inherit; border: 1px solid #dfe4ea; border-radius: 6px; padding: 20px; }
+.approval-card:hover { background: #f4f7fa; }
+.approval-card.selected { border-color: #183b60; box-shadow: inset 0 0 0 1px #183b60; }
+.approval-card p { font-size: 12px; color: #536478; }
+.approval-card strong { font-size: 35px; font-weight: 600; letter-spacing: -1px; }
+.approval-card > div { margin-top: 11px; }
+.approval-project-filter { max-width: 420px; margin-bottom: 18px; }
+.approval-table { min-width: 1040px; }
+.approval-table td:nth-child(2), .approval-table td:nth-child(6) { width: auto; }
+.approval-table td:nth-child(4) { width: 26%; }
+.approval-table td:nth-child(5) { width: 18%; }
+.approval-table .row-selected { background: #f4f8fc; }
+.approval-table .overdue, .approval-detail .overdue { color: #a02c35; font-weight: 600; }
+.badge-gate { background: #fdf3e3; border-color: #f0dcb8; color: #7a5316; }
+.priority { font-size: 11px; color: #5b6c80; }
+.priority-high { color: #9a2f37; font-weight: 700; }
+.row-action { display: inline-block; padding: 8px 12px; border: 1px solid #ccd7e2; border-radius: 4px; color: #29496a; text-decoration: none; font-size: 11px; background: white; }
+.row-action:hover { background: #edf2f8; text-decoration: none; }
+.approval-detail h3 { margin-top: 22px; }
+.approval-detail p { font-size: 12px; line-height: 1.7; color: #3f5167; }
+.approval-facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px 24px; margin: 18px 0; }
+.approval-facts dt { font-size: 10px; color: #6a7b8e; margin-bottom: 4px; }
+.approval-facts dd { margin: 0; font-size: 12px; font-weight: 600; }
+.approval-ball { display: grid; grid-template-columns: 1fr 1.4fr 1.4fr; gap: 20px; padding: 16px 18px; background: #f4f7fa; border: 1px solid #e0e6ec; border-radius: 6px; }
+.approval-ball span { display: block; font-size: 10px; color: #6a7b8e; margin-bottom: 4px; }
+.approval-ball strong { font-size: 12px; font-weight: 600; line-height: 1.5; }
+.role-banner { padding: 11px 14px; background: #fdf3e3; border: 1px solid #f0dcb8; border-radius: 4px; color: #6b4a14 !important; margin-bottom: 12px; }
+.check-list { list-style: none; padding: 0; margin: 0; font-size: 12px; line-height: 1.9; color: #3f5167; }
+.check-list .done { color: #2f5d3b; }
+.chip { display: inline-block; margin: 0 6px 6px 0; padding: 4px 8px; background: #eef1f5; border-radius: 4px; font-size: 10px; }
+button.danger { color: #8b2e33; border-color: #e3c4c6; }
+button.danger:hover { background: #fbeeee; }
+.pending-block { padding-bottom: 24px; margin-bottom: 24px; }
+.pending-list { list-style: none; padding: 0; margin: 12px 0 18px; font-size: 13px; line-height: 2; }
+.pending-list a { text-decoration: none; }
+.pending-list a:hover { text-decoration: underline; }
+.pending-list small { color: #6a7b8e; }
+.change-requests { margin-bottom: 18px; }
+.change-requests .action-buttons { margin-top: 4px; }
+@media (max-width: 1000px) { .approval-cards { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 720px) {
+  .topbar-tools { justify-content: flex-start; gap: 10px; }
+  .approval-cards { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .approval-facts, .approval-ball { grid-template-columns: 1fr; }
+  .approval-table { min-width: 0; }
+  .approval-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+  .approval-table, .approval-table tbody, .approval-table tr, .approval-table td { display: block; width: 100% !important; }
+  .approval-table tr { padding: 12px 14px; border-bottom: 1px solid #dce3eb; }
+  .approval-table td { border: 0; padding: 5px 0; display: grid; grid-template-columns: 96px 1fr; gap: 10px; }
+  .approval-table td::before { content: attr(data-label); font-size: 10px; color: #6a7b8e; }
+  .approval-table td small { grid-column: 2; margin-top: 0; }
+  .approval-table td.empty-row { display: block; }
+  .approval-table td.empty-row::before { content: none; }
+}

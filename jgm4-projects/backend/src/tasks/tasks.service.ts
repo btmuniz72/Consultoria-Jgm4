@@ -3,6 +3,8 @@ import { Prisma, TaskStatus } from '../generated/prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { TaskPlanDto, TaskRequirementDto, TaskTransitionDto, TimeEntryDto } from './tasks.dto';
 import { GatesService } from '../gates/gates.service';
+import { ensureApproval, resolveApprovals } from '../approvals/approval-sync';
+import { currentRole, isJgm4Role } from '../approvals/authority';
 
 type Actor = 'JGM4' | 'CLIENT';
 type Tx = Prisma.TransactionClient;
@@ -11,7 +13,7 @@ const statuses: Record<TaskStatus, string> = {
   WAITING_EVIDENCE: 'Aguardando evidências', WAITING_JGM4_VALIDATION: 'Aguardando validação JGM4',
   ADJUSTMENT_REQUESTED: 'Ajuste solicitado', VALIDATED: 'Validada', COMPLETED: 'Concluída', CANCELLED: 'Cancelada',
 };
-const actor = (): Actor => process.env.JGM4_LOCAL_ACTOR === 'CLIENT' ? 'CLIENT' : 'JGM4';
+const actor = (): Actor => isJgm4Role(currentRole()) ? 'JGM4' : 'CLIENT';
 const amount = (value: Prisma.Decimal | null | undefined) => value?.toNumber() ?? 0;
 const round = (value: number) => Math.round((value + Number.EPSILON) * 100) / 100;
 const actionFor = (status: TaskStatus, owner: string) => ({
@@ -172,9 +174,19 @@ export class TasksService {
         await tx.phase.update({ where: { id: task.phaseId }, data: { status: 'IN_PROGRESS', actualStartDate: now } });
         await tx.auditLog.create({ data: { projectId, entityType: 'Phase', entityId: task.phaseId, action: 'PHASE_STARTED', actorType: `${role}_LOCAL`, oldValue: { status: 'AVAILABLE' }, newValue: { status: 'IN_PROGRESS', actualStartDate: now.toISOString() } } });
       }
+      await this.syncApproval(tx, task, to, dto);
       if (to === 'COMPLETED') { await this.releaseEligible(tx, projectId); await this.gates.syncProject(tx, projectId); }
       return this.detailFrom(tx, taskId, projectId);
     });
+  }
+  // Central de Aprovações: atividade enviada à JGM4 abre a validação; validar/ajustar a encerra.
+  private async syncApproval(tx: Tx, task: { id: string; projectId: string; code: string; title: string; objective: string; plannedEndDate: Date | null; nextActionDueDate: Date | null }, to: TaskStatus, dto: TaskTransitionDto) {
+    const key = { entityType: 'Task', entityId: task.id, type: 'TASK_VALIDATION' as const };
+    if (to === 'WAITING_JGM4_VALIDATION') {
+      await ensureApproval(tx, { ...key, projectId: task.projectId, entityCode: task.code, title: `${task.code} — ${task.title}`, description: task.objective,
+        assignedRole: 'JGM4_CONSULTANT', dueAt: task.nextActionDueDate ?? task.plannedEndDate, requestedByRole: currentRole(), actorType: currentRole() });
+    } else if (to === 'VALIDATED') await resolveApprovals(tx, { ...key, status: 'APPROVED', comment: dto.comment?.trim() || null });
+    else if (to === 'ADJUSTMENT_REQUESTED') await resolveApprovals(tx, { ...key, status: 'ADJUSTMENT_REQUESTED', comment: [dto.comment?.trim(), dto.guidance?.trim()].filter(Boolean).join(' — ') || null });
   }
   async requirement(projectId: string, taskId: string, requirementId: string, dto: TaskRequirementDto) {
     if (this.currentActor() !== 'CLIENT') throw new ForbiddenException('Somente o perfil Ollem pode atualizar o checklist da atividade.');
@@ -223,6 +235,10 @@ export class TasksService {
     if (this.currentActor() !== 'JGM4') throw new ForbiddenException('Somente o perfil JGM4 pode alterar o planejamento da atividade.');
     return this.prisma.$transaction(async (tx) => {
       const task = await this.load(tx, projectId, taskId);
+      // Atividade ativa não tem o prazo alterado diretamente: exige aprovação (DUE_DATE_CHANGE).
+      if (dto.plannedEndDate !== undefined && !['NOT_STARTED', 'BLOCKED', 'COMPLETED', 'CANCELLED'].includes(task.status)) {
+        throw new ConflictException('Atividade ativa: solicite a alteração de prazo pela Central de Aprovações (DUE_DATE_CHANGE).');
+      }
       if (dto.expectedVersion !== undefined && dto.expectedVersion !== task.version) throw new ConflictException('A atividade foi atualizada. Recarregue antes de continuar.');
       const patch: Prisma.TaskUpdateInput = {};
       const oldValue: Record<string, unknown> = {}; const newValue: Record<string, unknown> = {};

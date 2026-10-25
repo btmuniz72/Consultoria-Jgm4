@@ -38,6 +38,10 @@ export class TaskDetailComponent implements OnInit {
   readonly notice = signal('');
   readonly adjustmentOpen = signal(false);
   readonly planOpen = signal(false);
+  readonly changeOpen = signal<'' | 'due' | 'reopen'>('');
+  readonly changeNotice = signal('');
+  dueForm = { requestedDate: '', expectedImpact: '', justification: '' };
+  reopenReason = '';
   adjustment = { comment: '', guidance: '' };
   evidenceForm = { description: '', referenceUrl: '' };
   timeForm = { date: this.today(), hours: 1, description: '' };
@@ -92,5 +96,13 @@ export class TaskDetailComponent implements OnInit {
     const payload = { ...this.planForm, plannedStartDate: this.planForm.plannedStartDate || undefined, plannedEndDate: this.planForm.plannedEndDate || undefined, nextActionDueDate: this.planForm.nextActionDueDate || undefined, expectedVersion: task.version };
     this.http.patch<TaskDetail>(this.url('/plan'), payload).pipe(takeUntilDestroyed(this.destroyRef), catchError((error: HttpErrorResponse) => { this.showError(error); return EMPTY; })).subscribe((updated) => { this.replaceTask(updated); this.planOpen.set(false); this.saving.set(false); });
   }
+  private postChange(path: string, body: object, notice: string) {
+    this.saving.set(true); this.error.set(''); this.changeNotice.set('');
+    this.http.post(this.url(path), body).pipe(takeUntilDestroyed(this.destroyRef), catchError((error: HttpErrorResponse) => { this.showError(error); return EMPTY; })).subscribe(() => {
+      this.saving.set(false); this.changeOpen.set(''); this.changeNotice.set(notice);
+    });
+  }
+  requestDueDate() { this.postChange('/due-date-change', this.dueForm, 'Pedido de alteração de prazo enviado para aprovação.'); }
+  requestReopen() { this.postChange('/reopen', { reason: this.reopenReason }, 'Pedido de reabertura enviado para aprovação.'); }
   reload() { window.location.reload(); }
 }

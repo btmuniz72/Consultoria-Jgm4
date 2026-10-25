@@ -17,10 +17,11 @@
     "dev": "concurrently -k -n API,WEB \"npm run start:dev -w backend\" \"npm run start -w frontend\"",
     "build": "npm run build -w backend && npm run build -w frontend",
     "test": "npm run test -w backend",
-    "test:browser": "node scripts/browser-check.ts && npm run test:browser:stage2 && npm run test:browser:stage3 && npm run test:browser:stage4",
+    "test:browser": "node scripts/browser-check.ts && npm run test:browser:stage2 && npm run test:browser:stage3 && npm run test:browser:stage4 && npm run test:browser:stage5",
     "test:browser:stage2": "tsx scripts/browser-check-stage2.ts",
     "test:browser:stage3": "tsx scripts/browser-check-stage3.ts",
     "test:browser:stage4": "tsx scripts/browser-check-stage4.ts",
+    "test:browser:stage5": "tsx scripts/browser-check-stage5.ts",
     "docs:alignment": "tsx scripts/export-alignment-document.ts"
   },
   "devDependencies": {

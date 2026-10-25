@@ -1,4 +1,4 @@
-# JGM4 Projects — Etapa 4
+# JGM4 Projects — Etapa 5
 
 Aplicação local do projeto **Estruturação do Almoxarifado**, da **Ollem do Brasil**. O sistema inclui plano, solicitações, workflow controlado das atividades, apontamento de horas, Gates com parecer técnico e decisão formal de avanço, e documento de alinhamento. O banco fica no PostgreSQL local da porta 5433; não há publicação, valores financeiros, cobrança ou e-mail.
 
@@ -158,3 +158,7 @@ Para regenerar o documento em branco: `npm run docs:alignment`.
 - A Etapa 3 não implementa aprovação de Gates, módulo financeiro, e-mail ou publicação.
 - Referência: [Etapa 3](docs/etapa-3.md) e [validação da Etapa 3](docs/validacao-etapa-3.md).
 - A Etapa 4 separa o parecer técnico JGM4 da decisão final Ollem; consulte [validação da Etapa 4](docs/validacao-etapa-4.md).
+
+## Etapa 5 — Central de Aprovações
+
+A Central (`/approvals`) reúne o que depende de decisão da JGM4 ou do patrocinador: solicitações, atividades, Gates e alterações (prazo, responsável, reabertura, cancelamento). As aprovações são criadas automaticamente pelos workflows e as decisões ficam no histórico e na auditoria, sem exclusão. O perfil simulado é escolhido no seletor do cabeçalho (cabeçalho HTTP `x-actor-role`); isso não é autenticação. O cenário de demonstração está nos projetos "Simulação — …" criados pelo seed. Detalhes, matriz de alçadas e endpoints: [validação da Etapa 5](docs/validacao-etapa-5.md).

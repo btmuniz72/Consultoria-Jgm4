@@ -1,9 +1,11 @@
 import { BadRequestException, ConflictException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { Prisma, GateStatus } from '../generated/prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
+import { ensureApproval, markInReview, resolveApprovals } from '../approvals/approval-sync';
+import { can, currentRole, isJgm4Role } from '../approvals/authority';
 
 type Db = Prisma.TransactionClient | PrismaService;
-const isJgm4 = () => process.env.JGM4_LOCAL_ACTOR !== 'CLIENT';
+const isJgm4 = () => isJgm4Role(currentRole());
 @Injectable()
 export class GatesService {
   constructor(private readonly prisma: PrismaService) {}
@@ -32,8 +34,37 @@ export class GatesService {
     if (gate.status === 'BLOCKED' && available) {
       await db.gate.update({ where: { id: gate.id }, data: { status: 'AVAILABLE', currentOwnerType: 'JGM4', nextAction: 'Iniciar análise do Gate.' } });
       await db.auditLog.create({ data: { projectId, entityType: 'Gate', entityId: gate.id, action: 'GATE_AVAILABLE', actorType: 'SYSTEM', oldValue: { status: 'BLOCKED' }, newValue: { status: 'AVAILABLE' } } });
+      await this.ensureTechnicalOpinion(db, gate);
     }
     return gate;
+  }
+  private ensureTechnicalOpinion(db: Db, gate: { id: string; projectId: string; code: string; title: string; question: string; nextActionDueDate: Date | null }) {
+    return ensureApproval(db, { projectId: gate.projectId, type: 'GATE_TECHNICAL_OPINION', entityType: 'Gate', entityId: gate.id, entityCode: gate.code,
+      title: `${gate.code} — ${gate.title}`, description: gate.question, assignedRole: 'JGM4_CONSULTANT', priority: 'HIGH', dueAt: gate.nextActionDueDate });
+  }
+  // Central de Aprovações: acompanha cada passo do Gate (parecer técnico JGM4 → decisão Ollem).
+  private async syncApprovals(tx: Prisma.TransactionClient, gate: { id: string; projectId: string; code: string; title: string; question: string; nextActionDueDate: Date | null }, action: string, body: Record<string, any>) {
+    const technical = { entityType: 'Gate', entityId: gate.id, type: 'GATE_TECHNICAL_OPINION' as const };
+    const client = { entityType: 'Gate', entityId: gate.id, type: 'GATE_CLIENT_DECISION' as const };
+    switch (action) {
+      case 'start-review':
+      case 'resume-review':
+        await this.ensureTechnicalOpinion(tx, gate); await markInReview(tx, technical.entityType, technical.entityId, technical.type); break;
+      case 'request-correction':
+        await resolveApprovals(tx, { ...technical, status: 'ADJUSTMENT_REQUESTED', comment: [body.correctionReason?.trim(), body.correctionInstructions?.trim()].filter(Boolean).join(' — ') }); break;
+      case 'technical-opinion':
+        if (body.technicalRecommendation === 'ADVANCE') {
+          await resolveApprovals(tx, { ...technical, status: 'APPROVED', comment: body.technicalOpinion.trim() });
+          await ensureApproval(tx, { projectId: gate.projectId, ...client, entityCode: gate.code, title: `${gate.code} — Decisão de avanço`, description: gate.question,
+            assignedRole: 'CLIENT_SPONSOR', priority: 'HIGH', dueAt: gate.nextActionDueDate, requestedByRole: currentRole(), actorType: currentRole() });
+        } else await resolveApprovals(tx, { ...technical, status: 'ADJUSTMENT_REQUESTED', comment: body.technicalOpinion.trim() });
+        break;
+      case 'client-decision':
+        if (body.clientDecision === 'APPROVE') await resolveApprovals(tx, { ...client, status: 'APPROVED', comment: body.comment?.trim() || null });
+        else if (body.clientDecision === 'REJECT') await resolveApprovals(tx, { ...client, status: 'REJECTED', comment: body.comment?.trim() || null });
+        else await tx.auditLog.create({ data: { projectId: gate.projectId, entityType: 'Gate', entityId: gate.id, action: 'APPROVAL_ON_HOLD', actorType: currentRole(), newValue: { comment: body.comment?.trim() || null } } });
+        break;
+    }
   }
   async list(projectId: string) {
     const gates = await this.prisma.gate.findMany({ where: { projectId }, include: { phase: { select: { order: true, name: true, status: true } }, criteria: { orderBy: { order: 'asc' } } }, orderBy: { phase: { order: 'asc' } } });
@@ -57,7 +88,7 @@ export class GatesService {
   }
   private decorate(db: Db, gate: any) {
     return Promise.resolve({ ...gate, blockedReason: gate.status === 'BLOCKED' ? 'Atividades obrigatórias ou solicitações bloqueantes ainda pendentes.' : null,
-      missingCriteria: gate.criteria.filter((c: any) => c.mandatory && !c.satisfied), localActor: isJgm4() ? 'JGM4_CONSULTANT' : 'CLIENT_SPONSOR' });
+      missingCriteria: gate.criteria.filter((c: any) => c.mandatory && !c.satisfied), localActor: isJgm4() ? 'JGM4_CONSULTANT' : 'CLIENT_SPONSOR', actorRole: currentRole(), canClientDecide: can(currentRole(), 'GATE_CLIENT_DECISION') });
   }
   private async releasePhaseTasks(tx: Prisma.TransactionClient, projectId: string, phaseId: string) {
     let released = true;
@@ -81,7 +112,7 @@ export class GatesService {
       await this.recalculate(tx, projectId, gateId);
       const gate = await tx.gate.findFirst({ where: { id: gateId, projectId }, include: { phase: true, criteria: true } });
       if (!gate) throw new NotFoundException('Gate não encontrado neste projeto.');
-      const role = isJgm4() ? 'JGM4_CONSULTANT' : 'CLIENT_SPONSOR';
+      const role = currentRole();
       const log = async (to: GateStatus | null, oldExtra = {}, newExtra = {}) => tx.auditLog.create({ data: { projectId, entityType: 'Gate', entityId: gateId, action: action.toUpperCase().replaceAll('-', '_'), actorType: role, oldValue: { status: gate.status, ...oldExtra }, newValue: { status: to ?? gate.status, ...newExtra } } });
       let status: GateStatus = gate.status; let owner = gate.currentOwnerType; let next = gate.nextAction;
       switch (action) {
@@ -116,9 +147,10 @@ export class GatesService {
           status = body.technicalRecommendation === 'ADVANCE' ? 'TECHNICALLY_APPROVED' : 'CORRECTION_REQUIRED'; owner = body.technicalRecommendation === 'ADVANCE' ? 'CLIENT_SPONSOR' : 'CLIENT'; next = body.technicalRecommendation === 'ADVANCE' ? 'Patrocinador Ollem: confirmar a decisão de avanço.' : 'Tratar as correções solicitadas pela JGM4.';
           await tx.gate.update({ where: { id: gateId }, data: { status, technicalRecommendation: body.technicalRecommendation, technicalOpinion: body.technicalOpinion.trim(), technicalApprovedAt: status === 'TECHNICALLY_APPROVED' ? new Date() : null, technicalApprovedByUserId: null, currentOwnerType: owner, nextAction: next } });
           await log(status, {}, { technicalRecommendation: body.technicalRecommendation, technicalOpinion: body.technicalOpinion.trim() });
+          await this.syncApprovals(tx, gate, action, body);
           return { saved: true };
         case 'client-decision':
-          if (isJgm4()) throw new ForbiddenException('Somente o patrocinador Ollem pode tomar a decisão empresarial.');
+          if (!can(currentRole(), 'GATE_CLIENT_DECISION')) throw new ForbiddenException('Somente o patrocinador Ollem pode tomar a decisão empresarial.');
           if (gate.status !== 'TECHNICALLY_APPROVED') throw new ConflictException('A decisão Ollem exige parecer técnico favorável da JGM4.');
           if (!['APPROVE', 'HOLD', 'REJECT'].includes(body.clientDecision)) throw new BadRequestException('Decisão inválida.');
           if (body.clientDecision === 'APPROVE') {
@@ -137,11 +169,13 @@ export class GatesService {
             ? (await tx.phase.findFirstOrThrow({ where: { projectId, order: gate.phase.order + 1 } })).id
             : gate.phaseId);
           await log(status, {}, { clientDecision: body.clientDecision, comment: body.comment?.trim() || null });
+          await this.syncApprovals(tx, gate, action, body);
           return { saved: true };
         default: throw new BadRequestException('Ação de Gate desconhecida.');
       }
       await tx.gate.update({ where: { id: gateId }, data: { status, currentOwnerType: owner, nextAction: next, correctionReason: action === 'request-correction' ? body.correctionReason.trim() : gate.correctionReason, correctionInstructions: action === 'request-correction' ? body.correctionInstructions.trim() : gate.correctionInstructions } });
       await log(status, {}, action === 'request-correction' ? { correctionReason: body.correctionReason.trim(), correctionInstructions: body.correctionInstructions.trim() } : {});
+      await this.syncApprovals(tx, gate, action, body);
       return { saved: true };
     });
     return this.detail(projectId, gateId);

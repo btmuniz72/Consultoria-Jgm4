@@ -35,6 +35,14 @@
       <article><p>Pontos de validação</p><div><strong>{{ current.summary.gateCount }}</strong><span>Gates</span></div><small>Um Gate ao final de cada fase</small></article>
     </section>
 
+    @if (pending(); as waiting) {
+      <section class="project-overview pending-block" aria-label="Aguardando decisão" data-testid="pending-block">
+        <p class="eyebrow">AGUARDANDO DECISÃO</p><h2>{{ waiting.total }} {{ waiting.total === 1 ? 'item' : 'itens' }}</h2>
+        @if (waiting.total) { <ul class="pending-list">@for (item of waiting.items.slice(0, 5); track item.id) { <li><a [routerLink]="['/approvals', item.id]"><strong>{{ item.code }}</strong> · {{ item.typeLabel }} <small>— {{ item.owner.label }}{{ item.overdue ? ' · atrasado' : '' }}</small></a></li> }</ul> } @else { <p>Nenhum item aguardando decisão neste projeto.</p> }
+        <a class="feature-link" routerLink="/approvals" [queryParams]="{ projectId: current.id }"><strong>Abrir a Central de Aprovações <span aria-hidden="true">→</span></strong><span>Decida solicitações, atividades, Gates e alterações em um só lugar.</span></a>
+      </section>
+    }
+
     @if (currentGate(); as currentGate) {
       <section class="project-overview" aria-label="Gate atual"><p class="eyebrow">GATE ATUAL</p><h2>Gate {{currentGate.phaseOrder}} — {{currentGate.title}}</h2><p>{{gateCriteriaDone(currentGate)}} / {{currentGate.criteria.length}} critérios atendidos</p><span class="badge" [class.badge-available]="currentGate.status === 'AVAILABLE'">{{statusLabel(currentGate.status)}}</span><p><strong>Próxima ação:</strong> {{currentGate.nextAction || 'Aguardar os pré-requisitos da fase.'}}</p><a [routerLink]="['/projects', current.id, 'gates', currentGate.id]">Abrir Gate →</a></section>
     }
