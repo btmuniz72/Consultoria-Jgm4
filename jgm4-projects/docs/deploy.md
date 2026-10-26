@@ -10,16 +10,16 @@ O pacote JGM4 Projects pode atender a SPA e à API pela mesma origem. No contêi
 
 ## Pré-requisitos para uma publicação futura
 
-Definir com a JGM4 o proxy compatível com o servidor atual do site, domínio e DNS de staging, serviço de aplicação, PostgreSQL gerenciado com TLS e backup, storage privado, SMTP com SPF/DKIM/DMARC e cofre de segredos. Nenhum desses recursos foi criado por esta revisão.
+Definir com a JGM4 o proxy compatível com o servidor atual do site, domínio e DNS de staging, serviço de aplicação, PostgreSQL gerenciado com TLS e backup, storage privado, SMTP de teste e cofre de segredos. A preparação e o estado atual estão em [staging.md](staging.md); a configuração Apache proposta está em [apache-area-cliente.md](apache-area-cliente.md). Nenhum desses recursos foi criado por esta revisão.
 
 ## Staging
 
-1. Usar um host técnico isolado, por exemplo `https://staging-projetos.jgm4consultoria.com.br`; staging não altera o site institucional.
+1. Usar um host técnico isolado, por exemplo `https://staging-projetos.jgm4consultoria.com.br`; staging não altera o site institucional. No levantamento de 2026-10-25 esse nome retornou NXDOMAIN.
 2. Criar banco exclusivo, usuário da aplicação restrito ao schema, usuário separado para migrations quando possível, rede privada e backup.
 3. Guardar segredos somente no cofre e definir `APP_ENV=staging`, `PUBLIC_APP_URL=https://staging-projetos.jgm4consultoria.com.br/projetos`, `PUBLIC_BASE_PATH=/projetos`, `API_BASE_PATH=/api`, `ALLOWED_ORIGINS=https://staging-projetos.jgm4consultoria.com.br` e `FRONTEND_DIST_DIR` para o diretório compilado.
-4. Construir o contêiner, que compila o Angular para `/projetos/`; aplicar migrations com `npm run prisma:migrate -w backend` e publicar apenas no host de staging.
+4. Construir o contêiner, que compila o Angular para `/projetos/`; aplicar migrations versionadas com `npm run db:migrate` (Prisma `migrate deploy`), nunca `db push`, e publicar apenas no host de staging.
 5. Executar `BASE_URL=https://staging-projetos.jgm4consultoria.com.br/projetos npm run smoke:external` (PowerShell: `$env:BASE_URL='https://staging-projetos.jgm4consultoria.com.br/projetos'; npm run smoke:external`). Com `SMOKE_EMAIL` e `SMOKE_PASSWORD` configurados no ambiente, o smoke verifica cookies, CSRF e logout.
-6. Executar os testes externos de navegador com a mesma `BASE_URL` e usuários de homologação, conforme `docs/homologacao-etapa-9.md`.
+6. Executar a matriz externa e registrar resultados conforme [homologacao-etapa-9b-3.md](homologacao-etapa-9b-3.md). O runner histórico `test:browser:external` depende de fixtures e fluxos de desenvolvimento; revise-o antes de apontá-lo a contas de staging.
 
 ## Release posterior
 

@@ -1,5 +1,14 @@
 const blogPosts = [
   {
+    title: "Sistema de Agendamento de Carga e Descarga: Como Organizar Suas Docas",
+    description: "Como funciona, quanto custa e quando compensa um sistema de agendamento de recebimento para operações com poucas docas.",
+    image: "../assets/doca-certa-agendamento-entregas-optimized.jpg",
+    url: "/blog/sistema-agendamento-carga-descarga.html",
+    datePublished: "2026-10-26",
+    category: "gestao",
+    keywords: "sistema de agendamento de carga e descarga controle de carga e descarga sistema de agendamento de recebimento gestão de docas sistema de agendamento de entregas preço mensalidade Doca Certa"
+  },
+  {
     title: "Inventário cíclico: como fazer e aumentar a acuracidade",
     description: "Como definir frequência, aplicar curva ABC, executar contagem cega e investigar divergências sem parar toda a operação.",
     image: "../assets/inventario-ciclico-acuracidade-estoque.webp",
