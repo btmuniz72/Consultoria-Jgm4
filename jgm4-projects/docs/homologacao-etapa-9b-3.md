@@ -18,6 +18,19 @@ Data da revalidação local: 2026-10-25. O ambiente de staging não está dispon
 | Isolamento Cliente A × Cliente B em projeto, tarefa, solicitação, Gate, relatório, documento e aprovação | PENDENTE | Executar matriz abaixo e registrar status HTTP esperado (403/404) sem expor conteúdo de B. |
 | SEO/robots sem afetar o site institucional | PENDENTE | Confirmar headers/meta da aplicação e os caminhos públicos após a regra do proxy. |
 
+## Etapa 9B.3B — levantamento de infraestrutura (2026-10-26)
+
+Status: **PREPARAÇÃO CONCLUÍDA / PROVISIONAMENTO PENDENTE**. Staging e produção continuam inexistentes; nenhum provedor foi escolhido.
+
+| Item | Resultado | Referência |
+|---|---|---|
+| Site institucional | Estático HTML/CSS/JS + 4 scripts PHP; HostGator BR (nginx + Apache), publicação por FTPS | [infraestrutura-atual.md](infraestrutura-atual.md) |
+| Frontend Angular em `/projetos/` | SUPORTADO (arquivos estáticos) | idem |
+| Proxy `/api` para backend externo, Node persistente, PostgreSQL | NÃO IDENTIFICADO (sem evidência de suporte) | idem |
+| Arquitetura recomendada | Cenário B (site e Angular atuais + backend externo + PostgreSQL), condicionada à prova do proxy | [arquitetura-producao.md](arquitetura-producao.md) |
+| Contratação, acessos e ordem de execução | Definidos, nada contratado | [checklist-provisionamento.md](checklist-provisionamento.md) |
+| Pendência para a Etapa 9B | Plano do HostGator, proxy, backend, banco, SMTP/DMARC, backup, staging e homologação real | idem |
+
 ## Roteiro Site-First no staging (obrigatório, parte da homepage)
 
 Execute no navegador, nesta ordem, e registre cada passo: (1) abrir `https://<host-staging>/`; (2) localizar "Área do Cliente" no menu; (3) clicar; (4) confirmar `/projetos/` (sem sessão, tela de login); (5) login com a conta fictícia do Cliente A; (6) dashboard; (7) Atividades; (8) abrir uma atividade; (9) atualizar a página; (10) confirmar que a sessão persiste; (11) Documentos; (12) voltar à Visão Geral; (13) logout; (14) confirmar retorno ao login. Complementos: `/rota-publica-inexistente` exibe o 404 institucional com status 404 (nunca a SPA); `/projetos/rota-interna` é tratada pelo Angular; `/projetos/privacy` leva a `/pages/politica.html`; cabeçalhos de `/projetos/` e `/api/` não foram sobrescritos pelo `.htaccess` institucional. O script `npm run test:site-integration` automatiza a mesma sequência em ambiente local como referência.
