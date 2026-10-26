@@ -39,4 +39,6 @@ A página institucional existente `/pages/politica.html` é a fonte única de Po
 
 ## Ambientes e publicação
 
+Visão consolidada da arquitetura Site-First (caminhos, cookies, ambientes e SEO): [site-first-architecture.md](site-first-architecture.md).
+
 Staging pode usar `staging-projetos.jgm4consultoria.com.br` ou endereço técnico, com banco, segredos, cookies e contas separados e base path `/projetos`. Produção pretendida: `https://www.jgm4consultoria.com.br/projetos` e `/api` na mesma origem, TLS válido, banco gerenciado, armazenamento persistente e SMTP. A publicação requer configuração de reverse proxy no virtual host e validação no servidor real. Nenhum deploy, alteração DNS ou contratação foi realizado nesta etapa.

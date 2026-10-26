@@ -47,7 +47,7 @@ class HealthController {
   @Public() @Get() async health() {
     try { await this.prisma.$queryRaw`SELECT 1`; }
     catch { throw new ServiceUnavailableException('Banco indisponível.'); }
-    return { status: 'ok', database: 'connected', stage: 5 };
+    return { status: 'ok' };
   }
   // Sondas mínimas, sem detalhes internos: liveness (processo vivo) e readiness (banco acessível).
   @Public() @Get('live') live() { return { status: 'ok' }; }

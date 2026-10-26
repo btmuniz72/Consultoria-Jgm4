@@ -4,6 +4,16 @@
 
 Staging não está provisionado nem acessível. Em 2026-10-25, a consulta DNS para `staging-projetos.jgm4consultoria.com.br` retornou `NXDOMAIN`; não há host alternativo, servidor, banco, storage ou credenciais de staging disponíveis no workspace. Este documento é um roteiro de preparação, não evidência de ambiente publicado.
 
+## Staging também é Site-First
+
+O host técnico é só um endereço temporário: a arquitetura interna continua sendo `/` (site institucional ou página de teste), `/projetos/` (Angular) e `/api/` (NestJS), com a mesma ordem de regras de produção ([site-first-architecture.md](site-first-architecture.md), [apache-area-cliente.md](apache-area-cliente.md)). A homologação **não** testa apenas `/projetos/`: ela reproduz a navegação real — homepage, clique em "Área do Cliente", login, projeto — e confirma que uma rota pública inexistente continua devolvendo o 404 institucional. O hostname de staging nunca é o endereço apresentado ao cliente nem entra em links do site.
+
+| Ambiente | Entrada | Observação |
+|---|---|---|
+| Local | `http://127.0.0.1:3019/` (gateway de `npm run test:site-integration`) | Banco local e schema temporário, dados fictícios. |
+| Staging | `https://<host-staging>/` | Provisionamento pendente; segredos, banco, cookies e contas próprios. |
+| Produção | `https://www.jgm4consultoria.com.br/` | Entrada principal `https://www.jgm4consultoria.com.br/projetos/`; não publicada. |
+
 ## Recursos e isolamento exigidos
 
 - Host técnico com DNS e certificado TLS próprios, virtual host e `DocumentRoot` isolados da hospedagem institucional. Não herdar o canonical para `www.jgm4consultoria.com.br`.
@@ -40,4 +50,4 @@ Construa a aplicação pelo processo documentado e execute `npm run db:migrate`;
 
 ## Saída para homologação
 
-Só considere staging disponível quando DNS, TLS, proxy, banco, migrations, storage, SMTP de teste, bootstrap administrativo, logs e backup estiverem verificados. Execute primeiro `npm run smoke:external` contra a origem aprovada e depois a matriz em [homologacao-etapa-9b-3.md](homologacao-etapa-9b-3.md). Não altere DNS ou publique em produção como parte da preparação desta etapa.
+Só considere staging disponível quando DNS, TLS, proxy, banco, migrations, storage, SMTP de teste, bootstrap administrativo, logs e backup estiverem verificados. Execute primeiro `npm run smoke:external` contra a origem aprovada e depois o roteiro Site-First (parte da homepage) e a matriz em [homologacao-etapa-9b-3.md](homologacao-etapa-9b-3.md). Não altere DNS ou publique em produção como parte da preparação desta etapa.

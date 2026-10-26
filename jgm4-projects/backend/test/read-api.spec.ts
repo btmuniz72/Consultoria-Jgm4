@@ -57,7 +57,7 @@ describe('Etapa 1 — API e PostgreSQL reais', () => {
 
   it('verifica a conexão real do PostgreSQL no health check', async () => {
     const response = await request(app.getHttpServer()).get('/api/health').expect(200);
-    expect(response.body).toEqual({ status: 'ok', database: 'connected', stage: 5 });
+    expect(response.body).toEqual({ status: 'ok' }); // sem detalhes internos; falha de banco responde 503
   });
   it('lista a Ollem sem dados de usuários ou credenciais', async () => {
     const response = await request(app.getHttpServer()).get('/api/companies').expect(200);

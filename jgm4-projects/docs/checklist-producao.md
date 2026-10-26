@@ -6,7 +6,7 @@ Estado em 2026-10-25, **antes de qualquer publicação**: o que depende de domí
 ## Infraestrutura
 | Item | Status | Observação |
 |---|---|---|
-| Domínios e DNS (`staging-app.…`, `app.…`) | BLOQUEANTE | decisão/contratação JGM4 |
+| Host técnico de staging e DNS (produção usa `www.jgm4consultoria.com.br/projetos/`; sem `app.`/`api.` públicos) | BLOQUEANTE | decisão/contratação JGM4 |
 | HTTPS válido + redirecionamento HTTP→HTTPS + renovação | BLOQUEANTE | exemplo em `deploy/Caddyfile.example` (não executado); `smoke:external` valida |
 | Servidor/PaaS para o processo Node | BLOQUEANTE | `Dockerfile`/systemd de exemplo (não executados) |
 | `TRUST_PROXY` conforme proxies | PENDENTE | depende do desenho |

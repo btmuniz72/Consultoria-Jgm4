@@ -44,7 +44,8 @@
     "ollem:revise": "tsx backend/scripts/revise-ollem.ts",
     "test:browser:ollem": "tsx scripts/browser-check-ollem.ts",
     "test:browser:base-path": "tsx scripts/browser-check-ollem.ts",
-    "test:browser:area-cliente": "tsx scripts/browser-check-ollem.ts"
+    "test:browser:area-cliente": "tsx scripts/browser-check-ollem.ts",
+    "test:site-integration": "tsx scripts/site-integration.ts"
   },
   "devDependencies": {
     "@playwright/test": "^1.56.0",

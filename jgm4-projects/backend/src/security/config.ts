@@ -69,6 +69,10 @@ export function validateProductionConfig(env: NodeJS.ProcessEnv = process.env): 
   const database = env.DATABASE_URL ?? '';
   if (!database) errors.push('DATABASE_URL ausente.');
   else if (!/sslmode=(require|verify-ca|verify-full)/i.test(database) && env.DATABASE_SSL !== 'require') errors.push('A conexão com o banco deve usar TLS (sslmode=require|verify-full na DATABASE_URL ou DATABASE_SSL=require).');
+  // Atrás do Apache, req.secure, IP de auditoria e cookies Secure dependem de TRUST_PROXY; confiança ampla (true/*/all) deixaria qualquer cliente forjar X-Forwarded-*.
+  const trust = (env.TRUST_PROXY ?? '').trim().toLowerCase();
+  if (!trust || trust === '0' || trust === 'false') errors.push('TRUST_PROXY deve declarar os proxies confiáveis (ex.: 1 para uma camada Apache); sem isso o HTTPS e o IP de auditoria não são reconhecidos atrás do proxy.');
+  else if (['true', '*', 'all'].includes(trust) || (/^\d+$/.test(trust) && Number(trust) > 3)) errors.push('TRUST_PROXY muito amplo: use o número exato de saltos confiáveis (ex.: 1) ou os endereços do proxy, nunca qualquer origem.');
   if (env.ALLOW_DEV_ACTOR_HEADER === 'true') errors.push('ALLOW_DEV_ACTOR_HEADER não pode estar ligado em produção.');
   if (['memory', 'outbox'].includes(env.MAIL_PROVIDER ?? '')) errors.push('MAIL_PROVIDER de desenvolvimento (memory/outbox) não é permitido em produção; use smtp.');
   if ((env.MAIL_PROVIDER ?? '') === 'smtp' && !env.SMTP_HOST) errors.push('SMTP_HOST ausente.');

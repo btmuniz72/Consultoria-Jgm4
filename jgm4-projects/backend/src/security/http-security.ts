@@ -3,7 +3,7 @@ import type { NestExpressApplication } from '@nestjs/platform-express';
 import type { NextFunction, Request, Response } from 'express';
 import helmet from 'helmet';
 import { existsSync } from 'node:fs';
-import { resolve } from 'node:path';
+import { extname, resolve } from 'node:path';
 import { allowedOrigins, apiBasePath, isProduction, publicBasePath, publicUrl } from './config';
 
 const SAFE = new Set(['GET', 'HEAD', 'OPTIONS']);
@@ -64,6 +64,7 @@ export function serveFrontend(app: INestApplication, dir = process.env.FRONTEND_
     if (req.method !== 'GET' || req.path === apiPath || req.path.startsWith(`${apiPath}/`)) return next();
     if (basePath !== '/' && req.path === basePath.slice(0, -1)) return res.redirect(308, basePath);
     if (basePath !== '/' && req.path !== basePath.slice(0, -1) && !req.path.startsWith(basePath)) return next();
+    if (extname(req.path)) return next(); // arquivo estático inexistente (ex.: chunk antigo): 404 real, nunca o index.html da SPA
     res.setHeader('X-Robots-Tag', 'noindex, nofollow, noarchive');
     res.setHeader('Cache-Control', 'no-cache'); res.sendFile(resolve(root, 'index.html'));
   });

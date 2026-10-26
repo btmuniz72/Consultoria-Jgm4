@@ -6,8 +6,9 @@ Data da revalidação local: 2026-10-25. O ambiente de staging não está dispon
 
 | Verificação | Resultado | Evidência / próximo passo |
 |---|---|---|
+| Navegação Site-First a partir da homepage (etapa 9B.3A) | OK local | `BROWSER_CHANNEL=msedge npm run test:site-integration`, 2026-10-26: 7 grupos de verificação (build com base `/projetos/`, site institucional intacto, 404 institucional, `/projetos/*` com 42 arquivos de build e deep links, `/api/*`, navegação homepage → Área do Cliente → login → dashboard → atividade com refresh → documentos → logout, isolamento de rotas). Usa gateway local que imita o virtual host, **não** Apache real. |
 | Browser da Área do Cliente sob `/projetos` | OK local | `npm run test:browser:area-cliente`, Edge; fluxo de cliente/admin, documentos, atividade, deep links, isolamento de autorização e larguras responsivas. |
-| Testes unitários | OK local | `npm test`: 196 testes aprovados. |
+| Testes unitários | OK local | `npm test`: 196 testes aprovados (189 backend + 7 frontend). |
 | Build | OK local | `npm run build`: backend e frontend compilados. |
 | Estado de migrations | OK local | `npm run db:status`: 15 migrations; schema atualizado. |
 | DNS e TLS externos | PENDENTE | DNS NXDOMAIN; repetir após provisionamento e emitir certificado. |
@@ -16,6 +17,10 @@ Data da revalidação local: 2026-10-25. O ambiente de staging não está dispon
 | Browser externo, login e rotas profundas | PENDENTE | Requer contas Cliente A/Admin e fixture fictícia no staging. |
 | Isolamento Cliente A × Cliente B em projeto, tarefa, solicitação, Gate, relatório, documento e aprovação | PENDENTE | Executar matriz abaixo e registrar status HTTP esperado (403/404) sem expor conteúdo de B. |
 | SEO/robots sem afetar o site institucional | PENDENTE | Confirmar headers/meta da aplicação e os caminhos públicos após a regra do proxy. |
+
+## Roteiro Site-First no staging (obrigatório, parte da homepage)
+
+Execute no navegador, nesta ordem, e registre cada passo: (1) abrir `https://<host-staging>/`; (2) localizar "Área do Cliente" no menu; (3) clicar; (4) confirmar `/projetos/` (sem sessão, tela de login); (5) login com a conta fictícia do Cliente A; (6) dashboard; (7) Atividades; (8) abrir uma atividade; (9) atualizar a página; (10) confirmar que a sessão persiste; (11) Documentos; (12) voltar à Visão Geral; (13) logout; (14) confirmar retorno ao login. Complementos: `/rota-publica-inexistente` exibe o 404 institucional com status 404 (nunca a SPA); `/projetos/rota-interna` é tratada pelo Angular; `/projetos/privacy` leva a `/pages/politica.html`; cabeçalhos de `/projetos/` e `/api/` não foram sobrescritos pelo `.htaccess` institucional. O script `npm run test:site-integration` automatiza a mesma sequência em ambiente local como referência.
 
 ## Matriz para execução no staging
 
