@@ -60,6 +60,8 @@ ErrorDocument 404 /404.html
   RewriteRule ^web/(?:web/)?blog\.html$ https://www.jgm4consultoria.com.br/pages/blog.html [R=301,L,NE]
   RewriteRule ^web/(?:web/)?analise\.html$ https://www.jgm4consultoria.com.br/pages/analise.html [R=301,L,NE]
   RewriteRule ^web/(?:web/)?politica\.html$ https://www.jgm4consultoria.com.br/pages/politica.html [R=301,L,NE]
+  RewriteRule ^web/(?:web/)?cursos\.html$ https://www.jgm4consultoria.com.br/pages/cursos.html [R=301,L,NE]
+  RewriteRule ^produtos/doca-certa/?$ https://docacerta.com.br/ [R=301,L,NE]
   RewriteRule ^blog-logistica/?$ https://www.jgm4consultoria.com.br/pages/blog.html [R=301,L,NE]
   RewriteRule ^contato-consultoria-logistica/?$ https://www.jgm4consultoria.com.br/#contato [R=301,L,NE]
   RewriteRule ^categoria-produto/consultoria/?$ https://www.jgm4consultoria.com.br/pages/planos-atendimento.html [R=301,L,NE]
