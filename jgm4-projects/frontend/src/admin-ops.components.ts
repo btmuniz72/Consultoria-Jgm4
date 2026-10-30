@@ -10,7 +10,7 @@ import { projectStatusLabels } from './dashboard.types';
 import { apiMessages } from './password-pages.component';
 
 // Administração operacional (Etapa 10A). O backend aplica todas as regras (somente JGM4_ADMIN); aqui só há a interface.
-const ROLE_OPTIONS = ['JGM4_ADMIN', 'JGM4_CONSULTANT', 'CLIENT_SPONSOR', 'CLIENT_MANAGER', 'CLIENT_USER'];
+const ROLE_OPTIONS = ['JGM4_ADMIN', 'JGM4_CONSULTANT', 'CLIENT_SPONSOR', 'CLIENT_MANAGER', 'CLIENT_USER', 'CLIENT_EXECUTIVE'];
 const PROJECT_ROLE_LABELS: Record<string, string> = { CONSULTANT_LEAD: 'Consultor principal', CLIENT_SPONSOR: 'Patrocinador', CLIENT_MANAGER: 'Gestor do cliente', TEAM_MEMBER: 'Membro da equipe' };
 const PROJECT_ROLES = Object.keys(PROJECT_ROLE_LABELS);
 const isClientRole = (role: string) => role.startsWith('CLIENT_');

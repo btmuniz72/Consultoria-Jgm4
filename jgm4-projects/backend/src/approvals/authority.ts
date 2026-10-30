@@ -4,7 +4,7 @@ import type { ApprovalType, UserRole } from '../generated/prisma/client';
 
 // Alçadas por role (Etapa 5). A estrutura é uma lista de regras permissão → roles, para que a
 // expansão futura (por projeto, por usuário vinculado, por valor) troque apenas a avaliação em `can`.
-export const ROLES = ['JGM4_ADMIN', 'JGM4_CONSULTANT', 'CLIENT_SPONSOR', 'CLIENT_MANAGER', 'CLIENT_USER'] as const satisfies readonly UserRole[];
+export const ROLES = ['JGM4_ADMIN', 'JGM4_CONSULTANT', 'CLIENT_SPONSOR', 'CLIENT_MANAGER', 'CLIENT_USER', 'CLIENT_EXECUTIVE'] as const satisfies readonly UserRole[];
 export type Role = typeof ROLES[number];
 
 export type Permission =
@@ -12,7 +12,8 @@ export type Permission =
   | 'DUE_DATE_APPROVE' | 'RESPONSIBLE_APPROVE' | 'TASK_REOPEN_APPROVE' | 'REQUEST_CANCEL_APPROVE' | 'CONFLICT_RESOLVE'
   | 'GATE_CLIENT_DECISION' | 'CLIENT_CRITICAL_APPROVE'
   | 'TASK_EXECUTE' | 'REQUEST_RESPOND' | 'DUE_DATE_REQUEST' | 'RESPONSIBLE_REQUEST' | 'TASK_REOPEN_REQUEST' | 'REQUEST_CANCEL_REQUEST'
-  | 'PHASE_STRUCTURE_EDIT' | 'CLOSED_ITEM_REOPEN' | 'CLOSED_GATE_EDIT' | 'GLOBAL_RULES_EDIT';
+  | 'PHASE_STRUCTURE_EDIT' | 'CLOSED_ITEM_REOPEN' | 'CLOSED_GATE_EDIT' | 'GLOBAL_RULES_EDIT'
+  | 'MILESTONE_MANAGE' | 'MILESTONE_CLIENT_DECISION' | 'COMMENT_WRITE' | 'INTERNAL_NOTE_WRITE';
 
 export interface AuthorityRule { permission: Permission; roles: readonly Role[]; description: string }
 const jgm4 = ['JGM4_ADMIN', 'JGM4_CONSULTANT'] as const;
@@ -30,12 +31,16 @@ export const AUTHORITY_RULES: readonly AuthorityRule[] = [
   { permission: 'CONFLICT_RESOLVE', roles: ['JGM4_ADMIN'], description: 'Resolver conflitos e aprovações de tipo OTHER' },
   { permission: 'GATE_CLIENT_DECISION', roles: ['CLIENT_SPONSOR'], description: 'Decidir o avanço do Gate (patrocinador)' },
   { permission: 'CLIENT_CRITICAL_APPROVE', roles: ['CLIENT_SPONSOR'], description: 'Aprovar mudanças críticas do lado cliente' },
-  { permission: 'TASK_EXECUTE', roles: ['CLIENT_MANAGER', 'CLIENT_SPONSOR'], description: 'Executar atividades' },
+  { permission: 'TASK_EXECUTE', roles: ['CLIENT_MANAGER', 'CLIENT_SPONSOR', 'CLIENT_USER'], description: 'Executar atividades, enviar evidências e responder ajustes' },
   { permission: 'REQUEST_RESPOND', roles: ['CLIENT_MANAGER', 'CLIENT_SPONSOR'], description: 'Responder solicitações' },
   { permission: 'DUE_DATE_REQUEST', roles: requesters, description: 'Pedir alteração de prazo' },
   { permission: 'RESPONSIBLE_REQUEST', roles: requesters, description: 'Pedir troca de responsável' },
   { permission: 'TASK_REOPEN_REQUEST', roles: requesters, description: 'Pedir reabertura de atividade concluída' },
   { permission: 'REQUEST_CANCEL_REQUEST', roles: requesters, description: 'Pedir cancelamento de solicitação' },
+  { permission: 'MILESTONE_MANAGE', roles: jgm4, description: 'Gerir marcos internos da fase: critérios, parecer técnico e correções' },
+  { permission: 'MILESTONE_CLIENT_DECISION', roles: ['CLIENT_SPONSOR', 'CLIENT_MANAGER'], description: 'Decidir (aprovar, manter ou rejeitar) um marco interno' },
+  { permission: 'COMMENT_WRITE', roles: ['JGM4_ADMIN', 'JGM4_CONSULTANT', 'CLIENT_SPONSOR', 'CLIENT_MANAGER', 'CLIENT_USER'], description: 'Comentar atividades, marcos e solicitações' },
+  { permission: 'INTERNAL_NOTE_WRITE', roles: jgm4, description: 'Registrar nota interna JGM4 (invisível ao cliente)' },
   { permission: 'PHASE_STRUCTURE_EDIT', roles: ['JGM4_ADMIN'], description: 'Alterar estrutura de fase (reservado)' },
   { permission: 'CLOSED_ITEM_REOPEN', roles: ['JGM4_ADMIN'], description: 'Reabrir item encerrado (reservado)' },
   { permission: 'CLOSED_GATE_EDIT', roles: ['JGM4_ADMIN'], description: 'Alterar Gate já fechado (reservado)' },

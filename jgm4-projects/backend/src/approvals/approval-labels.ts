@@ -20,7 +20,8 @@ export function roleLabel(role: Role | string | null | undefined, company: strin
     case 'JGM4_CONSULTANT': return 'Consultor JGM4';
     case 'CLIENT_SPONSOR': return `Patrocinador ${company}`;
     case 'CLIENT_MANAGER': return `Gestor ${company}`;
-    case 'CLIENT_USER': return `Usuário ${company}`;
+    case 'CLIENT_USER': return `Operacional ${company}`;
+    case 'CLIENT_EXECUTIVE': return `Diretoria ${company}`;
     default: return 'Sistema';
   }
 }

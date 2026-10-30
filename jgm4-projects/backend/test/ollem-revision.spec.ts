@@ -58,11 +58,11 @@ describe('Revisão Ollem — proposta, início, dependências e Gates com Postgr
   }, 180000);
   afterAll(async () => { if (app) await app.close(); process.env.DATABASE_URL = originalUrl; process.env.ALLOW_DEV_ACTOR_HEADER = previousDev; await pool.query(`DROP SCHEMA IF EXISTS "${schema}" CASCADE`); await pool.end(); });
 
-  it('1–5. preparação gratuita, meses corretos e treinamento somente em janeiro', async () => {
+  it('1–5. preparação gratuita, períodos corretos e treinamento somente na Fase 2', async () => {
     const { body } = await call('get', 'proposal').expect(200); const phases = body.preview.phases;
     expect(phases).toHaveLength(4); expect(phases[0]).toMatchObject({ total: 0, homeOfficeHours: 0, inCompanyHours: 0 });
-    expect(phases[1].period).toBe('Novembro e dezembro de 2026'); expect(phases[2].period).toBe('Janeiro de 2027');
-    expect(phases[1].tasks.some((t: any) => t.code === 'C14')).toBe(false); expect(phases[2].tasks.find((t: any) => t.code === 'C14').title).toContain('janeiro');
+    expect(phases[1].period).toBe('04/11/2026 a 31/01/2027'); expect(phases[2].period).toBe('Fevereiro e março de 2027');
+    expect(phases[1].tasks.some((t: any) => t.code === 'C14')).toBe(false); expect(phases[2].tasks.find((t: any) => t.code === 'C14').title).toContain('fevereiro e março');
     expect(phases[1].tasks.some((t: any) => t.code === 'OL-COMPRAS')).toBe(true); expect(phases[2].tasks.some((t: any) => t.code === 'OL-PICK')).toBe(true);
     expect(body.preview.total).toBeNull();
     await call('patch', `commercial/phases/${phaseIds[0]}`, 'admin', phaseConfig).expect(400);

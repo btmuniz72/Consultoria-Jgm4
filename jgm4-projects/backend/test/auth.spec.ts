@@ -35,7 +35,7 @@ describe('Etapa 5.1 — autenticação, vínculo usuário-projeto e isolamento',
     const client = await pool.connect();
     try {
       await client.query(`CREATE SCHEMA "${schema}"`); await client.query(`SET search_path TO "${schema}"`);
-      for (const folder of ['20261022000100_initial', '20261022000200_requests', '20261023000100_task_workflow', '20261023000200_gates', '20261024000100_approvals', '20261025000100_auth', '20261026000100_project_status_values', '20261026000200_project_status_data', '20261027000100_reports', '20261028000100_security','20261101000100_admin_ops','20261102000100_project_templates', '20261103000100_ollem_revision', '20261103000200_gate_required']) {
+      for (const folder of ['20261022000100_initial', '20261022000200_requests', '20261023000100_task_workflow', '20261023000200_gates', '20261024000100_approvals', '20261025000100_auth', '20261026000100_project_status_values', '20261026000200_project_status_data', '20261027000100_reports', '20261028000100_security','20261101000100_admin_ops','20261102000100_project_templates', '20261103000100_ollem_revision', '20261103000200_gate_required', '20261104000100_client_executive_role', '20261104000200_phase1_modeling']) {
         const migration = readFileSync(resolve(__dirname, `../prisma/migrations/${folder}/migration.sql`), 'utf8');
         if (folder === '20261023000200_gates') { const boundary = migration.indexOf('-- The first phase remains'); await client.query(migration.slice(0, boundary)); await client.query(migration.slice(boundary)); }
         else await client.query(migration);
@@ -264,7 +264,8 @@ describe('Etapa 5.1 — autenticação, vínculo usuário-projeto e isolamento',
     const opinion = await api('post', `/api/gates/${id.GA}/technical-opinion`, 'consIn', { technicalRecommendation: 'ADVANCE', technicalOpinion: 'Critérios atendidos.' }).expect(201);
     expect(opinion.body.status).toBe('TECHNICALLY_APPROVED');
     expect((await prisma.gate.findUniqueOrThrow({ where: { id: id.GA } })).technicalApprovedByUserId).toBe(id.consIn);
-    await api('post', `/api/tasks/${id.THA}/send-validation`, 'userA').expect(403); // CLIENT_USER não executa atividades
+    // 10B.1: CLIENT_USER (operacional Ollem) passa a ter alçada de execução; a recusa agora vem do estado da atividade (não de 403 por perfil).
+    expect((await api('post', `/api/tasks/${id.THA}/send-validation`, 'userA')).status).not.toBe(403);
     await api('post', `/api/projects/${id.PA}/requests/${id.RAA}/start`, 'userA').expect(403);
   });
 });

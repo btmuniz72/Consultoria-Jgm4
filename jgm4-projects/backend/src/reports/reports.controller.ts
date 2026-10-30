@@ -43,7 +43,7 @@ const XLSX_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.s
 // Todas as rotas passam pelo ProjectAccessGuard (vínculo + empresa pelo :projectId) e por @Roles.
 // Prévias (JSON) não geram registro; cada download (PDF/XLSX) grava o ReportGenerationLog.
 @Controller('projects/:projectId')
-@Roles('JGM4_ADMIN', 'JGM4_CONSULTANT', 'CLIENT_SPONSOR', 'CLIENT_MANAGER')
+@Roles('JGM4_ADMIN', 'JGM4_CONSULTANT', 'CLIENT_SPONSOR', 'CLIENT_MANAGER', 'CLIENT_EXECUTIVE')
 @RateLimit('export', 60, 600)
 export class ReportsController {
   constructor(private readonly reports: ReportsService, private readonly data: ReportsData, private readonly events: SecurityEventsService) {}

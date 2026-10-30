@@ -266,7 +266,7 @@ describe('Etapa 8 — segurança, sessões, proteção de dados e isolamento', (
     expect((await call('get', `/api/projects/${id.PA}/attachments?entityType=Task&entityId=${id.TA}`, 'userA').expect(200)).body).toHaveLength(1);
     // anexar em item de outro projeto, e perfil sem permissão de execução
     await upload(id.PA, 'managerA', pdf(), 'x.pdf', 'application/pdf', { entityType: 'Task', entityId: id.TB }).expect(404);
-    await upload(id.PA, 'userA', pdf(), 'x.pdf', 'application/pdf', { entityType: 'Task', entityId: id.TA }).expect(403);
+    await upload(id.PA, 'userA', pdf(), 'x.pdf', 'application/pdf', { entityType: 'Task', entityId: id.TA }).expect(201); // 10B.1: o operacional Ollem anexa evidências
     await upload(id.PA, 'managerA', pdf(), 'x.pdf', 'application/pdf', { entityType: 'Gate', entityId: id.GA }).expect(400);
   });
   it('15. arquivo inválido é rejeitado: extensão, assinatura, tipo declarado, pacote Office, macros, tamanho e malware', async () => {

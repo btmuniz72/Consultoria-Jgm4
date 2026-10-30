@@ -1,4 +1,5 @@
 import { reviseOllem } from '../src/commercial/revise-ollem';
+import { applyPhase1 } from '../src/commercial/phase1-ollem';
 import { config } from 'dotenv';
 import { resolve } from 'node:path';
 import { PrismaPg } from '@prisma/adapter-pg';
@@ -110,7 +111,7 @@ async function seed() {
       }
     }
   }, { timeout: 30000 });
-  if (process.env.OLLEM_LEGACY_FIXTURE !== 'true') await reviseOllem(prisma, projectId);
+  if (process.env.OLLEM_LEGACY_FIXTURE !== 'true') { await reviseOllem(prisma, projectId); await applyPhase1(prisma, projectId); }
   if (production) { console.log('Produção: seed base concluído; demonstrações e usuários de desenvolvimento NÃO foram criados.'); return; }
   const demo = await prisma.$transaction((tx) => seedApprovalsDemo(tx), { timeout: 30000 });
   if (demo) console.log('Cenário de demonstração da Etapa 5 criado: projetos "Simulação — ..." com 1 solicitação, 1 atividade, 1 Gate e 1 alteração de prazo pendentes.');

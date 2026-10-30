@@ -7,8 +7,8 @@ Implementação local em 25/10/2026. Escopo: implantação assistida, proposta t
 | Fase | Conteúdo | Referência |
 | --- | --- | --- |
 | 0 — Preparação do projeto | Empresa/projeto, usuários/acessos, patrocinador, gestor e responsáveis, apresentação do Projects, solicitações, evidências, Gates, reuniões e informações iniciais | Sem cobrança, R$ 0,00 |
-| 1 — Estruturação do CD | Planta/croqui, layout e melhorias físicas, zoneamento, movimentações aprovadas, endereçamento, cadastro e campos sistêmicos | Novembro/dezembro de 2026 |
-| 2 — Inventário, validação e treinamentos | Inventário físico x sistema, divergências, treinamento presencial, separação, documentos, picking, abastecimento, mínimos/máximos | Janeiro de 2027 |
+| 1 — Estruturação do CD | Planta/croqui, layout e melhorias físicas, zoneamento, movimentações aprovadas, endereçamento, cadastro e campos sistêmicos, exercícios operacionais e Controle de Fios e Cabos | 04/11/2026 a 31/01/2027 |
+| 2 — Inventário, processos e treinamentos | Inventário físico x sistema, divergências, treinamento presencial, separação, documentos, picking, abastecimento, mínimos/máximos | Fevereiro e março de 2027 |
 | 3 — Estabilização | Rotinas, auditoria, indicadores, POPs finais, inventário cíclico, correções, sustentação e encerramento | Após validação da Fase 2; datas a definir |
 
 Datas exatas são configuráveis pelo administrador em **Proposta → Gestão JGM4 → Fase → Datas exatas**. Os meses acima são referências do acordo. Datas e condições incluídas em documentos já emitidos permanecem no retrato daquela versão; alterações exigem emissão de nova versão.
@@ -49,9 +49,9 @@ O dashboard mostra as dependências abertas separadamente. Estar aguardando forn
 * Home Office: R$ 120,00/h.
 * In Company: R$ 220,00/h.
 * Fases comerciais começam com horas nulas, apresentadas como **A configurar**. Nulo não é zero contratado.
-* Home Office em novembro/dezembro: análise, layout, desenho, reuniões, documentação, acompanhamento, cadastro, orientação e validação.
-* In Company em janeiro: inventário, auditoria física, treinamento e validação prática.
-* Home Office em janeiro/fechamento: inventário analisado, relatórios, correções, POPs, sustentação e encerramento.
+* Home Office na Fase 1 (04/11/2026 a 31/01/2027): análise, layout, desenho, reuniões, documentação, acompanhamento, cadastro, orientação e validação.
+* In Company na Fase 2 (fevereiro e março de 2027): inventário, auditoria física, treinamento e validação prática.
+* Home Office na Fase 2 e no fechamento: inventário analisado, relatórios, correções, POPs, sustentação e encerramento.
 * Valores são calculados somente sobre horas JGM4 configuradas, com arredondamento monetário em centavos. Horas da Ollem não geram valor.
 
 Não se utiliza automaticamente o dimensionamento comercial anterior de 84 horas. Nenhuma quantidade comercial final foi presumida.

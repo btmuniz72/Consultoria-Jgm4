@@ -12,7 +12,7 @@ export function humanize(value: string | null | undefined): string {
 const pick = (map: Record<string, string>, value: string | null | undefined) => (value ? map[value] ?? humanize(value) : '—');
 
 export const roleLabels: Record<string, string> = {
-  JGM4_ADMIN: 'Administrador JGM4', JGM4_CONSULTANT: 'Consultor JGM4', CLIENT_SPONSOR: 'Patrocinador', CLIENT_MANAGER: 'Gestor', CLIENT_USER: 'Usuário', SYSTEM: 'Sistema', USER: 'Usuário',
+  JGM4_ADMIN: 'Administrador JGM4', JGM4_CONSULTANT: 'Consultor JGM4', CLIENT_SPONSOR: 'Patrocinador', CLIENT_MANAGER: 'Gestor', CLIENT_USER: 'Operacional', CLIENT_EXECUTIVE: 'Diretoria (leitura)', SYSTEM: 'Sistema', USER: 'Usuário',
 };
 export const roleLabel = (role: string | null | undefined) => pick(roleLabels, role);
 

@@ -14,6 +14,7 @@ enum UserRole {
   CLIENT_SPONSOR
   CLIENT_MANAGER
   CLIENT_USER
+  CLIENT_EXECUTIVE
 }
 
 // PLANNED e COMPLETED são valores legados (migrados para PLANNING / IMPLEMENTATION_COMPLETED); o PostgreSQL não remove valores de enum.
@@ -77,6 +78,23 @@ enum TaskStatus {
   VALIDATED
   COMPLETED
   CANCELLED
+}
+
+// Classificação da ação (10B.1). Rótulos em português ficam na interface.
+enum ActionClassification {
+  EXECUTE_NOW
+  PARALLEL
+  ACQUISITION
+  DEVELOPMENT
+  FUTURE
+}
+
+// Prioridade de negócio da atividade (distinta de ApprovalPriority, que mede a urgência de um pedido de aprovação).
+enum TaskPriority {
+  LOW
+  NORMAL
+  HIGH
+  CRITICAL
 }
 
 enum ApprovalType {
@@ -198,6 +216,9 @@ model User {
   statusEvents              ProjectStatusEvent[]
   sustainmentItems          SustainmentItem[]
   carriedItems              CarriedOverItem[]
+  milestonesJgm4            PhaseMilestone[]      @relation("MilestoneJgm4Responsible")
+  milestonesClient          PhaseMilestone[]      @relation("MilestoneClientResponsible")
+  comments                  Comment[]
 
   @@index([companyId])
 }
@@ -247,6 +268,8 @@ model Project {
   statusEvents            ProjectStatusEvent[]
   sustainmentItems        SustainmentItem[]
   carriedItems            CarriedOverItem[]
+  milestones              PhaseMilestone[]
+  comments                Comment[]
 
   @@unique([companyId, name])
   @@index([companyId, status])
@@ -273,6 +296,7 @@ model Phase {
   evidence           TaskEvidence[]
   carriedFrom        CarriedOverItem[] @relation("CarriedFrom")
   carriedTo          CarriedOverItem[] @relation("CarriedTo")
+  milestones         PhaseMilestone[]
   actualStartDate    DateTime?         @db.Date
   actualEndDate      DateTime?         @db.Date
   plannedStartDate   DateTime?         @db.Date
@@ -340,6 +364,14 @@ model GateCriterion {
 }
 
 model Task {
+  category                String?
+  classification          ActionClassification?
+  priority                TaskPriority?
+  // Respostas estruturadas simples (opcional; sem esquema fixo nesta versão). O percentual NÃO é gravado: é calculado.
+  responseData            Json?
+  milestoneId             String?               @db.Uuid
+  milestone               PhaseMilestone?       @relation(fields: [projectId, milestoneId], references: [projectId, id], onDelete: Restrict)
+  comments                Comment[]
   requiredForGate Boolean @default(true)
   movementApprovalRequired Boolean            @default(false)
   movementApprovedByUserId String?            @db.Uuid
@@ -391,7 +423,9 @@ model Task {
 
   @@unique([projectId, code])
   @@unique([projectId, phaseId, id])
+  @@unique([projectId, id])
   @@index([projectId, phaseId])
+  @@index([milestoneId])
 }
 
 model ProjectRequest {
@@ -421,8 +455,10 @@ model ProjectRequest {
   clientResponsible    User?                @relation("RequestResponsible", fields: [clientResponsibleId], references: [id], onDelete: Restrict)
   createdBy            User?                @relation("RequestCreator", fields: [createdByUserId], references: [id], onDelete: Restrict)
   requirements         RequestRequirement[]
+  comments             Comment[]
 
   @@unique([projectId, code])
+  @@unique([projectId, id])
   @@index([projectId, status])
   @@index([projectId, phaseId])
   @@index([taskId])
@@ -1029,4 +1065,87 @@ model ExternalDependency {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   @@index([projectId, status])
+}
+
+// 10B.1 — Marcos internos de uma fase (ex.: M1..M4 da Fase 1 da Ollem). Independentes dos Gates contratuais:
+// não alteram o que libera a fase seguinte nem pagamentos.
+model PhaseMilestone {
+  id                        String               @id @default(uuid()) @db.Uuid
+  projectId                 String               @db.Uuid
+  phaseId                   String               @db.Uuid
+  code                      String
+  title                     String
+  question                  String
+  order                     Int
+  // Reaproveita GateStatus: BLOCKED = em preparação; AVAILABLE = pronto para análise JGM4.
+  status                    GateStatus           @default(BLOCKED)
+  plannedDate               DateTime?            @db.Date
+  actualDate                DateTime?            @db.Date
+  jgm4ResponsibleUserId     String?              @db.Uuid
+  clientResponsibleUserId   String?              @db.Uuid
+  technicalOpinion          String?
+  technicalRecommendation   GateRecommendation?
+  technicalApprovedByUserId String?              @db.Uuid
+  technicalApprovedAt       DateTime?
+  clientDecision            GateClientDecision?
+  clientDecisionComment     String?
+  clientDecisionByUserId    String?              @db.Uuid
+  clientDecisionAt          DateTime?
+  correctionReason          String?
+  createdAt                 DateTime             @default(now())
+  updatedAt                 DateTime             @updatedAt
+  project                   Project              @relation(fields: [projectId], references: [id], onDelete: Restrict)
+  phase                     Phase                @relation(fields: [projectId, phaseId], references: [projectId, id], onDelete: Restrict)
+  jgm4Responsible           User?                @relation("MilestoneJgm4Responsible", fields: [jgm4ResponsibleUserId], references: [id], onDelete: Restrict)
+  clientResponsible         User?                @relation("MilestoneClientResponsible", fields: [clientResponsibleUserId], references: [id], onDelete: Restrict)
+  criteria                  MilestoneCriterion[]
+  tasks                     Task[]
+  comments                  Comment[]
+
+  @@unique([projectId, code])
+  @@unique([projectId, id])
+  @@index([phaseId, order])
+}
+
+model MilestoneCriterion {
+  id                String         @id @default(uuid()) @db.Uuid
+  milestoneId       String         @db.Uuid
+  code              String
+  description       String
+  mandatory         Boolean        @default(true)
+  satisfied         Boolean        @default(false)
+  satisfiedAt       DateTime?
+  satisfiedByUserId String?        @db.Uuid
+  evidenceReference String?
+  order             Int            @default(0)
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
+  milestone         PhaseMilestone @relation(fields: [milestoneId], references: [id], onDelete: Restrict)
+
+  @@unique([milestoneId, code])
+  @@index([milestoneId, order])
+}
+
+// Comentários append-only. Exatamente UMA entidade (CHECK na migration); chaves compostas (projectId, entidade)
+// garantem no banco que a entidade existe e pertence ao mesmo projeto. internal = nota interna JGM4.
+model Comment {
+  id           String          @id @default(uuid()) @db.Uuid
+  projectId    String          @db.Uuid
+  taskId       String?         @db.Uuid
+  milestoneId  String?         @db.Uuid
+  requestId    String?         @db.Uuid
+  authorUserId String          @db.Uuid
+  authorRole   UserRole
+  body         String
+  internal     Boolean         @default(false)
+  createdAt    DateTime        @default(now())
+  project      Project         @relation(fields: [projectId], references: [id], onDelete: Restrict)
+  task         Task?           @relation(fields: [projectId, taskId], references: [projectId, id], onDelete: Restrict)
+  milestone    PhaseMilestone? @relation(fields: [projectId, milestoneId], references: [projectId, id], onDelete: Restrict)
+  request      ProjectRequest? @relation(fields: [projectId, requestId], references: [projectId, id], onDelete: Restrict)
+  author       User            @relation(fields: [authorUserId], references: [id], onDelete: Restrict)
+
+  @@index([projectId, taskId, createdAt])
+  @@index([projectId, milestoneId, createdAt])
+  @@index([projectId, requestId, createdAt])
 }

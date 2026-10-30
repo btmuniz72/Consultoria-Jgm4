@@ -13,7 +13,7 @@ Executada localmente em 25/10/2026, com PostgreSQL real e Microsoft Edge via Pla
 ## Cenários verificados
 
 * Fase 0 sem cobrança; preparação interna não convertida em valor.
-* Fase 1 em novembro/dezembro de 2026 e Fase 2 em janeiro de 2027, com treinamentos na Fase 2.
+* Fase 1 de 04/11/2026 a 31/01/2027 e Fase 2 em fevereiro e março de 2027, com treinamentos na Fase 2 (calendário atualizado na 10B.1).
 * Cadastro/endereço/criticidade/EAN/DUN, compras paralelas, picking, abastecimento e mínimos/máximos nas fases aplicáveis.
 * IDs, solicitações, evidências, apontamentos e critérios anteriores preservados; revisão idempotente.
 * Home Office a R$ 120/h, In Company a R$ 220/h e horas cliente sem valor comercial.

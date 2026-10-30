@@ -39,14 +39,14 @@ export async function reviseOllem(prisma: PrismaClient, projectId: string) {
       C04: 'JGM4 propõe → Ollem analisa → aceite registrado → movimentação Ollem → evidência → validação JGM4. Movimentações estruturais relevantes exigem aceite prévio.',
       C10: 'Depósito → Rua → Andar → Apartamento; padrão simples e escalável, exemplo 01-03-02-05. JGM4 define formato e preenchimento; Ollem ou fornecedor cria campo no sistema.',
       C12: 'Ollem classifica CR1 (alta: falta, valor, prazo de reposição ou parada), CR2 (média) e CR3 (baixa). JGM4 orienta a metodologia. Ollem disponibiliza campo próprio no cadastro.',
-      C14: 'Treinamento presencial em janeiro: endereçamento, recebimento, armazenagem, movimentação, separação, devolução, inventário, criticidade, controles e campos sistêmicos.',
+      C14: 'Treinamento presencial na Fase 2 (fevereiro e março de 2027): endereçamento, recebimento, armazenagem, movimentação, separação, devolução, inventário, criticidade, controles e campos sistêmicos.',
       C21: 'Solicitação → liberação → separação → conferência → entrega/expedição → baixa. Definir área para separados, aguardando retirada e conferência sem mistura com estoque disponível.',
       C32: 'Cadastro mínimo: descrição, código interno, endereço, criticidade CR1/CR2/CR3, unidade e demais campos necessários. Ollem cria/valida campos EAN-13 e DUN-14; JGM4 orienta finalidade e preenchimento. Não exigir EAN quando não aplicável nem DUN sem embalagem logística.',
-      C40: 'Inventário de validação assistido: físico x sistema, endereços, divergências, criticidade, cadastro e organização. Execução conjunta em janeiro.',
+      C40: 'Inventário de validação assistido: físico x sistema, endereços, divergências, criticidade, cadastro e organização. Execução conjunta na Fase 2 (fevereiro e março de 2027).',
       C41: 'Registrar divergência, analisar causa, corrigir cadastro e endereço; corrigir saldo somente quando autorizado e registrar ação.',
       C44: 'Plano de sustentação e inventário cíclico simples: CR1 maior frequência, CR2 intermediária, CR3 menor. Revisar POPs, indicadores e responsáveis.',
     };
-    const titles: Record<string, string> = { C00: 'Preparação administrativa e apresentação do projeto', C02: 'Layout e melhorias físicas', C04: 'Movimentações estruturais aprovadas', C06: 'Orientações pontuais para implantação', C13: 'Inventário inicial e validação', C14: 'Treinamentos presenciais — janeiro de 2027', C32: 'Cadastro, campos de endereço, criticidade, EAN-13 e DUN-14', G3: 'Preparação e análise do Gate final' };
+    const titles: Record<string, string> = { C00: 'Preparação administrativa e apresentação do projeto', C02: 'Layout e melhorias físicas', C04: 'Movimentações estruturais aprovadas', C06: 'Orientações pontuais para implantação', C13: 'Inventário inicial e validação', C14: 'Treinamentos presenciais — fevereiro e março de 2027', C32: 'Cadastro, campos de endereço, criticidade, EAN-13 e DUN-14', G3: 'Preparação e análise do Gate final' };
     const tasks = await tx.task.findMany({ where: { projectId } });
     for (const task of tasks) {
       const order = phaseFor[task.code]; if (order === undefined) continue;
@@ -75,8 +75,8 @@ export async function reviseOllem(prisma: PrismaClient, projectId: string) {
       const created = await tx.task.create({ data: { projectId, phaseId: phases[task.phase], code: task.code, title: task.title, objective: task.title, instructions: task.instructions, acceptanceCriteria: 'Resultado documentado e validado pela JGM4.', blockedByGateId: gates[task.phase - 1], requiredForGate: task.code !== 'OL-COMPRAS', status: 'BLOCKED', responsibilityType: 'JOINT' } });
       await log('Task', created.id, null, created);
     }
-    await tx.project.update({ where: { id: projectId }, data: { ollemRevision: 1, commercialControlEnabled: true, plannedStartDate: new Date('2026-11-01') } });
-    await log('Project', projectId, project, { ollemRevision: 1, commercialControlEnabled: true, plannedStartDate: '2026-11-01', commercialHours: 'A configurar pela JGM4_ADMIN' });
+    await tx.project.update({ where: { id: projectId }, data: { ollemRevision: 1, commercialControlEnabled: true, plannedStartDate: new Date('2026-11-04') } });
+    await log('Project', projectId, project, { ollemRevision: 1, commercialControlEnabled: true, plannedStartDate: '2026-11-04', commercialHours: 'A configurar pela JGM4_ADMIN' });
     return { revised: true };
   }, { timeout: 60000 });
 }

@@ -62,7 +62,7 @@ try {
   expect(await page.locator('.sidebar').evaluate(element => getComputedStyle(element).position)).toBe('fixed');
   expect(await page.locator('.app-shell').evaluate(element => getComputedStyle(element).display)).toBe('flex');
   await expect(page.getByTestId('proposal-phase').first()).toContainText('Sem cobrança · R$ 0,00'); await expect(page.getByTestId('proposal-total')).toHaveText('A configurar');
-  await expect(page.locator('main')).toContainText('Novembro e dezembro de 2026'); await expect(page.locator('main')).toContainText('Janeiro de 2027');
+  await expect(page.locator('main')).toContainText('04/11/2026 a 31/01/2027'); await expect(page.locator('main')).toContainText('Fevereiro e março de 2027');
   await noOverflow(); await page.screenshot({ path: resolve(output, 'proposta-previa-desktop.png'), fullPage: true });
   // Configuração pela interface: horas fictícias permanecem apenas no schema temporário.
   for (const order of [1, 2, 3]) {

@@ -9,6 +9,10 @@ import { TemplatesController } from './templates/templates.controller';
 import { TemplatesService } from './templates/templates.service';
 import { AdminService } from './admin/admin.service';
 import { MembersService } from './admin/members.service';
+import { CommentsController } from './comments/comments.controller';
+import { CommentsService } from './comments/comments.service';
+import { MilestonesController } from './milestones/milestones.controller';
+import { MilestonesService } from './milestones/milestones.service';
 import { AttachmentsController } from './attachments/attachments.controller';
 import { AttachmentsService } from './attachments/attachments.service';
 import { STORAGE, createStorage } from './attachments/storage';
@@ -58,8 +62,8 @@ class HealthController {
 }
 
 @Module({
-  controllers: [CommercialController, TemplatesController, AdminOpsController, ProjectsController, HealthController, RequestsController, TasksController, GatesController, ApprovalsController, AuthController, DashboardController, LifecycleController, ReportsController, AdminController, MembersController, AttachmentsController],
-  providers: [CommercialService, TemplatesService, AdminOpsService, PrismaService, ProjectsService, RequestsService, TasksService, GatesService, ApprovalsService, AuthService, AccessService, DashboardService, LifecycleService, ReportsService, ReportsData, AdminService, MembersService, AttachmentsService,
+  controllers: [CommentsController, MilestonesController, CommercialController, TemplatesController, AdminOpsController, ProjectsController, HealthController, RequestsController, TasksController, GatesController, ApprovalsController, AuthController, DashboardController, LifecycleController, ReportsController, AdminController, MembersController, AttachmentsController],
+  providers: [CommentsService, MilestonesService, CommercialService, TemplatesService, AdminOpsService, PrismaService, ProjectsService, RequestsService, TasksService, GatesService, ApprovalsService, AuthService, AccessService, DashboardService, LifecycleService, ReportsService, ReportsData, AdminService, MembersService, AttachmentsService,
     SecurityEventsService, RateLimiter, MailService, { provide: STORAGE, useFactory: createStorage }, { provide: MALWARE_SCANNER, useFactory: createScanner },
     { provide: APP_GUARD, useClass: AuthGuard }, { provide: APP_GUARD, useClass: RateLimitGuard }, { provide: APP_GUARD, useClass: ProjectAccessGuard }, { provide: APP_FILTER, useClass: SecureExceptionFilter }],
 })

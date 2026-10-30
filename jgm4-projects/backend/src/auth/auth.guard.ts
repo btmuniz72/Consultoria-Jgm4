@@ -33,6 +33,8 @@ export class AuthGuard implements CanActivate {
         throw new HttpException({ statusCode: 403, message: 'Token CSRF ausente ou inválido.', error: 'Forbidden' }, 403);
       }
     }
+    // Diretoria (CLIENT_EXECUTIVE) é somente leitura: nenhuma rota que altera estado, exceto a conta pessoal (/api/auth/*).
+    if (user.role === 'CLIENT_EXECUTIVE' && !SAFE_METHODS.has(req.method) && !path.startsWith('/api/auth')) throw new ForbiddenException('O perfil de diretoria é somente leitura.');
     const roles = this.reflector.getAllAndOverride<Role[] | undefined>(ROLES_KEY, targets);
     if (roles?.length && !roles.includes(user.role)) throw new ForbiddenException(`O perfil ${user.role} não pode executar esta ação.`);
     return true;

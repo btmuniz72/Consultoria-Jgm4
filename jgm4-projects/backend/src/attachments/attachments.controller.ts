@@ -12,7 +12,7 @@ import { AttachmentsService, UploadDto } from './attachments.service';
 export class AttachmentsController {
   constructor(private readonly attachments: AttachmentsService) {}
 
-  @Roles('JGM4_ADMIN', 'JGM4_CONSULTANT', 'CLIENT_SPONSOR', 'CLIENT_MANAGER') @RateLimit('upload', 30, 600) @Post()
+  @Roles('JGM4_ADMIN', 'JGM4_CONSULTANT', 'CLIENT_SPONSOR', 'CLIENT_MANAGER', 'CLIENT_USER') @RateLimit('upload', 30, 600) @Post()
   @UseInterceptors(FileInterceptor('file', { storage: memoryStorage(), limits: { fileSize: uploadConfig().maxBytes, files: 1, fields: 5 }, defParamCharset: 'utf8' } as never))
   upload(@Param('projectId', ParseUUIDPipe) projectId: string, @Body() dto: UploadDto, @UploadedFile() file: { originalname: string; mimetype?: string; buffer: Buffer; size: number } | undefined) { return this.attachments.upload(projectId, dto, file); }
 

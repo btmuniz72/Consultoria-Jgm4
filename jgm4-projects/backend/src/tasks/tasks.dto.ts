@@ -1,5 +1,5 @@
-import { IsBoolean, IsDateString, IsInt, IsNumber, IsOptional, IsString, Max, MaxLength, Min, MinLength, IsEnum } from 'class-validator';
-import { ResponsibilityType } from '../generated/prisma/client';
+import { IsBoolean, IsDateString, IsInt, IsNumber, IsOptional, IsString, IsUUID, Max, MaxLength, Min, MinLength, IsEnum } from 'class-validator';
+import { ActionClassification, ResponsibilityType, TaskPriority } from '../generated/prisma/client';
 
 export class TaskTransitionDto {
   @IsOptional() @IsInt() @Min(0) expectedVersion?: number;
@@ -27,6 +27,10 @@ export class TaskPlanDto {
   @IsOptional() @IsString() @MaxLength(5000) nextAction?: string | null;
   @IsOptional() @IsNumber({ maxDecimalPlaces: 2 }) @Min(0) @Max(10000) plannedJgm4Hours?: number | null;
   @IsOptional() @IsNumber({ maxDecimalPlaces: 2 }) @Min(0) @Max(10000) plannedClientHours?: number | null;
+  @IsOptional() @IsString() @MaxLength(120) category?: string | null;
+  @IsOptional() @IsEnum(ActionClassification) classification?: ActionClassification | null;
+  @IsOptional() @IsEnum(TaskPriority) priority?: TaskPriority | null;
+  @IsOptional() @IsUUID() milestoneId?: string | null;
 }
 
 export class TaskEvidenceDto {

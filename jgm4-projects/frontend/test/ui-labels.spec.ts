@@ -4,7 +4,7 @@ import { fmtDate, fmtDateTime, fmtHours, fmtPercent, initials } from '../src/ui/
 describe('Etapa 10.5 — rótulos, tons e formatação centralizados', () => {
   it('traduz perfis sem expor o enum técnico', () => {
     expect(roleLabel('JGM4_ADMIN')).toBe('Administrador JGM4'); expect(roleLabel('JGM4_CONSULTANT')).toBe('Consultor JGM4');
-    expect(roleLabel('CLIENT_SPONSOR')).toBe('Patrocinador'); expect(roleLabel('CLIENT_MANAGER')).toBe('Gestor'); expect(roleLabel('CLIENT_USER')).toBe('Usuário');
+    expect(roleLabel('CLIENT_SPONSOR')).toBe('Patrocinador'); expect(roleLabel('CLIENT_MANAGER')).toBe('Gestor'); expect(roleLabel('CLIENT_USER')).toBe('Operacional'); expect(roleLabel('CLIENT_EXECUTIVE')).toBe('Diretoria (leitura)');
     expect(roleLabel(null)).toBe('—'); expect(Object.values(projectRoleLabels).join(' ')).not.toMatch(/_/);
   });
   it('nenhum rótulo de status contém underscore ou caixa-alta técnica; valores desconhecidos são humanizados', () => {

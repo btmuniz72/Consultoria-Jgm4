@@ -42,6 +42,7 @@
     "retention:run": "npm run retention:run -w backend",
     "docs:alignment": "tsx scripts/export-alignment-document.ts",
     "ollem:revise": "tsx backend/scripts/revise-ollem.ts",
+    "ollem:phase1": "tsx backend/scripts/phase1-ollem.ts",
     "test:browser:ollem": "tsx scripts/browser-check-ollem.ts",
     "test:browser:base-path": "tsx scripts/browser-check-ollem.ts",
     "test:browser:area-cliente": "tsx scripts/browser-check-ollem.ts",

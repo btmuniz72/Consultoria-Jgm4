@@ -7,6 +7,7 @@ import { GatesService } from '../gates/gates.service';
 import { assertProjectOpen } from '../projects/project-guard';
 import { ensureApproval, resolveApprovals } from '../approvals/approval-sync';
 import { assertCan, currentRole, currentUserId, isJgm4Role } from '../approvals/authority';
+import { taskProgress } from './progress';
 
 type Actor = 'JGM4' | 'CLIENT';
 type Tx = Prisma.TransactionClient;
@@ -81,7 +82,7 @@ export class TasksService {
     const localActor = this.currentActor();
     return {
       ...task, ...time, canApproveMovement: ['CLIENT_SPONSOR', 'CLIENT_MANAGER'].includes(currentRole()), blockedByRequests: blocking.requests.length > 0, blockingRequests: blocking.requests,
-      statusLabel: statuses[task.status], currentOwnerType: task.currentOwnerType,
+      progressPercent: taskProgress(task), statusLabel: statuses[task.status], currentOwnerType: task.currentOwnerType,
       nextAction: task.nextAction ?? actionFor(task.status, task.currentOwnerType),
       dependencies: { ...blocking, previousGate: blocking.gate }, missingRequirements,
       allowedActions: this.allowedActions(task.status, localActor, blocking.labels.length === 0, missingRequirements.length === 0, task.responsibilityType),
@@ -90,6 +91,7 @@ export class TasksService {
   }
   private allowedActions(status: TaskStatus, localActor: Actor, unblocked: boolean, checklistComplete: boolean, responsibility: string) {
     const actions: string[] = [];
+    if (currentRole() === 'CLIENT_EXECUTIVE') return actions; // diretoria: somente leitura
     if (status === 'RELEASED' && unblocked && (responsibility === 'JOINT' || responsibility === localActor)) actions.push('start');
     if (status === 'IN_PROGRESS' && localActor === 'CLIENT' && checklistComplete) actions.push('send-validation');
     if (status === 'WAITING_EVIDENCE' && localActor === 'CLIENT') actions.push('submit-evidence');
@@ -252,9 +254,10 @@ export class TasksService {
         throw new ConflictException('Atividade ativa: solicite a alteração de prazo pela Central de Aprovações (DUE_DATE_CHANGE).');
       }
       if (dto.expectedVersion !== undefined && dto.expectedVersion !== task.version) throw new ConflictException('A atividade foi atualizada. Recarregue antes de continuar.');
-      const patch: Prisma.TaskUpdateInput = {};
+      const patch: Prisma.TaskUncheckedUpdateManyInput = {};
       const oldValue: Record<string, unknown> = {}; const newValue: Record<string, unknown> = {};
-      for (const key of ['responsibilityType', 'plannedStartDate', 'plannedEndDate', 'plannedJgm4Hours', 'plannedClientHours', 'nextActionDueDate', 'nextAction'] as const) {
+      if (dto.milestoneId && !await tx.phaseMilestone.findFirst({ where: { id: dto.milestoneId, projectId }, select: { id: true } })) throw new BadRequestException('O marco informado não pertence a este projeto.');
+      for (const key of ['responsibilityType', 'plannedStartDate', 'plannedEndDate', 'plannedJgm4Hours', 'plannedClientHours', 'nextActionDueDate', 'nextAction', 'category', 'classification', 'priority', 'milestoneId'] as const) {
         const value = dto[key]; if (value === undefined) continue;
         const before = task[key] instanceof Date ? task[key]!.toISOString().slice(0, 10) : task[key] instanceof Prisma.Decimal ? task[key]!.toNumber() : task[key];
         const after = typeof value === 'string' && key.toLowerCase().includes('date') ? new Date(`${value.slice(0, 10)}T00:00:00.000Z`) : value;

@@ -11,7 +11,7 @@ import { inspectFile, safeFileName } from './file-validation';
 import { MALWARE_SCANNER, MalwareScanner, scanRequired } from './scanner';
 import { STORAGE, StorageProvider } from './storage';
 
-export class UploadDto { @IsIn(['Task', 'ProjectRequest']) entityType!: 'Task' | 'ProjectRequest'; @IsUUID() entityId!: string }
+export class UploadDto { @IsIn(['Task', 'ProjectRequest', 'PhaseMilestone']) entityType!: 'Task' | 'ProjectRequest' | 'PhaseMilestone'; @IsUUID() entityId!: string }
 
 @Injectable()
 export class AttachmentsService {
@@ -27,7 +27,10 @@ export class AttachmentsService {
     await assertProjectOpen(this.prisma, projectId);
     if (file.size > uploadConfig().maxBytes) throw new PayloadTooLargeException(`Arquivo acima do limite de ${uploadConfig().maxBytes / 1024 / 1024} MB.`);
     // A entidade precisa existir NESTE projeto (nenhum anexo em item de outro projeto).
-    const entity = dto.entityType === 'Task' ? await this.prisma.task.findFirst({ where: { id: dto.entityId, projectId }, select: { id: true, code: true } }) : await this.prisma.projectRequest.findFirst({ where: { id: dto.entityId, projectId }, select: { id: true, code: true } });
+    const where = { id: dto.entityId, projectId }; const select = { id: true, code: true } as const;
+    const entity = dto.entityType === 'Task' ? await this.prisma.task.findFirst({ where, select })
+      : dto.entityType === 'PhaseMilestone' ? await this.prisma.phaseMilestone.findFirst({ where, select })
+      : await this.prisma.projectRequest.findFirst({ where, select });
     if (!entity) throw new NotFoundException('Item não encontrado neste projeto.');
     const name = safeFileName(file.originalname);
     const inspection = await inspectFile(name, file.mimetype, file.buffer);
